@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class KhachHang {
 
 	private String maKhachHang;
