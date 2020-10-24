@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.HangXeConstant;
-import constant.XuatXuConstant;
 import converter.HangXeConvert;
-import converter.XuatXuConvert;
 import db.DatabaseConnect;
 import entity.HangXe;
-import entity.XuatXu;
 
 public class HangXeDao {
 

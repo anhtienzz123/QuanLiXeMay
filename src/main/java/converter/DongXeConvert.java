@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entity.DongXe;
-import entity.XuatXu;
 
 public class DongXeConvert {
+	
 	private DongXeConvert() {
 	}
 	

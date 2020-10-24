@@ -8,14 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.LoaiXeConstant;
-import constant.NhanVienKiThuatConstant;
 import constant.XeMayConstant;
 import converter.LoaiXeConvert;
-import converter.NhanVienKiThuatConvert;
 import converter.XeMayConvert;
 import db.DatabaseConnect;
 import entity.LoaiXe;
-import entity.NhanVienKiThuat;
 import entity.XeMay;
 
 public class XeMayDao {
@@ -52,7 +49,25 @@ public class XeMayDao {
 		}
 		return xeMays;
 	}
-	
+
+	public XeMay getXeMayTheoMa(String maXeMay) {
+		XeMay xeMay = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THEO_MA);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				xeMay = XeMayConvert.getXeMay(resultSet);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return xeMay;
+	}
+
 	public LoaiXe getLoaiXeTheoMa(String maLoaiXe) {
 
 		LoaiXe loaiXe = null;
@@ -71,14 +86,13 @@ public class XeMayDao {
 		}
 		return loaiXe;
 	}
-	
+
 	public boolean themXeMay(XeMay xeMay) {
 
 		int n = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(XeMayConstant.THEM_XE_MAY);
+			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.THEM_XE_MAY);
 			XeMayConvert.themXeMay(preparedStatement, xeMay);
 			n = preparedStatement.executeUpdate();
 
@@ -87,13 +101,12 @@ public class XeMayDao {
 		}
 		return n > 0;
 	}
-	
+
 	public boolean capNhatXeMay(XeMay xeMay) {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(XeMayConstant.CAP_NHAP_XE_MAY);
+			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.CAP_NHAP_XE_MAY);
 			XeMayConvert.capNhatXeMay(preparedStatement, xeMay);
 			n = preparedStatement.executeUpdate();
 
@@ -104,5 +117,5 @@ public class XeMayDao {
 
 		return n > 0;
 	}
-	
+
 }

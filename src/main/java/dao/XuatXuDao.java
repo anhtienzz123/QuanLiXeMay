@@ -7,12 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.Constant;
 import constant.XuatXuConstant;
-import converter.KhachHangConverter;
 import converter.XuatXuConvert;
 import db.DatabaseConnect;
-import entity.KhachHang;
 import entity.XuatXu;
 
 public class XuatXuDao {

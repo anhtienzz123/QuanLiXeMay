@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import converter.DocSo;
+import other.DocSo;
 
 public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 

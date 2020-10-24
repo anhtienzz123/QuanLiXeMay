@@ -15,4 +15,10 @@ public class HopDong {
 	private HoaDon hoaDon;
 	private XeMay xeMay;
 	private List<PhieuBaoHanh> phieuBaoHanhs;
+
+	public HopDong(String maHopDong) {
+		super();
+		this.maHopDong = maHopDong;
+	}
+
 }

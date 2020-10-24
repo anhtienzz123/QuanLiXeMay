@@ -4,20 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import db.DatabaseConnect;
-import entity.KhachHang;
-import entity.NhanVienHanhChinh;
-import entity.NhanVienKiThuat;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.Constant;
 import constant.NhanVienHanhChinhConstant;
-import converter.KhachHangConverter;
 import converter.NhanVienHanhChinhConvert;
-import converter.NhanVienKiThuatConvert;
+import db.DatabaseConnect;
+import entity.NhanVienHanhChinh;
 
 public class NhanVienHanhChinhDao {
 	private static NhanVienHanhChinhDao instance;

@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.DongXeConstant;
-import constant.XuatXuConstant;
 import converter.DongXeConvert;
-import converter.XuatXuConvert;
 import db.DatabaseConnect;
 import entity.DongXe;
-import entity.XuatXu;
 
 public class DongXeDao {
 	private static DongXeDao instance;
