@@ -3,8 +3,10 @@ package ui;
 import java.sql.SQLException;
 
 import converter.DocSo;
+import dao.DanhMucBaoHanhDao;
 import dao.KhachHangDao;
 import db.DatabaseConnect;
+import entity.DanhMucBaoHanh;
 import entity.KhachHang;
 
 public class Main {
@@ -13,8 +15,9 @@ public class Main {
 		DatabaseConnect.connect();
 		KhachHangDao khachHangDao = KhachHangDao.getInstance();
 		KhachHang khachHang = new KhachHang();
-
-		System.out.println(khachHangDao.capNhatKhachHang(khachHang));
+		DanhMucBaoHanhDao danhMucBaoHanhDao = DanhMucBaoHanhDao.getInstance();
+		DanhMucBaoHanh danhMucBaoHanh = new DanhMucBaoHanh("DM123", "Bánh xe");
+		System.out.println(danhMucBaoHanhDao.getDanhMucBaoHanhTheoMa("DM123"));
 	}
 	
 }
