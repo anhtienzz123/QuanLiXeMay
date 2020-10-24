@@ -10,7 +10,7 @@ public class DatabaseConnect {
 	private static Connection instance;
 	private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=QuanLiXeMay";
 	private static final String USER = "sa";
-	private static final String PASSWORD ="sapassword";
+	private static final String PASSWORD ="huynhanhtien0403";
 	
 	
 	private DatabaseConnect() {
