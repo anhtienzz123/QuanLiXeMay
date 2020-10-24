@@ -57,6 +57,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 	private JButton btnChonFile;
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
+	private JPopupMenu popupMenuHangXe;
+	private JMenuItem mntmThemHangXe;
+	private JMenuItem mntmSuaHangXe;
+	private JMenuItem mntmXoaHangXe;
+	private JPopupMenu popupMenuLoaiXe;
+	private JMenuItem mntmThemLoaiXe;
+	private JMenuItem mntmSuaLoaiXe;
+	private JMenuItem mntmXoaLoaiXe;
+	private JPopupMenu popupMenuDongXe;
+	private JMenuItem mntmThemDongXe;
+	private JMenuItem mntmSuaDongXe;
+	private JMenuItem mntmXoaDongXe;
+	private JPopupMenu popupMenuXuatXu;
+	private JMenuItem mntmThemXuatXu;
+	private JMenuItem mntmSuaXuatXu;
+	private JMenuItem mntmXoaXuatXu;
 
 	/**
 	 * Create the panel.
@@ -165,20 +181,20 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHang.setPreferredSize(new Dimension(180, 40));
 		horizontalBox_1.add(cboHang);
-
-		JPopupMenu popupMenuHangXe = new JPopupMenu();
+//
+		popupMenuHangXe = new JPopupMenu();
 		popupMenuHangXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		addPopup(cboHang, popupMenuHangXe);
 
-		JMenuItem mntmThemHangXe = new JMenuItem("Thêm hãng xe");
+		mntmThemHangXe = new JMenuItem("Thêm hãng xe");
 		mntmThemHangXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuHangXe.add(mntmThemHangXe);
 
-		JMenuItem mntmSuaHangXe = new JMenuItem("Sửa hãng xe");
+		mntmSuaHangXe = new JMenuItem("Sửa hãng xe");
 		mntmSuaHangXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuHangXe.add(mntmSuaHangXe);
 
-		JMenuItem mntmXoaHangXe = new JMenuItem("Xóa hãng xe");
+		mntmXoaHangXe = new JMenuItem("Xóa hãng xe");
 		mntmXoaHangXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuHangXe.add(mntmXoaHangXe);
 
@@ -203,18 +219,18 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_1.add(cboLoaiXe);
 
-		JPopupMenu popupMenuLoaiXe = new JPopupMenu();
+		popupMenuLoaiXe = new JPopupMenu();
 		addPopup(cboLoaiXe, popupMenuLoaiXe);
 
-		JMenuItem mntmThemLoaiXe = new JMenuItem("Thêm loại xe");
+		mntmThemLoaiXe = new JMenuItem("Thêm loại xe");
 		mntmThemLoaiXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuLoaiXe.add(mntmThemLoaiXe);
 
-		JMenuItem mntmSuaLoaiXe = new JMenuItem("Sửa loại xe");
+		mntmSuaLoaiXe = new JMenuItem("Sửa loại xe");
 		mntmSuaLoaiXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuLoaiXe.add(mntmSuaLoaiXe);
 
-		JMenuItem mntmXoaLoaiXe = new JMenuItem("Xóa loại xe");
+		mntmXoaLoaiXe = new JMenuItem("Xóa loại xe");
 		mntmXoaLoaiXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuLoaiXe.add(mntmXoaLoaiXe);
 
@@ -250,19 +266,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		cboDongXe.setMaximumSize(new Dimension(200, 40));
 		horizontalBox_2.add(cboDongXe);
 
-		JPopupMenu popupMenuDongXe = new JPopupMenu();
+		popupMenuDongXe = new JPopupMenu();
 		popupMenuDongXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		addPopup(cboDongXe, popupMenuDongXe);
 
-		JMenuItem mntmThemDongXe = new JMenuItem("Thêm dòng xe");
+		mntmThemDongXe = new JMenuItem("Thêm dòng xe");
 		mntmThemDongXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuDongXe.add(mntmThemDongXe);
 
-		JMenuItem mntmSuaDongXe = new JMenuItem("Sửa dòng xe");
+		mntmSuaDongXe = new JMenuItem("Sửa dòng xe");
 		mntmSuaDongXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuDongXe.add(mntmSuaDongXe);
 
-		JMenuItem mntmXoaDongXe = new JMenuItem("Xóa dòng xe");
+		mntmXoaDongXe = new JMenuItem("Xóa dòng xe");
 		mntmXoaDongXe.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuDongXe.add(mntmXoaDongXe);
 
@@ -289,19 +305,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		cboXuatXu.setMaximumSize(new Dimension(250, 40));
 		horizontalBox_2.add(cboXuatXu);
 
-		JPopupMenu popupMenuXuatXu = new JPopupMenu();
+		popupMenuXuatXu = new JPopupMenu();
 		popupMenuXuatXu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		addPopup(cboXuatXu, popupMenuXuatXu);
 
-		JMenuItem mntmThemXuatXu = new JMenuItem("Thêm xuất xứ");
+		mntmThemXuatXu = new JMenuItem("Thêm xuất xứ");
 		mntmThemXuatXu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuXuatXu.add(mntmThemXuatXu);
 
-		JMenuItem mntmSuaXuatXu = new JMenuItem("Sửa xuất xứ");
+		mntmSuaXuatXu = new JMenuItem("Sửa xuất xứ");
 		mntmSuaXuatXu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuXuatXu.add(mntmSuaXuatXu);
 
-		JMenuItem mntmXoaXuatXu = new JMenuItem("Xóa xuất xứ");
+		mntmXoaXuatXu = new JMenuItem("Xóa xuất xứ");
 		mntmXoaXuatXu.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		popupMenuXuatXu.add(mntmXoaXuatXu);
 
@@ -479,7 +495,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		txtSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoKhung.setColumns(12);
 		horizontalBox_4.add(txtSoKhung);
-		
+
 		Component rigidArea_9_8_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_9_8_1_1.setPreferredSize(new Dimension(50, 20));
 		rigidArea_9_8_1_1.setMaximumSize(new Dimension(40, 20));
@@ -501,7 +517,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		Component rigidArea_13_2 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_13_2.setPreferredSize(new Dimension(40, 20));
 		horizontalBox_4.add(rigidArea_13_2);
-		
+
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
 		horizontalBox_4.add(horizontalGlue_1);
 
@@ -642,6 +658,18 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 		btnQuayLai.addActionListener(this);
 		btnXoaRong.addActionListener(this);
 		btnChonFile.addActionListener(this);
+		mntmSuaDongXe.addActionListener(this);
+		mntmSuaHangXe.addActionListener(this);
+		mntmSuaLoaiXe.addActionListener(this);
+		mntmSuaXuatXu.addActionListener(this);
+		mntmThemDongXe.addActionListener(this);
+		mntmThemHangXe.addActionListener(this);
+		mntmThemLoaiXe.addActionListener(this);
+		mntmThemXuatXu.addActionListener(this);
+		mntmXoaDongXe.addActionListener(this);
+		mntmXoaHangXe.addActionListener(this);
+		mntmXoaLoaiXe.addActionListener(this);
+		mntmXoaXuatXu.addActionListener(this);
 	}
 
 	@Override
@@ -669,18 +697,18 @@ public class GD_ThemXeMay extends JPanel implements ActionListener {
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 					txtAnh.setText(f.getPath());
 				}
-				
+
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-				
+
 //				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+		}else if (o.equals(mntmThemDongXe)) {
+			new GD_ChiTietXeMay().setVisible(true);
 		}
-
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {

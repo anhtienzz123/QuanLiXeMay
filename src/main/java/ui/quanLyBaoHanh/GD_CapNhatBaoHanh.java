@@ -9,10 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.EventObject;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +25,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -159,23 +162,23 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener {
 
 		Box horizontalBox_2 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_2);
-		
+
 		Component rigidArea_9_5_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_2.add(rigidArea_9_5_1_1);
-		
+
 		JLabel lblNewLabel_1_2 = new JLabel("Tên NV kỹ thuật:");
 		lblNewLabel_1_2.setPreferredSize(new Dimension(170, 40));
 		lblNewLabel_1_2.setMaximumSize(new Dimension(100, 40));
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
 		horizontalBox_2.add(lblNewLabel_1_2);
-		
+
 		Component rigidArea_10_2_2 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_10_2_2.setPreferredSize(new Dimension(10, 20));
 		horizontalBox_2.add(rigidArea_10_2_2);
-		
+
 		JComboBox cboNVKT = new JComboBox();
 		cboNVKT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboNVKT.setModel(new DefaultComboBoxModel(new String[] {"Nguyễn Trần Nhật Hào"}));
+		cboNVKT.setModel(new DefaultComboBoxModel(new String[] { "Nguyễn Trần Nhật Hào" }));
 		cboNVKT.setMaximumSize(new Dimension(32767, 40));
 		horizontalBox_2.add(cboNVKT);
 
@@ -230,44 +233,44 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener {
 
 		Component rigidArea_11_2 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3.add(rigidArea_11_2);
-		
+
 		JLabel lblMHpng_1 = new JLabel("Số điện thoại:");
 		lblMHpng_1.setPreferredSize(new Dimension(170, 40));
 		lblMHpng_1.setMaximumSize(new Dimension(100, 40));
 		lblMHpng_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		horizontalBox_3.add(lblMHpng_1);
-		
+
 		Component rigidArea_10_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_10_1_1.setPreferredSize(new Dimension(10, 20));
 		horizontalBox_3.add(rigidArea_10_1_1);
-		
+
 		JLabel lblSDT = new JLabel("0123456789");
 		lblSDT.setPreferredSize(new Dimension(120, 40));
 		lblSDT.setMaximumSize(new Dimension(100, 40));
 		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_3.add(lblSDT);
-		
+
 		Component rigidArea_9_8_2_1_3 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_9_8_2_1_3.setPreferredSize(new Dimension(30, 20));
 		rigidArea_9_8_2_1_3.setMaximumSize(new Dimension(40, 20));
 		horizontalBox_3.add(rigidArea_9_8_2_1_3);
-		
+
 		JLabel lblNewLabel_1_1_1 = new JLabel("Ngày mua xe:");
 		lblNewLabel_1_1_1.setPreferredSize(new Dimension(150, 40));
 		lblNewLabel_1_1_1.setMaximumSize(new Dimension(100, 40));
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		horizontalBox_3.add(lblNewLabel_1_1_1);
-		
+
 		Component rigidArea_10_2_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_10_2_1_1.setPreferredSize(new Dimension(10, 20));
 		horizontalBox_3.add(rigidArea_10_2_1_1);
-		
+
 		JLabel lblNgayMuaXe = new JLabel("19/10/2020");
 		lblNgayMuaXe.setPreferredSize(new Dimension(120, 40));
 		lblNgayMuaXe.setMaximumSize(new Dimension(100, 40));
 		lblNgayMuaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_3.add(lblNgayMuaXe);
-		
+
 		Component rigidArea_13 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3.add(rigidArea_13);
 
@@ -387,15 +390,25 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener {
 		horizontalBox_6.add(scrollPane);
 
 		String[] colHeaderChiTietBH = { "STT", "Danh mục bảo hành", "Vệ sinh", "Thay thế" };
-		modelChiTietBH = new DefaultTableModel(colHeaderChiTietBH, 0);
+		modelChiTietBH = new DefaultTableModel(new Object[][] {}, colHeaderChiTietBH) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] { Object.class, Object.class, Boolean.class, Boolean.class };
+
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		};
 		tblBaoHanh = new JTable(modelChiTietBH);
 //		{
-//			private static final long serialVersionUID = 1L;
+//				private static final long serialVersionUID = 1L;
 //
-//			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-//				return false;
-//			}
-//		};
+//				public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+//					return false;
+//				}
+//			};
 		tblBaoHanh.setPreferredSize(new Dimension(1260, 220));
 		tblBaoHanh.setIntercellSpacing(new Dimension(5, 5));
 		tblBaoHanh.setRowMargin(2);
@@ -404,21 +417,11 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener {
 		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(36);
 		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(150);
 		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(300);
-		
-		
-		modelChiTietBH.addRow(new Object[] { "1", "Hệ thống phanh", new JRadioButton(), new JRadioButton()});
-		scrollPane.setViewportView(tblBaoHanh);
-		
-		
-//		 SourceTableModel stm = new SourceTableModel(); 
-//		    JTable sourceTable = new JTable(stm); 
-//
-//		    sourceTable.getColumnModel().getColumn(0).setCellRenderer(new RadioButtonRenderer()); 
-//		    sourceTable.getColumnModel().getColumn(0).setCellEditor(new RadioButtonEditor(new JCheckBox())); 
-//
-//		sourceTable.getColumnModel().getColumn(1).setCellRenderer(new RadioButtonRenderer()); 
-//		sourceTable.getColumnModel().getColumn(1).setCellEditor(new RadioButtonEditor(new JCheckBox())); 
 
+		modelChiTietBH.addRow(new Object[] { "1", "Hệ thống phanh", true, false });
+//		tblBaoHanh.getColumnModel().getColumn(2).setCellEditor(new DefaultCellEditor(cboNVKT));
+//		tblBaoHanh.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JTextField()));
+		scrollPane.setViewportView(tblBaoHanh);
 		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_6.add(rigidArea_5);
 
