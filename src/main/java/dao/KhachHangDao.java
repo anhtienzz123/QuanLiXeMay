@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.Constant;
+import constant.KhachHangConstant;
 import converter.KhachHangConverter;
 import db.DatabaseConnect;
 import entity.KhachHang;
@@ -34,7 +34,7 @@ public class KhachHangDao {
 		List<KhachHang> khachHangs = new ArrayList<>();
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(Constant.GET_KHACH_HANGS);
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANGS);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -57,7 +57,7 @@ public class KhachHangDao {
 		KhachHang khachHang = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(Constant.GET_KHACH_HANG_THEO_MA);
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_MA);
 			preparedStatement.setString(1, maKhachHang);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -77,7 +77,7 @@ public class KhachHangDao {
 		int n = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(Constant.THEM_KHACH_HANG);
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.THEM_KHACH_HANG);
 			KhachHangConverter.themKhachHang(preparedStatement, khachHang);
 			n = preparedStatement.executeUpdate();
 
@@ -93,7 +93,7 @@ public class KhachHangDao {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(Constant.CAP_NHAP_KHACH_HANG);			
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.CAP_NHAP_KHACH_HANG);
 			KhachHangConverter.capNhatKhachHang(preparedStatement, khachHang);
 			n = preparedStatement.executeUpdate();
 
@@ -109,7 +109,7 @@ public class KhachHangDao {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(Constant.XOA_KHACH_HANG);
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.XOA_KHACH_HANG);
 			preparedStatement.setString(1, maKhachHang);
 			n = preparedStatement.executeUpdate();
 

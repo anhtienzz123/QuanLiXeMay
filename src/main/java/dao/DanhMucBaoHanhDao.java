@@ -7,13 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.Constant;
 import constant.DanhMucBaoHanhConstant;
 import converter.DanhMucBaoHanhConvert;
-import converter.KhachHangConverter;
 import db.DatabaseConnect;
 import entity.DanhMucBaoHanh;
-import entity.KhachHang;
 
 public class DanhMucBaoHanhDao {
 	private static DanhMucBaoHanhDao instance;
