@@ -24,9 +24,6 @@ import com.toedter.calendar.JDateChooser;
 
 public class GD_CapNhatNhanVien extends JPanel implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel pnlXeMay;
 	private JLabel lblNhanVien;

@@ -11,6 +11,7 @@ import java.util.EventObject;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,13 +23,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.DefaultComboBoxModel;
 
 public class GD_NhanVien extends JPanel implements ActionListener{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTable tblNVHanhChinh;

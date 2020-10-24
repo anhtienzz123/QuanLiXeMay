@@ -12,20 +12,20 @@ import converter.HoaDonConverter;
 import db.DatabaseConnect;
 import entity.HoaDon;
 
-public class OrderDao {
+public class HoaDonDao {
 
-	private static OrderDao instance;
+	private static HoaDonDao instance;
 	private Connection connection;
 
 	// pattern singleton: đảm bảo trong vòng đời 1 ứng dụng chỉ cho phép duy nhất 1
 	// đối tượng này đc tạo ra --> đảm bảo tiết kiệm bộ nhớ, tính hiệu năng
-	private OrderDao() {
+	private HoaDonDao() {
 		connection = DatabaseConnect.getInstance();
 	}
 
-	public static OrderDao getInstance() {
+	public static HoaDonDao getInstance() {
 		if (instance == null)
-			instance = new OrderDao();
+			instance = new HoaDonDao();
 		return instance;
 	}
 
@@ -55,7 +55,7 @@ public class OrderDao {
 
 	}
 
-	public HoaDon getHoaDonTheoMaHoaDon() {
+	public HoaDon getHoaDonTheoMaHoaDon(String maHoaDon) {
 
 		HoaDon hoaDon = null;
 
@@ -63,13 +63,12 @@ public class OrderDao {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(HoaDonConstant.GET_HOA_DON_THEO_MA_HOA_DON);
 
+			preparedStatement.setString(1, maHoaDon);
+
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next()) {
-
+			if (resultSet.next())
 				hoaDon = HoaDonConverter.getHoaDon(resultSet);
-
-			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

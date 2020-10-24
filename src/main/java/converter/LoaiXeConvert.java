@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entity.LoaiXe;
-import entity.XuatXu;
 
 public class LoaiXeConvert {
 	

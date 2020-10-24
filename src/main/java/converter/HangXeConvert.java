@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entity.HangXe;
-import entity.XuatXu;
 
 public class HangXeConvert {
 	private HangXeConvert() {

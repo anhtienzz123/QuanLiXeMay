@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import converter.DocSo;
+import other.DocSo;
 import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
 import ui.quanLyXeMay.GD_ChiTietXeMay;

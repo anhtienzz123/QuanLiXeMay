@@ -75,10 +75,28 @@ public class ChiTietHoaDonDao {
 					.prepareStatement(ChiTietHoaDonConstant.THEM_CHI_TIET_HOA_DON);
 			ChiTietHoaDonConverter.themChiTietHoaDon(preparedStatement, chiTietHoaDon);
 
+			connection.setAutoCommit(false);
+			
 			n = preparedStatement.executeUpdate();
+			
+			//HopDong hopDong = new HopDong(maHopDong, hoaDon, xeMay, phieuBaoHanhs);
+			
+			HopDongDao hopDongDao = HopDongDao.getInstance();
+			
+			
+			connection.commit();
+			
+			
 
 		} catch (SQLException e) {
 
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			e.printStackTrace();
 		}
 		return n > 0;

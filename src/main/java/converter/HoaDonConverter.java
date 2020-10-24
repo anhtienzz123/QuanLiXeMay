@@ -8,6 +8,7 @@ import java.util.List;
 
 import dao.ChiTietHoaDonDao;
 import dao.KhachHangDao;
+import dao.NhanVienHanhChinhDao;
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -29,10 +30,13 @@ public class HoaDonConverter {
 		KhachHangDao khachHangDao = KhachHangDao.getInstance();
 		KhachHang khachHang = khachHangDao.getKhachHangTheoMa(maKhachHang);
 
+		NhanVienHanhChinhDao nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
+		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(maNVHanhChinh);
+
 		ChiTietHoaDonDao chiTietHoaDonDao = ChiTietHoaDonDao.getInstance();
 		List<ChiTietHoaDon> chiTietHoaDons = chiTietHoaDonDao.getChiTietHoaDonsTheoMaHoaDon(maHoaDon);
 
-		HoaDon hoaDon = new HoaDon(maHoaDon, khachHang, new NhanVienHanhChinh(), chiTietHoaDons, ngayLap);
+		HoaDon hoaDon = new HoaDon(maHoaDon, khachHang, nhanVienHanhChinh, chiTietHoaDons, ngayLap);
 		return hoaDon;
 
 	}

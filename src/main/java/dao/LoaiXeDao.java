@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.LoaiXeConstant;
-import constant.XuatXuConstant;
 import converter.LoaiXeConvert;
-import converter.XuatXuConvert;
 import db.DatabaseConnect;
 import entity.LoaiXe;
-import entity.XuatXu;
 
 public class LoaiXeDao {
 	private static LoaiXeDao instance;
