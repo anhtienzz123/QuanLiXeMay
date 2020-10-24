@@ -13,4 +13,10 @@ public class ChiTietHoaDon {
 	private XeMay xeMay;
 	private double giaBan;
 	private int soLuong;
+	
+	public double tinhTongTien() {
+		
+		return giaBan * soLuong;
+		
+	}
 }

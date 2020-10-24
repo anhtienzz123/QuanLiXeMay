@@ -17,4 +17,27 @@ public class HoaDon {
 	private NhanVienHanhChinh nhanVienHanhChinh;
 	private List<ChiTietHoaDon> chiTietHoaDons;
 	private Date ngayLap;
+
+	public HoaDon(String maHoaDon) {
+		super();
+		this.maHoaDon = maHoaDon;
+	}
+	
+	
+	public double tinhTongTienHoaDon() {
+		double tongTien = 0;
+
+		for (ChiTietHoaDon chiTietHoaDon : chiTietHoaDons) {
+
+			tongTien += chiTietHoaDon.tinhTongTien();
+		}
+
+		return tongTien;
+
+	}
+
+
+
+
+	
 }
