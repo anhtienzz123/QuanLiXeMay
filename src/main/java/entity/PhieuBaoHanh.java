@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,5 +16,6 @@ public class PhieuBaoHanh {
 	private HopDong hopDong;
 	private Date ngayBaoHanh;
 	private NhanVienKiThuat nhanVienKiThuat;
+	private List<ChiTietBaoHanh> chiTietBaoHanhs;
 	
 }
