@@ -21,4 +21,13 @@ public class HopDong {
 		this.maHopDong = maHopDong;
 	}
 
+	public HopDong(String maHopDong, HoaDon hoaDon, XeMay xeMay) {
+		super();
+		this.maHopDong = maHopDong;
+		this.hoaDon = hoaDon;
+		this.xeMay = xeMay;
+	}
+	
+	
+
 }

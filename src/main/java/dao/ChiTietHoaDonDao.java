@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ChiTietHoaDonConstant;
+import constant.TenEntity;
 import converter.ChiTietHoaDonConverter;
 import db.DatabaseConnect;
 import entity.ChiTietHoaDon;
+import entity.HopDong;
+import other.RandomMa;
 
 public class ChiTietHoaDonDao {
 
@@ -49,7 +52,7 @@ public class ChiTietHoaDonDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return chiTietHoaDons;
 
 	}
@@ -76,17 +79,16 @@ public class ChiTietHoaDonDao {
 			ChiTietHoaDonConverter.themChiTietHoaDon(preparedStatement, chiTietHoaDon);
 
 			connection.setAutoCommit(false);
-			
+
 			n = preparedStatement.executeUpdate();
-			
-			//HopDong hopDong = new HopDong(maHopDong, hoaDon, xeMay, phieuBaoHanhs);
-			
+
+			String maHopDong = RandomMa.getMaNgauNhien(TenEntity.HOP_DONG);
+			HopDong hopDong = new HopDong(maHopDong, chiTietHoaDon.getHoaDon(), chiTietHoaDon.getXeMay());
+
 			HopDongDao hopDongDao = HopDongDao.getInstance();
-			
-			
+			hopDongDao.themHopDong(hopDong);
+
 			connection.commit();
-			
-			
 
 		} catch (SQLException e) {
 
@@ -96,7 +98,7 @@ public class ChiTietHoaDonDao {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			e.printStackTrace();
 		}
 		return n > 0;
