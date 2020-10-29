@@ -17,7 +17,7 @@ public class HopDong {
 	private List<PhieuBaoHanh> phieuBaoHanhs;
 
 	public HopDong(String maHopDong) {
-		super();
+		
 		this.maHopDong = maHopDong;
 	}
 
