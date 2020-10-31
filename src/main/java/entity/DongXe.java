@@ -11,4 +11,6 @@ public class DongXe {
 
 	private String maDongXe;
 	private String tenDongXe;
+	private HangXe hangXe;
+	
 }
