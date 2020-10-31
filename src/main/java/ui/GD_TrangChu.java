@@ -259,7 +259,7 @@ public class GD_TrangChu extends JPanel implements ActionListener {
 			}
 		};
 		tblXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblXe.setRowHeight(30);
+		tblXe.setRowHeight(50);
 		tblXe.getColumnModel().getColumn(0).setPreferredWidth(69);
 		tblXe.getColumnModel().getColumn(1).setPreferredWidth(102);
 		tblXe.getColumnModel().getColumn(3).setPreferredWidth(90);
@@ -822,7 +822,9 @@ public class GD_TrangChu extends JPanel implements ActionListener {
 
 		Component rigidArea_17_5 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox_1.add(rigidArea_17_5);
-
+		
+		
+	     
 		dangKiSuKien();
 	}
 
