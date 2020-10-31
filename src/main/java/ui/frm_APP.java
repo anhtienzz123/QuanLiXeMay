@@ -356,6 +356,9 @@ public class frm_APP extends JFrame implements ActionListener, MouseListener {
 		listDanhMuc.add(new DanhMuc("ThongKe", pnlThongKe, lblThongKe));
 		listDanhMuc.add(new DanhMuc("HopDong", pnlHopDong, lblHopDong));
 		chuyen.setSuKien(listDanhMuc);
+		
+		
+		
 		lblDangXuat.addMouseListener(this);
 	}
 

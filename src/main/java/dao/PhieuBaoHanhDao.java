@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.KhachHangConstant;
 import constant.PhieuBaoHanhConstant;
+import converter.KhachHangConverter;
 import converter.PhieuBaoHanhConverter;
 import db.DatabaseConnect;
+import entity.KhachHang;
 import entity.PhieuBaoHanh;
 
 public class PhieuBaoHanhDao {
@@ -43,6 +46,28 @@ public class PhieuBaoHanhDao {
 			e.printStackTrace();
 		}
 
+		return phieuBaoHanhs;
+	}
+	
+	
+	public List<PhieuBaoHanh> getPhieuBaoHanhs (int from, int to){
+		
+		List<PhieuBaoHanh> phieuBaoHanhs = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(PhieuBaoHanhConstant.GET_PHIEU_BAO_HANHS_PHAN_TRANG);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				PhieuBaoHanh phieuBaoHanh = PhieuBaoHanhConverter.getPhieuBaoHanh(resultSet);
+				phieuBaoHanhs.add(phieuBaoHanh);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
 		return phieuBaoHanhs;
 	}
 

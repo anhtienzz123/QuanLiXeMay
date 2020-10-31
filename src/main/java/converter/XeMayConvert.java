@@ -5,12 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import dao.DongXeDao;
-import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.XuatXuDao;
 import db.DatabaseConnect;
 import entity.DongXe;
-import entity.HangXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
@@ -23,7 +21,6 @@ public class XeMayConvert {
 
 		DatabaseConnect.connect();
 		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
-		HangXeDao hangXeDao = HangXeDao.getInstance();
 		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
 		DongXeDao dongXeDao = DongXeDao.getInstance();
 
@@ -42,10 +39,10 @@ public class XeMayConvert {
 		DongXe dongXe = dongXeDao.getDongXeTheoMa(resultSet.getString("maDongXe"));
 		XuatXu xuatXu = xuatXuDao.getXuatXuTheoMa(resultSet.getString("maXuatXu"));
 		String moTa = resultSet.getString("moTa");
-		HangXe hangXe = hangXeDao.getHangXeTheoMa(resultSet.getString("maHangXe"));
+	
 
 		XeMay xeMay = new XeMay(maXeMay, tenXeMay, urlAnh, soLuong, giaNhap, heSoBan, thoiGianBaoHanh, soKhung,
-				soPhanKhoi, soSuon, mauXe, loaiXe, dongXe, xuatXu, hangXe, moTa);
+				soPhanKhoi, soSuon, mauXe, loaiXe, dongXe, xuatXu, moTa);
 		return xeMay;
 
 	}
@@ -66,7 +63,7 @@ public class XeMayConvert {
 		preparedStatement.setString(13, xeMay.getDongXe().getMaDongXe());
 		preparedStatement.setString(14, xeMay.getXuatXu().getMaXuatXu());
 		preparedStatement.setString(15, xeMay.getMoTa());
-		preparedStatement.setString(16, xeMay.getHangXe().getMaHangXe());
+	
 
 	}
 
@@ -85,7 +82,6 @@ public class XeMayConvert {
 		preparedStatement.setString(12, xeMay.getDongXe().getMaDongXe());
 		preparedStatement.setString(13, xeMay.getXuatXu().getMaXuatXu());
 		preparedStatement.setString(14, xeMay.getMoTa());
-		preparedStatement.setString(15, xeMay.getHangXe().getMaHangXe());
-		preparedStatement.setString(16, xeMay.getMaXeMay());
+		preparedStatement.setString(15, xeMay.getMaXeMay());
 	}
 }

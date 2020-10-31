@@ -23,7 +23,6 @@ public class XeMay {
 	private LoaiXe loaiXe;
 	private DongXe dongXe;
 	private XuatXu xuatXu;
-	private HangXe hangXe;
 	private String moTa;
 	
 	public XeMay(String maXeMay, String tenXeMay) {
@@ -36,8 +35,6 @@ public class XeMay {
 	public double tinhGiaBan() {
 		return giaNhap * heSoBan;
 	}
-
-
 
 	
 }

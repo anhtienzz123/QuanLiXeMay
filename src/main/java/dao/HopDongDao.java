@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.HopDongConstant;
+import constant.NhanVienKiThuatConstant;
 import converter.HopDongConverter;
+import converter.NhanVienHanhChinhConvert;
 import db.DatabaseConnect;
 import entity.HopDong;
+import entity.NhanVienHanhChinh;
 
 public class HopDongDao {
 
@@ -48,6 +51,27 @@ public class HopDongDao {
 
 		return hopDongs;
 
+	}
+	
+	public List<HopDong> getHopDongs (int from, int to){
+		
+		List<HopDong> hopDongs = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(HopDongConstant.GET_HOP_DONGS_PHAN_TRANG);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				HopDong hopDong = HopDongConverter.getHopDong(resultSet);
+				hopDongs.add(hopDong);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return hopDongs;
 	}
 
 	public HopDong getHopDongTheoMa(String maHopDong) {
