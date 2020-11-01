@@ -4,378 +4,314 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.Box;
-import java.awt.Component;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.EventObject;
+import java.util.List;
+import java.util.Random;
 
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
+import javax.swing.table.JTableHeader;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import ui.ChuyenManHinh;
+import ui.DanhMuc;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 
-public class GD_XeMay extends JPanel implements ActionListener{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 	private JTextField txtTimKiem;
-	private JTable tblXe;
 	private JTextField txtTrang;
-	private JPanel pnlXeMay;
-	private JLabel lblXeMay;
-	private JLabel lblTimKiem;
-	private JComboBox<String> cboTimKiem;
 	private JButton btnDau;
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
-	private JButton btnXemChiTiet;
-	private JButton btnXoa;
-	private JButton btnCapNhat;
 	private JButton btnThem;
+	private JButton btnSua;
+	private JButton btnXoa;
 	private DefaultTableModel modelXe;
+	private JTable tblXeMay;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_XeMay() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1300, 900));
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		
-		Box verticalBox = Box.createVerticalBox();
-		add(verticalBox);
-		
-		Box horizontalBox = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox);
-		
-		pnlXeMay = new JPanel();
-		pnlXeMay.setBackground(new Color(0, 128, 0));
-		pnlXeMay.setPreferredSize(new Dimension(1300, 50));
-		pnlXeMay.setMaximumSize(new Dimension(32767, 50));
-		horizontalBox.add(pnlXeMay);
-		pnlXeMay.setLayout(new BoxLayout(pnlXeMay, BoxLayout.X_AXIS));
-		
-		lblXeMay = new JLabel("Quản lý xe máy");
-		lblXeMay.setForeground(Color.WHITE);
-		lblXeMay.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblXeMay.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXeMay.setMaximumSize(new Dimension(37217, 50));
-		lblXeMay.setPreferredSize(new Dimension(1300, 50));
-		pnlXeMay.add(lblXeMay);
-		
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea.setPreferredSize(new Dimension(20, 40));
-		verticalBox.add(rigidArea);
-		
-		Box horizontalBox_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_1);
-		
-		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_4);
-		
-		lblTimKiem = new JLabel("Tìm kiếm: ");
-		lblTimKiem.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblTimKiem);
-		
-		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_5);
-		
-		cboTimKiem = new JComboBox<String>();
+		setPreferredSize(new Dimension(1450, 950));
+		setLayout(null);
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(58, 181, 74));
+		panel.setBounds(0, 0, 1450, 50);
+		add(panel);
+		panel.setLayout(null);
+
+		JLabel lblNewLabel = new JLabel("Quản lý xe máy");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNewLabel.setBounds(0, 0, 1450, 50);
+		panel.add(lblNewLabel);
+
+		JScrollPane scrollPaneXeMay = new JScrollPane();
+		scrollPaneXeMay.setBounds(33, 272, 1385, 582);
+		add(scrollPaneXeMay);
+
+		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setBackground(Color.GRAY);
+		btnXemChiTiet.setForeground(Color.WHITE);
+		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXemChiTiet.setBounds(641, 883, 218, 40);
+		add(btnXemChiTiet);
+
+		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
+		lblTngThuTrong_1.setBounds(33, 83, 103, 30);
+		add(lblTngThuTrong_1);
+		lblTngThuTrong_1.setForeground(Color.BLACK);
+		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã xe", "Tên xe"}));
-		cboTimKiem.setPreferredSize(new Dimension(100, 40));
-		cboTimKiem.setMaximumSize(new Dimension(200, 40));
-		horizontalBox_1.add(cboTimKiem);
-		
-		Component rigidArea_5_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_5_1);
-		
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Tên xe", "Mã xe" }));
+		cboTimKiem.setBounds(151, 83, 120, 30);
+		add(cboTimKiem);
+
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTimKiem.setPreferredSize(new Dimension(400, 40));
-		txtTimKiem.setMaximumSize(new Dimension(400, 40));
-		horizontalBox_1.add(txtTimKiem);
-		txtTimKiem.setColumns(15);
-		
-		Component rigidArea_4_1_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_4_1_1_1.setPreferredSize(new Dimension(80, 20));
-		horizontalBox_1.add(rigidArea_4_1_1_1);
-		
-		JLabel lblHng = new JLabel("Hãng:");
-		lblHng.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblHng);
-		
-		Component rigidArea_5_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_5_2);
-		
-		JComboBox<String> cboHang = new JComboBox<String>();
-		cboHang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Honda", "Yamaha", "Suzuki", "SYM", "Ducati"}));
-		cboHang.setPreferredSize(new Dimension(200, 40));
-		cboHang.setMaximumSize(new Dimension(200, 40));
-		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(cboHang);
-		
-		Component horizontalGlue = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue);
-		
-		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_6);
-		
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3.setPreferredSize(new Dimension(20, 40));
-		verticalBox.add(rigidArea_3);
-		
-		Box horizontalBox_1_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_1_1);
-		
-		Component rigidArea_4_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1_1.add(rigidArea_4_2);
-		
-		JLabel lblLoiXe = new JLabel("Loại xe:");
-		lblLoiXe.setPreferredSize(new Dimension(105, 16));
-		lblLoiXe.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1_1.add(lblLoiXe);
-		
-		Component rigidArea_5_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1_1.add(rigidArea_5_3);
-		
-		JComboBox<String> cboLoaiXe = new JComboBox<String>();
-		cboLoaiXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Xe số", "Xe tay ga", "Xe côn tay", "Xe mô tô"}));
-		cboLoaiXe.setPreferredSize(new Dimension(200, 40));
-		cboLoaiXe.setMaximumSize(new Dimension(200, 40));
+		txtTimKiem.setBounds(302, 83, 311, 30);
+		add(txtTimKiem);
+		txtTimKiem.setColumns(10);
+
+		JLabel lblTngThuTrong_1_1 = new JLabel("Hãng:");
+		lblTngThuTrong_1_1.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1.setBounds(676, 83, 83, 30);
+		add(lblTngThuTrong_1_1);
+
+		JComboBox cboHangXe = new JComboBox();
+		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboHangXe.setBackground(Color.WHITE);
+		cboHangXe.setBounds(771, 83, 245, 30);
+		add(cboHangXe);
+
+		JLabel lblTngThuTrong_1_1_1 = new JLabel("Loại xe:");
+		lblTngThuTrong_1_1_1.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_1.setBounds(1071, 83, 83, 30);
+		add(lblTngThuTrong_1_1_1);
+
+		JComboBox cboLoaiXe = new JComboBox();
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1_1.add(cboLoaiXe);
-		
-		Component horizontalGlue_5 = Box.createHorizontalGlue();
-		horizontalBox_1_1.add(horizontalGlue_5);
-		
-		JLabel lblDngXe = new JLabel("Dòng xe:");
-		lblDngXe.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1_1.add(lblDngXe);
-		
-		Component rigidArea_5_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1_1.add(rigidArea_5_2_1);
-		
-		JComboBox<String> cboDongXe = new JComboBox<String>();
-		cboDongXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Cub", "SH", "Vision", "Air Blade"}));
-		cboDongXe.setPreferredSize(new Dimension(200, 40));
-		cboDongXe.setMaximumSize(new Dimension(200, 40));
+		cboLoaiXe.setBackground(Color.WHITE);
+		cboLoaiXe.setBounds(1173, 83, 245, 30);
+		add(cboLoaiXe);
+
+		JLabel lblTngThuTrong_1_1_2 = new JLabel("Dòng xe:");
+		lblTngThuTrong_1_1_2.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_2.setBounds(33, 142, 83, 30);
+		add(lblTngThuTrong_1_1_2);
+
+		JComboBox cboDongXe = new JComboBox();
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1_1.add(cboDongXe);
-		
-		Component horizontalGlue_4 = Box.createHorizontalGlue();
-		horizontalBox_1_1.add(horizontalGlue_4);
-		
-		JLabel lblXuatXu = new JLabel("Xuất xứ:");
-		lblXuatXu.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1_1.add(lblXuatXu);
-		
-		Component rigidArea_5_2_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1_1.add(rigidArea_5_2_1_1);
-		
-		JComboBox<String> cboXuatXu = new JComboBox<String>();
-		cboXuatXu.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Việt Nam", "Nhật Bản", "Trung Quốc", "Thái Lan", "Đức"}));
-		cboXuatXu.setPreferredSize(new Dimension(200, 40));
-		cboXuatXu.setMaximumSize(new Dimension(200, 40));
+		cboDongXe.setBackground(Color.WHITE);
+		cboDongXe.setBounds(151, 142, 265, 30);
+		add(cboDongXe);
+
+		JLabel lblTngThuTrong_1_1_2_1 = new JLabel("Xuất xứ:");
+		lblTngThuTrong_1_1_2_1.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_2_1.setBounds(665, 142, 83, 30);
+		add(lblTngThuTrong_1_1_2_1);
+
+		JComboBox cboXuatXu = new JComboBox();
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1_1.add(cboXuatXu);
+		cboXuatXu.setBackground(Color.WHITE);
+		cboXuatXu.setBounds(772, 142, 244, 30);
+		add(cboXuatXu);
+
+		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách xe máy");
+		lblTngThuTrong_1_1_2_2.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_2_2.setBounds(33, 205, 175, 30);
+		add(lblTngThuTrong_1_1_2_2);
+
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(58, 181, 74));
+		separator.setBounds(33, 248, 1385, 11);
+		add(separator);
 		
-		Component horizontalGlue_2 = Box.createHorizontalGlue();
-		horizontalBox_1_1.add(horizontalGlue_2);
+		 btnDau = new JButton("");
+		btnDau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setForeground(Color.WHITE);
+		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnDau.setBackground(Color.GRAY);
+		btnDau.setBounds(33, 883, 50, 40);
+		add(btnDau);
 		
-		Component rigidArea_6_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1_1.add(rigidArea_6_1);
+		  btnTruoc = new JButton("");
+		btnTruoc.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setForeground(Color.WHITE);
+		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnTruoc.setBackground(Color.GRAY);
+		btnTruoc.setBounds(106, 883, 50, 40);
+		add(btnTruoc);
 		
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_1.setPreferredSize(new Dimension(20, 40));
-		verticalBox.add(rigidArea_1);
+		  btnSau = new JButton("");
+		btnSau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setForeground(Color.WHITE);
+		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnSau.setBackground(Color.GRAY);
+		btnSau.setBounds(268, 883, 50, 40);
+		add(btnSau);
 		
-		Box horizontalBox_2 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2);
+		  btnCuoi = new JButton("");
+		btnCuoi.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setForeground(Color.WHITE);
+		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCuoi.setBackground(Color.GRAY);
+		btnCuoi.setBounds(346, 883, 50, 40);
+		add(btnCuoi);
 		
-		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_8);
+		txtTrang = new JTextField();
+		txtTrang.setHorizontalAlignment(SwingConstants.CENTER);
+		txtTrang.setText("1");
+		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTrang.setColumns(10);
+		txtTrang.setBounds(182, 884, 60, 40);
+		add(txtTrang);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		horizontalBox_2.add(scrollPane);
+		 btnThem = new JButton("Thêm");
+		btnThem.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnThem.setForeground(Color.WHITE);
+		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnThem.setBackground(new Color(58, 181, 74));
+		btnThem.setBounds(1258, 883, 160, 40);
+		add(btnThem);
 		
-		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "loại xe", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành"};
+		 btnSua = new JButton("Sửa");
+		btnSua.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_construction_white_18dp.png")));
+		btnSua.setForeground(Color.WHITE);
+		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnSua.setBackground(new Color(0, 102, 255));
+		btnSua.setBounds(1071, 883, 160, 40);
+		add(btnSua);
+		
+		 btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_delete_sweep_white_18dp.png")));
+		btnXoa.setForeground(Color.WHITE);
+		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXoa.setBackground(Color.RED);
+		btnXoa.setBounds(886, 883, 160, 40);
+		add(btnXoa);
+		
+		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành" };
 		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
-		tblXe = new JTable(modelXe) {
+		tblXeMay = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
 				return false;
 			}
 		};
-		tblXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblXe.setRowHeight(30);
-		scrollPane.setViewportView(tblXe);
-		
-		Component rigidArea_7 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_7);
-		
-		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_2.setPreferredSize(new Dimension(20, 40));
-		verticalBox.add(rigidArea_2);
-		
-		Box horizontalBox_4 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_4);
-		
-		Component rigidArea_12 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12);
-		
-		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
-		btnDau.setBackground(Color.LIGHT_GRAY);
-		btnDau.setMaximumSize(new Dimension(50, 50));
-		btnDau.setPreferredSize(new Dimension(50, 50));
-		horizontalBox_4.add(btnDau);
-		
-		Component rigidArea_12_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12_1);
-		
-		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
-		btnTruoc.setBackground(Color.LIGHT_GRAY);
-		btnTruoc.setMaximumSize(new Dimension(50, 50));
-		btnTruoc.setPreferredSize(new Dimension(50, 50));
-		horizontalBox_4.add(btnTruoc);
-		
-		Component rigidArea_12_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12_2);
-		
-		txtTrang = new JTextField();
-		txtTrang.setHorizontalAlignment(SwingConstants.CENTER);
-		txtTrang.setText("1");
-		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTrang.setPreferredSize(new Dimension(50, 40));
-		txtTrang.setMaximumSize(new Dimension(50, 50));
-		horizontalBox_4.add(txtTrang);
-		txtTrang.setColumns(3);
-		
-		Component rigidArea_12_3_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12_3_2);
-		
-		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_next_white_24dp.png")));
-		btnSau.setBackground(Color.LIGHT_GRAY);
-		btnSau.setMaximumSize(new Dimension(50, 50));
-		btnSau.setPreferredSize(new Dimension(50, 50));
-		horizontalBox_4.add(btnSau);
-		
-		Component rigidArea_12_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12_3);
-		
-		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
-		btnCuoi.setBackground(Color.LIGHT_GRAY);
-		btnCuoi.setMaximumSize(new Dimension(50, 50));
-		btnCuoi.setPreferredSize(new Dimension(50, 50));
-		horizontalBox_4.add(btnCuoi);
-		
-		Component rigidArea_12_3_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_12_3_1);
-		
-		Component horizontalGlue_1 = Box.createHorizontalGlue();
-		horizontalBox_4.add(horizontalGlue_1);
-		
-		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_error_outline_white_18dp.png")));
-		btnXemChiTiet.setBackground(Color.LIGHT_GRAY);
-		btnXemChiTiet.setForeground(Color.WHITE);
-		btnXemChiTiet.setPreferredSize(new Dimension(200, 50));
-		btnXemChiTiet.setMaximumSize(new Dimension(300, 50));
-		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_4.add(btnXemChiTiet);
-		
-		Component rigidArea_9_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_9_1_1);
-		
-		btnXoa = new JButton("Xóa");
-		btnXoa.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_delete_sweep_white_18dp.png")));
-		btnXoa.setBackground(new Color(255, 0, 0));
-		btnXoa.setForeground(Color.WHITE);
-		btnXoa.setPreferredSize(new Dimension(140, 50));
-		btnXoa.setMaximumSize(new Dimension(300, 50));
-		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_4.add(btnXoa);
-		
-		Component rigidArea_9_3_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_9_3_1);
-		
-		btnCapNhat = new JButton("Cập nhật");
-		btnCapNhat.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_construction_white_18dp.png")));
-		btnCapNhat.setBackground(new Color(30, 144, 255));
-		btnCapNhat.setForeground(Color.WHITE);
-		btnCapNhat.setPreferredSize(new Dimension(170, 50));
-		btnCapNhat.setMaximumSize(new Dimension(300, 50));
-		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_4.add(btnCapNhat);
-		
-		Component rigidArea_9_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_9_2_1);
-		
-		btnThem = new JButton("Thêm");
-		btnThem.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
-		btnThem.setBackground(new Color(0, 128, 0));
-		btnThem.setForeground(Color.WHITE);
-		btnThem.setPreferredSize(new Dimension(140, 50));
-		btnThem.setMaximumSize(new Dimension(300, 50));
-		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_4.add(btnThem);
-		
-		Component rigidArea_10_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_10_1);
-		
-		Component verticalGlue = Box.createVerticalGlue();
-		verticalBox.add(verticalGlue);
-		
+		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblXeMay.setRowHeight(25);
+		scrollPaneXeMay.setViewportView(tblXeMay);
+		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		for(int i = 1; i<23; i++) {
+			modelXe.addRow(new Object[] { i, null, null, null });
+		}
+				
 		dangKiSuKien();
+
 	}
 	
-	public void dangKiSuKien() {
-		btnThem.addActionListener(this);
-		btnCapNhat.addActionListener(this);
+	
+
+	private void dangKiSuKien() {
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
+		btnSua.addActionListener(this);
+		btnThem.addActionListener(this);
 		btnTruoc.addActionListener(this);
-		btnXemChiTiet.addActionListener(this);
 		btnXoa.addActionListener(this);
-	}
-	public void chuyenManHinh(JPanel panel) {
-		this.removeAll();
-		this.setLayout(new BorderLayout());
-		this.add(panel);
-		this.validate();
-		this.repaint();
-	}
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		Object o = e.getSource();
-		if(o.equals(btnThem)) {
-			chuyenManHinh(new GD_ThemXeMay());
-		}else if (o.equals(btnCapNhat)) {
-			chuyenManHinh(new GD_CapNhatXeMay());
-		}else if (o.equals(btnXemChiTiet)) {
-			new GD_ChiTietXeMay().setVisible(true);
-		}
 		
 	}
 
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void setManHinh(JPanel newPanel) {
+		this.removeAll();
+		this.setLayout(new BorderLayout());
+		this.add(newPanel);
+		this.validate();
+		this.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			setManHinh(new GD_ThemXeMay());
+			
+		}else if (o.equals(btnSua)) {
+			setManHinh(new GD_CapNhatXeMay());
+		}
+	}
 }

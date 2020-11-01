@@ -1,352 +1,111 @@
 package ui.quanLyBaoHanh;
 
+import javax.swing.JPanel;
+import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.EventObject;
+import java.util.List;
+import java.util.Random;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+import ui.App;
+import ui.ChuyenManHinh;
+import ui.DanhMuc;
 import ui.quanLyHopDong.GD_HopDong;
 
-public class GD_BaoHanh extends JPanel implements ActionListener {
+import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JButton btnXemChiTiet;
+public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener {
 	private JButton btnCapNhat;
+	private DefaultTableModel modelBaoHanh;
 	private JTable tblBaoHanh;
+	private JButton btnXemChiTiet;
 	private JButton btnQuayLai;
-	private DefaultTableModel modelDotBaoHanh;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_BaoHanh() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1300, 900));
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-		Box verticalBox = Box.createVerticalBox();
-		add(verticalBox);
-
-		Box horizontalBox = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox);
-
-		JPanel pnlThemXe = new JPanel();
-		pnlThemXe.setBackground(new Color(0, 128, 0));
-		pnlThemXe.setPreferredSize(new Dimension(1300, 50));
-		pnlThemXe.setMaximumSize(new Dimension(32767, 50));
-		horizontalBox.add(pnlThemXe);
-		pnlThemXe.setLayout(new BoxLayout(pnlThemXe, BoxLayout.X_AXIS));
-
-		JLabel lblThemXe = new JLabel("Bảo hành");
-		lblThemXe.setMaximumSize(new Dimension(37217, 50));
-		lblThemXe.setPreferredSize(new Dimension(1300, 50));
-		lblThemXe.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblThemXe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThemXe.setForeground(Color.WHITE);
-		lblThemXe.setFont(new Font("Tahoma", Font.BOLD, 25));
-		pnlThemXe.add(lblThemXe);
-
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea.setMaximumSize(new Dimension(40, 40));
-		rigidArea.setPreferredSize(new Dimension(40, 40));
-		verticalBox.add(rigidArea);
-
-		Box horizontalBox_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_1);
-
-		Component rigidArea_9 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_9);
-
-		JLabel lblNewLabel = new JLabel("Mã bảo hành:");
-		lblNewLabel.setPreferredSize(new Dimension(150, 40));
-		lblNewLabel.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblNewLabel);
-
-		Component rigidArea_10 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_1.add(rigidArea_10);
-
-		JLabel lblBh = new JLabel("BH123456");
-		lblBh.setPreferredSize(new Dimension(120, 40));
-		lblBh.setMaximumSize(new Dimension(100, 40));
-		lblBh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(lblBh);
-
-		Component rigidArea_9_8_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_1.add(rigidArea_9_8_2);
-
-		Component horizontalGlue_5_2 = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue_5_2);
-
-		JLabel lblMHpng = new JLabel("Mã hợp đồng:");
-		lblMHpng.setPreferredSize(new Dimension(150, 40));
-		lblMHpng.setMaximumSize(new Dimension(100, 40));
-		lblMHpng.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblMHpng);
-
-		Component rigidArea_10_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_1.add(rigidArea_10_1);
-
-		JLabel lblBh_1 = new JLabel("BH123456");
-		lblBh_1.setPreferredSize(new Dimension(120, 40));
-		lblBh_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(lblBh_1);
-
-		Component horizontalGlue_5_3 = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue_5_3);
-
-		Component rigidArea_9_8_2_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2_2.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2_2.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_1.add(rigidArea_9_8_2_2);
-
-		JLabel lblNewLabel_1_3 = new JLabel("Mã khách hàng:");
-		lblNewLabel_1_3.setPreferredSize(new Dimension(170, 40));
-		lblNewLabel_1_3.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblNewLabel_1_3);
-
-		Component rigidArea_10_2_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_2_3.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_1.add(rigidArea_10_2_3);
-
-		JLabel lblBh_2_3 = new JLabel("BH123456");
-		lblBh_2_3.setPreferredSize(new Dimension(120, 40));
-		lblBh_2_3.setMaximumSize(new Dimension(100, 40));
-		lblBh_2_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(lblBh_2_3);
-
-		Component horizontalGlue_5 = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue_5);
-
-		Component rigidArea_12 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_12);
-
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_1.setMaximumSize(new Dimension(40, 40));
-		rigidArea_1.setPreferredSize(new Dimension(40, 40));
-		verticalBox.add(rigidArea_1);
-
-		Box horizontalBox_2 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2);
-
-		Component rigidArea_9_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_9_5);
-
-		JLabel lblNewLabel_1 = new JLabel("Tên khách hàng:");
-		lblNewLabel_1.setPreferredSize(new Dimension(170, 40));
-		lblNewLabel_1.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2.add(lblNewLabel_1);
-
-		Component rigidArea_10_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_2.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_2.add(rigidArea_10_2);
-
-		JLabel lblBh_2 = new JLabel("Nguyễn Trần Nhật Hào");
-		lblBh_2.setPreferredSize(new Dimension(300, 40));
-		lblBh_2.setMaximumSize(new Dimension(100, 40));
-		lblBh_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2.add(lblBh_2);
-
-		Component rigidArea_9_8_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2_1.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2_1.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_2.add(rigidArea_9_8_2_1);
-
-		JLabel lblMHpng_1 = new JLabel("Số điện thoại:");
-		lblMHpng_1.setPreferredSize(new Dimension(170, 40));
-		lblMHpng_1.setMaximumSize(new Dimension(100, 40));
-		lblMHpng_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2.add(lblMHpng_1);
-
-		Component rigidArea_10_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_1_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_2.add(rigidArea_10_1_1);
-
-		JLabel lblBh_1_1 = new JLabel("0123456789");
-		lblBh_1_1.setPreferredSize(new Dimension(120, 40));
-		lblBh_1_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2.add(lblBh_1_1);
-
-		Component rigidArea_9_8_2_1_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2_1_3.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2_1_3.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_2.add(rigidArea_9_8_2_1_3);
-
-		JLabel lblNewLabel_1_1_1 = new JLabel("Ngày mua xe:");
-		lblNewLabel_1_1_1.setPreferredSize(new Dimension(150, 40));
-		lblNewLabel_1_1_1.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2.add(lblNewLabel_1_1_1);
-
-		Component rigidArea_10_2_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_2_1_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_2.add(rigidArea_10_2_1_1);
-
-		JLabel lblBh_2_1_1 = new JLabel("19/10/2020");
-		lblBh_2_1_1.setPreferredSize(new Dimension(120, 40));
-		lblBh_2_1_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2.add(lblBh_2_1_1);
-
-		Component horizontalGlue_5_1 = Box.createHorizontalGlue();
-		horizontalBox_2.add(horizontalGlue_5_1);
-
-		Component rigidArea_13 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_13);
-
-		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_2.setMaximumSize(new Dimension(40, 40));
-		rigidArea_2.setPreferredSize(new Dimension(40, 40));
-		verticalBox.add(rigidArea_2);
-
-		Box horizontalBox_3 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_3);
-
-		Component rigidArea_11_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_3.add(rigidArea_11_2);
-
-		JLabel lblNewLabel_1_1 = new JLabel("Địa chỉ:");
-		lblNewLabel_1_1.setPreferredSize(new Dimension(80, 40));
-		lblNewLabel_1_1.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_3.add(lblNewLabel_1_1);
-
-		Component rigidArea_10_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_2_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_3.add(rigidArea_10_2_1);
-
-		JLabel lblBh_2_1 = new JLabel(
-				"............................................................................................");
-		lblBh_2_1.setPreferredSize(new Dimension(500, 40));
-		lblBh_2_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_3.add(lblBh_2_1);
-
-		Component rigidArea_9_8_2_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2_1_1.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2_1_1.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_3.add(rigidArea_9_8_2_1_1);
-
-		JLabel lblMHpng_1_1 = new JLabel("Mã xe:");
-		lblMHpng_1_1.setPreferredSize(new Dimension(80, 40));
-		lblMHpng_1_1.setMaximumSize(new Dimension(100, 40));
-		lblMHpng_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_3.add(lblMHpng_1_1);
-
-		Component rigidArea_10_1_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_1_1_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_3.add(rigidArea_10_1_1_1);
-
-		JLabel lblBh_1_1_1 = new JLabel("XM123456");
-		lblBh_1_1_1.setPreferredSize(new Dimension(120, 40));
-		lblBh_1_1_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_3.add(lblBh_1_1_1);
-
-		Component rigidArea_9_8_2_1_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_9_8_2_1_1_1.setPreferredSize(new Dimension(30, 20));
-		rigidArea_9_8_2_1_1_1.setMaximumSize(new Dimension(40, 20));
-		horizontalBox_3.add(rigidArea_9_8_2_1_1_1);
-
-		JLabel lblNewLabel_1_2_1 = new JLabel("Tên xe:");
-		lblNewLabel_1_2_1.setPreferredSize(new Dimension(80, 40));
-		lblNewLabel_1_2_1.setMaximumSize(new Dimension(100, 40));
-		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_3.add(lblNewLabel_1_2_1);
-
-		Component rigidArea_10_2_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_2_2_1.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_3.add(rigidArea_10_2_2_1);
-
-		JLabel lblBh_2_2_1 = new JLabel("Honda Air Blade 2020");
-		lblBh_2_2_1.setPreferredSize(new Dimension(250, 40));
-		lblBh_2_2_1.setMaximumSize(new Dimension(100, 40));
-		lblBh_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_3.add(lblBh_2_2_1);
-
-		Component horizontalGlue_5_1_1 = Box.createHorizontalGlue();
-		horizontalBox_3.add(horizontalGlue_5_1_1);
-
-		Component rigidArea_13_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_3.add(rigidArea_13_1);
-
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3.setMaximumSize(new Dimension(40, 40));
-		rigidArea_3.setPreferredSize(new Dimension(40, 40));
-		verticalBox.add(rigidArea_3);
-
-		Box horizontalBox_4 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_4);
-
-		Component rigidArea_9_10 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_9_10);
-
-		JLabel lblMHpng_1_2 = new JLabel("Thời gian bảo hành:");
-		lblMHpng_1_2.setPreferredSize(new Dimension(220, 40));
-		lblMHpng_1_2.setMaximumSize(new Dimension(100, 40));
-		lblMHpng_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_4.add(lblMHpng_1_2);
-
-		Component rigidArea_10_1_1_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_10_1_1_2.setPreferredSize(new Dimension(10, 20));
-		horizontalBox_4.add(rigidArea_10_1_1_2);
-
-		JLabel lblBh_1_1_2 = new JLabel("36 tháng");
-		lblBh_1_1_2.setPreferredSize(new Dimension(120, 40));
-		lblBh_1_1_2.setMaximumSize(new Dimension(100, 40));
-		lblBh_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_4.add(lblBh_1_1_2);
-
-		Component horizontalGlue_5_1_2 = Box.createHorizontalGlue();
-		horizontalBox_4.add(horizontalGlue_5_1_2);
-
-		Component rigidArea_9_12 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_4.add(rigidArea_9_12);
-
-		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_4.setMaximumSize(new Dimension(40, 40));
-		rigidArea_4.setPreferredSize(new Dimension(40, 20));
-		verticalBox.add(rigidArea_4);
-
-		Box horizontalBox_6 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_6);
-
-		Component rigidArea_9_4_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_6.add(rigidArea_9_4_1);
-
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(1260, 5));
-		horizontalBox_6.add(scrollPane);
-
-		String[] colHeaderChiTietBH = { "STT", "Đợt bảo hành", "Thời gian", "Ghi chú" };
-		modelDotBaoHanh = new DefaultTableModel(colHeaderChiTietBH, 0);
-		tblBaoHanh = new JTable(modelDotBaoHanh) {
+		setPreferredSize(new Dimension(1450, 950));
+		setLayout(null);
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(58, 181, 74));
+		panel.setBounds(0, 0, 1450, 50);
+		add(panel);
+		panel.setLayout(null);
+
+		JLabel lblNewLabel = new JLabel("Bảo hành");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNewLabel.setBounds(0, 0, 1450, 50);
+		panel.add(lblNewLabel);
+
+		JScrollPane scrollpaneBaoHanh = new JScrollPane();
+		scrollpaneBaoHanh.setBounds(29, 540, 1385, 182);
+		add(scrollpaneBaoHanh);
+
+		 btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setBackground(Color.GRAY);
+		btnXemChiTiet.setForeground(Color.WHITE);
+		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXemChiTiet.setBounds(937, 747, 218, 40);
+		add(btnXemChiTiet);
+
+		JLabel lblDanhSach = new JLabel("Danh sách các đợt bảo hành");
+		lblDanhSach.setForeground(new Color(58, 181, 74));
+		lblDanhSach.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDanhSach.setBounds(29, 474, 272, 30);
+		add(lblDanhSach);
+
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(58, 181, 74));
+		separator.setBounds(29, 512, 1385, 11);
+		add(separator);
+
+		btnCapNhat = new JButton("Cập nhật");
+		btnCapNhat.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnCapNhat.setForeground(Color.WHITE);
+		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnCapNhat.setBackground(new Color(58, 181, 74));
+		btnCapNhat.setBounds(1204, 747, 203, 40);
+		add(btnCapNhat);
+
+		String[] colHeaderBaoHanh = { "STT", "Đợt bảo hành", "Thời gian", "Ghi chú" };
+		modelBaoHanh = new DefaultTableModel(colHeaderBaoHanh, 0);
+		tblBaoHanh = new JTable(modelBaoHanh) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
@@ -354,102 +113,286 @@ public class GD_BaoHanh extends JPanel implements ActionListener {
 			}
 		};
 		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		modelDotBaoHanh.addRow(new Object[] { "1", "Lần 1", null, null});
-		modelDotBaoHanh.addRow(new Object[] { "2", "Lần 2", null, null});
-		modelDotBaoHanh.addRow(new Object[] { "3", "Lần 3", null, null});
-		modelDotBaoHanh.addRow(new Object[] { "4", "Lần 4", null, null});
-		modelDotBaoHanh.addRow(new Object[] { "5", "Lần 5", null, null});
-		modelDotBaoHanh.addRow(new Object[] { "6", "Lần 6", null, null});
-		scrollPane.setViewportView(tblBaoHanh);
-		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(36);
-		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(150);
-		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(300);
-		tblBaoHanh.setRowHeight(40);
-		scrollPane.setViewportView(tblBaoHanh);
+		tblBaoHanh.setRowHeight(25);
+		scrollpaneBaoHanh.setViewportView(tblBaoHanh);
 
-		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_6.add(rigidArea_5);
+		JPanel pnlLogo = new JPanel();
+		pnlLogo.setBounds(0, 817, 1450, 133);
+		add(pnlLogo);
+		pnlLogo.setLayout(null);
 
-		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_6.setMaximumSize(new Dimension(40, 40));
-		rigidArea_6.setPreferredSize(new Dimension(40, 40));
-		verticalBox.add(rigidArea_6);
-
-		Box horizontalBox_7 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_7);
-
-		Component rigidArea_15 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_7.add(rigidArea_15);
-
-		btnQuayLai = new JButton("Quay lại");
-		btnQuayLai.setPreferredSize(new Dimension(150, 50));
-		btnQuayLai.setMaximumSize(new Dimension(120, 50));
+		JLabel lblLogo = new JLabel("New label");
+		lblLogo.setIcon(
+				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
+								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
+		lblLogo.setBounds(0, 0, 1450, 133);
+		pnlLogo.add(lblLogo);
+		
+		 btnQuayLai = new JButton("Quay lại");
+		btnQuayLai.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuayLai.setBackground(Color.RED);
-		horizontalBox_7.add(btnQuayLai);
+		btnQuayLai.setBounds(29, 747, 164, 40);
+		add(btnQuayLai);
+		
+		JLabel lblTTPBH = new JLabel("Thông tin phiếu bảo hành");
+		lblTTPBH.setForeground(new Color(58, 181, 74));
+		lblTTPBH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTTPBH.setBounds(29, 61, 272, 30);
+		add(lblTTPBH);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(new Color(58, 181, 74));
+		separator_1.setBounds(29, 104, 1385, 11);
+		add(separator_1);
+		
+		JLabel lblTTKH = new JLabel("Thông tin khách hàng");
+		lblTTKH.setForeground(new Color(58, 181, 74));
+		lblTTKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTTKH.setBounds(70, 181, 211, 30);
+		add(lblTTKH);
+		
+		JLabel lblMPBH = new JLabel("Mã phiếu bảo hành:");
+		lblMPBH.setForeground(Color.BLACK);
+		lblMPBH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMPBH.setBounds(70, 131, 188, 30);
+		add(lblMPBH);
+		
+		JLabel lblMaPhieuBaoHanh = new JLabel("BH123456");
+		lblMaPhieuBaoHanh.setForeground(Color.BLACK);
+		lblMaPhieuBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaPhieuBaoHanh.setBounds(270, 131, 111, 30);
+		add(lblMaPhieuBaoHanh);
+		
+		JLabel lblMHD = new JLabel("Mã hợp đồng:");
+		lblMHD.setForeground(Color.BLACK);
+		lblMHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMHD.setBounds(543, 131, 188, 30);
+		add(lblMHD);
+		
+		JLabel lblMaHopDong = new JLabel("HD123456");
+		lblMaHopDong.setForeground(Color.BLACK);
+		lblMaHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaHopDong.setBounds(743, 131, 111, 30);
+		add(lblMaHopDong);
+		
+		JLabel lblNLHD = new JLabel("Ngày lập hợp đồng");
+		lblNLHD.setForeground(Color.BLACK);
+		lblNLHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNLHD.setBounds(1013, 131, 188, 30);
+		add(lblNLHD);
+		
+		JLabel lblNgay = new JLabel("01-11-2020");
+		lblNgay.setForeground(Color.BLACK);
+		lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNgay.setBounds(1214, 131, 111, 30);
+		add(lblNgay);
+		
+		JSeparator separator_1_1 = new JSeparator();
+		separator_1_1.setForeground(new Color(58, 181, 74));
+		separator_1_1.setBounds(70, 224, 589, 11);
+		add(separator_1_1);
+		
+		JLabel lblThngTinXe = new JLabel("Thông tin xe");
+		lblThngTinXe.setForeground(new Color(58, 181, 74));
+		lblThngTinXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblThngTinXe.setBounds(745, 181, 139, 30);
+		add(lblThngTinXe);
+		
+		JSeparator separator_1_1_1 = new JSeparator();
+		separator_1_1_1.setForeground(new Color(58, 181, 74));
+		separator_1_1_1.setBounds(743, 224, 633, 11);
+		add(separator_1_1_1);
+		
+		JLabel lblTnKhchHng = new JLabel("Mã khách hàng:");
+		lblTnKhchHng.setForeground(Color.BLACK);
+		lblTnKhchHng.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTnKhchHng.setBounds(70, 246, 164, 30);
+		add(lblTnKhchHng);
+		
+		JLabel lblMaKhachHang = new JLabel("KH123456");
+		lblMaKhachHang.setForeground(Color.BLACK);
+		lblMaKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaKhachHang.setBounds(270, 246, 358, 30);
+		add(lblMaKhachHang);
+		
+		JLabel lblTnKhchHng_1 = new JLabel("Tên khách hàng:");
+		lblTnKhchHng_1.setForeground(Color.BLACK);
+		lblTnKhchHng_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTnKhchHng_1.setBounds(70, 300, 164, 30);
+		add(lblTnKhchHng_1);
+		
+		JLabel lblTenKhachHang = new JLabel("Nguyễn Trần Nhật Hào");
+		lblTenKhachHang.setForeground(Color.BLACK);
+		lblTenKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTenKhachHang.setBounds(270, 300, 358, 30);
+		add(lblTenKhachHang);
+		
+		JLabel lblSinThoi = new JLabel("Số điện thoại:");
+		lblSinThoi.setForeground(Color.BLACK);
+		lblSinThoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSinThoi.setBounds(70, 358, 164, 30);
+		add(lblSinThoi);
+		
+		JLabel lblSoDienThoai = new JLabel("0123456789");
+		lblSoDienThoai.setForeground(Color.BLACK);
+		lblSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSoDienThoai.setBounds(270, 358, 358, 30);
+		add(lblSoDienThoai);
+		
+		JLabel lblaCh = new JLabel("Địa chỉ:");
+		lblaCh.setForeground(Color.BLACK);
+		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblaCh.setBounds(70, 416, 86, 30);
+		add(lblaCh);
+		
+		JLabel lblDiaChi = new JLabel("BH123456");
+		lblDiaChi.setForeground(Color.BLACK);
+		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDiaChi.setBounds(161, 416, 467, 30);
+		add(lblDiaChi);
+		
+		JLabel lblMXe = new JLabel("Mã xe:");
+		lblMXe.setForeground(Color.BLACK);
+		lblMXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMXe.setBounds(743, 246, 86, 30);
+		add(lblMXe);
+		
+		JLabel lblMaXe = new JLabel("KH123456");
+		lblMaXe.setForeground(Color.BLACK);
+		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaXe.setBounds(837, 246, 127, 30);
+		add(lblMaXe);
+		
+		JLabel lblSKhung = new JLabel("Số khung:");
+		lblSKhung.setForeground(Color.BLACK);
+		lblSKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSKhung.setBounds(743, 358, 100, 30);
+		add(lblSKhung);
+		
+		JLabel lblMaPhieuBaoHanh_1_2_1 = new JLabel("SK1234567890123");
+		lblMaPhieuBaoHanh_1_2_1.setForeground(Color.BLACK);
+		lblMaPhieuBaoHanh_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaPhieuBaoHanh_1_2_1.setBounds(872, 358, 188, 30);
+		add(lblMaPhieuBaoHanh_1_2_1);
+		
+		JLabel lblSSn = new JLabel("Số sườn:");
+		lblSSn.setForeground(Color.BLACK);
+		lblSSn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSSn.setBounds(743, 416, 86, 30);
+		add(lblSSn);
+		
+		JLabel lblTnKhchHng_1_1 = new JLabel("Tên xe:");
+		lblTnKhchHng_1_1.setForeground(Color.BLACK);
+		lblTnKhchHng_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTnKhchHng_1_1.setBounds(976, 246, 86, 30);
+		add(lblTnKhchHng_1_1);
+		
+		JLabel lblMaPhieuBaoHanh_1_1_1 = new JLabel("Honda Air Blade");
+		lblMaPhieuBaoHanh_1_1_1.setForeground(Color.BLACK);
+		lblMaPhieuBaoHanh_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaPhieuBaoHanh_1_1_1.setBounds(1080, 246, 358, 30);
+		add(lblMaPhieuBaoHanh_1_1_1);
+		
+		JLabel lblMaPhieuBaoHanh_1_2_1_1 = new JLabel("SK1234567890123");
+		lblMaPhieuBaoHanh_1_2_1_1.setForeground(Color.BLACK);
+		lblMaPhieuBaoHanh_1_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaPhieuBaoHanh_1_2_1_1.setBounds(872, 416, 188, 30);
+		add(lblMaPhieuBaoHanh_1_2_1_1);
+		
+		JLabel lblHng = new JLabel("Xuất Xứ:");
+		lblHng.setForeground(Color.BLACK);
+		lblHng.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHng.setBounds(743, 300, 100, 30);
+		add(lblHng);
+		
+		JLabel lblHng_1 = new JLabel("Hãng:");
+		lblHng_1.setForeground(Color.BLACK);
+		lblHng_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHng_1.setBounds(976, 300, 100, 30);
+		add(lblHng_1);
+		
+		JLabel lblVitNam = new JLabel("Việt Nam");
+		lblVitNam.setForeground(Color.BLACK);
+		lblVitNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblVitNam.setBounds(837, 300, 127, 30);
+		add(lblVitNam);
+		
+		JLabel lblHonda = new JLabel("Honda");
+		lblHonda.setForeground(Color.BLACK);
+		lblHonda.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHonda.setBounds(1080, 300, 127, 30);
+		add(lblHonda);
 
-		Component horizontalGlue = Box.createHorizontalGlue();
-		horizontalBox_7.add(horizontalGlue);
-
-		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setForeground(Color.WHITE);
-		btnXemChiTiet.setBackground(Color.LIGHT_GRAY);
-		btnXemChiTiet.setPreferredSize(new Dimension(180, 50));
-		btnXemChiTiet.setMaximumSize(new Dimension(150, 50));
-		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_7.add(btnXemChiTiet);
-
-		Component rigidArea_17 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_17.setPreferredSize(new Dimension(30, 20));
-		horizontalBox_7.add(rigidArea_17);
-
-		btnCapNhat = new JButton("Cập nhật");
-		btnCapNhat.setForeground(Color.WHITE);
-		btnCapNhat.setBackground(new Color(0, 128, 0));
-		btnCapNhat.setPreferredSize(new Dimension(170, 50));
-		btnCapNhat.setMaximumSize(new Dimension(120, 50));
-		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_7.add(btnCapNhat);
-
-		Component rigidArea_16 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_7.add(rigidArea_16);
-
-		Component verticalGlue = Box.createVerticalGlue();
-		verticalBox.add(verticalGlue);
-
+		/**
+		 * Đổi màu header cho table
+		 */
+		JTableHeader tableHeader2 = tblBaoHanh.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		for (int i = 1; i < 7; i++) {
+			modelBaoHanh.addRow(new Object[] { i, "Đợt "+i, null, null });
+		}
 		dangKiSuKien();
+
 	}
 
-	public void dangKiSuKien() {
+	private void dangKiSuKien() {
 		btnCapNhat.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnQuayLai.addActionListener(this);
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		Object o = e.getSource();
-		if (o.equals(btnXemChiTiet)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_ChiTietBaoHanh());
-			this.validate();
-			this.repaint();
-		} else if (o.equals(btnCapNhat)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatBaoHanh());
-			this.validate();
-			this.repaint();
-		} else if (o.equals(btnQuayLai)) {
+		if(o.equals(btnQuayLai)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
 			this.add(new GD_HopDong());
 			this.validate();
 			this.repaint();
+		}else if (o.equals(btnCapNhat)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_CapNhatBaoHanh());
+			this.validate();
+			this.repaint();
 		}
+		
+	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

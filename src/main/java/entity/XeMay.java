@@ -25,19 +25,15 @@ public class XeMay {
 	private XuatXu xuatXu;
 	private HangXe hangXe;
 	private String moTa;
-	
+
 	public XeMay(String maXeMay, String tenXeMay) {
 		super();
 		this.maXeMay = maXeMay;
 		this.tenXeMay = tenXeMay;
 	}
-	
-	
+
 	public double tinhGiaBan() {
 		return giaNhap * heSoBan;
 	}
 
-
-
-	
 }

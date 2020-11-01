@@ -457,7 +457,7 @@ public class GD_CapNhatNhanVien extends JPanel implements ActionListener {
 		}else if (o.equals(btnQuayLai)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_NhanVien());
+			this.add(new GD_NV());
 			this.validate();
 			this.repaint();
 		}

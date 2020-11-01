@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -9,23 +10,29 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import ui.quanLyHoaDon.GD_HD;
 import ui.quanLyHoaDon.GD_HoaDon;
+import ui.quanLyHoaDon.GD_LapHoaDon;
+import ui.quanLyHoaDon.GD_LapHoaDon;
+import ui.quanLyHopDong.GD_HDong;
 import ui.quanLyHopDong.GD_HopDong;
+import ui.quanLyKhachHang.GD_KH;
 import ui.quanLyKhachHang.GD_KhachHang;
+import ui.quanLyKhachHang.GD_ThemKhachHang;
+import ui.quanLyNhanVien.GD_NV;
 import ui.quanLyNhanVien.GD_NhanVien;
+import ui.quanLyNhanVien.GD_ThemNhanVien;
 import ui.quanLyThongKe.GD_ThongKe;
+import ui.quanLyXeMay.GD_TX;
+import ui.quanLyXeMay.GD_ThemXeMay;
+import ui.quanLyXeMay.GD_XM;
 import ui.quanLyXeMay.GD_XeMay;
 
 public class ChuyenManHinh {
 	private JPanel pnlMHChinh;
-//	private NhanVien nhanVien;
 	private String chonTrang = "";
 	private List<DanhMuc> dSTrang = null;
-
-//	public ChuyenManHinh(JPanel pnlMHChinh, NhanVien nhanVien) {
-//		this.pnlMHChinh = pnlMHChinh;
-//		this.nhanVien = nhanVien;
-//	}
+	private JPanel pnlMenu;
 	public ChuyenManHinh(JPanel pnlMHChinh) {
 		this.pnlMHChinh = pnlMHChinh;
 	}
@@ -47,6 +54,7 @@ public class ChuyenManHinh {
 		for (DanhMuc lst : danhMuc) {
 			lst.getLbl().addMouseListener(new LabelEvent(lst.getChon(), lst.getPnl(), lst.getLbl()));
 		}
+
 	}
 
 	class LabelEvent implements MouseListener {
@@ -69,60 +77,87 @@ public class ChuyenManHinh {
 			case "TrangChu":
 				node = new GD_TrangChu();
 				setPanel();
+
 				break;
 			case "HoaDon":
 				node = new GD_HoaDon();
 				setPanel();
+
 				break;
 			case "KhachHang":
-					node = new GD_KhachHang();
+				node = new GD_KhachHang();
 				setPanel();
+
 				break;
 			case "XeMay":
 				node = new GD_XeMay();
 				setPanel();
+
 				break;
 			case "HopDong":
 				node = new GD_HopDong();
 				setPanel();
+
 				break;
 			case "ThongKe":
 				node = new GD_ThongKe();
 				setPanel();
+
 				break;
 			case "NhanVien":
-//				if(nhanVien.getQuyenTruyCap().trim().equals("Admin")) {
-//					try {
-//						node = new NhanVienJPanel();
-//					} catch (SQLException e1) {
-//						// TODO Auto-generated catch block
-//						e1.printStackTrace();
-//					}
-//					setPanel();
-//				}
 				node = new GD_NhanVien();
 				setPanel();
-//				else {
-//					JOptionPane.showMessageDialog(null, "Chá»©c nÄƒng nÃ y chá»‰ dÃ nh cho ngÆ°á»�i quáº£n lÃ½");
-//				}
 				break;
+				
+				
+			case "LapHoaDon":
+				node = new GD_LapHoaDon();
+				setPanel();
+				break;
+			case "ThemKhachHang":
+				new GD_ThemKhachHang().setVisible(true);
+//				setPanel();
+				break;
+			case "QuanLyHangXe":
+//				node = new GD_NhanVien();
+//				setPanel();
+				break;
+			case "ThemXeMay":
+				node = new GD_ThemXeMay();
+				setPanel();
+				break;
+			case "ThemNhanVien":
+				node = new GD_ThemNhanVien();
+				setPanel();
+				break;
+			case "DoanhSoTheoNgay":
+//				node = new GD_NhanVien();
+//				setPanel();
+				break;
+				
+				
+				
+				
 			case "DangXuat":
 				break;
 			default:
 				node = new GD_TrangChu();
+
 				break;
 			}
-			
+
 			setThayDoiNen(chon);
 		}
 
 		public void setPanel() {
+
 			if (!chon.equals("DangXuat")) {
 				pnlMHChinh.removeAll();
 				pnlMHChinh.setLayout(new BorderLayout());
 				pnlMHChinh.add(node);
 				pnlMHChinh.validate();
 				pnlMHChinh.repaint();
+				setThayDoiKichThuocMenu(pnlMenu);
 			}
 		}
 
@@ -132,6 +167,7 @@ public class ChuyenManHinh {
 			chonTrang = chon;
 			pnlChon.setBackground(new Color(96, 100, 191));
 			lblChon.setBackground(new Color(96, 100, 191));
+
 		}
 
 		@Override
@@ -144,7 +180,7 @@ public class ChuyenManHinh {
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
 			if (!chonTrang.equalsIgnoreCase(chon)) {
-				pnlChon.setBackground(new Color(76, 175, 80));
+				pnlChon.setBackground(new Color(170, 213, 118));
 				lblChon.setBackground(new Color(96, 100, 191));
 			}
 		}
@@ -153,8 +189,8 @@ public class ChuyenManHinh {
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
 			if (!chonTrang.equalsIgnoreCase(chon)) {
-				pnlChon.setBackground(new Color(0, 128, 0));
-				lblChon.setBackground(new Color(76, 175, 80));
+				pnlChon.setBackground(new Color(58, 181, 74));
+				lblChon.setBackground(new Color(170, 213, 118));
 			}
 		}
 	}
@@ -165,9 +201,19 @@ public class ChuyenManHinh {
 				danhMuc.getPnl().setBackground(new Color(96, 100, 191));
 				danhMuc.getLbl().setBackground(new Color(96, 100, 191));
 			} else {
-				danhMuc.getPnl().setBackground(new Color(0, 128, 0));
+				danhMuc.getPnl().setBackground(new Color(58, 181, 74));
 				danhMuc.getLbl().setBackground(new Color(76, 175, 80));
 			}
 		}
+
+	}
+
+	private void setThayDoiKichThuocMenu(JPanel pnlMenu) {
+//		App app = new App();
+//		if (pnlMenu.getPreferredSize().width >= 120) {
+//			pnlMenu.setPreferredSize(new Dimension(120, 900));
+//			app.setPnlMenu(pnlMenu);
+//		}
+//		System.out.println(pnlMenu.getPreferredSize().width);
 	}
 }

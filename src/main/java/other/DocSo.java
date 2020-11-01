@@ -180,7 +180,8 @@ public class DocSo {
 		arrList.addAll(Arrays.asList(result));
 		return arrList;
 	}
+
 	public static void main(String[] args) {
-		System.out.println(readNum("10000000000000006"));
+		System.out.println(readNum("12312000056465"));
 	}
 }

@@ -180,7 +180,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			this.setVisible(false);
-			new frm_APP().setVisible(true);
+			new App().setVisible(true);
 		} else if (o.equals(btnHuy)) {
 			this.setVisible(false);
 		}

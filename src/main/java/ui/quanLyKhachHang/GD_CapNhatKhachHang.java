@@ -288,7 +288,7 @@ public class GD_CapNhatKhachHang extends JPanel implements ActionListener {
 		} else if (o.equals(btnQuayLai)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_KhachHang());
+			this.add(new GD_KH());
 			this.validate();
 			this.repaint();
 		}
