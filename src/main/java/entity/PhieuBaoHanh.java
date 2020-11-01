@@ -18,4 +18,11 @@ public class PhieuBaoHanh {
 	private NhanVienKiThuat nhanVienKiThuat;
 	private List<ChiTietBaoHanh> chiTietBaoHanhs;
 	
+	public PhieuBaoHanh(String maPhieuBaoHanh) {
+	
+		this.maPhieuBaoHanh = maPhieuBaoHanh;
+	}
+	
 }
+
+

@@ -23,7 +23,6 @@ public class XeMay {
 	private LoaiXe loaiXe;
 	private DongXe dongXe;
 	private XuatXu xuatXu;
-	private HangXe hangXe;
 	private String moTa;
 
 	public XeMay(String maXeMay, String tenXeMay) {
@@ -36,4 +35,8 @@ public class XeMay {
 		return giaNhap * heSoBan;
 	}
 
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 9427b75ca656a3e297d0e1e59c8ac2ade1012534
 }

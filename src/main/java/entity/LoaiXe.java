@@ -11,4 +11,5 @@ public class LoaiXe {
 
 	private String maLoaiXe;
 	private String tenLoaiXe;
+	
 }

@@ -18,4 +18,11 @@ public class NhanVienKiThuat {
 	private String diaChi;
 	private int soNamKinhNghiem;
 	private int bacTho;
+	
+	public NhanVienKiThuat(String maNVKiThuat) {
+		
+		this.maNVKiThuat = maNVKiThuat;
+	}
+	
+	
 }

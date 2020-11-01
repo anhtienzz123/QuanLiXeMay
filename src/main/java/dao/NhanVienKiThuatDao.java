@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.NhanVienKiThuatConstant;
+import constant.PhieuBaoHanhConstant;
 import converter.NhanVienKiThuatConvert;
+import converter.PhieuBaoHanhConverter;
 import db.DatabaseConnect;
 import entity.NhanVienKiThuat;
+import entity.PhieuBaoHanh;
 
 public class NhanVienKiThuatDao {
 	private static NhanVienKiThuatDao instance;
@@ -45,6 +48,28 @@ public class NhanVienKiThuatDao {
 		}
 
 		return nvKiThuats;
+	}
+	
+	
+	public List<NhanVienKiThuat> getNhanVienKiThuats (int from, int to){
+		
+		List<NhanVienKiThuat> nhanVienKiThuats = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				NhanVienKiThuat nhanVienKiThuat = NhanVienKiThuatConvert.getNhanVienKiThuat(resultSet);
+				nhanVienKiThuats.add(nhanVienKiThuat);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return nhanVienKiThuats;
 	}
 
 	public NhanVienKiThuat getNVKiThuatTheoMa(String maNVKiThuat) {

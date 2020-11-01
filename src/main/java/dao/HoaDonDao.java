@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.HoaDonConstant;
+import constant.HopDongConstant;
 import converter.HoaDonConverter;
+import converter.HopDongConverter;
 import db.DatabaseConnect;
 import entity.HoaDon;
+import entity.HopDong;
 
 public class HoaDonDao {
 
@@ -53,6 +56,27 @@ public class HoaDonDao {
 
 		return hoaDons;
 
+	}
+	
+	public List<HoaDon> getDons (int from, int to){
+		
+		List<HoaDon> hoaDons = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(HoaDonConstant.GET_HOA_DONS_PHAN_TRANG);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				HoaDon hoaDon = HoaDonConverter.getHoaDon(resultSet);
+				hoaDons.add(hoaDon);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return hoaDons;
 	}
 
 	public HoaDon getHoaDonTheoMaHoaDon(String maHoaDon) {

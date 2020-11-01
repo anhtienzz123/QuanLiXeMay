@@ -100,5 +100,7 @@ public class DanhMucBaoHanhDao {
 
 		return n > 0;
 	}
+	
+	
 
 }

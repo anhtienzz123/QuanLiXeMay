@@ -51,6 +51,28 @@ public class KhachHangDao {
 
 		return khachHangs;
 	}
+	
+	
+	public List<KhachHang> getKhachHangs (int from, int to){
+		
+		List<KhachHang> khachHangs = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANGS_PHAN_TRANG);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				KhachHang khachHang = KhachHangConverter.getKhachHang(resultSet);
+				khachHangs.add(khachHang);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return khachHangs;
+	}
 
 	public KhachHang getKhachHangTheoMa(String maKhachHang) {
 
