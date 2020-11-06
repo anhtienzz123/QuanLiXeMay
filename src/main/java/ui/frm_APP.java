@@ -384,18 +384,12 @@ public class frm_APP extends JFrame implements ActionListener, MouseListener {
 		listDanhMuc.add(new DanhMuc("HopDong", pnlHopDong, lblHopDong));
 		listDanhMuc.add(new DanhMuc("HopDong", pnlHopDong, lblIconHDong));
 		chuyen.setSuKien(listDanhMuc);
-<<<<<<< HEAD
 
 		pnlMenu.setPreferredSize(new Dimension(100, 900));
 		dangKiSuLien();
 	}
 
 	private void dangKiSuLien() {
-=======
-		
-		
-		
->>>>>>> 9427b75ca656a3e297d0e1e59c8ac2ade1012534
 		lblDangXuat.addMouseListener(this);
 		lblLogo.addMouseListener(this);
 		pnlMenu.addMouseListener(this);

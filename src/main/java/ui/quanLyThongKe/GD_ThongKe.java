@@ -11,12 +11,16 @@ import java.util.EventObject;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -27,6 +31,8 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
+
+import other.TableColorCellRender;
 
 public class GD_ThongKe extends JPanel {
 
@@ -183,11 +189,15 @@ public class GD_ThongKe extends JPanel {
 		scrollPaneDoanhThu.setBounds(856, 341, 562, 532);
 		add(scrollPaneDoanhThu);
 
-		String[] colHeaderDoanhThu = { "STT", "Mã hóa đơn", "Tên nhân viên lập", "Tên khách hàng"};
+		String[] colHeaderDoanhThu = { "STT", "Mã hóa đơn", "Tên nhân viên lập", "Tên khách hàng" };
 		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
 		tblDoanhThu = new JTable(modelDoanhThu) {
 			private static final long serialVersionUID = 1L;
 
+//			public void tableChanged(TableModelEvent e) {
+//				super.tableChanged(e);
+//				repaint();
+//			}
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
 				return false;
 			}
@@ -203,15 +213,27 @@ public class GD_ThongKe extends JPanel {
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		for (int i = 1; i < 21; i++) {
 			modelDoanhThu.addRow(new Object[] { i, null, null, null });
 		}
+//		Auto setSize
+//		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(40);
 		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(122);
 		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(200);
 		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tblDoanhThu.setShowGrid(false);
 		
 		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		/**
+		 * Đổi màu các dòng chẵn
+		 */
+//		TableColorCellRender render = new TableColorCellRender();
+//		tblDoanhThu.setDefaultRenderer(Object.class, render);
 		
 
 		JLabel lblTngThuTrong_2 = new JLabel("Danh sách hóa đơn đã lập trong ngày");

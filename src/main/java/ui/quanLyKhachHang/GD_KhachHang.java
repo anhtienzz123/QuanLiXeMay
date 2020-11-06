@@ -32,6 +32,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import ui.App;
 import ui.ChuyenManHinh;
 import ui.DanhMuc;
+import ui.quanLyNhanVien.GD_ThemNhanVien;
+
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
@@ -54,6 +56,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JTable tblKhachHang;
 	private JButton btnSua;
 	private JButton btnXoa;
+	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
@@ -80,7 +83,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		scrollPaneKhachHang.setBounds(29, 200, 1385, 532);
 		add(scrollPaneKhachHang);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		 btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
@@ -227,13 +230,10 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
 		btnThem.addActionListener(this);
-		btnCuoi.addActionListener(this);
-		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
-		btnThem.addActionListener(this);
 		btnTruoc.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
 
 	}
 
@@ -270,6 +270,18 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		if(o.equals(btnThem)){
+			new GD_ThemKhachHang().setVisible(true);
+		}else if (o.equals(btnSua)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_CapNhatKhachHang());
+			this.validate();
+			this.repaint();
+			
+		}else if (o.equals(btnXemChiTiet)) {
+			new GD_ChiTietKhachHang().setVisible(true);
+		}
 		
 	}
 }
