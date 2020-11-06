@@ -11,15 +11,7 @@ public class DongXe {
 
 	private String maDongXe;
 	private String tenDongXe;
+	private double thue;
 	private HangXe hangXe;
-	
-	
-	
-	
-	
 
-	
-	
-	
-	
 }

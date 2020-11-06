@@ -51,17 +51,17 @@ public class KhachHangDao {
 
 		return khachHangs;
 	}
-	
-	
-	public List<KhachHang> getKhachHangs (int from, int to){
-		
+
+	public List<KhachHang> getKhachHangs(int from, int to) {
+
 		List<KhachHang> khachHangs = new ArrayList<>();
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANGS_PHAN_TRANG);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.GET_KHACH_HANGS_PHAN_TRANG);
 			preparedStatement.setInt(1, from);
 			preparedStatement.setInt(2, to);
-			
+
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				KhachHang khachHang = KhachHangConverter.getKhachHang(resultSet);
@@ -141,5 +141,26 @@ public class KhachHangDao {
 		}
 
 		return n > 0;
+	}
+
+	// nếu không trùng thì return True
+	public boolean kiemTraMaKhongTrung(String maKhachHang) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maKhachHang);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

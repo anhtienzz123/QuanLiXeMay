@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import db.DatabaseConnect;
 
 public class GD_DangNhap extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -45,12 +48,16 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		new GD_DangNhap().setVisible(true);
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public GD_DangNhap() {
 		
 		/*

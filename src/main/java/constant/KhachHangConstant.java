@@ -9,5 +9,6 @@ public class KhachHangConstant {
 	public static final String CAP_NHAP_KHACH_HANG = "update KhachHang set soCMT = ?, hoTenKH = ?,"
 			+ " ngaySinh = ?, soDienThoai = ?, diaChiKH = ? where maKhachHang = ?";
 	public static final String XOA_KHACH_HANG = "delete from KhachHang where maKhachHang = ?";
-
+    public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maKhachHang from KhachHang\r\n" + 
+    		"where maKhachHang = ? ";
 }

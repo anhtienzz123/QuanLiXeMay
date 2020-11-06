@@ -23,10 +23,13 @@ public class NhanVienHanhChinhConvert {
 		String diaChi = resultSet.getString("diaChi");
 		String chucVu = resultSet.getString("chucVu");
 		String trinhDoHocVan = resultSet.getString("trinhDoHocVan");
+		String tenAnh = resultSet.getString("tenAnh");
 		boolean vaiTro = resultSet.getBoolean("vaiTro");
+		boolean gioiTinh = resultSet.getBoolean("gioiTinh");
+		boolean trangThai = resultSet.getBoolean("trangThai");
 
-		NhanVienHanhChinh NVHanhChinh = new NhanVienHanhChinh(maNVHanhChinh, hoTenNV, matKhau, ngaySinh, soDienThoai,
-				diaChi, chucVu, trinhDoHocVan, vaiTro);
+		NhanVienHanhChinh NVHanhChinh = new NhanVienHanhChinh(maNVHanhChinh, hoTenNV, matKhau, gioiTinh, ngaySinh,
+				soDienThoai, diaChi, tenAnh, chucVu, trinhDoHocVan, vaiTro, trangThai);
 		return NVHanhChinh;
 	}
 
@@ -35,27 +38,33 @@ public class NhanVienHanhChinhConvert {
 		preparedStatement.setString(1, NVHanhChinh.getMaNVHanhChinh());
 		preparedStatement.setString(2, NVHanhChinh.getHoTenNV());
 		preparedStatement.setString(3, NVHanhChinh.getMatKhau());
-		preparedStatement.setDate(4, NVHanhChinh.getNgaySinh());
-		preparedStatement.setString(5, NVHanhChinh.getSoDienThoai());
-		preparedStatement.setString(6, NVHanhChinh.getDiaChi());
-		preparedStatement.setString(7, NVHanhChinh.getChucVu());
-		preparedStatement.setString(8, NVHanhChinh.getTrinhDoHocVan());
-		preparedStatement.setBoolean(9, NVHanhChinh.isVaiTro());
+		preparedStatement.setBoolean(4, NVHanhChinh.isGioiTinh());
+		preparedStatement.setDate(5, NVHanhChinh.getNgaySinh());
+		preparedStatement.setString(6, NVHanhChinh.getSoDienThoai());
+		preparedStatement.setString(7, NVHanhChinh.getDiaChi());
+		preparedStatement.setString(8, NVHanhChinh.getTenAnh());
+		preparedStatement.setString(9, NVHanhChinh.getChucVu());
+		preparedStatement.setString(10, NVHanhChinh.getTrinhDoHocVan());
+		preparedStatement.setBoolean(11, NVHanhChinh.isVaiTro());
+		preparedStatement.setBoolean(11, NVHanhChinh.isTrangThai());
 
 	}
 
 	public static void capNhatNhanVienHanhChinh(PreparedStatement preparedStatement, NhanVienHanhChinh NVHanhChinh)
 			throws SQLException {
-		
+
 		preparedStatement.setString(1, NVHanhChinh.getHoTenNV());
 		preparedStatement.setString(2, NVHanhChinh.getMatKhau());
-		preparedStatement.setDate(3, NVHanhChinh.getNgaySinh());
-		preparedStatement.setString(4, NVHanhChinh.getSoDienThoai());
-		preparedStatement.setString(5, NVHanhChinh.getDiaChi());
-		preparedStatement.setString(6, NVHanhChinh.getChucVu());
-		preparedStatement.setString(7, NVHanhChinh.getTrinhDoHocVan());
-		preparedStatement.setBoolean(8, NVHanhChinh.isVaiTro());
-		preparedStatement.setString(9, NVHanhChinh.getMaNVHanhChinh());
+		preparedStatement.setBoolean(3, NVHanhChinh.isGioiTinh());
+		preparedStatement.setDate(4, NVHanhChinh.getNgaySinh());
+		preparedStatement.setString(5, NVHanhChinh.getSoDienThoai());
+		preparedStatement.setString(6, NVHanhChinh.getDiaChi());
+		preparedStatement.setString(7, NVHanhChinh.getTenAnh());
+		preparedStatement.setString(8, NVHanhChinh.getChucVu());
+		preparedStatement.setString(9, NVHanhChinh.getTrinhDoHocVan());
+		preparedStatement.setBoolean(10, NVHanhChinh.isVaiTro());
+		preparedStatement.setBoolean(11, NVHanhChinh.isTrangThai());
+		preparedStatement.setString(12, NVHanhChinh.getMaNVHanhChinh());
 	}
 
 }

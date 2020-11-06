@@ -1,48 +1,38 @@
 package ui.quanLyKhachHang;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.EventObject;
 import java.util.List;
-import java.util.Random;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
+import dao.KhachHangDao;
+import entity.KhachHang;
 import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
+import ui.quanLyBaoHanh.GD_BaoHanh;
 
 public class GD_KhachHang extends JPanel implements ActionListener, MouseListener {
+
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -55,10 +45,19 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JButton btnSua;
 	private JButton btnXoa;
 
+	private int page = 1;
+	private int maxPage = 2;
+	private static final int SIZE = 20;
+	private KhachHangDao khachHangDao;
+	private List<KhachHang> khachHangs;
+
 	/**
 	 * Create the panel.
 	 */
 	public GD_KhachHang() {
+
+		khachHangDao = KhachHangDao.getInstance();
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -81,7 +80,8 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		add(scrollPaneKhachHang);
 
 		JButton btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet
+				.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -97,7 +97,8 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Số CMT"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(
+				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Số CMT" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -159,15 +160,15 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		add(txtTrang);
 
 		btnThem = new JButton("Thêm");
-		btnThem.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnThem.setIcon(
+				new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
 		btnThem.setBounds(1239, 753, 168, 40);
 		add(btnThem);
 
-		String[] colHeaderKhachHang = { "STT", "Mã khách hàng",
-				"Tên khách hàng", "Số CMT", "Số điện thoại" };
+		String[] colHeaderKhachHang = { "STT", "Mã khách hàng", "Tên khách hàng", "Số CMT", "Số điện thoại" };
 		modelKhachHang = new DefaultTableModel(colHeaderKhachHang, 0);
 		tblKhachHang = new JTable(modelKhachHang) {
 			private static final long serialVersionUID = 1L;
@@ -179,7 +180,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		tblKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblKhachHang.setRowHeight(25);
 		scrollPaneKhachHang.setViewportView(tblKhachHang);
-		
+
 		/**
 		 * Đổi màu header cho table
 		 */
@@ -187,9 +188,6 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for (int i = 1; i < 21; i++) {
-			modelKhachHang.addRow(new Object[] { i, null, null, null });
-		}
 
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setBounds(0, 817, 1450, 133);
@@ -203,15 +201,15 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1450, 133);
 		pnlLogo.add(lblLogo);
-		
-		 btnSua = new JButton("Sửa");
+
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
 		btnSua.setBounds(1041, 753, 168, 40);
 		add(btnSua);
-		
-		 btnXoa = new JButton("Xóa");
+
+		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
@@ -219,19 +217,16 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		add(btnXoa);
 
 		dangKiSuKien();
+		loadDuLieu();
 
 	}
 
 	private void dangKiSuKien() {
-		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
-		btnThem.addActionListener(this);
 		btnCuoi.addActionListener(this);
-		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
 		btnThem.addActionListener(this);
 		btnTruoc.addActionListener(this);
+		btnSau.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
 
@@ -239,7 +234,6 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -269,7 +263,71 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
+		Object source = e.getSource();
+
+		if(source == btnDau) {
+			this.page = 1;
+			loadDuLieu();
+		}
 		
+		if(source == btnCuoi) {
+			this.page = maxPage;
+			loadDuLieu();
+		}
+		
+		if (source == btnSau && page < maxPage) {
+			this.page++;
+			loadDuLieu();
+
+		}
+
+		if (source == btnTruoc && page > 1) {
+			this.page--;
+			loadDuLieu();
+		}
+		
+		if(source == btnThem) {
+			new GD_ThemKhachHang().setVisible(true);
+			
+		}
+
+	}
+
+	private void loadDuLieu() {
+		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
+		
+		if(khachHangs.size() > 0) {
+			xoaDuLieuTrongBang();
+			themKhachHangsVaoBang();
+			txtTrang.setText(this.page + "");
+		}
+	}
+
+	private void themKhachHangsVaoBang() {
+		if (khachHangs != null) {
+			for (KhachHang khachHang : khachHangs) {
+				themKhachHangVaoBang(khachHang);
+			}
+		}
+	}
+
+	
+
+	private void themKhachHangVaoBang(KhachHang khachHang) {
+
+		Object[] object = new Object[5];
+		object[0] = tblKhachHang.getRowCount() + 1;
+		object[1] = khachHang.getMaKhachHang();
+		object[2] = khachHang.getHoTenKH();
+		object[3] = khachHang.getSoCMT();
+		object[4] = khachHang.getSoDienThoai();
+		modelKhachHang.addRow(object);
+	}
+
+	private void xoaDuLieuTrongBang() {
+		while (modelKhachHang.getRowCount() > 0) {
+			modelKhachHang.removeRow(0);
+		}
+
 	}
 }

@@ -35,8 +35,5 @@ public class XeMay {
 		return giaNhap * heSoBan;
 	}
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> 9427b75ca656a3e297d0e1e59c8ac2ade1012534
+
 }
