@@ -12,11 +12,6 @@ import java.awt.event.MouseListener;
 import java.util.EventObject;
 import java.util.List;
 
-import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import ui.quanLyNhanVien.GD_TNV;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,7 +29,6 @@ import javax.swing.table.JTableHeader;
 import dao.KhachHangDao;
 import entity.KhachHang;
 import ui.App;
-import ui.quanLyBaoHanh.GD_BaoHanh;
 
 public class GD_KhachHang extends JPanel implements ActionListener, MouseListener {
 

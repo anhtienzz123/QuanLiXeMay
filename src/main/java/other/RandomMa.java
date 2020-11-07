@@ -87,14 +87,14 @@ public class RandomMa {
 	}
 
 	private static String randomMaKhachHang() {
-        
+
 		KhachHangDao khachHangDao = KhachHangDao.getInstance();
 		String ma = "";
-				
-	    do {
-	    	ma = TenEntity.KHACH_HANG + sinhMaNgauNhien();
-	    }while(!khachHangDao.kiemTraMaKhongTrung(ma));
-		
+
+		do {
+			ma = TenEntity.KHACH_HANG + sinhMaNgauNhien();
+		} while (!khachHangDao.kiemTraMaKhongTrung(ma));
+
 		return ma;
 	}
 
@@ -102,11 +102,11 @@ public class RandomMa {
 
 		NhanVienHanhChinhDao nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
 		String ma = "";
-				
-	    do {
-	    	ma = TenEntity.KHACH_HANG + sinhMaNgauNhien();
-	    }while(!nhanVienHanhChinhDao.kiemTraMaKhongTrung(ma));
-		
+
+		do {
+			ma = TenEntity.KHACH_HANG + sinhMaNgauNhien();
+		} while (!nhanVienHanhChinhDao.kiemTraMaKhongTrung(ma));
+
 		return ma;
 	}
 
@@ -159,13 +159,10 @@ public class RandomMa {
 
 		return "";
 	}
-	
-	
+
 	private static String sinhMaNgauNhien() {
 		Random random = new Random();
 		return String.valueOf(random.nextInt((999999 - 100000) + 1) + 100000);
 	}
-
-	
 
 }

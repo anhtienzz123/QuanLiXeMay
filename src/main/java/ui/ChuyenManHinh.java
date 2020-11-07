@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -10,22 +9,15 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import ui.quanLyHoaDon.GD_HD;
 import ui.quanLyHoaDon.GD_HoaDon;
 import ui.quanLyHoaDon.GD_LapHoaDon;
-import ui.quanLyHoaDon.GD_LapHoaDon;
-import ui.quanLyHopDong.GD_HDong;
 import ui.quanLyHopDong.GD_HopDong;
-import ui.quanLyKhachHang.GD_KH;
 import ui.quanLyKhachHang.GD_KhachHang;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
-import ui.quanLyNhanVien.GD_NV;
 import ui.quanLyNhanVien.GD_NhanVien;
-import ui.quanLyNhanVien.GD_TNV;
+import ui.quanLyNhanVien.GD_ThemNhanVien;
 import ui.quanLyThongKe.GD_ThongKe;
-import ui.quanLyXeMay.GD_TX;
 import ui.quanLyXeMay.GD_ThemXeMay;
-import ui.quanLyXeMay.GD_XM;
 import ui.quanLyXeMay.GD_XeMay;
 
 public class ChuyenManHinh {
@@ -127,7 +119,7 @@ public class ChuyenManHinh {
 				setPanel();
 				break;
 			case "ThemNhanVien":
-				node = new GD_TNV();
+				node = new GD_ThemNhanVien();
 				setPanel();
 				break;
 			case "DoanhSoTheoNgay":
