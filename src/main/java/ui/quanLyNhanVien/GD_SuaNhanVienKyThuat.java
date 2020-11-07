@@ -377,6 +377,13 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 			}
 			lblAnh.setText("");
 		}
+		if (o.equals(btnThoat)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_NhanVien());
+			this.validate();
+			this.repaint();
+		}
 
 	}
 }

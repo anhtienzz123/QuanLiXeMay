@@ -54,6 +54,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 	private JButton btnBaoHanh;
 	private DefaultTableModel modelHopDong;
 	private JTable tblHopDong;
+	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
@@ -80,7 +81,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		scrollPaneHopDong.setBounds(29, 200, 1385, 532);
 		add(scrollPaneHopDong);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		 btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
@@ -225,10 +226,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
-		btnBaoHanh.addActionListener(this);
-		btnCuoi.addActionListener(this);
-		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
 		btnBaoHanh.addActionListener(this);
 		btnTruoc.addActionListener(this);
 
@@ -274,6 +272,11 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 			this.validate();
 			this.repaint();
 		}
+		
+		if(o.equals(btnXemChiTiet)) {
+			new GD_ChiTietHD().setVisible(true);
+		}
+		
 		
 	}
 }

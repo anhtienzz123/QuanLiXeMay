@@ -375,24 +375,26 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnQuayLai)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_HopDong());
-			this.validate();
-			this.repaint();
-		}else if (o.equals(btnCapNhat)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatBaoHanh());
-			this.validate();
-			this.repaint();
+			chuyenManHinh(new GD_HopDong());
+		} if (o.equals(btnCapNhat)) {
+			chuyenManHinh(new GD_CapNhatBaoHanh());
 		}
 		
+		if (o.equals(btnXemChiTiet)) {
+			chuyenManHinh(new GD_ChiTietBaoHanh());
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	public void chuyenManHinh(JPanel newJpanel) {
+		this.removeAll();
+		this.setLayout(new BorderLayout());
+		this.add(newJpanel);
+		this.validate();
+		this.repaint();
 	}
 }

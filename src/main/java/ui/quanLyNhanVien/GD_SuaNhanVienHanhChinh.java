@@ -39,7 +39,6 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	private JTextField txtTenNV;
 	private JButton btnThem;
 	private DefaultTableModel modelNVHanhChinh;
-	private JButton btnXoaRong;
 	private JButton btnThoat;
 	private DefaultTableModel modelNVKyThuat;
 	private JTextField txtSoDienThoai;
@@ -111,14 +110,6 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1450, 133);
 		pnlLogo.add(lblLogo);
-
-		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setToolTipText("Xóa trắng các trường nhập dữ liệu");
-		btnXoaRong.setForeground(Color.WHITE);
-		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setBounds(1041, 753, 168, 40);
-		add(btnXoaRong);
 
 		btnThoat = new JButton("Thoát");
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
@@ -344,7 +335,6 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 	private void dangKiSuKien() {
 		btnThem.addActionListener(this);
-		btnXoaRong.addActionListener(this);
 		btnThoat.addActionListener(this);
 		lblHienMK.addMouseListener(this);
 		lblAnMK.addMouseListener(this);
@@ -425,6 +415,13 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 			if (t == JOptionPane.YES_OPTION) {
 				txtMatKhau.setText("12345678");
 			}
+		}
+		if (o.equals(btnThoat)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_NhanVien());
+			this.validate();
+			this.repaint();
 		}
 
 	}

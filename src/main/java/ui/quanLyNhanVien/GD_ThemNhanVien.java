@@ -458,6 +458,13 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 			}
 			lblAnh.setText("");
 		}
+		if (o.equals(btnThoat)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_NhanVien());
+			this.validate();
+			this.repaint();
+		}
 
 	}
 }
