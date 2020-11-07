@@ -72,7 +72,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 540);
 		setLocationRelativeTo(null);
-		setTitle("Thông tin khách hàng");
+		setTitle("Thêm khách hàng");
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -92,7 +92,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-		JLabel lblNewLabel = new JLabel("Khách hàng");
+		JLabel lblNewLabel = new JLabel("Thêm khách hàng");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setMaximumSize(new Dimension(37137, 50));
 		lblNewLabel.setPreferredSize(new Dimension(800, 50));
@@ -114,6 +114,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(lblNewLabel_1);
 
 		Component rigidArea_15 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15.setPreferredSize(new Dimension(25, 20));
 		horizontalBox_1.add(rigidArea_15);
 
 		lblMaKH = new JLabel();
@@ -126,6 +127,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(horizontalGlue_1);
 
 		Component rigidArea_5_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_5_1.setPreferredSize(new Dimension(115, 20));
 		horizontalBox_1.add(rigidArea_5_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Số CMT:");
@@ -133,6 +135,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(lblNewLabel_1_1);
 
 		Component rigidArea_15_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15_1.setPreferredSize(new Dimension(45, 20));
 		horizontalBox_1.add(rigidArea_15_1);
 
 		txtSoCMT = new JTextField();
@@ -189,6 +192,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_3.add(lblNewLabel_1_3);
 
 		Component rigidArea_15_3 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15_3.setPreferredSize(new Dimension(50, 20));
 		horizontalBox_3.add(rigidArea_15_3);
 
 		txtSoDienThoai = new JTextField();

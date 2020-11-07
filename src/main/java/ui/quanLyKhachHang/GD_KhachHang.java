@@ -13,6 +13,11 @@ import java.awt.event.MouseListener;
 import java.util.EventObject;
 import java.util.List;
 
+import ui.App;
+import ui.ChuyenManHinh;
+import ui.DanhMuc;
+import ui.quanLyNhanVien.GD_TNV;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,7 +50,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JTable tblKhachHang;
 	private JButton btnSua;
 	private JButton btnXoa;
+<<<<<<< HEAD
 	private JComboBox<String> cboTimKiem;
+=======
+	private JButton btnXemChiTiet;
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 
 	private int page = 1;
 	private int maxPage = 2;
@@ -82,7 +91,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		scrollPaneKhachHang.setBounds(29, 200, 1385, 532);
 		add(scrollPaneKhachHang);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet
 				.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
@@ -227,20 +236,70 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private void dangKiSuKien() {
 		btnDau.addActionListener(this);
 		btnCuoi.addActionListener(this);
-		btnThem.addActionListener(this);
-		btnTruoc.addActionListener(this);
 		btnSau.addActionListener(this);
+		btnTruoc.addActionListener(this);
+		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
+<<<<<<< HEAD
 		txtTimKiem.addKeyListener(this);
 		cboTimKiem.addActionListener(this);
+=======
+		btnXemChiTiet.addActionListener(this);
+
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
+		if (source.equals(btnThem)) {
+			new GD_ThemKhachHang().setVisible(true);
+		}
+		if (source.equals(btnSua)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_CapNhatKhachHang());
+			this.validate();
+			this.repaint();
 
+<<<<<<< HEAD
+=======
+		}
+		if (source.equals(btnXemChiTiet)) {
+			new GD_ChiTietKhachHang().setVisible(true);
+		}
+
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		if (source == btnDau) {
 			this.page = 1;
 			capNhatDuLieuTrongBang();
@@ -265,14 +324,18 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		if (source == btnThem) {
 			new GD_ThemKhachHang().setVisible(true);
 
+<<<<<<< HEAD
 		}
 
 		if (source == cboTimKiem) {
 			
+=======
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		}
 
 	}
 
+<<<<<<< HEAD
 	@Override
 	public void keyReleased(KeyEvent e) {
         this.field = cboTimKiem.getSelectedItem().toString();
@@ -292,6 +355,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		String field = cboTimKiem.getSelectedItem().toString();
 		khachHangs = khachHangDao.timKiemKhachHangs(timKiem, from, to, field);
 		
+=======
+	private void loadDuLieu() {
+		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
+
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		if (khachHangs.size() > 0) {
 			xoaDuLieuTrongBang();
 			themKhachHangsVaoBang();

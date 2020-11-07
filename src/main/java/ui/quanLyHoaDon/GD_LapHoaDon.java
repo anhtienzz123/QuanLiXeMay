@@ -323,37 +323,57 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTimKiem.setBounds(326, 275, 386, 30);
+		txtTimKiem.setBounds(274, 275, 438, 30);
 		add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
+<<<<<<< HEAD
 		 cboHang = new JComboBox<String>();
 		cboHang.setModel(new DefaultComboBoxModel(new String[] { "Harley Davidson", "Tất cả" }));
+=======
+		JComboBox cboHang = new JComboBox();
+		cboHang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Honda", "Yamaha", "Suzuki", "Kawasaki"}));
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHang.setBackground(Color.WHITE);
-		cboHang.setBounds(132, 326, 171, 30);
+		cboHang.setBounds(132, 326, 115, 30);
 		add(cboHang);
 
+<<<<<<< HEAD
 		JComboBox<String> cboLoaiXe = new JComboBox<String>();
 		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Xe côn tay", "Tất cả" }));
+=======
+		JComboBox cboLoaiXe = new JComboBox();
+		cboLoaiXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Xe số", "Xe tay ga", "Xe côn tay", "Xe mô tô"}));
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
-		cboLoaiXe.setBounds(582, 326, 130, 30);
+		cboLoaiXe.setBounds(360, 326, 130, 30);
 		add(cboLoaiXe);
 
+<<<<<<< HEAD
 		JComboBox<String> cboDongXe = new JComboBox<String>();
 		cboDongXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Air Blade", "Tất cả" }));
+=======
+		JComboBox cboDongXe = new JComboBox();
+		cboDongXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Air Blade", "SH", "Cub"}));
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
-		cboDongXe.setBounds(132, 373, 171, 30);
+		cboDongXe.setBounds(132, 373, 115, 30);
 		add(cboDongXe);
 
+<<<<<<< HEAD
 		JComboBox<String> cboXuatXu = new JComboBox<String>();
 		cboXuatXu.setModel(new DefaultComboBoxModel<String>(
 				new String[] { "Trung Quốc", "Tất cả", "Việt Nam", "Nhật Bản", "Thái Lan", "Đức", "Trung Quốc" }));
+=======
+		JComboBox cboXuatXu = new JComboBox();
+		cboXuatXu.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Việt Nam", "Nhật Bản", "Thái Lan", "Đức", "Trung Quốc"}));
+>>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
-		cboXuatXu.setBounds(575, 373, 137, 30);
+		cboXuatXu.setBounds(360, 373, 130, 30);
 		add(cboXuatXu);
 
 		JButton btnDau = new JButton("");
@@ -546,7 +566,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblXuatXu.setForeground(Color.BLACK);
 		lblXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblXuatXu.setBackground(new Color(102, 102, 255));
-		lblXuatXu.setBounds(463, 373, 88, 30);
+		lblXuatXu.setBounds(274, 369, 88, 30);
 		add(lblXuatXu);
 
 		JLabel lblDongXe = new JLabel("Dòng xe:");
@@ -560,7 +580,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblLoai.setForeground(Color.BLACK);
 		lblLoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLoai.setBackground(new Color(102, 102, 255));
-		lblLoai.setBounds(475, 326, 74, 30);
+		lblLoai.setBounds(274, 326, 74, 30);
 		add(lblLoai);
 
 		JLabel lblHang = new JLabel("Hãng:");
@@ -574,7 +594,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên xe", "Mã xe" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setBackground(Color.WHITE);
-		cboTimKiem.setBounds(132, 276, 171, 29);
+		cboTimKiem.setBounds(132, 276, 115, 29);
 		add(cboTimKiem);
 
 		JLabel lblTK = new JLabel("Tìm kiếm:");
@@ -609,6 +629,34 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		txtSoLuong.setColumns(10);
 		txtSoLuong.setBounds(496, 840, 62, 40);
 		add(txtSoLuong);
+		
+		JComboBox cboMau = new JComboBox();
+		cboMau.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Đen", "Trắng", "Đỏ", "Đỏ-Đen"}));
+		cboMau.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboMau.setBackground(Color.WHITE);
+		cboMau.setBounds(568, 326, 151, 30);
+		add(cboMau);
+		
+		JLabel lblMu = new JLabel("Màu:");
+		lblMu.setForeground(Color.BLACK);
+		lblMu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMu.setBackground(new Color(102, 102, 255));
+		lblMu.setBounds(518, 326, 69, 30);
+		add(lblMu);
+		
+		JLabel lblGi = new JLabel("Giá:");
+		lblGi.setForeground(Color.BLACK);
+		lblGi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblGi.setBackground(new Color(102, 102, 255));
+		lblGi.setBounds(518, 373, 69, 30);
+		add(lblGi);
+		
+		JComboBox cboGia = new JComboBox();
+		cboGia.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Dưới 25tr", "Từ 25tr - 60tr", "Trên 60tr"}));
+		cboGia.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboGia.setBackground(Color.WHITE);
+		cboGia.setBounds(568, 373, 151, 30);
+		add(cboGia);
 		
 		
 		

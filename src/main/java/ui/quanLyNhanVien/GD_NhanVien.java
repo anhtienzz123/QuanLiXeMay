@@ -32,6 +32,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import ui.App;
 import ui.ChuyenManHinh;
 import ui.DanhMuc;
+import ui.quanLyBaoHanh.GD_BaoHanh;
+
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
@@ -321,6 +323,13 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_ThemNhanVien());
+			this.validate();
+			this.repaint();
+		}
 
 	}
 }
