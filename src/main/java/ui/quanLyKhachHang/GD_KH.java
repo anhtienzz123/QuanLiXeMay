@@ -1,30 +1,31 @@
 package ui.quanLyKhachHang;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.Box;
 import java.awt.Component;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
+import java.util.List;
 
-import javax.swing.JTextField;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import ui.quanLyBaoHanh.GD_BHanh;
-
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
-import javax.swing.DefaultComboBoxModel;
+import dao.KhachHangDao;
+import entity.KhachHang;
 
 public class GD_KH extends JPanel implements ActionListener {
 
@@ -48,10 +49,16 @@ public class GD_KH extends JPanel implements ActionListener {
 	private JButton btnCapNhat;
 	private DefaultTableModel modelKhachHang;
 
+	private KhachHangDao khachHangDao;
+	private List<KhachHang> khachHangs;
+
 	/**
 	 * Create the panel.
 	 */
 	public GD_KH() {
+		
+		khachHangDao = KhachHangDao.getInstance();
+		System.out.println("chay ham nay");
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1300, 900));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -97,7 +104,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		horizontalBox_1.add(rigidArea_5);
 
 		cboTimKiem = new JComboBox<String>();
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã khách hàng", "Tên khách hàng"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã khách hàng", "Tên khách hàng" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setPreferredSize(new Dimension(170, 40));
 		cboTimKiem.setMaximumSize(new Dimension(170, 40));
@@ -112,7 +119,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		txtTimKiem.setMaximumSize(new Dimension(500, 40));
 		horizontalBox_1.add(txtTimKiem);
 		txtTimKiem.setColumns(15);
-		
+
 		Component horizontalGlue = Box.createHorizontalGlue();
 		horizontalBox_1.add(horizontalGlue);
 
@@ -132,7 +139,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		horizontalBox_2.add(scrollPane);
 
-		String[] colHeaderKhachHang = { "STT", "Mã khách hàng", "Tên khách hàng", "Ngày Sinh", "Số điện thoại"};
+		String[] colHeaderKhachHang = { "STT", "Mã khách hàng", "Tên khách hàng", "Ngày Sinh", "Số điện thoại" };
 		modelKhachHang = new DefaultTableModel(colHeaderKhachHang, 0);
 		tblKhacHang = new JTable(modelKhachHang) {
 			private static final long serialVersionUID = 1L;
@@ -214,8 +221,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		horizontalBox_4.add(horizontalGlue_1);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet
-				.setIcon(new ImageIcon(GD_KH.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setIcon(new ImageIcon(GD_KH.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.LIGHT_GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setPreferredSize(new Dimension(200, 50));
@@ -254,6 +260,8 @@ public class GD_KH extends JPanel implements ActionListener {
 		verticalBox.add(verticalGlue);
 
 		dangKiSuKien();
+		
+		loadDuLieu();
 	}
 
 	private void dangKiSuKien() {
@@ -269,8 +277,8 @@ public class GD_KH extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o =e.getSource();
-		if(o.equals(btnXemChiTiet)) {
+		Object o = e.getSource();
+		if (o.equals(btnXemChiTiet)) {
 			new GD_ChiTietKhachHang().setVisible(true);
 		}
 //		else if (o.equals(btnThem)) {
@@ -287,6 +295,44 @@ public class GD_KH extends JPanel implements ActionListener {
 			this.validate();
 			this.repaint();
 		}
+	}
+
+	
+	private void loadDuLieu() {
+		khachHangs = khachHangDao.getKhachHangs(1, 20);
+		
+		themKhachHangsVaoBang();
+	}
+	
+	private void themKhachHangsVaoBang() {
+		if (khachHangs != null) {
+			for (KhachHang khachHang : khachHangs) {
+				themKhachHangVaoBang(khachHang);
+			}
+		}
+	}
+	
+	public void capNhatLaiDuLieuTrongBang() {
+		xoaDuLieuTrongBang();
+		loadDuLieu();
+	}
+
+	private void themKhachHangVaoBang(KhachHang khachHang) {
+
+		Object[] object = new Object[5];
+		object[0] = tblKhacHang.getRowCount() + 1;
+		object[1] = khachHang.getMaKhachHang();
+		object[2] = khachHang.getHoTenKH();
+		object[3] = khachHang.getSoCMT();
+		object[4] = khachHang.getSoDienThoai();
+		modelKhachHang.addRow(object);
+	}
+	
+	private void xoaDuLieuTrongBang() {
+		while (modelKhachHang.getRowCount() > 0) {
+			modelKhachHang.removeRow(0);
+		}
+
 	}
 
 }

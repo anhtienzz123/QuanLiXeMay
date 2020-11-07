@@ -21,7 +21,7 @@ import ui.quanLyKhachHang.GD_KhachHang;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
 import ui.quanLyNhanVien.GD_NV;
 import ui.quanLyNhanVien.GD_NhanVien;
-import ui.quanLyNhanVien.GD_ThemNhanVien;
+import ui.quanLyNhanVien.GD_TNV;
 import ui.quanLyThongKe.GD_ThongKe;
 import ui.quanLyXeMay.GD_TX;
 import ui.quanLyXeMay.GD_ThemXeMay;
@@ -127,7 +127,7 @@ public class ChuyenManHinh {
 				setPanel();
 				break;
 			case "ThemNhanVien":
-				node = new GD_ThemNhanVien();
+				node = new GD_TNV();
 				setPanel();
 				break;
 			case "DoanhSoTheoNgay":

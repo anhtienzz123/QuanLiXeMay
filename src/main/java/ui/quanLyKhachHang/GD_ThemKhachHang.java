@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.Calendar;
 
 import javax.swing.Box;
@@ -14,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +23,11 @@ import javax.swing.JTextArea;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import constant.TenEntity;
+import dao.KhachHangDao;
+import entity.KhachHang;
+import other.RandomMa;
 
 public class GD_ThemKhachHang extends JFrame implements ActionListener {
 
@@ -32,12 +39,13 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 	private JButton btnThoat;
 	private JLabel lblMaKH;
 	private JTextField txtDiaChi;
-	private JTextField textField;
+	private JTextField txtSoDienThoai;
 	private JTextField txtSoCMT;
 	private JTextField txtTenKH;
 	private JDateChooser txtNgaySinh;
 	private JButton btnXoaRong;
 	private JButton btnThem;
+	private KhachHangDao khachHangDao;
 
 	/**
 	 * Launch the application.
@@ -59,10 +67,12 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public GD_ThemKhachHang() {
+		khachHangDao = KhachHangDao.getInstance();
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 540);
 		setLocationRelativeTo(null);
-		setTitle("Thông tin khách hàng");
+		setTitle("Thêm khách hàng");
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -82,7 +92,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-		JLabel lblNewLabel = new JLabel("Khách hàng");
+		JLabel lblNewLabel = new JLabel("Thêm khách hàng");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setMaximumSize(new Dimension(37137, 50));
 		lblNewLabel.setPreferredSize(new Dimension(800, 50));
@@ -104,9 +114,11 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(lblNewLabel_1);
 
 		Component rigidArea_15 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15.setPreferredSize(new Dimension(25, 20));
 		horizontalBox_1.add(rigidArea_15);
 
-		lblMaKH = new JLabel("KH123456");
+		lblMaKH = new JLabel();
+		
 		lblMaKH.setForeground(Color.BLACK);
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_1.add(lblMaKH);
@@ -115,6 +127,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(horizontalGlue_1);
 
 		Component rigidArea_5_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_5_1.setPreferredSize(new Dimension(115, 20));
 		horizontalBox_1.add(rigidArea_5_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Số CMT:");
@@ -122,6 +135,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(lblNewLabel_1_1);
 
 		Component rigidArea_15_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15_1.setPreferredSize(new Dimension(45, 20));
 		horizontalBox_1.add(rigidArea_15_1);
 
 		txtSoCMT = new JTextField();
@@ -154,7 +168,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_2.add(horizontalGlue_2);
 
 		txtTenKH = new JTextField();
-		txtTenKH.setText("Nguyễn Trần Nhật Hào");
+		txtTenKH.setText("");
 		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenKH.setPreferredSize(new Dimension(300, 40));
 		txtTenKH.setMaximumSize(new Dimension(2147483647, 40));
@@ -178,15 +192,16 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		horizontalBox_3.add(lblNewLabel_1_3);
 
 		Component rigidArea_15_3 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15_3.setPreferredSize(new Dimension(50, 20));
 		horizontalBox_3.add(rigidArea_15_3);
 
-		textField = new JTextField();
-		textField.setText("0123456789");
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		textField.setPreferredSize(new Dimension(200, 40));
-		textField.setMaximumSize(new Dimension(2147483647, 40));
-		textField.setColumns(5);
-		horizontalBox_3.add(textField);
+		txtSoDienThoai = new JTextField();
+		
+		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtSoDienThoai.setPreferredSize(new Dimension(200, 40));
+		txtSoDienThoai.setMaximumSize(new Dimension(2147483647, 40));
+		txtSoDienThoai.setColumns(5);
+		horizontalBox_3.add(txtSoDienThoai);
 
 		Component rigidArea_5_1_1 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3.add(rigidArea_5_1_1);
@@ -315,6 +330,11 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 
 		Component verticalGlue = Box.createVerticalGlue();
 		verticalBox.add(verticalGlue);
+		
+		// tạo mã ngẫu nhiên
+		lblMaKH.setText(RandomMa.getMaNgauNhien(TenEntity.KHACH_HANG));
+	
+		
 		dangKiSuKien();
 	}
 	
@@ -326,10 +346,46 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-		if(o.equals(btnThoat)) {
+		Object source = e.getSource();
+		if(source.equals(btnThoat)) {
 			this.setVisible(false);
 		}
+		
+		if(source == btnThem) {
+			KhachHang khachHang = getKhachHang();
+			
+			if(validateKhachHang(khachHang)) {
+				if(khachHangDao.themKhachHang(khachHang)) {
+					JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên", JOptionPane.INFORMATION_MESSAGE, null );
+				}else {
+					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE, null );
+				}
+			}
+			
+		}
+		
+		if(source == btnXoaRong) {
+			
+		}
+	}
+	
+	private KhachHang getKhachHang() {
+		String maKhachHang = lblMaKH.getText();
+		String soCMT = txtSoCMT.getText();
+		String hoTenKH = txtTenKH.getText();
+		String soDienThoai = txtSoDienThoai.getText();
+		String ngaySinhString = txtNgaySinh.getName();
+		System.out.println("ngay sinh string: " + ngaySinhString);
+		String diaChiKH = txtDiaChi.getText();
+		
+		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, new Date(2020, 10, 11), soDienThoai, diaChiKH);
+		return khachHang;
+		
+	}
+	
+	private boolean validateKhachHang(KhachHang khachHang) {
+		
+		return true;
 	}
 
 }

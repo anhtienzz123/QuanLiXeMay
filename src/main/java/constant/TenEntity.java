@@ -2,6 +2,10 @@ package constant;
 
 public class TenEntity {
 
+	private TenEntity() {
+		
+	}
+
 	public static final String KHACH_HANG = "KH";
 	public static final String NHAN_VIEN_HANH_CHINH = "NVHC";
 	public static final String NHAN_VIEN_KI_THUAT = "NVKT";
@@ -14,6 +18,4 @@ public class TenEntity {
 	public static final String HANG_XE = "HX";
 	public static final String LOAI_XE = "LX";
 	public static final String XUAT_XU = "XX";
-
-	
 }

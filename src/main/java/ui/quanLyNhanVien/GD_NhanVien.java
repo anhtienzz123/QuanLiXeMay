@@ -323,11 +323,13 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		this.removeAll();
-		this.setLayout(new BorderLayout());
-		this.add(new GD_ThemNhanVien());
-		this.validate();
-		this.repaint();
+		if(o.equals(btnThem)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_ThemNhanVien());
+			this.validate();
+			this.repaint();
+		}
 
 	}
 }
