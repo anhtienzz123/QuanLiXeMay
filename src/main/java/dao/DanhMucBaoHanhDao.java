@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.DanhMucBaoHanhConstant;
+import constant.NhanVienKiThuatConstant;
 import converter.DanhMucBaoHanhConvert;
 import db.DatabaseConnect;
 import entity.DanhMucBaoHanh;
@@ -101,6 +102,25 @@ public class DanhMucBaoHanhDao {
 		return n > 0;
 	}
 	
+	public boolean kiemTraMaKhongTrung(String maDanhMucBaoHanh) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(DanhMucBaoHanhConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maDanhMucBaoHanh);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+	}
 	
 
 }

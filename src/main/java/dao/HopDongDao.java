@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.HoaDonConstant;
 import constant.HopDongConstant;
 import constant.NhanVienKiThuatConstant;
 import converter.HopDongConverter;
@@ -127,5 +128,25 @@ public class HopDongDao {
 		}
 
 		return n > 0;
+	}
+	
+	public boolean kiemTraMaKhongTrung(String maHopDong) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(HopDongConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maHopDong);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }
