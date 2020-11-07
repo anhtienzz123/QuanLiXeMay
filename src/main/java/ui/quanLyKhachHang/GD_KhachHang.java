@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventObject;
@@ -26,11 +28,12 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import constant.KhachHangConstant;
 import dao.KhachHangDao;
 import entity.KhachHang;
 import ui.App;
 
-public class GD_KhachHang extends JPanel implements ActionListener, MouseListener {
+public class GD_KhachHang extends JPanel implements ActionListener, MouseListener, KeyListener {
 
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
@@ -43,13 +46,17 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JTable tblKhachHang;
 	private JButton btnSua;
 	private JButton btnXoa;
+
 	private JButton btnXemChiTiet;
 
 	private int page = 1;
 	private int maxPage = 2;
 	private static final int SIZE = 20;
+	private String field = "";
 	private KhachHangDao khachHangDao;
 	private List<KhachHang> khachHangs;
+
+	private JComboBox<String> cboTimKiem;
 
 	/**
 	 * Create the panel.
@@ -94,11 +101,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(
-				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Số CMT" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { KhachHangConstant.MA_KHACH_HANG,
+				KhachHangConstant.TEN_KHACH_HANG, KhachHangConstant.SO_DIEN_THOAI, KhachHangConstant.SO_CMT }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -217,7 +224,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		add(btnXoa);
 
 		dangKiSuKien();
-		loadDuLieu();
+		capNhatDuLieuTrongBang();
 
 	}
 
@@ -229,7 +236,122 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
+
+		txtTimKiem.addKeyListener(this);
+		cboTimKiem.addActionListener(this);
+
 		btnXemChiTiet.addActionListener(this);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source.equals(btnThem)) {
+			new GD_ThemKhachHang().setVisible(true);
+		}
+		if (source.equals(btnSua)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_CapNhatKhachHang());
+			this.validate();
+			this.repaint();
+
+		}
+		if (source.equals(btnXemChiTiet)) {
+			new GD_ChiTietKhachHang().setVisible(true);
+		}
+
+		if (source == btnDau) {
+			this.page = 1;
+			capNhatDuLieuTrongBang();
+		}
+
+		if (source == btnCuoi) {
+			this.page = maxPage;
+			capNhatDuLieuTrongBang();
+		}
+
+		if (source == btnSau && page < maxPage) {
+			this.page++;
+			capNhatDuLieuTrongBang();
+
+		}
+
+		if (source == btnTruoc && page > 1) {
+			this.page--;
+			capNhatDuLieuTrongBang();
+		}
+
+		if (source == btnThem) {
+			new GD_ThemKhachHang().setVisible(true);
+
+		}
+
+		if (source == cboTimKiem) {
+
+		}
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.field = cboTimKiem.getSelectedItem().toString();
+		page = 1;
+
+		capNhatDuLieuTrongBang();
+
+	}
+
+	private void capNhatDuLieuTrongBang() {
+
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		khachHangs = khachHangDao.timKiemKhachHangs(timKiem, from, to, field);
+
+		if (khachHangs.size() > 0) {
+			xoaDuLieuTrongBang();
+			themKhachHangsVaoBang();
+			txtTrang.setText(this.page + "");
+		}
+	}
+
+//	private void loadDuLieu() {
+//		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
+//
+//		if (khachHangs.size() > 0) {
+//			xoaDuLieuTrongBang();
+//			themKhachHangsVaoBang();
+//			txtTrang.setText(this.page + "");
+//		}
+//
+//	}
+
+	private void themKhachHangsVaoBang() {
+		if (khachHangs != null) {
+			for (KhachHang khachHang : khachHangs) {
+				themKhachHangVaoBang(khachHang);
+			}
+		}
+	}
+
+	private void themKhachHangVaoBang(KhachHang khachHang) {
+
+		Object[] object = new Object[5];
+		object[0] = tblKhachHang.getRowCount() + 1;
+		object[1] = khachHang.getMaKhachHang();
+		object[2] = khachHang.getHoTenKH();
+		object[3] = khachHang.getSoCMT();
+		object[4] = khachHang.getSoDienThoai();
+		modelKhachHang.addRow(object);
+	}
+
+	private void xoaDuLieuTrongBang() {
+		while (modelKhachHang.getRowCount() > 0) {
+			modelKhachHang.removeRow(0);
+		}
 
 	}
 
@@ -263,84 +385,14 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object source = e.getSource();
-		if (source.equals(btnThem)) {
-			new GD_ThemKhachHang().setVisible(true);
-		}
-		if (source.equals(btnSua)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatKhachHang());
-			this.validate();
-			this.repaint();
-
-		}
-		if (source.equals(btnXemChiTiet)) {
-			new GD_ChiTietKhachHang().setVisible(true);
-		}
-
-		if (source == btnDau) {
-			this.page = 1;
-			loadDuLieu();
-		}
-
-		if (source == btnCuoi) {
-			this.page = maxPage;
-			loadDuLieu();
-		}
-
-		if (source == btnSau && page < maxPage) {
-			this.page++;
-			loadDuLieu();
-
-		}
-
-		if (source == btnTruoc && page > 1) {
-			this.page--;
-			loadDuLieu();
-		}
-
-		if (source == btnThem) {
-			new GD_ThemKhachHang().setVisible(true);
-
-		}
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 
-	private void loadDuLieu() {
-		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
-
-		if (khachHangs.size() > 0) {
-			xoaDuLieuTrongBang();
-			themKhachHangsVaoBang();
-			txtTrang.setText(this.page + "");
-		}
-	}
-
-	private void themKhachHangsVaoBang() {
-		if (khachHangs != null) {
-			for (KhachHang khachHang : khachHangs) {
-				themKhachHangVaoBang(khachHang);
-			}
-		}
-	}
-
-	private void themKhachHangVaoBang(KhachHang khachHang) {
-
-		Object[] object = new Object[5];
-		object[0] = tblKhachHang.getRowCount() + 1;
-		object[1] = khachHang.getMaKhachHang();
-		object[2] = khachHang.getHoTenKH();
-		object[3] = khachHang.getSoCMT();
-		object[4] = khachHang.getSoDienThoai();
-		modelKhachHang.addRow(object);
-	}
-
-	private void xoaDuLieuTrongBang() {
-		while (modelKhachHang.getRowCount() > 0) {
-			modelKhachHang.removeRow(0);
-		}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 }

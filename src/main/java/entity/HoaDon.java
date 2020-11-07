@@ -1,6 +1,7 @@
 package entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -22,8 +23,17 @@ public class HoaDon {
 		super();
 		this.maHoaDon = maHoaDon;
 	}
-	
-	
+
+	public HoaDon(String maHoaDon, KhachHang khachHang, NhanVienHanhChinh nhanVienHanhChinh, Date ngayLap) {
+		super();
+		this.maHoaDon = maHoaDon;
+		this.khachHang = khachHang;
+		this.nhanVienHanhChinh = nhanVienHanhChinh;
+		this.ngayLap = ngayLap;
+
+		this.chiTietHoaDons = new ArrayList<ChiTietHoaDon>();
+	}
+
 	public double tinhTongTienHoaDon() {
 		double tongTien = 0;
 
@@ -36,8 +46,19 @@ public class HoaDon {
 
 	}
 
+	public void themChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
 
+		System.out.println(chiTietHoaDon.getXeMay().getMaXeMay());
+		for (ChiTietHoaDon ctHoaDon : chiTietHoaDons) {
+			
+			if (ctHoaDon.getXeMay().getMaXeMay().equalsIgnoreCase(chiTietHoaDon.getXeMay().getMaXeMay())) {
+				ctHoaDon.tangSoLuong(chiTietHoaDon.getSoLuong());
+				System.out.println("Tim thay");
+				return;
+			}
+		}
 
+		this.chiTietHoaDons.add(chiTietHoaDon);
+	}
 
-	
 }

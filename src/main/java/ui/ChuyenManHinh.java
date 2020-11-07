@@ -53,7 +53,7 @@ public class ChuyenManHinh {
 
 		private JPanel node;
 		private String chon;
-
+		
 		private JPanel pnlChon;
 		private JLabel lblChon;
 
@@ -61,6 +61,7 @@ public class ChuyenManHinh {
 			this.chon = chon;
 			this.pnlChon = pnlChon;
 			this.lblChon = lblChon;
+			
 		}
 
 		@Override
@@ -103,7 +104,7 @@ public class ChuyenManHinh {
 				
 				
 			case "LapHoaDon":
-				node = new GD_LapHoaDon();
+				node = new GD_LapHoaDon("1");
 				setPanel();
 				break;
 			case "ThemKhachHang":

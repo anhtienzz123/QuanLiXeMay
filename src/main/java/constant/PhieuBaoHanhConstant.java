@@ -7,6 +7,7 @@ public class PhieuBaoHanhConstant {
 	public static final String CAP_NHAP_PHIEU_BAO_HANH = "update PhieuBaoHanh set maHopDong = ?,ngayBaoHanh = ?, maNVKiThuat where maPhieuBaoHanh = ?";
 	public static final String GET_PHIEU_BAO_HANH_THEO_MA_HOP_DONG ="select * from PhieuBaoHanh where maHopDong = ?";
 	public static final String GET_PHIEU_BAO_HANHS_PHAN_TRANG = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) as row FROM HopDong) a WHERE a.row >= ?  and a.row <= ?";
-
+	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maPhieuBaoHanh from PhieuBaoHanh\r\n" + 
+    		"where maPhieuBaoHanh = ? ";
 	
 }

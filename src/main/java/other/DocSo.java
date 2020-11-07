@@ -182,6 +182,6 @@ public class DocSo {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(readNum("12312000056465"));
+		System.out.println(readNum("123"));
 	}
 }

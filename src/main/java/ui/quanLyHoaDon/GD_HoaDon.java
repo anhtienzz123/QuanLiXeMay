@@ -270,7 +270,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		if (o.equals(btnLapHoaDon)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_LapHoaDon());
+			this.add(new GD_LapHoaDon("1"));
 			this.validate();
 			this.repaint();
 		}

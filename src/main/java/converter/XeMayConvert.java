@@ -26,7 +26,7 @@ public class XeMayConvert {
 
 		String maXeMay = resultSet.getString("maXeMay");
 		String tenXeMay = resultSet.getString("tenXeMay");
-		String urlAnh = resultSet.getString("urlAnh");
+		String urlAnh = resultSet.getString("tenAnh");
 		int soLuong = resultSet.getInt("soLuong");
 		double giaNhap = resultSet.getDouble("giaNhap");
 		double heSoBan = resultSet.getDouble("heSoBan");
@@ -34,7 +34,7 @@ public class XeMayConvert {
 		String soKhung = resultSet.getString("soKhung");
 		int soPhanKhoi = resultSet.getInt("soPhanKhoi");
 		String soSuon = resultSet.getString("soSuon");
-		String mauXe = resultSet.getString("maXe");
+		String mauXe = resultSet.getString("mauXe");
 		LoaiXe loaiXe = loaiXeDao.getLoaiXeTheoMa(resultSet.getString("maLoaiXe"));
 		DongXe dongXe = dongXeDao.getDongXeTheoMa(resultSet.getString("maDongXe"));
 		XuatXu xuatXu = xuatXuDao.getXuatXuTheoMa(resultSet.getString("maXuatXu"));
@@ -50,7 +50,7 @@ public class XeMayConvert {
 	public static void themXeMay(PreparedStatement preparedStatement, XeMay xeMay) throws SQLException {
 		preparedStatement.setString(1, xeMay.getMaXeMay());
 		preparedStatement.setString(2, xeMay.getTenXeMay());
-		preparedStatement.setString(3, xeMay.getUrlAnh());
+		preparedStatement.setString(3, xeMay.getTenAnh());
 		preparedStatement.setInt(4, xeMay.getSoLuong());
 		preparedStatement.setDouble(5, xeMay.getGiaNhap());
 		preparedStatement.setDouble(6,xeMay.getHeSoBan());
@@ -69,7 +69,7 @@ public class XeMayConvert {
 
 	public static void capNhatXeMay(PreparedStatement preparedStatement, XeMay xeMay) throws SQLException {
 		preparedStatement.setString(1, xeMay.getTenXeMay());
-		preparedStatement.setString(2, xeMay.getUrlAnh());
+		preparedStatement.setString(2, xeMay.getTenAnh());
 		preparedStatement.setInt(3, xeMay.getSoLuong());
 		preparedStatement.setDouble(4, xeMay.getGiaNhap());
 		preparedStatement.setDouble(5, xeMay.getHeSoBan());

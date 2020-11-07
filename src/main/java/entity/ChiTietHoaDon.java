@@ -19,4 +19,8 @@ public class ChiTietHoaDon {
 		return giaBan * soLuong;
 		
 	}
+	
+	public void tangSoLuong(int soLuong) {
+		this.soLuong += soLuong;
+	}
 }
