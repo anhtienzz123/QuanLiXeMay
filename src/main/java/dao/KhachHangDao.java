@@ -163,4 +163,50 @@ public class KhachHangDao {
 
 		return true;
 	}
+
+	public List<KhachHang> timKiemKhachHangs(String timKiem, int from, int to, String field) {
+
+		List<KhachHang> khachHangs = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANGS_PHAN_TRANG);
+				break;
+			case KhachHangConstant.MA_KHACH_HANG:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_MA_KHACH_HANG);
+				break;
+			case KhachHangConstant.SO_CMT:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_SO_CMT);
+				break;
+
+			case KhachHangConstant.TEN_KHACH_HANG:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_TEN_KHACH_HANG);
+				break;
+
+			case KhachHangConstant.SO_DIEN_THOAI:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_SO_DIEN_THOAI);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setString(1, "%" + timKiem + "%");
+			preparedStatement.setInt(2, from);
+			preparedStatement.setInt(3, to);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				KhachHang khachHang = KhachHangConverter.getKhachHang(resultSet);
+				khachHangs.add(khachHang);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return khachHangs;
+	}
 }

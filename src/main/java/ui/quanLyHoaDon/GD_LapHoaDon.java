@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.EventObject;
 
 import javax.swing.Box;
@@ -24,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import db.DatabaseConnect;
 import other.DocSo;
 import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
@@ -47,11 +49,20 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 	private JTextField txtTrang;
 	private JTextField txtTienKhachTra;
 	private JTextField txtSoLuong;
+	
+	private JComboBox<String> cboHang;
+	private JComboBox<String> cboTimKiem;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_LapHoaDon() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -308,21 +319,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		modelXe.addRow(new Object[] { "1", null, null, null });
-		modelXe.addRow(new Object[] { "2", null, null, null });
-		modelXe.addRow(new Object[] { "3", null, null, null });
-		modelXe.addRow(new Object[] { "4", null, null, null });
-		modelXe.addRow(new Object[] { "5", null, null, null });
-		modelXe.addRow(new Object[] { "6", null, null, null });
-		modelXe.addRow(new Object[] { "7", null, null, null });
-		modelXe.addRow(new Object[] { "8", null, null, null });
-		modelXe.addRow(new Object[] { "9", null, null, null });
-		modelXe.addRow(new Object[] { "10", null, null, null });
-		modelXe.addRow(new Object[] { "11", null, null, null });
-		modelXe.addRow(new Object[] { "12", null, null, null });
-		modelXe.addRow(new Object[] { "13", null, null, null });
-		modelXe.addRow(new Object[] { "14", null, null, null });
-		modelXe.addRow(new Object[] { "15", null, null, null });
+		
 
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -330,29 +327,29 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
-		JComboBox cboHang = new JComboBox();
+		 cboHang = new JComboBox<String>();
 		cboHang.setModel(new DefaultComboBoxModel(new String[] { "Harley Davidson", "Tất cả" }));
 		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHang.setBackground(Color.WHITE);
 		cboHang.setBounds(132, 326, 171, 30);
 		add(cboHang);
 
-		JComboBox cboLoaiXe = new JComboBox();
-		cboLoaiXe.setModel(new DefaultComboBoxModel(new String[] { "Xe côn tay", "Tất cả" }));
+		JComboBox<String> cboLoaiXe = new JComboBox<String>();
+		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Xe côn tay", "Tất cả" }));
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
 		cboLoaiXe.setBounds(582, 326, 130, 30);
 		add(cboLoaiXe);
 
-		JComboBox cboDongXe = new JComboBox();
-		cboDongXe.setModel(new DefaultComboBoxModel(new String[] { "Air Blade", "Tất cả" }));
+		JComboBox<String> cboDongXe = new JComboBox<String>();
+		cboDongXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Air Blade", "Tất cả" }));
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
 		cboDongXe.setBounds(132, 373, 171, 30);
 		add(cboDongXe);
 
-		JComboBox cboXuatXu = new JComboBox();
-		cboXuatXu.setModel(new DefaultComboBoxModel(
+		JComboBox<String> cboXuatXu = new JComboBox<String>();
+		cboXuatXu.setModel(new DefaultComboBoxModel<String>(
 				new String[] { "Trung Quốc", "Tất cả", "Việt Nam", "Nhật Bản", "Thái Lan", "Đức", "Trung Quốc" }));
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
@@ -573,8 +570,8 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblHang.setBounds(30, 326, 62, 30);
 		add(lblHang);
 
-		JComboBox cboTimKiem = new JComboBox();
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Tên xe", "Mã xe" }));
+		cboTimKiem = new JComboBox<String>();
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên xe", "Mã xe" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setBounds(132, 276, 171, 29);
@@ -633,4 +630,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 //			new GD_ThemKhachHang().setVisible(true);
 //		}
 	}
+	
+	
 }

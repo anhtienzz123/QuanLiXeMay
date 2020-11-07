@@ -118,4 +118,82 @@ public class XeMayDao {
 		return n > 0;
 	}
 
+//	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem, double gia1, double gia2,String mauSac, String xuatXu,
+//			String loaiXe, String dongXe, String hangXe) {
+//
+//
+//
+//		String sql = "select maTour, tenTour, gia, ngayDi, ngayVe, ten, tinhThanh, tour.maDiaDanh from tour inner join diadanh on  tour.maDiaDanh = diadanh.maDiaDanh where ngayDi > curdate()";
+//
+//		if (!tenDiaDanh.trim().equals("")) {
+//			sql += " and ten = '" + tenDiaDanh + "'";
+//		}
+//
+//		if (!(gia1 == 0 && gia2 == 0)) {
+//
+//			if (gia1 == 0 && gia2 == 1999999) {
+//				sql += " and gia <= 1999999";
+//			}
+//
+//			if (gia1 == 2000000 && gia2 == 5000000) {
+//				sql += " and gia >= " + gia1 + " and gia <= " + gia2;
+//			}
+//
+//			if (gia1 == 5000001 && gia2 == 10000000) {
+//				sql += " and gia >= " + gia1 + " and gia <= " + gia2;
+//			}
+//
+//			if (gia1 == 10000001) {
+//				sql += " and gia >= 10000001";
+//			}
+//
+//		}
+//
+//		if (!ngayDi.equals("")) {
+//			sql += " and ngayDi = '" + ngayDi + "'";
+//
+//		}
+//
+//		if (!tinhThanh.trim().equals("")) {
+//			sql += " and tinhThanh = '" + tinhThanh + "'";
+//
+//		}
+//
+//		sql += " limit " + viTri + ", " + size;
+//
+//		List<Tour> listTours = new ArrayList<Tour>();
+//
+//		PreparedStatement preparedStatement;
+//		ResultSet rSet;
+//		try {
+//			preparedStatement = connection.prepareStatement(sql);
+//			rSet = preparedStatement.executeQuery();
+//
+//			while (rSet.next()) {
+//				String maTour = rSet.getString("maTour");
+//				String tenTour = rSet.getString("tenTour");
+//				double giaTour = rSet.getDouble("gia");
+//				Date ngDi = rSet.getDate("ngayDi");
+//				Date ngayVe = rSet.getDate("ngayVe");
+//
+//				String maDiaDanh = rSet.getString("maDiaDanh");
+//				DiaDanh diaDanh = getDiaDanh(maDiaDanh);
+//
+//				Tour tour = new Tour(maTour, tenTour, giaTour, ngDi, ngayVe, diaDanh);
+//				listTours.add(tour);
+//			}
+//
+//			rSet.close();
+//			preparedStatement.close();
+//			connection.close();
+//			return listTours;
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return null;
+//
+//	}
 }

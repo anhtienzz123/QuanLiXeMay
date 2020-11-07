@@ -104,7 +104,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		horizontalBox_1.add(rigidArea_5);
 
 		cboTimKiem = new JComboBox<String>();
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã khách hàng", "Tên khách hàng" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Mã khách hàng", "Tên khách hàng" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setPreferredSize(new Dimension(170, 40));
 		cboTimKiem.setMaximumSize(new Dimension(170, 40));
@@ -272,6 +272,8 @@ public class GD_KH extends JPanel implements ActionListener {
 		btnTruoc.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnXoa.addActionListener(this);
+		
+		
 
 	}
 
