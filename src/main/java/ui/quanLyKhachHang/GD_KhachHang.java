@@ -1,5 +1,6 @@
 package ui.quanLyKhachHang;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,11 +13,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventObject;
 import java.util.List;
-
-import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import ui.quanLyNhanVien.GD_TNV;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -50,11 +46,8 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JTable tblKhachHang;
 	private JButton btnSua;
 	private JButton btnXoa;
-<<<<<<< HEAD
-	private JComboBox<String> cboTimKiem;
-=======
+
 	private JButton btnXemChiTiet;
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 
 	private int page = 1;
 	private int maxPage = 2;
@@ -62,6 +55,8 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private String field = "";
 	private KhachHangDao khachHangDao;
 	private List<KhachHang> khachHangs;
+
+	private JComboBox<String> cboTimKiem;
 
 	/**
 	 * Create the panel.
@@ -241,41 +236,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
-<<<<<<< HEAD
+
 		txtTimKiem.addKeyListener(this);
 		cboTimKiem.addActionListener(this);
-=======
+
 		btnXemChiTiet.addActionListener(this);
-
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 
 	}
 
@@ -292,14 +257,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			this.validate();
 			this.repaint();
 
-<<<<<<< HEAD
-=======
 		}
 		if (source.equals(btnXemChiTiet)) {
 			new GD_ChiTietKhachHang().setVisible(true);
 		}
 
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		if (source == btnDau) {
 			this.page = 1;
 			capNhatDuLieuTrongBang();
@@ -324,49 +286,48 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		if (source == btnThem) {
 			new GD_ThemKhachHang().setVisible(true);
 
-<<<<<<< HEAD
 		}
 
 		if (source == cboTimKiem) {
-			
-=======
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
+
 		}
 
 	}
 
-<<<<<<< HEAD
 	@Override
 	public void keyReleased(KeyEvent e) {
-        this.field = cboTimKiem.getSelectedItem().toString();
-        page = 1;
-	
+		this.field = cboTimKiem.getSelectedItem().toString();
+		page = 1;
+
 		capNhatDuLieuTrongBang();
 
 	}
 
-
-
 	private void capNhatDuLieuTrongBang() {
-		
+
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
 		String timKiem = txtTimKiem.getText();
 		String field = cboTimKiem.getSelectedItem().toString();
 		khachHangs = khachHangDao.timKiemKhachHangs(timKiem, from, to, field);
-		
-=======
-	private void loadDuLieu() {
-		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
 
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
 		if (khachHangs.size() > 0) {
 			xoaDuLieuTrongBang();
 			themKhachHangsVaoBang();
 			txtTrang.setText(this.page + "");
 		}
-
 	}
+
+//	private void loadDuLieu() {
+//		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
+//
+//		if (khachHangs.size() > 0) {
+//			xoaDuLieuTrongBang();
+//			themKhachHangsVaoBang();
+//			txtTrang.setText(this.page + "");
+//		}
+//
+//	}
 
 	private void themKhachHangsVaoBang() {
 		if (khachHangs != null) {

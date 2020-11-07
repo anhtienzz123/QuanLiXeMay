@@ -19,6 +19,11 @@ public class XeMayDao {
 	private static XeMayDao instance;
 	private Connection connection;
 
+	private static final String TAT_CA = "Tất cả";
+	private static final String RONG = "";
+	private static final String MA_XE = "Mã xe";
+	private static final String TEN_XE ="Tên xe";
+
 	private XeMayDao() {
 		connection = DatabaseConnect.getInstance();
 	}
@@ -117,83 +122,162 @@ public class XeMayDao {
 
 		return n > 0;
 	}
+	
+	
+	
+	public int getMaxPageTheoNhieuTieuChi(String timKiem,String field,String gia, String mauXe, String tenXuatXu,
+			String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
 
-//	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem, double gia1, double gia2,String mauSac, String xuatXu,
-//			String loaiXe, String dongXe, String hangXe) {
-//
-//
-//
-//		String sql = "select maTour, tenTour, gia, ngayDi, ngayVe, ten, tinhThanh, tour.maDiaDanh from tour inner join diadanh on  tour.maDiaDanh = diadanh.maDiaDanh where ngayDi > curdate()";
-//
-//		if (!tenDiaDanh.trim().equals("")) {
-//			sql += " and ten = '" + tenDiaDanh + "'";
-//		}
-//
-//		if (!(gia1 == 0 && gia2 == 0)) {
-//
-//			if (gia1 == 0 && gia2 == 1999999) {
-//				sql += " and gia <= 1999999";
-//			}
-//
-//			if (gia1 == 2000000 && gia2 == 5000000) {
-//				sql += " and gia >= " + gia1 + " and gia <= " + gia2;
-//			}
-//
-//			if (gia1 == 5000001 && gia2 == 10000000) {
-//				sql += " and gia >= " + gia1 + " and gia <= " + gia2;
-//			}
-//
-//			if (gia1 == 10000001) {
-//				sql += " and gia >= 10000001";
-//			}
-//
-//		}
-//
-//		if (!ngayDi.equals("")) {
-//			sql += " and ngayDi = '" + ngayDi + "'";
-//
-//		}
-//
-//		if (!tinhThanh.trim().equals("")) {
-//			sql += " and tinhThanh = '" + tinhThanh + "'";
-//
-//		}
-//
-//		sql += " limit " + viTri + ", " + size;
-//
-//		List<Tour> listTours = new ArrayList<Tour>();
-//
-//		PreparedStatement preparedStatement;
-//		ResultSet rSet;
-//		try {
-//			preparedStatement = connection.prepareStatement(sql);
-//			rSet = preparedStatement.executeQuery();
-//
-//			while (rSet.next()) {
-//				String maTour = rSet.getString("maTour");
-//				String tenTour = rSet.getString("tenTour");
-//				double giaTour = rSet.getDouble("gia");
-//				Date ngDi = rSet.getDate("ngayDi");
-//				Date ngayVe = rSet.getDate("ngayVe");
-//
-//				String maDiaDanh = rSet.getString("maDiaDanh");
-//				DiaDanh diaDanh = getDiaDanh(maDiaDanh);
-//
-//				Tour tour = new Tour(maTour, tenTour, giaTour, ngDi, ngayVe, diaDanh);
-//				listTours.add(tour);
-//			}
-//
-//			rSet.close();
-//			preparedStatement.close();
-//			connection.close();
-//			return listTours;
-//
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//
-//	}
+		String sql = "SELECT count(maXeMay) as total\r\n" + 
+				"from XeMay\r\n" + 
+				"inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n" + 
+				"inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe\r\n" + 
+				"inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n" + 
+				"inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + 
+				"where soLuong > 0";
+
+		if (!timKiem.trim().equals(RONG)) {
+			if(field.equalsIgnoreCase(TEN_XE)) {
+				sql += " and tenXeMay like '%" + timKiem + "%'";
+			}
+			
+			if(field.equalsIgnoreCase(MA_XE)) {
+				sql += " and maXeMay like '%" + timKiem + "%'";
+			}
+		}
+
+		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and mauXe = '" + mauXe +"'"  ; 
+		}
+
+		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenXuatXu = '" + tenXuatXu + "'";
+		}
+
+		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenLoaiXe = '" + tenLoaiXe + "'";
+		}
+
+		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenDongXe = '" + tenDongXe +"'"  ;
+		}
+
+		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenHangXe = '" + tenHangXe + "'";
+		}
+
+		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
+
+			if(gia.equalsIgnoreCase("Dưới 25tr")) {
+				sql += " and giaNhap < 25000000";
+			}else if(gia.equalsIgnoreCase("Trên 60tr")) {
+				sql += " and giaNhap > 60000000";
+			}else {
+				sql += " and giaNhap between 25000000 and 60000000 ";
+			}
+			
+		}
+
+
+		int count = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				count = resultSet.getInt("total");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return (int) Math.ceil(count * 1.00 / size);
+
+	}
+	
+
+	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem,String field,String gia, String mauXe, String tenXuatXu,
+			String tenLoaiXe, String tenDongXe, String tenHangXe, int from, int to) {
+
+		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n"
+				+ "as row FROM XeMay) as a\r\n"
+				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE row between " +from+ " and "  +to+ " \r\n"
+				+ "and soLuong > 0";
+
+		if (!timKiem.trim().equals(RONG)) {
+			if(field.equalsIgnoreCase(TEN_XE)) {
+				sql += " and tenXeMay like '%" + timKiem + "%'";
+			}
+			
+			if(field.equalsIgnoreCase(MA_XE)) {
+				sql += " and maXeMay like '%" + timKiem + "%'";
+			}
+		}
+
+		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and mauXe = '" + mauXe +"'"  ; 
+		}
+
+		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenXuatXu = '" + tenXuatXu + "'";
+		}
+
+		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenLoaiXe = '" + tenLoaiXe + "'";
+		}
+
+		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenDongXe = '" + tenDongXe +"'"  ;
+		}
+
+		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenHangXe = '" + tenHangXe + "'";
+		}
+
+		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
+
+			if(gia.equalsIgnoreCase("Dưới 25tr")) {
+				sql += " and giaNhap < 25000000";
+			}else if(gia.equalsIgnoreCase("Trên 60tr")) {
+				sql += " and giaNhap > 60000000";
+			}else {
+				sql += " and giaNhap between 25000000 and 60000000 ";
+			}
+			
+		}
+
+		System.out.println(sql);
+
+		List<XeMay> xeMays = new ArrayList<XeMay>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				XeMay xeMay = XeMayConvert.getXeMay(resultSet);
+
+				xeMays.add(xeMay);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return xeMays;
+
+	}
 }

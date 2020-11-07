@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,4 +17,10 @@ public class KhachHang {
 	private Date ngaySinh;
 	private String soDienThoai;
 	private String diaChiKH;
+
+	public KhachHang(String maKhachHang) {
+		super();
+		this.maKhachHang = maKhachHang;
+	}
+
 }

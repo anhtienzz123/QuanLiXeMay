@@ -311,7 +311,7 @@ public class GD_NV extends JPanel implements ActionListener{
 		}else if (o.equals(btnCapNhat)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatNhanVien());
+			//this.add(new GD_CapNhatNhanVien());
 			this.validate();
 			this.repaint();
 		}else if (o.equals(btnXemChiTiet)) {

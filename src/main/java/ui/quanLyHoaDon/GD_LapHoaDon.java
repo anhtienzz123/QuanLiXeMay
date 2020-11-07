@@ -1,68 +1,119 @@
 package ui.quanLyHoaDon;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import dao.DongXeDao;
+import dao.HangXeDao;
+import dao.KhachHangDao;
+import dao.LoaiXeDao;
+import dao.NhanVienHanhChinhDao;
+import dao.XeMayDao;
+import dao.XuatXuDao;
 import db.DatabaseConnect;
+import entity.ChiTietHoaDon;
+import entity.HoaDon;
+import entity.KhachHang;
+import entity.NhanVienHanhChinh;
+import entity.XeMay;
+import other.DinhDangTien;
 import other.DocSo;
-import ui.quanLyHoaDon.GD_ChiTietHoaDon;
-import ui.quanLyKhachHang.GD_ThemKhachHang;
-import ui.quanLyXeMay.GD_ChiTietXeMay;
-import javax.swing.JSeparator;
-import javax.swing.border.LineBorder;
-import javax.swing.border.EmptyBorder;
+import other.XuLyChung;
 
-public class GD_LapHoaDon extends JPanel implements ActionListener {
+public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel modelHoaDon;
 	private DefaultTableModel modelXe;
-	private JTextField txtSoCMT;
-	private JTextField txtSoDienThoai;
 	private JTable tblHoaDon;
 	private JTable tblXeMay;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JTextField txtTienKhachTra;
 	private JTextField txtSoLuong;
-	
-	private JComboBox<String> cboHang;
+
+	private JButton btnThem;
+	private JButton btnDau;
+	private JButton btnTruoc;
+	private JButton btnSau;
+	private JButton btnCuoi; 
+
+	// Thong tin hoa don
+	private JLabel lblNgayLapHoaDon;
+	private JLabel lblMaHoaDon;
+	private JLabel lblTienTraLai;
+	private JLabel lblTongTien;
+	private JLabel lblTienBangChu;
+	private JButton btnThanhToan;
+
+	// Nhan vien
+	private JLabel lblMaNhanVien;
+	private JLabel lblTenNhanVien;
+	private String maNhanVienHanhChinh;
+
+	// khách hàng
+	private JLabel lblMaKhachHang;
+	private JLabel lblTenKhachHang;
+	private JLabel lblNgaySinh;
+	private JLabel lblDiaChi;
+	private JTextField txtSoCMT;
+	private JTextField txtSoDienThoai;
+
+	private JComboBox<String> cboHangXe;
+	private JComboBox<String> cboDongXe;
+	private JComboBox<String> cboLoaiXe;
+	private JComboBox<String> cboMauXe;
+	private JComboBox<String> cboGiaXe;
+	private JComboBox<String> cboXuatXu;
 	private JComboBox<String> cboTimKiem;
 
-	/**
-	 * Create the panel.
-	 */
-	public GD_LapHoaDon() {
+	private int page = 1;
+	private int maxPage = 2;
+	private static final int SIZE = 15;
+	private XeMayDao xeMayDao;
+	private List<XeMay> xeMays;
+
+	private HoaDon hoaDon;
+	private String maHoaDon;
+
+	public GD_LapHoaDon(String maNhanVienHanhChinh) {
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
+
 		try {
 			DatabaseConnect.connect();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -112,7 +163,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		separator_1.setBounds(602, 91, 790, 30);
 		add(separator_1);
 
-		JLabel lblMaHoaDon = new JLabel("HD123456");
+		lblMaHoaDon = new JLabel();
 		lblMaHoaDon.setForeground(Color.BLACK);
 		lblMaHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaHoaDon.setBackground(new Color(102, 102, 255));
@@ -126,12 +177,12 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblNLHD.setBounds(42, 125, 171, 50);
 		add(lblNLHD);
 
-		JLabel lblNgayLạpHoaDon = new JLabel("20-10-2020");
-		lblNgayLạpHoaDon.setForeground(Color.BLACK);
-		lblNgayLạpHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgayLạpHoaDon.setBackground(new Color(102, 102, 255));
-		lblNgayLạpHoaDon.setBounds(242, 125, 124, 50);
-		add(lblNgayLạpHoaDon);
+		lblNgayLapHoaDon = new JLabel("20-10-2020");
+		lblNgayLapHoaDon.setForeground(Color.BLACK);
+		lblNgayLapHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNgayLapHoaDon.setBackground(new Color(102, 102, 255));
+		lblNgayLapHoaDon.setBounds(242, 125, 124, 50);
+		add(lblNgayLapHoaDon);
 
 		JLabel lblMNV = new JLabel("Mã nhân viên:");
 		lblMNV.setForeground(Color.BLACK);
@@ -140,7 +191,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblMNV.setBounds(42, 163, 159, 50);
 		add(lblMNV);
 
-		JLabel lblMaNhanVien = new JLabel("NV123456");
+		lblMaNhanVien = new JLabel();
 		lblMaNhanVien.setForeground(Color.BLACK);
 		lblMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaNhanVien.setBackground(new Color(102, 102, 255));
@@ -154,13 +205,14 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblTNV.setBounds(42, 198, 159, 50);
 		add(lblTNV);
 
-		JLabel lblTenNhanVien = new JLabel("Nguyễn Trần Nhật Hào");
+		lblTenNhanVien = new JLabel();
 		lblTenNhanVien.setForeground(Color.BLACK);
 		lblTenNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenNhanVien.setBackground(new Color(102, 102, 255));
 		lblTenNhanVien.setBounds(242, 198, 264, 50);
 		add(lblTenNhanVien);
 
+		// khách hàng
 		JLabel lblMKH = new JLabel("Mã khách hàng:");
 		lblMKH.setForeground(Color.BLACK);
 		lblMKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -168,7 +220,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblMKH.setBounds(602, 91, 159, 50);
 		add(lblMKH);
 
-		JLabel lblMaKhachHang = new JLabel("KH123456");
+		lblMaKhachHang = new JLabel();
 		lblMaKhachHang.setForeground(Color.BLACK);
 		lblMaKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaKhachHang.setBackground(new Color(102, 102, 255));
@@ -182,21 +234,21 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblNewLabel_1_2_2_1.setBounds(602, 125, 171, 50);
 		add(lblNewLabel_1_2_2_1);
 
-		JLabel lblTenKhachHang = new JLabel("Nguyễn Trần Nhật Hào");
+		lblTenKhachHang = new JLabel();
 		lblTenKhachHang.setForeground(Color.BLACK);
 		lblTenKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenKhachHang.setBackground(new Color(102, 102, 255));
 		lblTenKhachHang.setBounds(790, 135, 438, 30);
 		add(lblTenKhachHang);
 
-		JLabel lblNgaySinh = new JLabel("20-10-2000");
+		lblNgaySinh = new JLabel("20-10-2000");
 		lblNgaySinh.setForeground(Color.BLACK);
 		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNgaySinh.setBackground(new Color(102, 102, 255));
 		lblNgaySinh.setBounds(1195, 163, 115, 50);
 		add(lblNgaySinh);
 
-		JLabel lblDiaChi = new JLabel("12 Nguyễn Văn Bảo, phường 4, Gò Vấp, TPHCM");
+		lblDiaChi = new JLabel();
 		lblDiaChi.setForeground(Color.BLACK);
 		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDiaChi.setBackground(new Color(102, 102, 255));
@@ -226,7 +278,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 
 		txtSoCMT = new JTextField();
 		txtSoCMT.setBorder(null);
-		txtSoCMT.setText("123456789012");
 		txtSoCMT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoCMT.setBounds(1166, 104, 144, 25);
 		add(txtSoCMT);
@@ -238,7 +289,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		add(separator_2);
 
 		txtSoDienThoai = new JTextField();
-		txtSoDienThoai.setText("0123456789");
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setColumns(10);
 		txtSoDienThoai.setBorder(null);
@@ -263,7 +313,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		JScrollPane scrollPaneHoaDon = new JScrollPane();
 		scrollPaneHoaDon.setBounds(731, 277, 661, 316);
 		add(scrollPaneHoaDon);
-		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe", "Số lượng", "Giá Bán", "Bảo hành" };
+		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số lượng", "Giá Bán", "Tổng tiền" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -279,18 +329,11 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(500);
 		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(100);
 		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(300);
-		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(100);
 		JTableHeader tableHeader = tblHoaDon.getTableHeader();
 		tableHeader.setBackground(new Color(58, 181, 74));
 		tableHeader.setForeground(Color.white);
 		tableHeader.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPaneHoaDon.setViewportView(tblHoaDon);
-
-		modelHoaDon.addRow(new Object[] { "1", null, null, null });
-		modelHoaDon.addRow(new Object[] { "2", null, null, null });
-		modelHoaDon.addRow(new Object[] { "3", null, null, null });
-		modelHoaDon.addRow(new Object[] { "4", null, null, null });
-		modelHoaDon.addRow(new Object[] { "5", null, null, null });
 
 //		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe", "hãng", "loại xe", "Màu sắc", "Số lượng", "Giá Bán",
 //		"Bảo hành" };
@@ -319,7 +362,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
 
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -327,74 +369,53 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
-<<<<<<< HEAD
-		 cboHang = new JComboBox<String>();
-		cboHang.setModel(new DefaultComboBoxModel(new String[] { "Harley Davidson", "Tất cả" }));
-=======
-		JComboBox cboHang = new JComboBox();
-		cboHang.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Honda", "Yamaha", "Suzuki", "Kawasaki"}));
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
-		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboHang.setBackground(Color.WHITE);
-		cboHang.setBounds(132, 326, 115, 30);
-		add(cboHang);
+		cboHangXe = new JComboBox<String>();
 
-<<<<<<< HEAD
-		JComboBox<String> cboLoaiXe = new JComboBox<String>();
-		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Xe côn tay", "Tất cả" }));
-=======
-		JComboBox cboLoaiXe = new JComboBox();
-		cboLoaiXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Xe số", "Xe tay ga", "Xe côn tay", "Xe mô tô"}));
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
+		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboHangXe.setBackground(Color.WHITE);
+		cboHangXe.setBounds(132, 326, 115, 30);
+		add(cboHangXe);
+
+		cboLoaiXe = new JComboBox<String>();
+
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
 		cboLoaiXe.setBounds(360, 326, 130, 30);
 		add(cboLoaiXe);
 
-<<<<<<< HEAD
-		JComboBox<String> cboDongXe = new JComboBox<String>();
-		cboDongXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Air Blade", "Tất cả" }));
-=======
-		JComboBox cboDongXe = new JComboBox();
-		cboDongXe.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Air Blade", "SH", "Cub"}));
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
+		cboDongXe = new JComboBox<String>();
+
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
 		cboDongXe.setBounds(132, 373, 115, 30);
 		add(cboDongXe);
 
-<<<<<<< HEAD
-		JComboBox<String> cboXuatXu = new JComboBox<String>();
-		cboXuatXu.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "Trung Quốc", "Tất cả", "Việt Nam", "Nhật Bản", "Thái Lan", "Đức", "Trung Quốc" }));
-=======
-		JComboBox cboXuatXu = new JComboBox();
-		cboXuatXu.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Việt Nam", "Nhật Bản", "Thái Lan", "Đức", "Trung Quốc"}));
->>>>>>> 946565ffa06be6892dbf62588e04d612dcfeead1
+		cboXuatXu = new JComboBox<String>();
+
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
 		cboXuatXu.setBounds(360, 373, 130, 30);
 		add(cboXuatXu);
 
-		JButton btnDau = new JButton("");
+		btnDau = new JButton("");
 		btnDau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setBackground(Color.GRAY);
 		btnDau.setBounds(30, 840, 51, 40);
 		add(btnDau);
 
-		JButton btnTruoc = new JButton("");
+		btnTruoc = new JButton("");
 		btnTruoc.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setBackground(Color.GRAY);
 		btnTruoc.setBounds(93, 840, 51, 40);
 		add(btnTruoc);
 
-		JButton btnSau = new JButton("");
+		btnSau = new JButton("");
 		btnSau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_skip_next_white_24dp.png")));
 		btnSau.setBackground(Color.GRAY);
 		btnSau.setBounds(230, 840, 51, 40);
 		add(btnSau);
 
-		JButton btnCuoi = new JButton("");
+	    btnCuoi = new JButton("");
 		btnCuoi.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setBackground(Color.GRAY);
 		btnCuoi.setBounds(293, 840, 51, 40);
@@ -436,21 +457,21 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		separator_3.setBounds(0, 38, 661, 10);
 		pnlTongTien.add(separator_3);
 
-		JLabel lblTongTien = new JLabel("30000000 VNĐ");
+		lblTongTien = new JLabel("0 VNĐ");
 		lblTongTien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTongTien.setForeground(Color.WHITE);
 		lblTongTien.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblTongTien.setBackground(new Color(102, 102, 255));
 		lblTongTien.setBounds(0, 38, 661, 46);
 		pnlTongTien.add(lblTongTien);
-		
-		JLabel lblBngCh = new JLabel("Bằng chữ: ba mươi triệu đồng.");
-		lblBngCh.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBngCh.setForeground(Color.WHITE);
-		lblBngCh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblBngCh.setBackground(new Color(102, 102, 255));
-		lblBngCh.setBounds(0, 87, 661, 46);
-		pnlTongTien.add(lblBngCh);
+
+		lblTienBangChu = new JLabel("Bằng chữ: không đồng.");
+		lblTienBangChu.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTienBangChu.setForeground(Color.WHITE);
+		lblTienBangChu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTienBangChu.setBackground(new Color(102, 102, 255));
+		lblTienBangChu.setBounds(0, 87, 661, 46);
+		pnlTongTien.add(lblTienBangChu);
 
 		JPanel pnlTienKhachTra = new JPanel();
 		pnlTienKhachTra.setBackground(new Color(255, 215, 0));
@@ -484,7 +505,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		txtTienKhachTra.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTienKhachTra.setForeground(Color.WHITE);
 		txtTienKhachTra.setBackground(new Color(255, 215, 0));
-		txtTienKhachTra.setText("123456789012");
 		txtTienKhachTra.setFont(new Font("Tahoma", Font.BOLD, 20));
 		txtTienKhachTra.setColumns(10);
 		txtTienKhachTra.setBorder(null);
@@ -516,7 +536,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		separator_3_2.setBounds(0, 38, 319, 10);
 		pnlTienTraLai.add(separator_3_2);
 
-		JLabel lblTienTraLai = new JLabel("30000000 VNĐ");
+		lblTienTraLai = new JLabel();
 		lblTienTraLai.setBounds(0, 38, 319, 56);
 		pnlTienTraLai.add(lblTienTraLai);
 		lblTienTraLai.setHorizontalAlignment(SwingConstants.CENTER);
@@ -524,7 +544,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblTienTraLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblTienTraLai.setBackground(new Color(102, 102, 255));
 
-		JButton btnThem = new JButton("Thêm");
+		btnThem = new JButton("Thêm");
 		btnThem.setIcon(
 				new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_add_shopping_cart_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
@@ -604,7 +624,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblTK.setBounds(30, 275, 107, 30);
 		add(lblTK);
 
-		JButton btnThanhToan = new JButton("Thanh toán");
+		btnThanhToan = new JButton("Thanh toán");
 		btnThanhToan
 				.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_monetization_on_white_18dp.png")));
 		btnThanhToan.setBounds(1073, 893, 319, 42);
@@ -613,7 +633,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnThanhToan.setBackground(new Color(0, 153, 51));
 
-		JButton btnTaoMoi = new JButton("Tạo mới");
+		JButton btnTaoMoi = new JButton("Tạo mới hóa đơn");
 		btnTaoMoi.setIcon(
 				new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
 		btnTaoMoi.setForeground(Color.WHITE);
@@ -629,55 +649,288 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		txtSoLuong.setColumns(10);
 		txtSoLuong.setBounds(496, 840, 62, 40);
 		add(txtSoLuong);
-		
-		JComboBox cboMau = new JComboBox();
-		cboMau.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Đen", "Trắng", "Đỏ", "Đỏ-Đen"}));
-		cboMau.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboMau.setBackground(Color.WHITE);
-		cboMau.setBounds(568, 326, 151, 30);
-		add(cboMau);
-		
+
+		cboMauXe = new JComboBox<String>();
+		cboMauXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Tất cả", "Đen", "Trắng", "Đỏ", "Đỏ-Đen" }));
+
+		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboMauXe.setBackground(Color.WHITE);
+		cboMauXe.setBounds(568, 326, 151, 30);
+		add(cboMauXe);
+
 		JLabel lblMu = new JLabel("Màu:");
 		lblMu.setForeground(Color.BLACK);
 		lblMu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMu.setBackground(new Color(102, 102, 255));
 		lblMu.setBounds(518, 326, 69, 30);
 		add(lblMu);
-		
+
 		JLabel lblGi = new JLabel("Giá:");
 		lblGi.setForeground(Color.BLACK);
 		lblGi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGi.setBackground(new Color(102, 102, 255));
 		lblGi.setBounds(518, 373, 69, 30);
 		add(lblGi);
-		
-		JComboBox cboGia = new JComboBox();
-		cboGia.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "Dưới 25tr", "Từ 25tr - 60tr", "Trên 60tr"}));
-		cboGia.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboGia.setBackground(Color.WHITE);
-		cboGia.setBounds(568, 373, 151, 30);
-		add(cboGia);
-		
-		
-		
 
+		cboGiaXe = new JComboBox<String>();
+		cboGiaXe.setModel(new DefaultComboBoxModel<String>(
+				new String[] { "Tất cả", "Dưới 25tr", "Từ 25tr - 60tr", "Trên 60tr" }));
+		cboGiaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboGiaXe.setBackground(Color.WHITE);
+		cboGiaXe.setBounds(568, 373, 151, 30);
+		add(cboGiaXe);
+
+		khoiTao();
 		dangKiSuKien();
+		hienThiNhanVien();
+
+		loadDuLieuThongTinTimKiem();
+		capNhatXeMaysTrongBang();
+
+	}
+
+	public void khoiTao() {
+		xeMayDao = xeMayDao.getInstance();
+		hoaDon = new HoaDon(maHoaDon, new KhachHang(lblMaKhachHang.getText()),
+				new NhanVienHanhChinh(lblMaNhanVien.getText()), new Date(2020, 01, 01));
+
 	}
 
 	private void dangKiSuKien() {
+		txtSoDienThoai.addActionListener(this);
+		btnThem.addActionListener(this);
+		cboHangXe.addActionListener(this);
+		cboLoaiXe.addActionListener(this);
+		cboMauXe.addActionListener(this);
+		cboDongXe.addActionListener(this);
+		cboXuatXu.addActionListener(this);
+		cboGiaXe.addActionListener(this);
+		
+		cboTimKiem.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
+		
+		btnTruoc.addActionListener(this);
+		btnSau.addActionListener(this);
+		btnDau.addActionListener(this);
+		btnCuoi.addActionListener(this);
+		
+		
+		
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-//		if (o.equals(btnThanhToan)) {
-//			new GD_ChiTietHoaDon().setVisible(true);
-//		} else if (o.equals(btnXemChiTiet)) {
-//			new GD_ChiTietXeMay().setVisible(true);
-//		} else if (o.equals(btnThemKH)) {
-//			new GD_ThemKhachHang().setVisible(true);
-//		}
+		Object source = e.getSource();
+
+		if (source == txtSoDienThoai) {
+			KhachHangDao khachHangDao = KhachHangDao.getInstance();
+			String soDienThoai = txtSoDienThoai.getText();
+			KhachHang khachHang = khachHangDao.getKhachHangTheoSoDienThoai(soDienThoai);
+			hienThiKhachHang(khachHang);
+		}
+
+		if (source == btnThem) {
+
+			int index = tblXeMay.getSelectedRow();
+			XeMay xeMay = xeMays.get(index);
+			int soLuong = Integer.valueOf(txtSoLuong.getText());
+
+			if (xeMay.getSoLuong() >= soLuong) {
+				ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(this.maHoaDon), xeMay, xeMay.getGiaNhap(),
+						soLuong);
+				xeMay.setSoLuong(xeMay.getSoLuong() - soLuong);
+				xeMayDao.capNhatXeMay(xeMay);
+
+				this.hoaDon.themChiTietHoaDon(chiTietHoaDon);
+
+				capNhatXeMaysTrongBang();
+				capNhatHoaDon();
+			} else {
+				JOptionPane.showMessageDialog(null, "Xe máy này không đủ số lượng");
+			}
+		}
+
+		if (source == cboHangXe || source == cboLoaiXe || source == cboMauXe || source == cboDongXe
+				|| source == cboXuatXu || source == cboGiaXe) {
+			this.page = 1;
+			capNhatXeMaysTrongBang();
+		}
+		
+		if(source == cboTimKiem) {
+			this.page = 1;
+			txtTimKiem.setText("");
+			capNhatXeMaysTrongBang();
+		}
+		
+		if(source == btnTruoc && this.page > 1 ) {
+			
+			this.page--;
+			capNhatXeMaysTrongBang();
+		}
+		
+		if(source == btnSau && this.page < maxPage) {
+			this.page++;
+			capNhatXeMaysTrongBang();
+		}
+		
+		if(source == btnDau) {
+			this.page = 1;
+			capNhatXeMaysTrongBang();
+		}
+		
+		if(source == btnCuoi) {
+			this.page = maxPage;
+		}
+		
+		
+		
+
 	}
+
 	
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+         this.page = 1;
+         capNhatXeMaysTrongBang();
+		
+	}
+
+	private void capNhatHoaDon() {
+
+		xoaDuLieuChiTietHoaDonsTrongBang();
+		for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
+			Object[] datas = new Object[5];
+			datas[0] = tblHoaDon.getRowCount() + 1;
+			datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
+			datas[2] = chiTietHoaDon.getSoLuong();
+			datas[3] = chiTietHoaDon.getGiaBan();
+			datas[4] = chiTietHoaDon.tinhTongTien();
+
+			modelHoaDon.addRow(datas);
+		}
+
+		lblTongTien.setText(DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
+		lblTienBangChu.setText(DocSo.readNum(hoaDon.tinhTongTienHoaDon() + ""));
+
+	}
+
+	private void capNhatXeMaysTrongBang() {
+
+		
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		String gia = cboGiaXe.getSelectedItem().toString();
+		String mauXe = cboMauXe.getSelectedItem().toString();
+		String tenXuatXu = cboXuatXu.getSelectedItem().toString();
+		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
+		String tenDongXe = cboDongXe.getSelectedItem().toString();
+		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field,gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe, tenHangXe,
+				from, to);
 	
+		xoaDuLieuXeMayTrongBang();
+		themXeMaysVaoBang();
+		txtTrang.setText(this.page + "");
+
+	}
+
+	private void themXeMaysVaoBang() {
+
+		if (xeMays != null) {
+
+			for (XeMay xeMay : xeMays) {
+				themXeMayVaoBang(xeMay);
+			}
+		}
+
+	}
+
+	private void themXeMayVaoBang(XeMay xeMay) {
+
+		Object[] datas = new Object[8];
+		datas[0] = tblXeMay.getRowCount() + 1;
+		datas[1] = xeMay.getMaXeMay();
+		datas[2] = xeMay.getTenXeMay();
+		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
+		datas[4] = xeMay.getMauXe();
+		datas[5] = xeMay.getSoLuong();
+		datas[6] = xeMay.getGiaNhap();
+		datas[7] = xeMay.getThoiGianBaoHanh();
+
+		modelXe.addRow(datas);
+	}
+
+	private void hienThiKhachHang(KhachHang khachHang) {
+		lblMaKhachHang.setText(khachHang.getMaKhachHang());
+		lblTenKhachHang.setText(khachHang.getHoTenKH());
+		txtSoCMT.setText(khachHang.getSoCMT());
+		txtSoCMT.setEditable(false);
+		txtSoDienThoai.setEditable(false);
+		lblNgaySinh.setText(khachHang.getNgaySinh().toString());
+		lblDiaChi.setText(khachHang.getDiaChiKH());
+	}
+
+	private void hienThiNhanVien() {
+
+		NhanVienHanhChinhDao nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
+		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
+		System.out.println(nhanVienHanhChinh);
+		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
+		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
+
+		String maHoaDon = "123";
+		String ngayLapHoaDon = "09-11-2020";
+
+		lblMaHoaDon.setText(maHoaDon);
+		lblNgayLapHoaDon.setText(ngayLapHoaDon);
+
+	}
+
+	private void loadDuLieuThongTinTimKiem() {
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+		HangXeDao hangXeDao = HangXeDao.getInstance();
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+
+		cboXuatXu.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				xuatXuDao.getXuatXus().stream().map(s -> s.getTenXuatXu()).collect(Collectors.toList()))));
+		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				loaiXeDao.getLoaiXes().stream().map(s -> s.getTenLoaiXe()).collect(Collectors.toList()))));
+		cboHangXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
+		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+	}
+
+	private void xoaDuLieuChiTietHoaDonsTrongBang() {
+		while (modelHoaDon.getRowCount() > 0) {
+			modelHoaDon.removeRow(0);
+		}
+
+	}
+
+	private void xoaDuLieuXeMayTrongBang() {
+		while (modelXe.getRowCount() > 0) {
+			modelXe.removeRow(0);
+		}
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

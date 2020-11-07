@@ -23,5 +23,11 @@ public class NhanVienHanhChinh {
 	private String trinhDoHocVan;
 	private boolean vaiTro;
 	private boolean trangThai;
+	public NhanVienHanhChinh(String maNVHanhChinh) {
+		super();
+		this.maNVHanhChinh = maNVHanhChinh;
+	}
+	
+	
 
 }

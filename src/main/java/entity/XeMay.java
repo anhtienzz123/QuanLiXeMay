@@ -11,7 +11,7 @@ public class XeMay {
 
 	private String maXeMay;
 	private String tenXeMay;
-	private String urlAnh;
+	private String tenAnh;
 	private int soLuong;
 	private double giaNhap;
 	private double heSoBan;
