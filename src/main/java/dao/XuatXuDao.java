@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.XeMayConstant;
 import constant.XuatXuConstant;
 import converter.XuatXuConvert;
 import db.DatabaseConnect;
@@ -98,5 +99,25 @@ public class XuatXuDao {
 		}
 
 		return n > 0;
+	}
+	
+	public boolean kiemTraMaKhongTrung(String maXuatXu) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(XuatXuConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maXuatXu);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

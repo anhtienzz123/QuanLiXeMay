@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.HopDongConstant;
 import constant.LoaiXeConstant;
 import converter.LoaiXeConvert;
 import db.DatabaseConnect;
@@ -98,5 +99,25 @@ public class LoaiXeDao {
 		}
 
 		return n > 0;
+	}
+	
+	public boolean kiemTraMaKhongTrung(String maLoaiXe) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(LoaiXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maLoaiXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

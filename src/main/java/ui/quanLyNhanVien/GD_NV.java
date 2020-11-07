@@ -304,7 +304,7 @@ public class GD_NV extends JPanel implements ActionListener{
 		if(o.equals(btnThem)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_TNV());
+			//this.add(new GD_TNV());
 			this.validate();
 			this.repaint();
 			
@@ -315,7 +315,7 @@ public class GD_NV extends JPanel implements ActionListener{
 			this.validate();
 			this.repaint();
 		}else if (o.equals(btnXemChiTiet)) {
-			new GD_ChiTietNVHanhChinh().setVisible(true);
+			//new GD_ChiTietNVHanhChinh().setVisible(true);
 		}
 		
 	}

@@ -59,6 +59,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private JTextField txtTrang;
 	private JTextField txtTienKhachTra;
 	private JTextField txtSoLuong;
+	private JLabel lblBangChu;
 
 	private JButton btnThem;
 	private JButton btnDau;
@@ -465,6 +466,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		lblTongTien.setBounds(0, 38, 661, 46);
 		pnlTongTien.add(lblTongTien);
 
+
 		lblTienBangChu = new JLabel("Bằng chữ: không đồng.");
 		lblTienBangChu.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTienBangChu.setForeground(Color.WHITE);
@@ -472,6 +474,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		lblTienBangChu.setBackground(new Color(102, 102, 255));
 		lblTienBangChu.setBounds(0, 87, 661, 46);
 		pnlTongTien.add(lblTienBangChu);
+
 
 		JPanel pnlTienKhachTra = new JPanel();
 		pnlTienKhachTra.setBackground(new Color(255, 215, 0));

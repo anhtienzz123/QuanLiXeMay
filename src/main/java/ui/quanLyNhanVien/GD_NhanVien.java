@@ -330,6 +330,12 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 			this.validate();
 			this.repaint();
 		}
-
+		if(o.equals(btnSua)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_SuaNhanVienHanhChinh());
+			this.validate();
+			this.repaint();
+		}
 	}
 }

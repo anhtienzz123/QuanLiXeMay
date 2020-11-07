@@ -4,11 +4,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.EventObject;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -33,13 +40,23 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import com.toedter.calendar.JDateChooser;
 
 import other.TableColorCellRender;
+import ui.quanLyHoaDon.GD_LapHoaDon;
+import java.awt.CardLayout;
+import javax.swing.BoxLayout;
 
-public class GD_ThongKe extends JPanel {
+public class GD_ThongKe extends JPanel implements MouseListener {
 
-	private JPanel pnlThongKe;
+	private JPanel pnlTKThang;
 	private Vector colHeaderDoanhThu;
 	private DefaultTableModel modelDoanhThu;
-	private JTable tblDoanhThu;
+	private JLabel lblChiTietDTNgay;
+	private JLabel lblChiTietDTThang;
+	private JLabel lblChiTietDTNam;
+	private JPanel pnlXemChiTietDTNgay;
+	private JPanel pnlXemChiTietDTNam;
+	private JPanel pnlXemChiTietDTThang;
+	private DefaultTableModel modelHDNgay;
+	private JPanel pnlTK;
 
 	/**
 	 * Create the panel.
@@ -80,13 +97,13 @@ public class GD_ThongKe extends JPanel {
 		lblThongKeThang.setBounds(12, 0, 317, 69);
 		pnlThongKeThang.add(lblThongKeThang);
 
-		JPanel pnlXemChiTietDTThang = new JPanel();
+		pnlXemChiTietDTThang = new JPanel();
 		pnlXemChiTietDTThang.setBackground(new Color(0, 119, 182));
 		pnlXemChiTietDTThang.setBounds(0, 105, 433, 35);
 		pnlThongKeThang.add(pnlXemChiTietDTThang);
 		pnlXemChiTietDTThang.setLayout(null);
 
-		JLabel lblChiTietDTThang = new JLabel("Xem chi tiết ");
+		lblChiTietDTThang = new JLabel("Xem chi tiết ");
 		lblChiTietDTThang.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblChiTietDTThang.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
 		lblChiTietDTThang.setBounds(0, 0, 433, 35);
@@ -121,13 +138,13 @@ public class GD_ThongKe extends JPanel {
 		lblThongKeNgay.setBounds(12, 0, 317, 69);
 		pnlThongKeNgay.add(lblThongKeNgay);
 
-		JPanel pnlXemChiTietDTNgay = new JPanel();
+		pnlXemChiTietDTNgay = new JPanel();
 		pnlXemChiTietDTNgay.setLayout(null);
 		pnlXemChiTietDTNgay.setBackground(new Color(9, 161, 41));
 		pnlXemChiTietDTNgay.setBounds(0, 105, 433, 35);
 		pnlThongKeNgay.add(pnlXemChiTietDTNgay);
 
-		JLabel lblChiTietDTNgay = new JLabel("Xem chi tiết ");
+		lblChiTietDTNgay = new JLabel("Xem chi tiết ");
 		lblChiTietDTNgay.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblChiTietDTNgay.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
 		lblChiTietDTNgay.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,13 +179,13 @@ public class GD_ThongKe extends JPanel {
 		lblThongKeNam.setBounds(12, 0, 317, 69);
 		pnlThongKeNam.add(lblThongKeNam);
 
-		JPanel pnlXemChiTietDTNam = new JPanel();
+		pnlXemChiTietDTNam = new JPanel();
 		pnlXemChiTietDTNam.setLayout(null);
 		pnlXemChiTietDTNam.setBackground(new Color(201, 162, 39));
 		pnlXemChiTietDTNam.setBounds(0, 105, 433, 35);
 		pnlThongKeNam.add(pnlXemChiTietDTNam);
 
-		JLabel lblChiTietDTNam = new JLabel("Xem chi tiết ");
+		lblChiTietDTNam = new JLabel("Xem chi tiết ");
 		lblChiTietDTNam.setHorizontalTextPosition(SwingConstants.LEADING);
 		lblChiTietDTNam.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
 		lblChiTietDTNam.setHorizontalAlignment(SwingConstants.CENTER);
@@ -184,112 +201,91 @@ public class GD_ThongKe extends JPanel {
 		lblThongKeNgay_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeNgay_1_1_1.setBounds(283, 0, 150, 107);
 		pnlThongKeNam.add(lblThongKeNgay_1_1_1);
-
-		JScrollPane scrollPaneDoanhThu = new JScrollPane();
-		scrollPaneDoanhThu.setBounds(856, 341, 562, 532);
-		add(scrollPaneDoanhThu);
-
-		String[] colHeaderDoanhThu = { "STT", "Mã hóa đơn", "Tên nhân viên lập", "Tên khách hàng" };
-		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
-		tblDoanhThu = new JTable(modelDoanhThu) {
-			private static final long serialVersionUID = 1L;
-
-//			public void tableChanged(TableModelEvent e) {
-//				super.tableChanged(e);
-//				repaint();
-//			}
-			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-				return false;
-			}
-		};
-		tblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblDoanhThu.setRowHeight(25);
-		scrollPaneDoanhThu.setViewportView(tblDoanhThu);
-
-		/**
-		 * Đổi màu header cho table
-		 */
-		JTableHeader tableHeader2 = tblDoanhThu.getTableHeader();
-		tableHeader2.setBackground(new Color(58, 181, 74));
-		tableHeader2.setForeground(Color.white);
-		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		for (int i = 1; i < 21; i++) {
-			modelDoanhThu.addRow(new Object[] { i, null, null, null });
-		}
-//		Auto setSize
-//		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(40);
-		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(122);
-		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(200);
-		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(200);
-		tblDoanhThu.setShowGrid(false);
-		
-		
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
-		/**
-		 * Đổi màu các dòng chẵn
-		 */
-//		TableColorCellRender render = new TableColorCellRender();
-//		tblDoanhThu.setDefaultRenderer(Object.class, render);
-		
-
-		JLabel lblTngThuTrong_2 = new JLabel("Danh sách hóa đơn đã lập trong ngày");
-		lblTngThuTrong_2.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2.setBounds(856, 278, 392, 50);
-		add(lblTngThuTrong_2);
-
-		JDateChooser txtNgay = new JDateChooser();
-		txtNgay.setForeground(new Color(58, 181, 74));
-		txtNgay.setDateFormatString("dd-MM-yyyy");
-		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgay.setBounds(1245, 288, 172, 30);
-		txtNgay.setDate(Calendar.getInstance().getTime());
-		add(txtNgay);
-
-		JLabel lblTngThuTrong_2_1 = new JLabel("Doanh thu tháng");
-		lblTngThuTrong_2_1.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1.setBounds(257, 278, 182, 50);
-		add(lblTngThuTrong_2_1);
-
-		JLabel lblThang = new JLabel("10-2020");
 		DateFormat df = new SimpleDateFormat("MM-yyyy");
-		lblThang.setText(df.format(txtNgay.getDate()));
-		lblThang.setForeground(new Color(58, 181, 74));
-		lblThang.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblThang.setBounds(432, 278, 108, 50);
-		add(lblThang);
 
-		pnlThongKe = new JPanel();
-		pnlThongKe.setBounds(33, 341, 777, 567);
-		add(pnlThongKe);
-		setDataToChart1(pnlThongKe);
+		pnlTK = new JPanel();
+		pnlTK.setBounds(0, 244, 1450, 717);
+		add(pnlTK);
+		pnlTK.setLayout(new BoxLayout(pnlTK, BoxLayout.X_AXIS));
+		pnlTK.add(new GD_ThongKeNgay());
+		dangKiSuKien();
+
+		dangKiSuKien();
 
 	}
 
-	public void setDataToChart1(JPanel jpnItem) {
+	public void dangKiSuKien() {
+		lblChiTietDTNam.addMouseListener(this);
+		lblChiTietDTNgay.addMouseListener(this);
+		lblChiTietDTThang.addMouseListener(this);
+	}
 
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Random r = new Random();
-		for (int i = 1; i <= 31; i++) {
-			int ran = r.nextInt(15);
-			dataset.addValue(ran, "Học viên", i + "");
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		Object o = e.getSource();
+		if (o.equals(lblChiTietDTNgay)) {
+			pnlTK.removeAll();
+			pnlTK.setLayout(new BorderLayout());
+			pnlTK.add(new GD_ThongKeNgay());
+			pnlTK.validate();
+			pnlTK.repaint();
+		}
+		if (o.equals(lblChiTietDTThang)) {
+			pnlTK.removeAll();
+			pnlTK.setLayout(new BorderLayout());
+			pnlTK.add(new GD_ThongKeThang());
+			pnlTK.validate();
+			pnlTK.repaint();
+		}
+		if (o.equals(lblChiTietDTNam)) {
+			pnlTK.removeAll();
+			pnlTK.setLayout(new BorderLayout());
+			pnlTK.add(new GD_ThongKeNam());
+			pnlTK.validate();
+			pnlTK.repaint();
 		}
 
-		JFreeChart barChart = ChartFactory.createBarChart("".toUpperCase(), "Ngày", "Doanh thu", dataset,
-				PlotOrientation.VERTICAL, false, true, false);
-
-		ChartPanel chartPanel = new ChartPanel(barChart);
-		chartPanel.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
-
-		jpnItem.removeAll();
-		jpnItem.setLayout(new BorderLayout());
-		jpnItem.add(chartPanel);
-		jpnItem.validate();
-		jpnItem.repaint();
 	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		Object o = e.getSource();
+		if (o.equals(lblChiTietDTNgay)) {
+			pnlXemChiTietDTNgay.setBackground(Color.LIGHT_GRAY);
+		}
+		if (o.equals(lblChiTietDTThang)) {
+			pnlXemChiTietDTThang.setBackground(Color.LIGHT_GRAY);
+		}
+		if (o.equals(lblChiTietDTNam)) {
+			pnlXemChiTietDTNam.setBackground(Color.LIGHT_GRAY);
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		Object o = e.getSource();
+		if (o.equals(lblChiTietDTNgay)) {
+			pnlXemChiTietDTNgay.setBackground(new Color(9, 161, 41));
+		}
+		if (o.equals(lblChiTietDTThang)) {
+			pnlXemChiTietDTThang.setBackground(new Color(0, 119, 182));
+		}
+		if (o.equals(lblChiTietDTNam)) {
+			pnlXemChiTietDTNam.setBackground(new Color(201, 162, 39));
+		}
+
+	}
+
 }

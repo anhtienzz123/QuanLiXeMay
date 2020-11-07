@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.DongXeConstant;
 import constant.HangXeConstant;
 import converter.HangXeConvert;
 import db.DatabaseConnect;
@@ -99,5 +100,25 @@ public class HangXeDao {
 		}
 
 		return n > 0;
+	}
+	
+	public boolean kiemTraMaKhongTrung(String maHangXe) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(HangXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maHangXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 }

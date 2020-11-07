@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.NhanVienHanhChinhConstant;
 import constant.NhanVienKiThuatConstant;
 import constant.PhieuBaoHanhConstant;
 import converter.NhanVienKiThuatConvert;
@@ -150,6 +151,26 @@ public class NhanVienKiThuatDao {
 		}
 
 		return n > 0;
+	}
+	
+	public boolean kiemTraMaKhongTrung(String maNVKiThuat) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(NhanVienKiThuatConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			preparedStatement.setString(1, maNVKiThuat);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 
 }

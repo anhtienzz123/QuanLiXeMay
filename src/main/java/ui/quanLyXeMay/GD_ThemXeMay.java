@@ -109,7 +109,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		txtTenXe.setColumns(10);
 
 		JLabel lblMa = new JLabel("Mã xe:");
-		lblMa.setForeground(new Color(58, 181, 74));
+		lblMa.setForeground(Color.BLACK);
 		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMa.setBounds(29, 113, 111, 30);
 		add(lblMa);
@@ -150,19 +150,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(btnXoaRong);
 
 		JLabel lblTen = new JLabel("Tên xe:");
-		lblTen.setForeground(new Color(58, 181, 74));
+		lblTen.setForeground(Color.BLACK);
 		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTen.setBounds(428, 113, 111, 30);
 		add(lblTen);
 
 		JLabel lblHang = new JLabel("Hãng xe:");
-		lblHang.setForeground(new Color(58, 181, 74));
+		lblHang.setForeground(Color.BLACK);
 		lblHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHang.setBounds(960, 113, 111, 30);
 		add(lblHang);
 
 		JLabel lblLoai = new JLabel("Loại xe:");
-		lblLoai.setForeground(new Color(58, 181, 74));
+		lblLoai.setForeground(Color.BLACK);
 		lblLoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLoai.setBounds(29, 174, 111, 30);
 		add(lblLoai);
@@ -174,7 +174,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(cboLoaiXe);
 
 		JLabel lblDong = new JLabel("Dòng xe:");
-		lblDong.setForeground(new Color(58, 181, 74));
+		lblDong.setForeground(Color.BLACK);
 		lblDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDong.setBounds(428, 174, 111, 30);
 		add(lblDong);
@@ -186,7 +186,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(cboDongXe);
 
 		JLabel lblSoPhanKhoi = new JLabel("Số phân khối:");
-		lblSoPhanKhoi.setForeground(new Color(58, 181, 74));
+		lblSoPhanKhoi.setForeground(Color.BLACK);
 		lblSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoPhanKhoi.setBounds(960, 174, 171, 30);
 		add(lblSoPhanKhoi);
@@ -198,7 +198,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(cboSoPhanKhoi);
 
 		JLabel lblSoLuong = new JLabel("Số lượng:");
-		lblSoLuong.setForeground(new Color(58, 181, 74));
+		lblSoLuong.setForeground(Color.BLACK);
 		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoLuong.setBounds(29, 233, 111, 30);
 		add(lblSoLuong);
@@ -210,13 +210,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtSoLuong);
 
 		JLabel lblChiec = new JLabel("chiếc xe.");
-		lblChiec.setForeground(new Color(58, 181, 74));
+		lblChiec.setForeground(Color.BLACK);
 		lblChiec.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblChiec.setBounds(218, 233, 87, 30);
 		add(lblChiec);
 
 		JLabel lblMau = new JLabel("Màu xe:");
-		lblMau.setForeground(new Color(58, 181, 74));
+		lblMau.setForeground(Color.BLACK);
 		lblMau.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMau.setBounds(428, 233, 111, 30);
 		add(lblMau);
@@ -228,7 +228,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(cboMauXe);
 
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");
-		lblGiaNhap.setForeground(new Color(58, 181, 74));
+		lblGiaNhap.setForeground(Color.BLACK);
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGiaNhap.setBounds(960, 233, 111, 30);
 		add(lblGiaNhap);
@@ -240,13 +240,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtGiaNhap);
 
 		JLabel lblVND = new JLabel("VNĐ.");
-		lblVND.setForeground(new Color(58, 181, 74));
+		lblVND.setForeground(Color.BLACK);
 		lblVND.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVND.setBounds(1351, 233, 87, 30);
 		add(lblVND);
 
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
-		lblHeSoBan.setForeground(new Color(58, 181, 74));
+		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHeSoBan.setBounds(777, 293, 111, 30);
 		add(lblHeSoBan);
@@ -258,7 +258,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtHeSoBan);
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
-		lblBaoHanh.setForeground(new Color(58, 181, 74));
+		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBaoHanh.setBounds(960, 293, 111, 30);
 		add(lblBaoHanh);
@@ -270,13 +270,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtBaoHanh);
 
 		JLabel lblThang = new JLabel("tháng.");
-		lblThang.setForeground(new Color(58, 181, 74));
+		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblThang.setBounds(1212, 293, 67, 30);
 		add(lblThang);
 
 		JLabel lblSoKhung = new JLabel("Số khung:");
-		lblSoKhung.setForeground(new Color(58, 181, 74));
+		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoKhung.setBounds(29, 293, 111, 30);
 		add(lblSoKhung);
@@ -288,7 +288,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtSoKhung);
 
 		JLabel lblSoSuon = new JLabel("Số sườn:");
-		lblSoSuon.setForeground(new Color(58, 181, 74));
+		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoSuon.setBounds(428, 293, 111, 30);
 		add(lblSoSuon);
@@ -300,7 +300,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(txtSoSuon);
 
 		JLabel lblMoTa = new JLabel("Mô tả:");
-		lblMoTa.setForeground(new Color(58, 181, 74));
+		lblMoTa.setForeground(Color.BLACK);
 		lblMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMoTa.setBounds(535, 351, 111, 30);
 		add(lblMoTa);
@@ -315,7 +315,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		scrollPane.setViewportView(txtMoTa);
 
 		JLabel lblA = new JLabel("Ảnh:");
-		lblA.setForeground(new Color(58, 181, 74));
+		lblA.setForeground(Color.BLACK);
 		lblA.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblA.setBounds(29, 351, 47, 30);
 		add(lblA);
@@ -416,6 +416,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 		}
+		lblAnh.setText("");
 
 	}
 

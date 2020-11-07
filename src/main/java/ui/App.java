@@ -92,8 +92,10 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblNewLabel = new JLabel("");
 //		lblNewLabel.setIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg")));
-		lblNewLabel.setIcon(new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg")).getImage()
-				.getScaledInstance(panel_1.getPreferredSize().width-500, panel_1.getPreferredSize().height, Image.SCALE_DEFAULT)));
+		lblNewLabel.setIcon(
+				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+						.getImage().getScaledInstance(panel_1.getPreferredSize().width - 500,
+								panel_1.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		panel_1.add(lblNewLabel);
 
 		Box hB2 = Box.createHorizontalBox();
@@ -316,7 +318,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		vB1.add(pnlDangXuat);
 		pnlDangXuat.setLayout(new BoxLayout(pnlDangXuat, BoxLayout.X_AXIS));
 
-		 lblIconDangXuat = new JLabel("");
+		lblIconDangXuat = new JLabel("");
 		lblIconDangXuat.setMinimumSize(new Dimension(120, 70));
 		lblIconDangXuat.setIcon(new ImageIcon(App.class.getResource("/img/export_50px.png")));
 		lblIconDangXuat.setPreferredSize(new Dimension(120, 70));

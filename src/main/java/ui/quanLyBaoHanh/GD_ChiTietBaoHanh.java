@@ -457,7 +457,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener {
 		if (o.equals(btnQuayLai)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_BHanh());
+			this.add(new GD_BaoHanh());
 			this.validate();
 			this.repaint();
 		}
