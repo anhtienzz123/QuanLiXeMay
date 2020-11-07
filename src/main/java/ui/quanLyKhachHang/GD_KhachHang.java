@@ -29,7 +29,6 @@ import javax.swing.table.JTableHeader;
 import dao.KhachHangDao;
 import entity.KhachHang;
 import ui.App;
-import ui.quanLyBaoHanh.GD_BaoHanh;
 
 public class GD_KhachHang extends JPanel implements ActionListener, MouseListener {
 
@@ -44,6 +43,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JTable tblKhachHang;
 	private JButton btnSua;
 	private JButton btnXoa;
+	private JButton btnXemChiTiet;
 
 	private int page = 1;
 	private int maxPage = 2;
@@ -79,7 +79,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		scrollPaneKhachHang.setBounds(29, 200, 1385, 532);
 		add(scrollPaneKhachHang);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet
 				.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
@@ -224,11 +224,12 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private void dangKiSuKien() {
 		btnDau.addActionListener(this);
 		btnCuoi.addActionListener(this);
-		btnThem.addActionListener(this);
-		btnTruoc.addActionListener(this);
 		btnSau.addActionListener(this);
+		btnTruoc.addActionListener(this);
+		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
 
 	}
 
@@ -264,17 +265,31 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
+		if (source.equals(btnThem)) {
+			new GD_ThemKhachHang().setVisible(true);
+		}
+		if (source.equals(btnSua)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_CapNhatKhachHang());
+			this.validate();
+			this.repaint();
 
-		if(source == btnDau) {
+		}
+		if (source.equals(btnXemChiTiet)) {
+			new GD_ChiTietKhachHang().setVisible(true);
+		}
+
+		if (source == btnDau) {
 			this.page = 1;
 			loadDuLieu();
 		}
-		
-		if(source == btnCuoi) {
+
+		if (source == btnCuoi) {
 			this.page = maxPage;
 			loadDuLieu();
 		}
-		
+
 		if (source == btnSau && page < maxPage) {
 			this.page++;
 			loadDuLieu();
@@ -285,18 +300,18 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			this.page--;
 			loadDuLieu();
 		}
-		
-		if(source == btnThem) {
+
+		if (source == btnThem) {
 			new GD_ThemKhachHang().setVisible(true);
-			
+
 		}
 
 	}
 
 	private void loadDuLieu() {
 		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
-		
-		if(khachHangs.size() > 0) {
+
+		if (khachHangs.size() > 0) {
 			xoaDuLieuTrongBang();
 			themKhachHangsVaoBang();
 			txtTrang.setText(this.page + "");
@@ -310,8 +325,6 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		}
 	}
-
-	
 
 	private void themKhachHangVaoBang(KhachHang khachHang) {
 

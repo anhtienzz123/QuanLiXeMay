@@ -34,7 +34,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.CardLayout;
 import javax.swing.JPasswordField;
 
-public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseListener {
+public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, MouseListener {
 	private JTextField txtTenNV;
 	private JButton btnThem;
 	private DefaultTableModel modelNVHanhChinh;
@@ -44,23 +44,18 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	private JTextField txtSoDienThoai;
 	private JTextField txtAnh;
 	private JTextField txtDiaChi;
-	private JTextField txtChucVu;
-	private JTextField txtTrinhDoHocVan;
-	private JPasswordField txtMatKhau;
 	private JTextField txtNamKinhNghiem;
-	private JLabel lblHienMK;
-	private JLabel lblAnMK;
-	private JComboBox cboLoaiNV;
-	private JPanel pnlNVHanhChinh;
 	private JPanel pnlNVKyThuat;
 	private JButton btnChonFile;
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
+	private JRadioButton rdbtnNam;
+	private JRadioButton rdbtnNu;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThemNhanVien() {
+	public GD_SuaNhanVienKyThuat() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -71,7 +66,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Thêm nhân viên");
+		JLabel lblNewLabel = new JLabel("Cập nhật thông tin nhân viên kỹ thuật");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -92,8 +87,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 		btnThem = new JButton("Thêm");
 		btnThem.setToolTipText("Thêm nhân viên");
-		btnThem.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnThem.setIcon(new ImageIcon(
+				GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -141,13 +136,6 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		lblLNV.setBounds(615, 76, 147, 30);
 		add(lblLNV);
 
-		cboLoaiNV = new JComboBox();
-		cboLoaiNV.setBackground(Color.WHITE);
-		cboLoaiNV.setModel(new DefaultComboBoxModel(new String[] { "Nhân viên hành chính", "Nhân viên kỹ thuật" }));
-		cboLoaiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboLoaiNV.setBounds(802, 79, 228, 30);
-		add(cboLoaiNV);
-
 		JLabel lblTNV = new JLabel("Tên nhân viên:");
 		lblTNV.setForeground(Color.BLACK);
 		lblTNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -166,21 +154,23 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel("img");
-		lblAnh.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/pictures_folder_30px.png")));
+//		lblAnh.setIcon(new ImageIcon(new ImageIcon("/img/athlete_male_127px.png").getImage()
+//				.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setBounds(0, 0, 325, 301);
 		pnlAnh.add(lblAnh);
 
-		JRadioButton rdbtnNam = new JRadioButton("Nam");
+		rdbtnNam = new JRadioButton("Nam");
 		rdbtnNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		rdbtnNam.setBackground(Color.WHITE);
 		rdbtnNam.setBounds(802, 142, 127, 25);
 		rdbtnNam.setSelected(true);
 		add(rdbtnNam);
 
-		JRadioButton rdbtnNu = new JRadioButton("Nữ");
+		rdbtnNu = new JRadioButton("Nữ");
 		rdbtnNu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		rdbtnNu.setBackground(Color.WHITE);
 		rdbtnNu.setBounds(933, 142, 127, 25);
@@ -254,77 +244,6 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		add(pnlLoaiNV);
 		pnlLoaiNV.setLayout(new CardLayout(0, 0));
 
-		 pnlNVHanhChinh = new JPanel();
-		pnlNVHanhChinh.setBackground(Color.WHITE);
-		pnlLoaiNV.add(pnlNVHanhChinh, "name_191634603687900");
-		pnlNVHanhChinh.setLayout(null);
-
-		JLabel lblChcV = new JLabel("Chức vụ:");
-		lblChcV.setForeground(Color.BLACK);
-		lblChcV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblChcV.setBounds(28, 13, 147, 30);
-		pnlNVHanhChinh.add(lblChcV);
-
-		txtChucVu = new JTextField();
-		txtChucVu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtChucVu.setColumns(10);
-		txtChucVu.setBounds(224, 13, 305, 30);
-		pnlNVHanhChinh.add(txtChucVu);
-
-		JLabel lblChcV_1 = new JLabel("Trình độ học vấn:");
-		lblChcV_1.setForeground(Color.BLACK);
-		lblChcV_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblChcV_1.setBounds(599, 13, 156, 30);
-		pnlNVHanhChinh.add(lblChcV_1);
-
-		txtTrinhDoHocVan = new JTextField();
-		txtTrinhDoHocVan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTrinhDoHocVan.setColumns(10);
-		txtTrinhDoHocVan.setBounds(790, 13, 227, 30);
-		pnlNVHanhChinh.add(txtTrinhDoHocVan);
-
-		JLabel lblQuynTruyCp = new JLabel("Quyền truy cập:");
-		lblQuynTruyCp.setForeground(Color.BLACK);
-		lblQuynTruyCp.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblQuynTruyCp.setBounds(28, 81, 147, 30);
-		pnlNVHanhChinh.add(lblQuynTruyCp);
-
-		JComboBox cboQuyenTruyCap = new JComboBox();
-		cboQuyenTruyCap.setModel(new DefaultComboBoxModel(new String[] { "Nhân viên bán hàng", "Người quản lý" }));
-		cboQuyenTruyCap.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboQuyenTruyCap.setBounds(224, 81, 305, 30);
-		pnlNVHanhChinh.add(cboQuyenTruyCap);
-
-		JLabel lblMtKhu = new JLabel("Mật khẩu:");
-		lblMtKhu.setForeground(Color.BLACK);
-		lblMtKhu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMtKhu.setBounds(599, 81, 147, 30);
-		pnlNVHanhChinh.add(lblMtKhu);
-
-		txtMatKhau = new JPasswordField();
-		txtMatKhau.setToolTipText("Mật khẩu mặc định là 12345678");
-		txtMatKhau.setHorizontalAlignment(SwingConstants.CENTER);
-		txtMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMatKhau.setBounds(790, 84, 227, 30);
-		txtMatKhau.setText("12345678");
-		pnlNVHanhChinh.add(txtMatKhau);
-
-		lblHienMK = new JLabel("");
-		lblHienMK.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_black_36dp.png")));
-		lblHienMK.setForeground(Color.BLACK);
-		lblHienMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHienMK.setBounds(1029, 84, 40, 30);
-		pnlNVHanhChinh.add(lblHienMK);
-
-		lblAnMK = new JLabel("");
-		lblAnMK.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_off_black_36dp.png")));
-		lblAnMK.setForeground(Color.BLACK);
-		lblAnMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblAnMK.setBounds(1029, 84, 40, 30);
-		pnlNVHanhChinh.add(lblAnMK);
-		lblAnMK.setVisible(false);
-
 		pnlNVKyThuat = new JPanel();
 		pnlNVKyThuat.setBackground(Color.WHITE);
 		pnlLoaiNV.add(pnlNVKyThuat, "name_191649957157600");
@@ -361,13 +280,31 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		cboBacTho.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboBacTho.setBounds(796, 13, 228, 30);
 		pnlNVKyThuat.add(cboBacTho);
-		
+
 		JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
 		lblThongBao.setForeground(Color.RED);
 		lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblThongBao.setBounds(41, 693, 1043, 30);
 		add(lblThongBao);
 
+		JLabel lblLoaiNV = new JLabel("Nhân viên kỹ thuật");
+		lblLoaiNV.setForeground(Color.BLACK);
+		lblLoaiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLoaiNV.setBounds(802, 76, 228, 30);
+		add(lblLoaiNV);
+
+		/*
+		 * if (rdbtnNam.isSelected()) { // lblAnh.setIcon(new ImageIcon(new
+		 * ImageIcon("/img/athlete_male_127px.png").getImage() //
+		 * .getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(),
+		 * Image.SCALE_DEFAULT))); lblAnh.setIcon(new
+		 * ImageIcon("/img/athlete_male_127px.png")); lblAnh.setText(""); }else { //
+		 * lblAnh.setIcon(new ImageIcon(new
+		 * ImageIcon("/img/athlete_female_127px.png").getImage() //
+		 * .getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(),
+		 * Image.SCALE_DEFAULT))); lblAnh.setIcon(new
+		 * ImageIcon("/img/athlete_female_127px.png")); lblAnh.setText(""); }
+		 */
 		dangKiSuKien();
 
 	}
@@ -376,25 +313,16 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		btnThem.addActionListener(this);
 		btnXoaRong.addActionListener(this);
 		btnThoat.addActionListener(this);
-		lblHienMK.addMouseListener(this);
-		lblAnMK.addMouseListener(this);
-		cboLoaiNV.addActionListener(this);
 		btnChonFile.addActionListener(this);
+		rdbtnNam.addActionListener(this);
+		rdbtnNu.addActionListener(this);
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Object o = e.getSource();
-		if (o.equals(lblHienMK)) {
-			txtMatKhau.setEchoChar((char) 0);
-			lblHienMK.setVisible(false);
-			lblAnMK.setVisible(true);
-		} else if (o.equals(lblAnMK)) {
-			txtMatKhau.setEchoChar('●');
-			lblAnMK.setVisible(false);
-			lblHienMK.setVisible(true);
-		}
+
 	}
 
 	@Override
@@ -424,16 +352,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o.equals(cboLoaiNV)) {
-			if (cboLoaiNV.getSelectedIndex() == 1) {
-				pnlNVHanhChinh.setVisible(false);
-				pnlNVKyThuat.setVisible(true);
-			} else {
-				pnlNVHanhChinh.setVisible(true);
-				pnlNVKyThuat.setVisible(false);
-			}
-		}
-		if(o.equals(btnChonFile)) {
+		if (o.equals(btnChonFile)) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				JFileChooser fileChooser = new JFileChooser();
