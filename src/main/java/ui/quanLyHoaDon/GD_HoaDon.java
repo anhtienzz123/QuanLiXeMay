@@ -158,7 +158,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		add(txtTrang);
 
 		btnLapHoaDon = new JButton("Lập hóa đơn");
-		btnLapHoaDon.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnLapHoaDon
+				.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
 		btnLapHoaDon.setForeground(Color.WHITE);
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLapHoaDon.setBackground(new Color(58, 181, 74));

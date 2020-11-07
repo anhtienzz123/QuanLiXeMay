@@ -47,6 +47,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 	private JTextField txtTrang;
 	private JTextField txtTienKhachTra;
 	private JTextField txtSoLuong;
+	private JLabel lblBangChu;
 
 	/**
 	 * Create the panel.
@@ -426,13 +427,13 @@ public class GD_LapHoaDon extends JPanel implements ActionListener {
 		lblTongTien.setBounds(0, 38, 661, 46);
 		pnlTongTien.add(lblTongTien);
 		
-		JLabel lblBngCh = new JLabel("Bằng chữ: ba mươi triệu đồng.");
-		lblBngCh.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBngCh.setForeground(Color.WHITE);
-		lblBngCh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblBngCh.setBackground(new Color(102, 102, 255));
-		lblBngCh.setBounds(0, 87, 661, 46);
-		pnlTongTien.add(lblBngCh);
+		lblBangChu = new JLabel("Bằng chữ: ba mươi triệu đồng.");
+		lblBangChu.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBangChu.setForeground(Color.WHITE);
+		lblBangChu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblBangChu.setBackground(new Color(102, 102, 255));
+		lblBangChu.setBounds(0, 87, 661, 46);
+		pnlTongTien.add(lblBangChu);
 
 		JPanel pnlTienKhachTra = new JPanel();
 		pnlTienKhachTra.setBackground(new Color(255, 215, 0));
