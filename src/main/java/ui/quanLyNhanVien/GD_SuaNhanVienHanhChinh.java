@@ -309,11 +309,12 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		pnlNVHanhChinh.add(lblAnMK);
 
 		btnResetMK = new JButton("Reset mật khẩu");
+		btnResetMK.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/reset_30px.png")));
 		btnResetMK.setToolTipText("Reset mật khẩu về lại mặc định");
 		btnResetMK.setForeground(Color.WHITE);
 		btnResetMK.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnResetMK.setBackground(Color.GRAY);
-		btnResetMK.setBounds(790, 139, 227, 30);
+		btnResetMK.setBounds(790, 139, 227, 35);
 		pnlNVHanhChinh.add(btnResetMK);
 		lblAnMK.setVisible(false);
 

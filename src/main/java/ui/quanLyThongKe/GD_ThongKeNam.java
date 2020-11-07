@@ -24,13 +24,21 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTabbedPane;
+import javax.swing.JScrollPane;
 
 public class GD_ThongKeNam extends JPanel implements MouseListener {
 
-	private JPanel pnlDoanhThu;
+	private JPanel pnlDoanhThuThang;
 	private Vector colHeaderDoanhThu;
 	private DefaultTableModel modelDoanhThu;
 	private JPanel pnlTopXe;
+	private JPanel pnlTopDong;
+	private JPanel pnlTopHang;
+	private JPanel pnlDoanhThuQuy;
+	private JTabbedPane tabbedPaneDoanhThu;
+	private JTabbedPane tabbedPaneXe;
+	private JDateChooser txtNgay;
 
 	/**
 	 * Create the panel.
@@ -40,38 +48,14 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		setPreferredSize(new Dimension(1450, 717));
 		setLayout(null);
 
-		JLabel lblTngThuTrong_2 = new JLabel("Top các dòng xe bán chạy trong năm");
-		lblTngThuTrong_2.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2.setBounds(853, 61, 392, 50);
-		add(lblTngThuTrong_2);
-
-		JDateChooser txtNgay = new JDateChooser();
+		txtNgay = new JDateChooser();
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
 		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgay.setBounds(218, 20, 146, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-
-		JLabel lblTngThuTrong_2_1 = new JLabel("Doanh thu năm");
-		lblTngThuTrong_2_1.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1.setBounds(254, 61, 182, 50);
-		add(lblTngThuTrong_2_1);
-
-		JLabel lblThang = new JLabel("10-2020");
 		DateFormat df = new SimpleDateFormat("MM-yyyy");
-		lblThang.setText(df.format(txtNgay.getDate()));
-		lblThang.setForeground(new Color(58, 181, 74));
-		lblThang.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblThang.setBounds(429, 61, 108, 50);
-		add(lblThang);
-
-		pnlDoanhThu = new JPanel();
-		pnlDoanhThu.setBounds(30, 124, 777, 567);
-		add(pnlDoanhThu);
-		thongKeDoanhThu(pnlDoanhThu);
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn năm:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
@@ -79,15 +63,46 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		lblTngThuTrong_2_1_1.setBounds(48, 20, 182, 30);
 		add(lblTngThuTrong_2_1_1);
 
-		pnlTopXe = new JPanel();
-		pnlTopXe.setBackground(Color.WHITE);
-		pnlTopXe.setBounds(863, 124, 553, 528);
-		add(pnlTopXe);
+		tabbedPaneXe = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneXe.setBounds(843, 20, 571, 671);
+		tabbedPaneXe.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabbedPaneXe.setBackground(new Color(58, 181, 74));
+		tabbedPaneXe.setForeground(Color.WHITE);
+		add(tabbedPaneXe);
 
-		thongKeTopXe(pnlTopXe);
+		pnlTopXe = new JPanel();
+		tabbedPaneXe.addTab("Xe máy", null, pnlTopXe, null);
+		pnlTopXe.setBackground(Color.WHITE);
+
+		pnlTopDong = new JPanel();
+		pnlTopDong.setBackground(Color.WHITE);
+		tabbedPaneXe.addTab("Dòng xe", null, pnlTopDong, null);
+
+		pnlTopHang = new JPanel();
+		pnlTopHang.setBackground(Color.WHITE);
+		tabbedPaneXe.addTab("Hãng xe", null, pnlTopHang, null);
+
+		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneDoanhThu.setBounds(48, 63, 777, 628);
+		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
+		tabbedPaneDoanhThu.setForeground(Color.WHITE);
+		add(tabbedPaneDoanhThu);
+
+		pnlDoanhThuThang = new JPanel();
+		tabbedPaneDoanhThu.addTab("Tháng", null, pnlDoanhThuThang, null);
+
+		pnlDoanhThuQuy = new JPanel();
+		tabbedPaneDoanhThu.addTab("Quý", null, pnlDoanhThuQuy, null);
 
 		dangKiSuKien();
 
+
+		thongKeDoanhThuNam(pnlDoanhThuThang);
+		thongKeDoanhThuQuy(pnlDoanhThuQuy);
+		thongKeTopXe(pnlTopXe);
+		thongKeTopDongXe(pnlTopDong);
+		thongKeTopHangXe(pnlTopHang);
 	}
 
 	public void dangKiSuKien() {
@@ -124,11 +139,11 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * Biểu đồ cột thống kê doanh thu trong năm
+	 * Biểu đồ cột thống kê số doanh thu bán trong năm
 	 * 
 	 * @param jpnItem
 	 */
-	public void thongKeDoanhThu(JPanel jpnItem) {
+	public void thongKeDoanhThuNam(JPanel jpnItem) {
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		Random r = new Random();
@@ -137,8 +152,8 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 			dataset.addValue(ran, "Doanh thu", i + "");
 		}
 
-		JFreeChart barChart = ChartFactory.createBarChart("".toUpperCase(), "Tháng", "Doanh thu", dataset,
-				PlotOrientation.VERTICAL, false, true, false);
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu trong năm".toUpperCase(), "Tháng",
+				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
 
 		ChartPanel chartPanel1 = new ChartPanel(barChart);
 		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
@@ -149,13 +164,92 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		jpnItem.validate();
 		jpnItem.repaint();
 	}
+	/**
+	 * Biểu đồ cột thống kê số doanh thu bán các quý trong năm
+	 * 
+	 * @param jpnItem
+	 */
+	public void thongKeDoanhThuQuy(JPanel jpnItem) {
+		
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		Random r = new Random();
+			dataset.addValue(110, "Doanh thu", "Quý 1" + "");
+			dataset.addValue(90, "Doanh thu", "Quý 2" + "");
+			dataset.addValue(130, "Doanh thu", "Quý 3" + "");
+			dataset.addValue(140, "Doanh thu", "Quý 4" + "");
+		
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu các quý trong năm".toUpperCase(), "Quý",
+				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+		
+		ChartPanel chartPanel1 = new ChartPanel(barChart);
+		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
+		
+		jpnItem.removeAll();
+		jpnItem.setLayout(new BorderLayout());
+		jpnItem.add(chartPanel1);
+		jpnItem.validate();
+		jpnItem.repaint();
+	}
 
 	/**
-	 * Biểu đồ tròn thống kê các xe bán chạy trong năm
+	 * Biểu đồ trò thống kê top các xe bán chạy trong năm
 	 * 
 	 * @param jpnItem
 	 */
 	public void thongKeTopXe(JPanel jpnItem) {
+
+		DefaultPieDataset pieDataset = new DefaultPieDataset();
+		pieDataset.setValue("Air Blade 2020", 3);
+		pieDataset.setValue("Vision 2020", 3);
+		pieDataset.setValue("Yamaha Sirius 2020", 2);
+		pieDataset.setValue("SH mode", 2);
+
+		JFreeChart pieChart = ChartFactory.createPieChart("Các xe bán chạy trong năm", pieDataset, true, true, true);
+
+		ChartPanel chartPanel2 = new ChartPanel(pieChart);
+		chartPanel2.setBackground(Color.WHITE);
+		chartPanel2.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
+
+		jpnItem.removeAll();
+		jpnItem.setLayout(new BorderLayout());
+		jpnItem.add(chartPanel2);
+		jpnItem.validate();
+		jpnItem.repaint();
+	}
+
+	/**
+	 * Biểu đồ trò thống kê top các dòng xe bán chạy trong năm
+	 * 
+	 * @param jpnItem
+	 */
+	public void thongKeTopDongXe(JPanel jpnItem) {
+
+		DefaultPieDataset pieDataset = new DefaultPieDataset();
+		pieDataset.setValue("Air Blade", 3);
+		pieDataset.setValue("Sirius", 2);
+		pieDataset.setValue("SH", 3);
+		pieDataset.setValue("Vision", 2);
+
+		JFreeChart pieChart = ChartFactory.createPieChart("Các dòng xe bán chạy trong năm", pieDataset, true, true,
+				true);
+
+		ChartPanel chartPanel2 = new ChartPanel(pieChart);
+		chartPanel2.setBackground(Color.WHITE);
+		chartPanel2.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
+
+		jpnItem.removeAll();
+		jpnItem.setLayout(new BorderLayout());
+		jpnItem.add(chartPanel2);
+		jpnItem.validate();
+		jpnItem.repaint();
+	}
+
+	/**
+	 * Biểu đồ trò thống kê top các hãng xe bán chạy trong năm
+	 * 
+	 * @param jpnItem
+	 */
+	public void thongKeTopHangXe(JPanel jpnItem) {
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 		pieDataset.setValue("Honda", 4);
@@ -163,7 +257,8 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		pieDataset.setValue("Suzuki", 2);
 		pieDataset.setValue("SYM", 1);
 
-		JFreeChart pieChart = ChartFactory.createPieChart("", pieDataset, true, true, true);
+		JFreeChart pieChart = ChartFactory.createPieChart("Các hãng xe bán chạy trong năm", pieDataset, true, true,
+				true);
 
 		ChartPanel chartPanel2 = new ChartPanel(pieChart);
 		chartPanel2.setBackground(Color.WHITE);
