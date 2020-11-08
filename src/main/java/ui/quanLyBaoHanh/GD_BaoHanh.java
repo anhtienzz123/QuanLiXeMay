@@ -50,6 +50,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
 	private JButton btnQuayLai;
+	private JButton btnDanhMucBH;
 
 	/**
 	 * Create the panel.
@@ -81,7 +82,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(937, 747, 218, 40);
+		btnXemChiTiet.setBounds(656, 747, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblDanhSach = new JLabel("Danh sách các đợt bảo hành");
@@ -325,6 +326,13 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		lblHonda.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHonda.setBounds(1080, 300, 127, 30);
 		add(lblHonda);
+		
+		btnDanhMucBH = new JButton("Danh mục bảo hành");
+		btnDanhMucBH.setForeground(Color.WHITE);
+		btnDanhMucBH.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnDanhMucBH.setBackground(new Color(0, 153, 255));
+		btnDanhMucBH.setBounds(909, 747, 259, 40);
+		add(btnDanhMucBH);
 
 		/**
 		 * Đổi màu header cho table
@@ -344,6 +352,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		btnCapNhat.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnQuayLai.addActionListener(this);
+		btnDanhMucBH.addActionListener(this);
 		
 	}
 
@@ -382,6 +391,9 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		
 		if (o.equals(btnXemChiTiet)) {
 			chuyenManHinh(new GD_ChiTietBaoHanh());
+		}
+		if (o.equals(btnDanhMucBH)) {
+			new GD_DanhMucBaoHanh().setVisible(true);
 		}
 	}
 
