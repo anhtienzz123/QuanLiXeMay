@@ -6,12 +6,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.EventObject;
-import java.util.Random;
+import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -31,6 +30,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
+import dao.ThongKeDao;
+import other.DinhDangTien;
+import other.OutputNhanVien_HoaDonLap;
+
 public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 	private JPanel pnlThongKe;
@@ -38,6 +41,9 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	private DefaultTableModel modelDoanhThu;
 	private JTable tblDoanhThu;
 	private JButton btnXemChiTiet;
+
+	private LocalDate localDate;
+	private ThongKeDao thongKeDao;
 
 	/**
 	 * Create the panel.
@@ -51,7 +57,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		scrollPaneDoanhThu.setBounds(854, 104, 562, 532);
 		add(scrollPaneDoanhThu);
 
-		String[] colHeaderDoanhThu = { "STT", "Mã hóa đơn", "Tên nhân viên lập", "Số lượng hóa đơn" };
+		String[] colHeaderDoanhThu = {"Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
 		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
 		tblDoanhThu = new JTable(modelDoanhThu) {
 			private static final long serialVersionUID = 1L;
@@ -76,15 +82,13 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		for (int i = 1; i < 21; i++) {
-			modelDoanhThu.addRow(new Object[] { i, null, null, null });
-		}
 //		Auto setSize
 //		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(40);
-		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(122);
-		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(150);
+		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(50);
 		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(200);
+	
 		tblDoanhThu.setShowGrid(false);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -103,14 +107,16 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		add(lblTngThuTrong_2);
 
 		JDateChooser txtNgay = new JDateChooser();
+
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
 		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgay.setBounds(1243, 51, 172, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-		DateFormat df = new SimpleDateFormat("MM-yyyy");
+		// DateFormat df = new SimpleDateFormat("MM-yyyy");
 
+		khoiTao();
 		pnlThongKe = new JPanel();
 		pnlThongKe.setBounds(31, 51, 777, 620);
 		add(pnlThongKe);
@@ -132,17 +138,43 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	 * 
 	 * @param jpnItem
 	 */
-	public void setDataToChart1(JPanel jpnItem) {
 
-		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Random r = new Random();
-		for (int i = 1; i <= 31; i++) {
-			int ran = r.nextInt(15);
-			dataset.addValue(ran, "", i + "");
+	private void khoiTao() {
+		thongKeDao = ThongKeDao.getInstance();
+		localDate = LocalDate.now();
+
+		hienThiHoaDonLapTrongNgay();
+	}
+
+	private void hienThiHoaDonLapTrongNgay() {
+
+		List<OutputNhanVien_HoaDonLap> result = thongKeDao.thongKeHoaDonLapCuaNhanViensTrongNgay(localDate);
+
+		for (OutputNhanVien_HoaDonLap outputNhanVien_HoaDonLap : result) {
+			Object[] datas = new Object[5];
+			datas[0] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
+			datas[1] = outputNhanVien_HoaDonLap.getHoTenNV();
+			datas[2] = outputNhanVien_HoaDonLap.getSoLuong();
+			datas[3] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
+
+			modelDoanhThu.addRow(datas);
 		}
 
-		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu của tháng hiện tại".toUpperCase(), "Ngày", "Doanh thu", dataset,
-				PlotOrientation.VERTICAL, false, true, false);
+	}
+
+	public void setDataToChart1(JPanel jpnItem) {
+
+		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(localDate.getMonthValue(),
+				localDate.getYear());
+
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+		result.forEach((key, value) -> {
+			dataset.addValue(value, "", key);
+		});
+
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu của tháng hiện tại".toUpperCase(), "Ngày",
+				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));

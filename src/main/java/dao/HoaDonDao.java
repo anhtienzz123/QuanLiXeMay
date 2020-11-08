@@ -58,16 +58,47 @@ public class HoaDonDao {
 		return hoaDons;
 
 	}
-	
-	public List<HoaDon> getDons (int from, int to){
-		
+
+	public List<HoaDon> getHoaDonsTheoNgayLap(int ngay, int thang, int nam) {
+
+		List<HoaDon> hoaDons = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(HoaDonConstant.GET_HOA_DONS_THEO_NGAY_LAP);
+
+			preparedStatement.setInt(1, ngay);
+			preparedStatement.setInt(2, thang);
+			preparedStatement.setInt(3, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				HoaDon hoaDon = HoaDonConverter.getHoaDon(resultSet);
+
+				hoaDons.add(hoaDon);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return hoaDons;
+
+	}
+
+	public List<HoaDon> getDons(int from, int to) {
+
 		List<HoaDon> hoaDons = new ArrayList<>();
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(HoaDonConstant.GET_HOA_DONS_PHAN_TRANG);
 			preparedStatement.setInt(1, from);
 			preparedStatement.setInt(2, to);
-			
+
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				HoaDon hoaDon = HoaDonConverter.getHoaDon(resultSet);
@@ -131,12 +162,11 @@ public class HoaDonDao {
 		return n > 0;
 
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maHoaDon) {
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(HoaDonConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			PreparedStatement preparedStatement = connection.prepareStatement(HoaDonConstant.KIEM_TRA_MA_KHONG_TRUNG);
 			preparedStatement.setString(1, maHoaDon);
 
 			ResultSet resultSet = preparedStatement.executeQuery();

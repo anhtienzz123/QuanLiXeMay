@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.EventObject;
@@ -39,6 +40,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
+import dao.ThongKeDao;
+import other.DinhDangTien;
 import other.TableColorCellRender;
 import ui.quanLyHoaDon.GD_LapHoaDon;
 import java.awt.CardLayout;
@@ -58,10 +61,17 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 	private DefaultTableModel modelHDNgay;
 	private JPanel pnlTK;
 
+	private LocalDate localDate;
+	private ThongKeDao thongKeDao;
+	private JLabel lblThongKeNgay;
+	private JLabel lblThongKeNam;
+	private JLabel lblThongKeThang;
+
 	/**
 	 * Create the panel.
 	 */
 	public GD_ThongKe() {
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -91,7 +101,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblTngThuTrong.setBounds(12, 49, 317, 50);
 		pnlThongKeThang.add(lblTngThuTrong);
 
-		JLabel lblThongKeThang = new JLabel("150,000,000 VNĐ");
+		lblThongKeThang = new JLabel();
 		lblThongKeThang.setForeground(Color.WHITE);
 		lblThongKeThang.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeThang.setBounds(12, 0, 317, 69);
@@ -132,7 +142,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblTngThuTrong_3.setBounds(12, 49, 317, 50);
 		pnlThongKeNgay.add(lblTngThuTrong_3);
 
-		JLabel lblThongKeNgay = new JLabel("15,000,000 VNĐ");
+		lblThongKeNgay = new JLabel();
 		lblThongKeNgay.setForeground(Color.WHITE);
 		lblThongKeNgay.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeNgay.setBounds(12, 0, 317, 69);
@@ -173,7 +183,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblTngThuTrong_1.setBounds(12, 49, 317, 50);
 		pnlThongKeNam.add(lblTngThuTrong_1);
 
-		JLabel lblThongKeNam = new JLabel("1,500,000,000 VNĐ");
+		lblThongKeNam = new JLabel();
 		lblThongKeNam.setForeground(Color.WHITE);
 		lblThongKeNam.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeNam.setBounds(12, 0, 317, 69);
@@ -208,8 +218,8 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		add(pnlTK);
 		pnlTK.setLayout(new BoxLayout(pnlTK, BoxLayout.X_AXIS));
 		pnlTK.add(new GD_ThongKeNgay());
-		dangKiSuKien();
-
+		
+		khoiTao();
 		dangKiSuKien();
 
 	}
@@ -245,6 +255,20 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 			pnlTK.repaint();
 		}
 
+	}
+
+	private void khoiTao() {
+		localDate = LocalDate.now();
+
+		thongKeDao = ThongKeDao.getInstance();
+		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
+				localDate.getYear());
+		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());
+		Double nam = thongKeDao.getDoanhThuTheoNam(localDate.getYear());
+
+		lblThongKeNgay.setText(DinhDangTien.format(ngay));
+		lblThongKeThang.setText(DinhDangTien.format(thang));
+		lblThongKeNam.setText(DinhDangTien.format(nam));
 	}
 
 	@Override

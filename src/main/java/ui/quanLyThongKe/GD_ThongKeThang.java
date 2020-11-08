@@ -4,16 +4,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Random;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
@@ -24,10 +28,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
 
-public class GD_ThongKeThang extends JPanel implements MouseListener {
+import dao.ThongKeDao;
+
+public class GD_ThongKeThang extends JPanel{
 
 	private JPanel pnlDoanhThuThang;
 	private Vector colHeaderDoanhThu;
@@ -38,6 +42,10 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 	private JTabbedPane tabbedPaneXe;
 	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
+
+	private ThongKeDao thongKeDao;
+	private int thang;
+	private int nam;
 
 	/**
 	 * Create the panel.
@@ -54,7 +62,17 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 		txtNgay.setBounds(218, 20, 146, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-		DateFormat df = new SimpleDateFormat("MM-yyyy");
+		
+
+		txtNgay.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+				
+				if(e.getPropertyName().equals("date")) {
+					
+				}
+			}
+		});
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn tháng:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
@@ -89,9 +107,10 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 
 		dangKiSuKien();
 
+		khoiTao();
 
-		thongKeDoanhThuNam(pnlDoanhThuThang);
-		
+		thongKeDoanhThuThang(pnlDoanhThuThang);
+
 		pnlTopXe = new JPanel();
 		pnlTopXe.setBackground(Color.WHITE);
 		tabbedPaneDoanhThu.addTab("Xe bán chạy trong tháng", null, pnlTopXe, null);
@@ -100,36 +119,16 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 		thongKeTopHangXe(pnlTopHang);
 	}
 
+	public void khoiTao() {
+		thongKeDao = ThongKeDao.getInstance();
+		LocalDate date = LocalDate.now();
+		thang = date.getMonthValue();
+		nam = date.getYear();
+
+	}
+
 	public void dangKiSuKien() {
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		Object o = e.getSource();
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		Object o = e.getSource();
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		Object o = e.getSource();
+		
 
 	}
 
@@ -138,14 +137,15 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 	 * 
 	 * @param jpnItem
 	 */
-	public void thongKeDoanhThuNam(JPanel jpnItem) {
+	public void thongKeDoanhThuThang(JPanel jpnItem) {
+
+		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(thang, nam);
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Random r = new Random();
-		for (int i = 1; i <= 31; i++) {
-			int ran = r.nextInt(15);
-			dataset.addValue(ran, "Doanh thu", i + "");
-		}
+
+		result.forEach((key, value) -> {
+			dataset.addValue(value, "Doanh thu", key);
+		});
 
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu trong tháng".toUpperCase(), "Tháng",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
@@ -167,18 +167,20 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 	 */
 	public void thongKeTopXe(JPanel jpnItem) {
 
+		Map<String, Long> result = thongKeDao.getTopXeBansTrongThang(5, thang, nam);
+
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		dataset.addValue(120, "Số lượng", "Air Blade 2020");
-		dataset.addValue(200, "Số lượng", "Vision 2020");
-		dataset.addValue(90, "Số lượng", "Yamaha Sirius 2020");
-		dataset.addValue(160, "Số lượng", "SH mode");
+
+		result.forEach((key, value) -> {
+			dataset.addValue(value, "Số lượng", key);
+		});
 
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê các xe bán chạy trong tháng".toUpperCase(), "Xe",
 				"Số lượng", dataset, PlotOrientation.VERTICAL, false, true, false);
-		
+
 		ChartPanel chartPanel1 = new ChartPanel(barChart);
 		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
-		
+
 		jpnItem.removeAll();
 		jpnItem.setLayout(new BorderLayout());
 		jpnItem.add(chartPanel1);
@@ -220,11 +222,13 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 	 */
 	public void thongKeTopHangXe(JPanel jpnItem) {
 
+		Map<String, Long> result = thongKeDao.thongKeHangXeTrongThang(thang, nam);
+
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Honda", 4);
-		pieDataset.setValue("Yamaha", 3);
-		pieDataset.setValue("Suzuki", 2);
-		pieDataset.setValue("SYM", 1);
+
+		result.forEach((key, value) -> {
+			pieDataset.setValue(key, value);
+		});
 
 		JFreeChart pieChart = ChartFactory.createPieChart("Các hãng xe bán chạy trong tháng", pieDataset, true, true,
 				true);
@@ -239,4 +243,6 @@ public class GD_ThongKeThang extends JPanel implements MouseListener {
 		jpnItem.validate();
 		jpnItem.repaint();
 	}
+
+	
 }
