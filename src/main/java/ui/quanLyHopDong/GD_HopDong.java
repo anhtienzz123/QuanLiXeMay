@@ -51,7 +51,6 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
-	private JButton btnBaoHanh;
 	private DefaultTableModel modelHopDong;
 	private JTable tblHopDong;
 	private JButton btnXemChiTiet;
@@ -81,12 +80,13 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		scrollPaneHopDong.setBounds(29, 200, 1385, 532);
 		add(scrollPaneHopDong);
 
-		 btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet
+				.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(937, 753, 218, 40);
+		btnXemChiTiet.setBounds(1196, 753, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -98,7 +98,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên",
+				"Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -158,14 +159,6 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		txtTrang.setColumns(10);
 		txtTrang.setBounds(178, 754, 60, 40);
 		add(txtTrang);
-
-		btnBaoHanh = new JButton("Bảo hành");
-		btnBaoHanh.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
-		btnBaoHanh.setForeground(Color.WHITE);
-		btnBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnBaoHanh.setBackground(new Color(58, 181, 74));
-		btnBaoHanh.setBounds(1204, 753, 203, 40);
-		add(btnBaoHanh);
 
 		String[] colHeaderHopDong = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
 				"Tên khách hàng", "ngày lập hóa đơn" };
@@ -227,7 +220,6 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
-		btnBaoHanh.addActionListener(this);
 		btnTruoc.addActionListener(this);
 
 	}
@@ -265,18 +257,10 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnBaoHanh)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_BaoHanh());
-			this.validate();
-			this.repaint();
-		}
-		
-		if(o.equals(btnXemChiTiet)) {
+
+		if (o.equals(btnXemChiTiet)) {
 			new GD_ChiTietHD().setVisible(true);
 		}
-		
-		
+
 	}
 }
