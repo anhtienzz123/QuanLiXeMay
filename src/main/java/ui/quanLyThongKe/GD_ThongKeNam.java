@@ -32,13 +32,13 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private JPanel pnlDoanhThuThang;
 	private Vector colHeaderDoanhThu;
 	private DefaultTableModel modelDoanhThu;
-	private JPanel pnlTopXe;
 	private JPanel pnlTopDong;
 	private JPanel pnlTopHang;
 	private JPanel pnlDoanhThuQuy;
 	private JTabbedPane tabbedPaneDoanhThu;
 	private JTabbedPane tabbedPaneXe;
 	private JDateChooser txtNgay;
+	private JPanel pnlTopXe;
 
 	/**
 	 * Create the panel.
@@ -70,10 +70,6 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		tabbedPaneXe.setForeground(Color.WHITE);
 		add(tabbedPaneXe);
 
-		pnlTopXe = new JPanel();
-		tabbedPaneXe.addTab("Xe máy", null, pnlTopXe, null);
-		pnlTopXe.setBackground(Color.WHITE);
-
 		pnlTopDong = new JPanel();
 		pnlTopDong.setBackground(Color.WHITE);
 		tabbedPaneXe.addTab("Dòng xe", null, pnlTopDong, null);
@@ -90,16 +86,20 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		add(tabbedPaneDoanhThu);
 
 		pnlDoanhThuThang = new JPanel();
-		tabbedPaneDoanhThu.addTab("Tháng", null, pnlDoanhThuThang, null);
+		tabbedPaneDoanhThu.addTab("Doanh thu từng tháng", null, pnlDoanhThuThang, null);
 
 		pnlDoanhThuQuy = new JPanel();
-		tabbedPaneDoanhThu.addTab("Quý", null, pnlDoanhThuQuy, null);
+		tabbedPaneDoanhThu.addTab("Doanh thu từng quý", null, pnlDoanhThuQuy, null);
 
 		dangKiSuKien();
 
 
 		thongKeDoanhThuNam(pnlDoanhThuThang);
 		thongKeDoanhThuQuy(pnlDoanhThuQuy);
+		
+		pnlTopXe = new JPanel();
+		pnlTopXe.setBackground(Color.WHITE);
+		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
@@ -173,10 +173,10 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		Random r = new Random();
-			dataset.addValue(110, "Doanh thu", "Quý 1" + "");
-			dataset.addValue(90, "Doanh thu", "Quý 2" + "");
-			dataset.addValue(130, "Doanh thu", "Quý 3" + "");
-			dataset.addValue(140, "Doanh thu", "Quý 4" + "");
+			dataset.addValue(110, "Doanh thu", "Quý 1");
+			dataset.addValue(90, "Doanh thu", "Quý 2");
+			dataset.addValue(130, "Doanh thu", "Quý 3");
+			dataset.addValue(140, "Doanh thu", "Quý 4");
 		
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu các quý trong năm".toUpperCase(), "Quý",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
@@ -192,27 +192,27 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	/**
-	 * Biểu đồ trò thống kê top các xe bán chạy trong năm
+	 * Biểu đồ cột thống kê top các xe bán chạy trong năm
 	 * 
 	 * @param jpnItem
 	 */
 	public void thongKeTopXe(JPanel jpnItem) {
 
-		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Air Blade 2020", 3);
-		pieDataset.setValue("Vision 2020", 3);
-		pieDataset.setValue("Yamaha Sirius 2020", 2);
-		pieDataset.setValue("SH mode", 2);
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		dataset.addValue(120, "Số lượng", "Air Blade 2020");
+		dataset.addValue(200, "Số lượng", "Vision 2020");
+		dataset.addValue(90, "Số lượng", "Yamaha Sirius 2020");
+		dataset.addValue(160, "Số lượng", "SH mode");
 
-		JFreeChart pieChart = ChartFactory.createPieChart("Các xe bán chạy trong năm", pieDataset, true, true, true);
-
-		ChartPanel chartPanel2 = new ChartPanel(pieChart);
-		chartPanel2.setBackground(Color.WHITE);
-		chartPanel2.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
-
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê các xe bán chạy trong năm".toUpperCase(), "Xe",
+				"Số lượng", dataset, PlotOrientation.VERTICAL, false, true, false);
+		
+		ChartPanel chartPanel1 = new ChartPanel(barChart);
+		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
+		
 		jpnItem.removeAll();
 		jpnItem.setLayout(new BorderLayout());
-		jpnItem.add(chartPanel2);
+		jpnItem.add(chartPanel1);
 		jpnItem.validate();
 		jpnItem.repaint();
 	}
