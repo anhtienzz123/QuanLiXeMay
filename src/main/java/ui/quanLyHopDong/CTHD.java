@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import other.DocSo;
 
-public class GD_ChiTietHopDong extends JFrame implements ActionListener{
+public class CTHD extends JFrame implements ActionListener{
 
 	/**
 	 * 
@@ -61,7 +61,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GD_ChiTietHopDong frame = new GD_ChiTietHopDong();
+					CTHD frame = new CTHD();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,9 +73,9 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 	/**
 	 * Create the frame.
 	 */
-	public GD_ChiTietHopDong() {
+	public CTHD() {
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_ChiTietHopDong.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
+				.getImage(CTHD.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
 		setTitle("Hợp đồng");
 		setSize(950, 960);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -93,7 +93,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		verticalBox.add(horizontalBox);
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 0));
+		panel.setBackground(new Color(58, 181, 74));
 		panel.setPreferredSize(new Dimension(800, 50));
 		panel.setMaximumSize(new Dimension(32767, 50));
 		horizontalBox.add(panel);
@@ -192,7 +192,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		horizontalBox_2.add(lblMaNV);
 		
 		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_4.setPreferredSize(new Dimension(50, 20));
+		rigidArea_4.setPreferredSize(new Dimension(100, 20));
 		horizontalBox_2.add(rigidArea_4);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Tên NV:");
@@ -227,6 +227,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		horizontalBox_2_2_1.add(lblNewLabel_1_1_1_2_1);
 		
 		Component rigidArea_2_2_1_2 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_2_2_1_2.setPreferredSize(new Dimension(50, 20));
 		horizontalBox_2_2_1.add(rigidArea_2_2_1_2);
 		
 		 lblNgaySinhNV = new JLabel("30/04/2020");
@@ -234,6 +235,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		horizontalBox_2_2_1.add(lblNgaySinhNV);
 		
 		Component rigidArea_2_2_2_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_2_2_2_1.setPreferredSize(new Dimension(95, 20));
 		horizontalBox_2_2_1.add(rigidArea_2_2_2_1);
 		
 		JLabel lblNewLabel_1_2_3_2 = new JLabel("SĐT:");
@@ -375,7 +377,7 @@ public class GD_ChiTietHopDong extends JFrame implements ActionListener{
 		horizontalBox_2_2.add(lblNgaySinhKH);
 
 		Component rigidArea_2_1_1_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_2_1_1_2.setPreferredSize(new Dimension(60, 20));
+		rigidArea_2_1_1_2.setPreferredSize(new Dimension(270, 20));
 		horizontalBox_2_2.add(rigidArea_2_1_1_2);
 		
 		JLabel lblNewLabel_1_2_3 = new JLabel("SĐT:");

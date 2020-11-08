@@ -109,23 +109,10 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		txtNgay.setBounds(1243, 51, 172, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-
-		JLabel lblTngThuTrong_2_1 = new JLabel("Doanh thu tháng");
-		lblTngThuTrong_2_1.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1.setBounds(255, 41, 182, 50);
-		add(lblTngThuTrong_2_1);
-
-		JLabel lblThang = new JLabel("10-2020");
 		DateFormat df = new SimpleDateFormat("MM-yyyy");
-		lblThang.setText(df.format(txtNgay.getDate()));
-		lblThang.setForeground(new Color(58, 181, 74));
-		lblThang.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblThang.setBounds(430, 41, 108, 50);
-		add(lblThang);
 
 		pnlThongKe = new JPanel();
-		pnlThongKe.setBounds(31, 104, 777, 567);
+		pnlThongKe.setBounds(31, 51, 777, 620);
 		add(pnlThongKe);
 		setDataToChart1(pnlThongKe);
 
@@ -154,7 +141,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 			dataset.addValue(ran, "", i + "");
 		}
 
-		JFreeChart barChart = ChartFactory.createBarChart("".toUpperCase(), "Ngày", "Doanh thu", dataset,
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu của tháng hiện tại".toUpperCase(), "Ngày", "Doanh thu", dataset,
 				PlotOrientation.VERTICAL, false, true, false);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);

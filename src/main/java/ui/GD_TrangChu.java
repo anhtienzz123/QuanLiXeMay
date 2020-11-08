@@ -73,6 +73,8 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private JLabel lblThemNhanVien;
 	private JLabel lblIconThemNhanVien;
 	private List<DanhMuc> listDanhMuc;
+	private JPanel pnlAnh;
+	private JButton btnDoiMatKhau;
 
 	/**
 	 * Create the panel.
@@ -100,7 +102,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblNewLabel_1.setForeground(new Color(58, 181, 74));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel_1.setBackground(new Color(102, 102, 255));
-		lblNewLabel_1.setBounds(924, 458, 266, 50);
+		lblNewLabel_1.setBounds(924, 410, 266, 50);
 		add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Liên kết nhanh:");
@@ -112,7 +114,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(58, 181, 74));
-		separator.setBounds(924, 498, 501, 30);
+		separator.setBounds(924, 450, 501, 30);
 		add(separator);
 
 		JSeparator separator_1 = new JSeparator();
@@ -124,28 +126,28 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblMNV.setForeground(Color.BLACK);
 		lblMNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblMNV.setBackground(new Color(102, 102, 255));
-		lblMNV.setBounds(924, 505, 159, 50);
+		lblMNV.setBounds(924, 457, 159, 50);
 		add(lblMNV);
 
 		lblMaNhanVien = new JLabel("NV123456");
 		lblMaNhanVien.setForeground(Color.BLACK);
 		lblMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblMaNhanVien.setBackground(new Color(102, 102, 255));
-		lblMaNhanVien.setBounds(1124, 505, 124, 50);
+		lblMaNhanVien.setBounds(1124, 457, 124, 50);
 		add(lblMaNhanVien);
 
 		JLabel lblTNV = new JLabel("Tên nhân viên:");
 		lblTNV.setForeground(Color.BLACK);
 		lblTNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTNV.setBackground(new Color(102, 102, 255));
-		lblTNV.setBounds(924, 550, 188, 50);
+		lblTNV.setBounds(924, 502, 188, 50);
 		add(lblTNV);
 
 		lblTenNhanVien = new JLabel("ABCDE");
 		lblTenNhanVien.setForeground(Color.BLACK);
 		lblTenNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTenNhanVien.setBackground(new Color(102, 102, 255));
-		lblTenNhanVien.setBounds(1124, 550, 264, 50);
+		lblTenNhanVien.setBounds(1124, 502, 264, 50);
 		add(lblTenNhanVien);
 
 		JSeparator separator_1_1 = new JSeparator();
@@ -157,14 +159,14 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblChcV.setForeground(Color.BLACK);
 		lblChcV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblChcV.setBackground(new Color(102, 102, 255));
-		lblChcV.setBounds(924, 595, 159, 50);
+		lblChcV.setBounds(924, 547, 159, 50);
 		add(lblChcV);
 
 		lblChucVu = new JLabel("Nhân viên bán hàng");
 		lblChucVu.setForeground(Color.BLACK);
 		lblChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblChucVu.setBackground(new Color(102, 102, 255));
-		lblChucVu.setBounds(1124, 595, 264, 50);
+		lblChucVu.setBounds(1124, 547, 264, 50);
 		add(lblChucVu);
 
 		pnlLapHoaDon = new JPanel();
@@ -200,25 +202,24 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblLogo.setBounds(0, 0, 1450, 133);
 		pnlLogo.add(lblLogo);
 
-		JPanel pnlClock = new DongHoAnalog();
-		pnlClock.setLayout(null);
-		pnlClock.setBounds(991, 92, 317, 300);
-		add(pnlClock);
-
-		lblGio = new JLabel("00 : 00 : 00");
-		lblGio.setForeground(Color.BLACK);
-		lblGio.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblGio.setBackground(new Color(102, 102, 255));
-		lblGio.setBounds(1163, 395, 145, 50);
-		add(lblGio);
-
-		lblNgay = new JLabel("");
-		lblNgay.setForeground(Color.BLACK);
-		lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgay.setBackground(new Color(102, 102, 255));
-		lblNgay.setBounds(992, 395, 159, 50);
-		add(lblNgay);
-
+//		JPanel pnlAnh = new DongHoAnalog();
+		 pnlAnh = new JPanel();
+		pnlAnh.setLayout(null);
+		pnlAnh.setBounds(991, 92, 317, 300);
+		add(pnlAnh);
+		/*
+		 * Giờ
+		 * lblGio = new JLabel("00 : 00 : 00"); lblGio.setForeground(Color.BLACK);
+		 * lblGio.setFont(new Font("Tahoma", Font.PLAIN, 20)); lblGio.setBackground(new
+		 * Color(102, 102, 255)); lblGio.setBounds(1163, 395, 145, 50); add(lblGio);
+		 */
+		/*
+		 * Ngày
+		 * lblNgay = new JLabel(""); lblNgay.setForeground(Color.BLACK);
+		 * lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		 * lblNgay.setBackground(new Color(102, 102, 255)); lblNgay.setBounds(992, 395,
+		 * 159, 50); add(lblNgay);
+		 */
 		pnlThemKhachHang = new JPanel();
 		pnlThemKhachHang.setLayout(null);
 		pnlThemKhachHang.setBackground(new Color(58, 181, 74));
@@ -342,34 +343,33 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblaCh.setBackground(new Color(102, 102, 255));
 		lblaCh.setBounds(87, 759, 1004, 50);
 		add(lblaCh);
+		
+		btnDoiMatKhau = new JButton("Đổi mật khẩu");
+		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/password_reset_30px.png")));
+		btnDoiMatKhau.setBackground(Color.GRAY);
+		btnDoiMatKhau.setForeground(Color.WHITE);
+		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnDoiMatKhau.setBounds(1224, 656, 201, 35);
+		add(btnDoiMatKhau);
 		chuyen.setSuKien(listDanhMuc);
 		dangKiSuKien();
-		DongHo();
+//		DongHo();
 	}
 
 	private void dangKiSuKien() {
+		btnDoiMatKhau.addActionListener(this);
 	}
 
-	public void DongHo() {
-		long millis = System.currentTimeMillis();
-		Date date = new Date(millis);
-		SimpleDateFormat dt1 = new SimpleDateFormat("dd - MM - yyyy");
-		lblNgay.setText(dt1.format(date));
-
-		new Thread() {
-			public void run() {
-				while (true) {
-					Calendar ca = new GregorianCalendar();
-					int gio = ca.get(Calendar.HOUR_OF_DAY);
-					int phut = ca.get(Calendar.MINUTE);
-					int giay = ca.get(Calendar.SECOND);
-					String dongHo = gio + " : " + phut + " : " + giay;
-					lblGio.setText(dongHo);
-				}
-			}
-		}.start();
-	}
-
+	/*
+	 * public void DongHo() { long millis = System.currentTimeMillis(); Date date =
+	 * new Date(millis); SimpleDateFormat dt1 = new
+	 * SimpleDateFormat("dd - MM - yyyy"); lblNgay.setText(dt1.format(date));
+	 * 
+	 * new Thread() { public void run() { while (true) { Calendar ca = new
+	 * GregorianCalendar(); int gio = ca.get(Calendar.HOUR_OF_DAY); int phut =
+	 * ca.get(Calendar.MINUTE); int giay = ca.get(Calendar.SECOND); String dongHo =
+	 * gio + " : " + phut + " : " + giay; lblGio.setText(dongHo); } } }.start(); }
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

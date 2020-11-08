@@ -52,6 +52,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 	private JButton btnLapHoaDon;
 	private DefaultTableModel modelXe;
 	private JTable tblXeMay;
+	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
@@ -78,7 +79,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		scrollPaneHoaDon.setBounds(29, 200, 1385, 532);
 		add(scrollPaneHoaDon);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		 btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
@@ -225,12 +226,11 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
-		btnLapHoaDon.addActionListener(this);
-		btnCuoi.addActionListener(this);
-		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
 		btnLapHoaDon.addActionListener(this);
 		btnTruoc.addActionListener(this);
+		tblXeMay.addMouseListener(this);
+		
 
 	}
 
@@ -273,6 +273,9 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 			this.add(new GD_LapHoaDon("1"));
 			this.validate();
 			this.repaint();
+		}
+		if (o.equals(btnXemChiTiet)) {
+			new GD_ChiTietHoaDon().setVisible(true);
 		}
 	}
 }

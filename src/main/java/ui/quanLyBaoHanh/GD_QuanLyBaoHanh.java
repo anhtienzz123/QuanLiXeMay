@@ -1,4 +1,4 @@
-package ui.quanLyHopDong;
+package ui.quanLyBaoHanh;
 
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -44,22 +44,21 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 
-public class GD_HopDong extends JPanel implements ActionListener, MouseListener {
+public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseListener {
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
-	private JButton btnBaoHanh;
-	private DefaultTableModel modelHopDong;
-	private JTable tblHopDong;
+	private DefaultTableModel modelBaoHanh;
+	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_HopDong() {
+	public GD_QuanLyBaoHanh() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -70,23 +69,23 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Quản lý hợp đồng");
+		JLabel lblNewLabel = new JLabel("Quản lý Bảo hành");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBounds(0, 0, 1450, 50);
 		panel.add(lblNewLabel);
 
-		JScrollPane scrollPaneHopDong = new JScrollPane();
-		scrollPaneHopDong.setBounds(29, 200, 1385, 532);
-		add(scrollPaneHopDong);
+		JScrollPane scrollPaneBaoHanh = new JScrollPane();
+		scrollPaneBaoHanh.setBounds(29, 200, 1385, 532);
+		add(scrollPaneBaoHanh);
 
 		 btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(937, 753, 218, 40);
+		btnXemChiTiet.setBounds(1196, 753, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -98,7 +97,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã phiếu bảo hành", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -120,7 +119,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		add(separator);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -128,7 +127,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -136,7 +135,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -144,7 +143,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -159,27 +158,19 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		txtTrang.setBounds(178, 754, 60, 40);
 		add(txtTrang);
 
-		btnBaoHanh = new JButton("Bảo hành");
-		btnBaoHanh.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
-		btnBaoHanh.setForeground(Color.WHITE);
-		btnBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnBaoHanh.setBackground(new Color(58, 181, 74));
-		btnBaoHanh.setBounds(1204, 753, 203, 40);
-		add(btnBaoHanh);
-
 		String[] colHeaderHopDong = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
 				"Tên khách hàng", "ngày lập hóa đơn" };
-		modelHopDong = new DefaultTableModel(colHeaderHopDong, 0);
-		tblHopDong = new JTable(modelHopDong) {
+		modelBaoHanh = new DefaultTableModel(colHeaderHopDong, 0);
+		tblBaoHanh = new JTable(modelBaoHanh) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
 				return false;
 			}
 		};
-		tblHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblHopDong.setRowHeight(25);
-		scrollPaneHopDong.setViewportView(tblHopDong);
+		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblBaoHanh.setRowHeight(25);
+		scrollPaneBaoHanh.setViewportView(tblBaoHanh);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");
 		lblTngThuTrong_1_1.setForeground(Color.BLACK);
@@ -207,16 +198,23 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1450, 133);
 		pnlLogo.add(lblLogo);
+		
+		JButton btnDanhMucBaoHanh = new JButton("Danh mục bảo hành");
+		btnDanhMucBaoHanh.setForeground(Color.WHITE);
+		btnDanhMucBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnDanhMucBaoHanh.setBackground(Color.GRAY);
+		btnDanhMucBaoHanh.setBounds(906, 753, 257, 40);
+		add(btnDanhMucBaoHanh);
 
 		/**
 		 * Đổi màu header cho table
 		 */
-		JTableHeader tableHeader2 = tblHopDong.getTableHeader();
+		JTableHeader tableHeader2 = tblBaoHanh.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		for (int i = 1; i < 21; i++) {
-			modelHopDong.addRow(new Object[] { i, null, null, null });
+			modelBaoHanh.addRow(new Object[] { i, null, null, null });
 		}
 		dangKiSuKien();
 
@@ -227,7 +225,6 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
-		btnBaoHanh.addActionListener(this);
 		btnTruoc.addActionListener(this);
 
 	}
@@ -265,18 +262,13 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnBaoHanh)) {
+		if (o.equals(btnXemChiTiet)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
 			this.add(new GD_BaoHanh());
 			this.validate();
 			this.repaint();
 		}
-		
-		if(o.equals(btnXemChiTiet)) {
-			new GD_ChiTietHD().setVisible(true);
-		}
-		
-		
+
 	}
 }

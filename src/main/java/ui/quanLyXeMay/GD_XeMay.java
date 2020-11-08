@@ -1,44 +1,32 @@
 package ui.quanLyXeMay;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.EventObject;
-import java.util.List;
-import java.util.Random;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
 
 public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 	private JTextField txtTimKiem;
@@ -52,6 +40,10 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 	private JButton btnXoa;
 	private DefaultTableModel modelXe;
 	private JTable tblXeMay;
+	private JMenuItem mntmHang;
+	private JMenuItem mntmLoaiXe;
+	private JMenuItem mntmDongXe;
+	private JMenuItem mntmXuatXu;
 
 	/**
 	 * Create the panel.
@@ -116,6 +108,13 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setBounds(771, 83, 245, 30);
 		add(cboHangXe);
+		
+		JPopupMenu popupHang = new JPopupMenu();
+		addPopup(cboHangXe, popupHang);
+		
+		 mntmHang = new JMenuItem("Quản lý hãng xe");
+		mntmHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		popupHang.add(mntmHang);
 
 		JLabel lblTngThuTrong_1_1_1 = new JLabel("Loại xe:");
 		lblTngThuTrong_1_1_1.setForeground(Color.BLACK);
@@ -128,6 +127,14 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		cboLoaiXe.setBackground(Color.WHITE);
 		cboLoaiXe.setBounds(1173, 83, 245, 30);
 		add(cboLoaiXe);
+		
+		JPopupMenu popupLoaiXe = new JPopupMenu();
+		popupLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		addPopup(cboLoaiXe, popupLoaiXe);
+		
+		 mntmLoaiXe = new JMenuItem("Quản lý loại xe");
+		mntmLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		popupLoaiXe.add(mntmLoaiXe);
 
 		JLabel lblTngThuTrong_1_1_2 = new JLabel("Dòng xe:");
 		lblTngThuTrong_1_1_2.setForeground(Color.BLACK);
@@ -140,6 +147,13 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		cboDongXe.setBackground(Color.WHITE);
 		cboDongXe.setBounds(151, 142, 265, 30);
 		add(cboDongXe);
+		
+		JPopupMenu popupDongXe = new JPopupMenu();
+		addPopup(cboDongXe, popupDongXe);
+		
+		 mntmDongXe = new JMenuItem("Quản lý dòng xe");
+		mntmDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		popupDongXe.add(mntmDongXe);
 
 		JLabel lblTngThuTrong_1_1_2_1 = new JLabel("Xuất xứ:");
 		lblTngThuTrong_1_1_2_1.setForeground(Color.BLACK);
@@ -152,6 +166,13 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		cboXuatXu.setBackground(Color.WHITE);
 		cboXuatXu.setBounds(772, 142, 244, 30);
 		add(cboXuatXu);
+		
+		JPopupMenu popupXuatXu = new JPopupMenu();
+		addPopup(cboXuatXu, popupXuatXu);
+		
+		mntmXuatXu = new JMenuItem("Quản lý xuất xứ");
+		mntmXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		popupXuatXu.add(mntmXuatXu);
 
 		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách xe máy");
 		lblTngThuTrong_1_1_2_2.setForeground(new Color(58, 181, 74));
@@ -262,7 +283,10 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		btnThem.addActionListener(this);
 		btnTruoc.addActionListener(this);
 		btnXoa.addActionListener(this);
-		
+		mntmDongXe.addActionListener(this);
+		mntmHang.addActionListener(this);
+		mntmLoaiXe.addActionListener(this);
+		mntmXuatXu.addActionListener(this);
 	}
 
 
@@ -310,8 +334,38 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		if(o.equals(btnThem)) {
 			setManHinh(new GD_ThemXeMay());
 			
-		}else if (o.equals(btnSua)) {
+		}
+		if (o.equals(btnSua)) {
 			setManHinh(new GD_CapNhatXeMay());
 		}
+		if (o.equals(mntmDongXe)) {
+			new GD_DongXe().setVisible(true);
+		}
+		if (o.equals(mntmHang)) {
+			new GD_HangXe().setVisible(true);
+		}
+		if (o.equals(mntmLoaiXe)) {
+			new GD_LoaiXe().setVisible(true);
+		}
+		if (o.equals(mntmXuatXu)) {
+			new GD_XuatXu().setVisible(true);
+		}
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

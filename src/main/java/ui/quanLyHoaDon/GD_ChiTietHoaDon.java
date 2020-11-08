@@ -21,6 +21,9 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener{
 
@@ -31,6 +34,17 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener{
 	private JPanel contentPane;
 	private JTable tblHoaDon;
 	private DefaultTableModel modelHoaDon;
+	private JLabel lblMaHD;
+	private JLabel lblNgayLapHD;
+	private JLabel lblMaNV;
+	private JLabel lblTenNV;
+	private JLabel lblMaKH;
+	private JLabel lblTenKH;
+	private JLabel lblSDT;
+	private JLabel lblDiaChi;
+	private JLabel lblSoCMT;
+	private JLabel lblNgaySinh;
+	private JButton btnThoat;
 
 	/**
 	 * Launch the application.
@@ -55,293 +69,199 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener{
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GD_ChiTietHoaDon.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
 		setTitle("Hóa đơn");
-		setSize(800, 900);
+		setSize(1200, 900);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setForeground(new Color(51, 153, 51));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-
-		Box verticalBox = Box.createVerticalBox();
-		contentPane.add(verticalBox);
-
-		Box horizontalBox = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox);
-
+		contentPane.setLayout(null);
+		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 0));
-		panel.setPreferredSize(new Dimension(800, 50));
-		panel.setMaximumSize(new Dimension(32767, 50));
-		horizontalBox.add(panel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-
+		panel.setBackground(new Color(58, 181, 74));
+		panel.setBounds(0, 0, 1182, 50);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
 		JLabel lblNewLabel = new JLabel("Hóa đơn");
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setMaximumSize(new Dimension(37017, 50));
-		lblNewLabel.setPreferredSize(new Dimension(800, 50));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblNewLabel.setBounds(0, 0, 1182, 50);
 		panel.add(lblNewLabel);
-
-		Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea);
-
-		Box horizontalBox_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_1);
-
-		Component rigidArea_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_1);
-
-		JLabel lblNewLabel_1 = new JLabel("Mã hóa đơn:");
-		lblNewLabel_1.setPreferredSize(new Dimension(170, 40));
+		
+		JLabel lblNewLabel_1 = new JLabel("Thông tin hóa đơn");
+		lblNewLabel_1.setForeground(new Color(58, 181, 74));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblNewLabel_1);
-
-		Component rigidArea_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_2);
-
-		JLabel lblMaHD = new JLabel("KH123456");
-		lblMaHD.setPreferredSize(new Dimension(150, 40));
-		lblMaHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(lblMaHD);
-
-		Component rigidArea_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_1_1);
-
-		Component horizontalGlue_1_2 = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue_1_2);
-
-		JLabel lblNewLabel_1_1 = new JLabel("Ngày lập hóa đơn:");
-		lblNewLabel_1_1.setPreferredSize(new Dimension(190, 40));
+		lblNewLabel_1.setBounds(23, 63, 249, 30);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Thông tin khách hàng");
+		lblNewLabel_1_1.setForeground(new Color(58, 181, 74));
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_1.add(lblNewLabel_1_1);
-
-		Component rigidArea_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_2_1);
-
-		JLabel lblNgayLapHD = new JLabel("19/10/2020");
-		lblNgayLapHD.setPreferredSize(new Dimension(150, 40));
-		lblNgayLapHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_1.add(lblNgayLapHD);
-
-		Component horizontalGlue = Box.createHorizontalGlue();
-		horizontalBox_1.add(horizontalGlue);
-
-		Component rigidArea_7 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_1.add(rigidArea_7);
-
-		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3);
-
-		Box horizontalBox_2 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2);
-
-		Component rigidArea_1_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_1_2);
-
-		JLabel lblNewLabel_1_2 = new JLabel("Mã nhân viên:");
-		lblNewLabel_1_2.setPreferredSize(new Dimension(170, 40));
+		lblNewLabel_1_1.setBounds(528, 63, 287, 30);
+		contentPane.add(lblNewLabel_1_1);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBorder(null);
+		separator.setForeground(new Color(58, 181, 74));
+		separator.setBounds(23, 92, 457, 14);
+		contentPane.add(separator);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBorder(null);
+		separator_1.setForeground(new Color(58, 181, 74));
+		separator_1.setBounds(528, 92, 623, 14);
+		contentPane.add(separator_1);
+		
+		JLabel lblNewLabel_1_2 = new JLabel("Mã hóa đơn:");
+		lblNewLabel_1_2.setForeground(new Color(0, 0, 0));
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2.add(lblNewLabel_1_2);
-
-		Component rigidArea_2_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_2_2);
-
-		JLabel lblMaNV = new JLabel("NV123456");
-		lblMaNV.setPreferredSize(new Dimension(150, 40));
-		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2.add(lblMaNV);
-
-		Component horizontalGlue_1_1 = Box.createHorizontalGlue();
-		horizontalBox_2.add(horizontalGlue_1_1);
-
-		JLabel lblNewLabel_1_1_1 = new JLabel("Tên NV:");
-		lblNewLabel_1_1_1.setPreferredSize(new Dimension(80, 40));
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2.add(lblNewLabel_1_1_1);
-
-		Component rigidArea_2_1_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_2_1_1);
-
-		JLabel lblTenNV = new JLabel("Nguyễn Trần Nhật Hào");
-		lblTenNV.setPreferredSize(new Dimension(240, 40));
-		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2.add(lblTenNV);
-
-		Component horizontalGlue_1 = Box.createHorizontalGlue();
-		horizontalBox_2.add(horizontalGlue_1);
-
-		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2.add(rigidArea_8);
-
-		Component rigidArea_3_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_1.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_1);
-
-		Box horizontalBox_2_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_1);
-
-		Component rigidArea_1_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_1.add(rigidArea_1_2_1);
-
-		JLabel lblNewLabel_1_2_1 = new JLabel("Mã khách hàng:");
-		lblNewLabel_1_2_1.setPreferredSize(new Dimension(170, 40));
-		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_1.add(lblNewLabel_1_2_1);
-
-		Component rigidArea_2_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_1.add(rigidArea_2_2_1);
-
-		JLabel lblMaKH = new JLabel("HD123456");
-		lblMaKH.setPreferredSize(new Dimension(135, 40));
-		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_1.add(lblMaKH);
-
-		Component horizontalGlue_2 = Box.createHorizontalGlue();
-		horizontalBox_2_1.add(horizontalGlue_2);
-
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Số CMT:");
-		lblNewLabel_1_1_1_1.setPreferredSize(new Dimension(120, 40));
-		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_1.add(lblNewLabel_1_1_1_1);
-
-		JLabel lblCMT = new JLabel("123456789012");
-		lblCMT.setPreferredSize(new Dimension(150, 40));
-		lblCMT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_1.add(lblCMT);
-
-		Component rigidArea_2_1_1_2_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_2_1_1_2_1.setPreferredSize(new Dimension(50, 20));
-		horizontalBox_2_1.add(rigidArea_2_1_1_2_1);
-
-		Component horizontalGlue_1_3 = Box.createHorizontalGlue();
-		horizontalBox_2_1.add(horizontalGlue_1_3);
-
-		Component rigidArea_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_1.add(rigidArea_5);
-
-		Component rigidArea_3_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_2.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_2);
-
-		Box horizontalBox_2_2 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_2);
-
-		Component rigidArea_1_2_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_2.add(rigidArea_1_2_2);
-
-		JLabel lblNewLabel_1_2_2 = new JLabel("Tên KH:");
-		lblNewLabel_1_2_2.setPreferredSize(new Dimension(80, 40));
+		lblNewLabel_1_2.setBounds(23, 101, 136, 30);
+		contentPane.add(lblNewLabel_1_2);
+		
+		 lblMaHD = new JLabel("HD123456");
+		lblMaHD.setForeground(Color.BLACK);
+		lblMaHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaHD.setBounds(232, 101, 136, 30);
+		contentPane.add(lblMaHD);
+		
+		JLabel lblNewLabel_1_2_2 = new JLabel("Ngày lập hóa đơn:");
+		lblNewLabel_1_2_2.setForeground(Color.BLACK);
 		lblNewLabel_1_2_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_2.add(lblNewLabel_1_2_2);
-
-		Component rigidArea_2_2_2 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_2.add(rigidArea_2_2_2);
-
-		JLabel lblTenKH = new JLabel("Nguyễn Trần Nhật Hào");
-		lblTenKH.setPreferredSize(new Dimension(240, 40));
-		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_2.add(lblTenKH);
-
-		Component horizontalGlue_3 = Box.createHorizontalGlue();
-		horizontalBox_2_2.add(horizontalGlue_3);
-
-		JLabel lblNewLabel_1_1_1_2 = new JLabel("Ngày sinh:");
-		lblNewLabel_1_1_1_2.setPreferredSize(new Dimension(120, 40));
-		lblNewLabel_1_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_2.add(lblNewLabel_1_1_1_2);
-
-		JLabel lblNgaySinh = new JLabel("30/04/2020");
-		lblNgaySinh.setPreferredSize(new Dimension(150, 40));
-		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_2.add(lblNgaySinh);
-
-		Component rigidArea_2_1_1_2 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_2_1_1_2.setPreferredSize(new Dimension(60, 20));
-		horizontalBox_2_2.add(rigidArea_2_1_1_2);
-
-		Component horizontalGlue_1_6 = Box.createHorizontalGlue();
-		horizontalBox_2_2.add(horizontalGlue_1_6);
-
-		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_2.add(rigidArea_6);
-
-		Component rigidArea_3_3 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_3.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_3);
-
-		Box horizontalBox_2_3 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_3);
-
-		Component rigidArea_1_2_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_3.add(rigidArea_1_2_3);
-
-		JLabel lblNewLabel_1_2_3 = new JLabel("SĐT:");
-		lblNewLabel_1_2_3.setPreferredSize(new Dimension(80, 40));
+		lblNewLabel_1_2_2.setBounds(23, 144, 197, 30);
+		contentPane.add(lblNewLabel_1_2_2);
+		
+		 lblNgayLapHD = new JLabel("11-11-2020");
+		lblNgayLapHD.setForeground(Color.BLACK);
+		lblNgayLapHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNgayLapHD.setBounds(232, 144, 136, 30);
+		contentPane.add(lblNgayLapHD);
+		
+		JLabel lblNewLabel_1_2_3 = new JLabel("Mã nhân viên:");
+		lblNewLabel_1_2_3.setForeground(Color.BLACK);
 		lblNewLabel_1_2_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_3.add(lblNewLabel_1_2_3);
-
-		Component rigidArea_2_2_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_3.add(rigidArea_2_2_3);
-
-		JLabel lblSDT = new JLabel("0123456789");
-		lblSDT.setPreferredSize(new Dimension(155, 40));
-		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_3.add(lblSDT);
-
-		Component rigidArea_1_1_1_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_3.add(rigidArea_1_1_1_3);
-
-		JLabel lblNewLabel_1_1_1_3 = new JLabel("Địa chỉ:");
-		lblNewLabel_1_1_1_3.setPreferredSize(new Dimension(80, 40));
-		lblNewLabel_1_1_1_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_3.add(lblNewLabel_1_1_1_3);
-
-		Component rigidArea_2_1_1_3 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_3.add(rigidArea_2_1_1_3);
-
-		JLabel lblDiaChi = new JLabel("..........................................................");
-		lblDiaChi.setMaximumSize(new Dimension(3701, 40));
-		lblDiaChi.setPreferredSize(new Dimension(350, 40));
-		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_3.add(lblDiaChi);
-
-		Component rigidArea_6_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_3.add(rigidArea_6_1);
-
-		Component rigidArea_3_4 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_4.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_4);
-
-		Box horizontalBox_2_4 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_4);
-
-		Component rigidArea_1_2_4 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_4.add(rigidArea_1_2_4);
-
-		JLabel lblNewLabel_1_2_4 = new JLabel("Chi tiết hóa đơn:");
-		lblNewLabel_1_2_4.setPreferredSize(new Dimension(170, 40));
+		lblNewLabel_1_2_3.setBounds(23, 187, 182, 30);
+		contentPane.add(lblNewLabel_1_2_3);
+		
+		 lblMaNV = new JLabel("HC123456");
+		lblMaNV.setForeground(Color.BLACK);
+		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaNV.setBounds(232, 187, 136, 30);
+		contentPane.add(lblMaNV);
+		
+		JLabel lblNewLabel_1_2_4 = new JLabel("Tên nhân viên:");
+		lblNewLabel_1_2_4.setForeground(Color.BLACK);
 		lblNewLabel_1_2_4.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_4.add(lblNewLabel_1_2_4);
-
-		Component horizontalGlue_1_4 = Box.createHorizontalGlue();
-		horizontalBox_2_4.add(horizontalGlue_1_4);
-
-		Component rigidArea_3_4_1 = Box.createRigidArea(new Dimension(20, 20));
-		verticalBox.add(rigidArea_3_4_1);
-
-		Box horizontalBox_2_4_1 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_4_1);
-
-		Component rigidArea_1_2_4_1 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_4_1.add(rigidArea_1_2_4_1);
-
+		lblNewLabel_1_2_4.setBounds(23, 230, 182, 30);
+		contentPane.add(lblNewLabel_1_2_4);
+		
+		 lblTenNV = new JLabel("Nguyễn Trần Nhật Hào");
+		lblTenNV.setForeground(Color.BLACK);
+		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTenNV.setBounds(232, 230, 270, 30);
+		contentPane.add(lblTenNV);
+		
+		JLabel lblNewLabel_1_2_5 = new JLabel("Mã khách hàng:");
+		lblNewLabel_1_2_5.setForeground(Color.BLACK);
+		lblNewLabel_1_2_5.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_5.setBounds(529, 101, 197, 30);
+		contentPane.add(lblNewLabel_1_2_5);
+		
+		 lblMaKH = new JLabel("KH123456");
+		lblMaKH.setForeground(Color.BLACK);
+		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblMaKH.setBounds(718, 101, 136, 30);
+		contentPane.add(lblMaKH);
+		
+		 lblTenKH = new JLabel("Nguyễn Trần Nhật Hào");
+		lblTenKH.setForeground(Color.BLACK);
+		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTenKH.setBounds(718, 144, 389, 30);
+		contentPane.add(lblTenKH);
+		
+		JLabel lblNewLabel_1_2_2_1 = new JLabel("Tên khách hàng:");
+		lblNewLabel_1_2_2_1.setForeground(Color.BLACK);
+		lblNewLabel_1_2_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_2_1.setBounds(529, 144, 182, 30);
+		contentPane.add(lblNewLabel_1_2_2_1);
+		
+		JLabel lblNewLabel_1_2_3_1 = new JLabel("Số điện thoại:");
+		lblNewLabel_1_2_3_1.setForeground(Color.BLACK);
+		lblNewLabel_1_2_3_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_3_1.setBounds(529, 187, 182, 30);
+		contentPane.add(lblNewLabel_1_2_3_1);
+		
+		 lblSDT = new JLabel("0123456789");
+		lblSDT.setForeground(Color.BLACK);
+		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSDT.setBounds(718, 187, 136, 30);
+		contentPane.add(lblSDT);
+		
+		 lblDiaChi = new JLabel("12, Nguyễn Văn Bảo, phường 4, Quận Gò Vấp, TPHCM");
+		lblDiaChi.setForeground(Color.BLACK);
+		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDiaChi.setBounds(616, 230, 554, 30);
+		contentPane.add(lblDiaChi);
+		
+		JLabel lblNewLabel_1_2_4_1 = new JLabel("Địa chỉ:");
+		lblNewLabel_1_2_4_1.setForeground(Color.BLACK);
+		lblNewLabel_1_2_4_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_4_1.setBounds(529, 230, 136, 30);
+		contentPane.add(lblNewLabel_1_2_4_1);
+		
+		JLabel lblNewLabel_1_2_5_1 = new JLabel("Số CMT:");
+		lblNewLabel_1_2_5_1.setForeground(Color.BLACK);
+		lblNewLabel_1_2_5_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_5_1.setBounds(899, 101, 121, 30);
+		contentPane.add(lblNewLabel_1_2_5_1);
+		
+		 lblSoCMT = new JLabel("123456789012");
+		lblSoCMT.setForeground(Color.BLACK);
+		lblSoCMT.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSoCMT.setBounds(1015, 101, 136, 30);
+		contentPane.add(lblSoCMT);
+		
+		JLabel lblNewLabel_1_2_5_1_1 = new JLabel("Ngày sinh:");
+		lblNewLabel_1_2_5_1_1.setForeground(Color.BLACK);
+		lblNewLabel_1_2_5_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_2_5_1_1.setBounds(899, 187, 121, 30);
+		contentPane.add(lblNewLabel_1_2_5_1_1);
+		
+		 lblNgaySinh = new JLabel("11-11-2020");
+		lblNgaySinh.setForeground(Color.BLACK);
+		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNgaySinh.setBounds(1015, 187, 136, 30);
+		contentPane.add(lblNgaySinh);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(new Color(58, 181, 74));
+		separator_2.setBorder(null);
+		separator_2.setBounds(23, 302, 1128, 14);
+		contentPane.add(separator_2);
+		
+		JLabel lblNewLabel_1_3 = new JLabel("Chi tiết hóa đơn");
+		lblNewLabel_1_3.setForeground(new Color(58, 181, 74));
+		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1_3.setBounds(23, 273, 249, 30);
+		contentPane.add(lblNewLabel_1_3);
+		
+		btnThoat = new JButton("Thoát");
+		btnThoat.setBackground(Color.RED);
+		btnThoat.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setForeground(Color.WHITE);
+		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnThoat.setBounds(1015, 810, 136, 30);
+		contentPane.add(btnThoat);
+		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(760, 300));
-		horizontalBox_2_4_1.add(scrollPane);
+		scrollPane.setBackground(Color.WHITE);
+		scrollPane.setBounds(23, 329, 1128, 383);
+		contentPane.add(scrollPane);
+
+
 
 		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe", "hãng", "loại xe", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành"};
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
@@ -352,6 +272,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener{
 				return false;
 			}
 		};
+		tblHoaDon.setBackground(Color.WHITE);
 		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHoaDon.setRowHeight(30);
 		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(35);
@@ -364,61 +285,22 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener{
 		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(80);
 		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(63);
 		scrollPane.setViewportView(tblHoaDon);
-
-		Component rigidArea_4 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_4_1.add(rigidArea_4);
-
-		Component rigidArea_3_5 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_5.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_5);
-
-		Box horizontalBox_2_5 = Box.createHorizontalBox();
-		verticalBox.add(horizontalBox_2_5);
-
-		Component rigidArea_1_2_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_5.add(rigidArea_1_2_5);
-
-		JLabel lblNewLabel_1_2_5 = new JLabel("Tổng tiền:");
-		lblNewLabel_1_2_5.setPreferredSize(new Dimension(110, 40));
-		lblNewLabel_1_2_5.setForeground(Color.RED);
-		lblNewLabel_1_2_5.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_5.add(lblNewLabel_1_2_5);
-
-		Component rigidArea_2_2_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_5.add(rigidArea_2_2_5);
-
-		JLabel lblTongTien = new JLabel("1.500.000.000 VNĐ");
-		lblTongTien.setPreferredSize(new Dimension(350, 40));
-		lblTongTien.setForeground(Color.RED);
-		lblTongTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		horizontalBox_2_5.add(lblTongTien);
-
-		Component rigidArea_1_1_1_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_5.add(rigidArea_1_1_1_5);
-
-		Component horizontalGlue_1_5 = Box.createHorizontalGlue();
-		horizontalBox_2_5.add(horizontalGlue_1_5);
-
-		JButton btnThoat = new JButton("Thoát");
-		btnThoat.setBackground(Color.RED);
-		btnThoat.setForeground(Color.WHITE);
-		btnThoat.setPreferredSize(new Dimension(150, 40));
-		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_2_5.add(btnThoat);
-
-		Component rigidArea_2_1_1_5 = Box.createRigidArea(new Dimension(20, 20));
-		horizontalBox_2_5.add(rigidArea_2_1_1_5);
-
-		Component rigidArea_3_5_1 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_3_5_1.setPreferredSize(new Dimension(20, 30));
-		verticalBox.add(rigidArea_3_5_1);
+		
+		JTableHeader tableHeaderNVKyThuat = tblHoaDon.getTableHeader();
+		tableHeaderNVKyThuat.setBackground(new Color(58, 181, 74));
+		tableHeaderNVKyThuat.setForeground(Color.white);
+		tableHeaderNVKyThuat.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		for (int i = 1; i < 7; i++) {
+			modelHoaDon.addRow(new Object[] { i, null, null, null });
+		}
 		
 		btnThoat.addActionListener(this);
+		
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		setVisible(false);
 	}
-
 }
