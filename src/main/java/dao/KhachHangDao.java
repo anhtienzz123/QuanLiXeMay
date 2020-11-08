@@ -113,6 +113,26 @@ public class KhachHangDao {
 
 		return khachHang;
 	}
+	
+	public KhachHang getKhachHangTheoSoCMT(String soCMT) {
+
+		KhachHang khachHang = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_SO_CMT);
+			preparedStatement.setString(1, soCMT);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				khachHang = KhachHangConverter.getKhachHang(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return khachHang;
+	}
 
 	public boolean themKhachHang(KhachHang khachHang) {
 
