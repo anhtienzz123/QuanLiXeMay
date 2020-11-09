@@ -275,7 +275,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 			this.repaint();
 		}
 		if (o.equals(btnXemChiTiet)) {
-			new GD_ChiTietHoaDon().setVisible(true);
+			new GD_ChiTietHoaDon("1").setVisible(true);
 		}
 	}
 }

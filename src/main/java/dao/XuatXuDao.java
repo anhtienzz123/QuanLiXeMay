@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.XeMayConstant;
 import constant.XuatXuConstant;
 import converter.XuatXuConvert;
 import db.DatabaseConnect;
@@ -55,6 +54,26 @@ public class XuatXuDao {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.GET_XUAT_XU_THEO_MA);
 			preparedStatement.setString(1, maXuatXu);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				xuatXu = XuatXuConvert.getXuatXu(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return xuatXu;
+	}
+	
+	public XuatXu getXuatXuTheoTen(String tenXuatXu) {
+
+		XuatXu xuatXu = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.GET_XUAT_XU_THEO_MA);
+			preparedStatement.setString(1, tenXuatXu);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

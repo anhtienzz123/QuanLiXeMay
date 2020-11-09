@@ -7,14 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.HangXeConstant;
 import constant.HoaDonConstant;
-import constant.HopDongConstant;
 import converter.HoaDonConverter;
-import converter.HopDongConverter;
 import db.DatabaseConnect;
 import entity.HoaDon;
-import entity.HopDong;
 
 public class HoaDonDao {
 
@@ -147,9 +143,10 @@ public class HoaDonDao {
 
 			try {
 
-				chiTietHoaDonDao.themChiTietHoaDons(hoaDon.getChiTietHoaDons());
+				HoaDonConverter.themHoaDon(preparedStatement, hoaDon);
 				n = preparedStatement.executeUpdate();
-
+				chiTietHoaDonDao.themChiTietHoaDons(hoaDon.getChiTietHoaDons());
+				
 				connection.commit();
 			} catch (Exception e) {
 				connection.rollback();

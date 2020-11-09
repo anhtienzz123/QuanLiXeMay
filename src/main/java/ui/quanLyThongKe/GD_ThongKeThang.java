@@ -195,11 +195,13 @@ public class GD_ThongKeThang extends JPanel{
 	 */
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
+		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(thang, nam);
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		pieDataset.setValue("Air Blade", 3);
-		pieDataset.setValue("Sirius", 2);
-		pieDataset.setValue("SH", 3);
-		pieDataset.setValue("Vision", 2);
+		
+		result.forEach( (key,value) -> {
+			pieDataset.setValue(key, value);
+			
+		});
 
 		JFreeChart pieChart = ChartFactory.createPieChart("Các dòng xe bán chạy trong tháng", pieDataset, true, true,
 				true);

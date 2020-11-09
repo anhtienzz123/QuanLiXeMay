@@ -7,14 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.HoaDonConstant;
 import constant.HopDongConstant;
-import constant.NhanVienKiThuatConstant;
 import converter.HopDongConverter;
-import converter.NhanVienHanhChinhConvert;
 import db.DatabaseConnect;
 import entity.HopDong;
-import entity.NhanVienHanhChinh;
 
 public class HopDongDao {
 

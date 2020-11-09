@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.DongXeConstant;
 import constant.HangXeConstant;
 import converter.HangXeConvert;
 import db.DatabaseConnect;
@@ -56,6 +55,26 @@ public class HangXeDao {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.GET_HANG_XE_THEO_MA);
 			preparedStatement.setString(1, maHangXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				hangXe = HangXeConvert.getHangXe(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return hangXe;
+	}
+	
+	public HangXe getHangXeTheoTen(String tenHangXe) {
+
+		HangXe hangXe = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.GET_HANG_XE_THEO_MA);
+			preparedStatement.setString(1, tenHangXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

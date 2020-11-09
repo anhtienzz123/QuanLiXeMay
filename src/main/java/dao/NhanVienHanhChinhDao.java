@@ -7,14 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.KhachHangConstant;
 import constant.NhanVienHanhChinhConstant;
 import constant.NhanVienKiThuatConstant;
 import converter.NhanVienHanhChinhConvert;
-import converter.NhanVienKiThuatConvert;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
-import entity.NhanVienKiThuat;
 
 public class NhanVienHanhChinhDao {
 	private static NhanVienHanhChinhDao instance;
