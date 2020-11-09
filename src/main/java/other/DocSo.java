@@ -1,5 +1,6 @@
 package other;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -182,6 +183,10 @@ public class DocSo {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(readNum("123"));
+		double a = 46000000;
+		DecimalFormat df = new DecimalFormat("###.##");
+//		Long b = Long.parseLong(String.valueOf(a));
+		System.out.println(df.format(a));
+		System.out.println(readNum(df.format(a).trim()));
 	}
 }

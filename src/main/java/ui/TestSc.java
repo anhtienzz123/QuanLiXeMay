@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
+import keeptoo.KGradientPanel;
+import java.awt.Color;
 
 public class TestSc extends JFrame implements PropertyChangeListener {
 
@@ -53,12 +55,19 @@ public class TestSc extends JFrame implements PropertyChangeListener {
 		contentPane.add(dateChooser);
 
 		textField = new JTextField();
-		textField.setBounds(115, 181, 171, 68);
+		textField.setBounds(110, 37, 171, 68);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		dateChooser.addPropertyChangeListener(this);
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		textField.setText(df.format(dateChooser.getDate()));
+		
+		KGradientPanel gradientPanel = new KGradientPanel();
+		gradientPanel.kEndColor = new Color(102, 153, 255);
+		gradientPanel.setkStartColor(new Color(186, 24, 27));
+		gradientPanel.setkEndColor(new Color(247, 178, 103));
+		gradientPanel.setBounds(65, 167, 676, 100);
+		contentPane.add(gradientPanel);
 
 	}
 

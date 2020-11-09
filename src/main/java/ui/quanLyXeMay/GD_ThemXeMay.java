@@ -66,6 +66,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	private JButton btnChonFile;
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
+	private JButton btnImport;
 
 	/**
 	 * Create the panel.
@@ -146,7 +147,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setBounds(1027, 753, 168, 40);
+		btnXoaRong.setBounds(1041, 753, 168, 40);
 		add(btnXoaRong);
 
 		JLabel lblTen = new JLabel("Tên xe:");
@@ -366,8 +367,15 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		lblThongBao = new JLabel("Số khung không hợp lệ");
 		lblThongBao.setForeground(Color.RED);
 		lblThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
-		lblThongBao.setBounds(139, 753, 822, 30);
+		lblThongBao.setBounds(139, 753, 377, 30);
 		add(lblThongBao);
+
+		btnImport = new JButton("Import file");
+		btnImport.setForeground(Color.WHITE);
+		btnImport.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnImport.setBackground(Color.GRAY);
+		btnImport.setBounds(846, 753, 168, 40);
+		add(btnImport);
 
 		dangKiSuKien();
 
@@ -377,6 +385,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		btnThem.addActionListener(this);
 		btnChonFile.addActionListener(this);
 		btnXoaRong.addActionListener(this);
+		btnImport.addActionListener(this);
 	}
 
 	@Override
@@ -388,11 +397,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnThem)) {
+		if (o.equals(btnThem)) {
+
+		}
+		if (o.equals(btnXoaRong)) {
 			
-		}else if (o.equals(btnXoaRong)) {
-			
-		}else if (o.equals(btnChonFile)) {
+		}
+		if (o.equals(btnChonFile)) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				JFileChooser fileChooser = new JFileChooser();
@@ -405,6 +416,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 					lblAnh.setIcon(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage()
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 					txtPath.setText(f.getPath());
+					lblAnh.setText("");
 				}
 
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -416,7 +428,29 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 		}
-		lblAnh.setText("");
+		if(o.equals(btnImport)) {
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter( "xlsx", "xls");
+				fileChooser.setFileFilter(imgFilter);
+				fileChooser.setMultiSelectionEnabled(false);
+				fileChooser.setPreferredSize(new Dimension(900, 600));
+				if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+					File f = fileChooser.getSelectedFile();
+					txtPath.setText(f.getPath());
+				}
+
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+//				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 
 	}
 
