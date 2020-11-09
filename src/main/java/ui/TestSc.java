@@ -1,17 +1,23 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
-import java.awt.Color;
 
-public class TestSc extends JFrame {
+import com.toedter.calendar.JDateChooser;
+
+public class TestSc extends JFrame implements PropertyChangeListener {
 
 	private JPanel contentPane;
+	private JDateChooser dateChooser;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -39,17 +45,26 @@ public class TestSc extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(94, 59, 664, 328);
-		contentPane.add(tabbedPane);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.CYAN);
-		tabbedPane.addTab("New tab", null, panel, null);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.ORANGE);
-		tabbedPane.addTab("New tab", null, panel_1, null);
+
+		dateChooser = new JDateChooser();
+		dateChooser.setDateFormatString("dd-MM-yyyy");
+		dateChooser.setBounds(379, 55, 248, 50);
+		dateChooser.setDate(Calendar.getInstance().getTime());
+		contentPane.add(dateChooser);
+
+		textField = new JTextField();
+		textField.setBounds(115, 181, 171, 68);
+		contentPane.add(textField);
+		textField.setColumns(10);
+		dateChooser.addPropertyChangeListener(this);
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		textField.setText(df.format(dateChooser.getDate()));
+
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		textField.setText(df.format(dateChooser.getDate()));
 	}
 }

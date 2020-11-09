@@ -63,9 +63,9 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private JPanel pnlQuanLyHangXe;
 	private JLabel lblQuanLyHangXe;
 	private JLabel lblIconQuanLyHangXe;
-	private JPanel pnlDoanhSoTheoNgay;
-	private JLabel lblDoanhSoTheoNgay;
-	private JLabel lblIconDoanhSoTheoNgay;
+	private JPanel pnlBaoHanh;
+	private JLabel lblBaoHanh;
+	private JLabel lblIconBaoHanh;
 	private JPanel pnlThemXeMay;
 	private JLabel lblIconThemXeMay;
 	private JLabel lblThemXeMay;
@@ -258,24 +258,24 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblIconQuanLyHangXe.setBounds(0, 0, 278, 123);
 		pnlQuanLyHangXe.add(lblIconQuanLyHangXe);
 
-		pnlDoanhSoTheoNgay = new JPanel();
-		pnlDoanhSoTheoNgay.setLayout(null);
-		pnlDoanhSoTheoNgay.setBackground(new Color(58, 181, 74));
-		pnlDoanhSoTheoNgay.setBounds(87, 517, 278, 165);
-		add(pnlDoanhSoTheoNgay);
+		pnlBaoHanh = new JPanel();
+		pnlBaoHanh.setLayout(null);
+		pnlBaoHanh.setBackground(new Color(58, 181, 74));
+		pnlBaoHanh.setBounds(87, 517, 278, 165);
+		add(pnlBaoHanh);
 
-		lblDoanhSoTheoNgay = new JLabel("Doanh số theo ngày");
-		lblDoanhSoTheoNgay.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDoanhSoTheoNgay.setForeground(Color.WHITE);
-		lblDoanhSoTheoNgay.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblDoanhSoTheoNgay.setBounds(0, 102, 278, 63);
-		pnlDoanhSoTheoNgay.add(lblDoanhSoTheoNgay);
+		lblBaoHanh = new JLabel("Bảo hành");
+		lblBaoHanh.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBaoHanh.setForeground(Color.WHITE);
+		lblBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblBaoHanh.setBounds(0, 102, 278, 63);
+		pnlBaoHanh.add(lblBaoHanh);
 
-		lblIconDoanhSoTheoNgay = new JLabel("");
-		lblIconDoanhSoTheoNgay.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/calendar_100px.png")));
-		lblIconDoanhSoTheoNgay.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconDoanhSoTheoNgay.setBounds(0, 0, 278, 123);
-		pnlDoanhSoTheoNgay.add(lblIconDoanhSoTheoNgay);
+		lblIconBaoHanh = new JLabel("");
+		lblIconBaoHanh.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/calendar_100px.png")));
+		lblIconBaoHanh.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconBaoHanh.setBounds(0, 0, 278, 123);
+		pnlBaoHanh.add(lblIconBaoHanh);
 
 		pnlThemXeMay = new JPanel();
 		pnlThemXeMay.setLayout(null);
@@ -331,8 +331,8 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("QuanLyHangXe", pnlQuanLyHangXe, lblIconQuanLyHangXe));
 		listDanhMuc.add(new DanhMuc("ThemXeMay", pnlThemXeMay, lblThemXeMay));
 		listDanhMuc.add(new DanhMuc("ThemXeMay", pnlThemXeMay, lblIconThemXeMay));
-		listDanhMuc.add(new DanhMuc("DoanhSoTheoNgay", pnlDoanhSoTheoNgay, lblDoanhSoTheoNgay));
-		listDanhMuc.add(new DanhMuc("DoanhSoTheoNgay", pnlDoanhSoTheoNgay, lblIconDoanhSoTheoNgay));
+		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblBaoHanh));
+		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblIconBaoHanh));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblThemNhanVien));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblIconThemNhanVien));
 		ChuyenManHinh chuyen = new ChuyenManHinh(this);
