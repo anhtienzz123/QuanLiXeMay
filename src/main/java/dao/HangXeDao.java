@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.DongXeConstant;
 import constant.HangXeConstant;
 import converter.HangXeConvert;
 import db.DatabaseConnect;

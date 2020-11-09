@@ -7,13 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.KhachHangConstant;
-import constant.LoaiXeConstant;
 import constant.PhieuBaoHanhConstant;
-import converter.KhachHangConverter;
 import converter.PhieuBaoHanhConverter;
 import db.DatabaseConnect;
-import entity.KhachHang;
 import entity.PhieuBaoHanh;
 
 public class PhieuBaoHanhDao {

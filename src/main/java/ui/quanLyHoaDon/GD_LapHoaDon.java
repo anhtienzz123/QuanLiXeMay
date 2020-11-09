@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.EventObject;
 import java.util.List;
@@ -31,6 +32,7 @@ import javax.swing.table.JTableHeader;
 import constant.TenEntity;
 import dao.DongXeDao;
 import dao.HangXeDao;
+import dao.HoaDonDao;
 import dao.KhachHangDao;
 import dao.LoaiXeDao;
 import dao.NhanVienHanhChinhDao;
@@ -75,7 +77,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private JLabel lblTienTraLai;
 	private JLabel lblTongTien;
 	private JLabel lblTienBangChu;
-	private JButton btnThanhToan;
+	private JButton btnLapHoaDon;
 	private JButton btnTaoMoi;
 	private JButton btnSua;
 	private JButton btnXoa;
@@ -110,10 +112,9 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private List<XeMay> xeMays;
 
 	private HoaDon hoaDon;
-	private String maHoaDon;
 
 	public GD_LapHoaDon(String maNhanVienHanhChinh) {
-		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
+		this.maNhanVienHanhChinh = "NVHC222222";
 
 		try {
 			DatabaseConnect.connect();
@@ -637,14 +638,14 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		lblTK.setBounds(30, 275, 107, 30);
 		add(lblTK);
 
-		btnThanhToan = new JButton("Thanh toán");
-		btnThanhToan
+		btnLapHoaDon = new JButton("Lập hóa đơn");
+		btnLapHoaDon
 				.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_monetization_on_white_18dp.png")));
-		btnThanhToan.setBounds(1073, 893, 319, 42);
-		add(btnThanhToan);
-		btnThanhToan.setForeground(Color.WHITE);
-		btnThanhToan.setFont(new Font("Tahoma", Font.BOLD, 21));
-		btnThanhToan.setBackground(new Color(0, 153, 51));
+		btnLapHoaDon.setBounds(1073, 893, 319, 42);
+		add(btnLapHoaDon);
+		btnLapHoaDon.setForeground(Color.WHITE);
+		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 21));
+		btnLapHoaDon.setBackground(new Color(0, 153, 51));
 
 		btnTaoMoi = new JButton("Tạo mới hóa đơn");
 		btnTaoMoi.setIcon(
@@ -664,7 +665,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		add(txtSoLuong);
 
 		cboMauXe = new JComboBox<String>();
-		cboMauXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Tất cả", "Đen", "Trắng", "Đỏ", "Đỏ-Đen" }));
 
 		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboMauXe.setBackground(Color.WHITE);
@@ -712,6 +712,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private void dangKiSuKien() {
 		txtSoDienThoai.addActionListener(this);
 		txtSoCMT.addActionListener(this);
+		txtTienKhachTra.addActionListener(this);
 
 		btnThem.addActionListener(this);
 		cboHangXe.addActionListener(this);
@@ -730,7 +731,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		btnCuoi.addActionListener(this);
 
 		btnTaoMoi.addActionListener(this);
-		btnThanhToan.addActionListener(this);
+		btnLapHoaDon.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
 
@@ -768,9 +769,10 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 			if (!lblMaKhachHang.getText().trim().equals("")) {
 				if (hoaDon == null) {
-					hoaDon = new HoaDon(maHoaDon, new KhachHang(lblMaKhachHang.getText()),
+					hoaDon = new HoaDon(lblMaHoaDon.getText(), new KhachHang(lblMaKhachHang.getText()),
 							new NhanVienHanhChinh(lblMaNhanVien.getText()),
 							XuLyThoiGian.chuyenStringThanhDate(lblNgayLapHoaDon.getText()));
+
 				}
 
 				int index = tblXeMay.getSelectedRow();
@@ -778,7 +780,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 				int soLuong = Integer.valueOf(txtSoLuong.getText());
 
 				if (xeMay.getSoLuong() >= soLuong) {
-					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(this.maHoaDon), xeMay,
+					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(lblMaHoaDon.getText()), xeMay,
 							xeMay.getGiaNhap(), soLuong);
 					xeMay.setSoLuong(xeMay.getSoLuong() - soLuong);
 					xeMayDao.capNhatXeMay(xeMay);
@@ -828,52 +830,102 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 			this.page = maxPage;
 		}
 
-		if (source == btnThanhToan) {
+		if (source == txtTienKhachTra) {
+
+			try {
+				double tienTra = Double.valueOf(txtTienKhachTra.getText());
+
+				double tongTienHoaDon = hoaDon.tinhTongTienHoaDon();
+
+				if (tienTra < tongTienHoaDon) {
+					JOptionPane.showMessageDialog(null, "Tiền trả không đủ");
+					txtTienKhachTra.selectAll();
+					txtTienKhachTra.requestFocus();
+
+				} else {
+					double tienTraLai = tienTra - tongTienHoaDon;
+					lblTienTraLai.setText(DinhDangTien.format(tienTraLai));
+				}
+
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Tiền trả không hợp lệ");
+				txtTienKhachTra.selectAll();
+				txtTienKhachTra.requestFocus();
+
+			}
+		}
+
+		if (source == btnLapHoaDon) {
+
+			if(lblTienTraLai.getText().length() > 0) {
+				HoaDonDao hoaDonDao = HoaDonDao.getInstance();
+				System.out.println(hoaDon);
+				if (hoaDonDao.themHoaDon(this.hoaDon)) {
+					
+					
+					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
+					hoaDon = null;
+					capNhatHoaDon();
+					capNhatKhachHang(null);
+					lblMaHoaDon.setText(RandomMa.getMaNgauNhien(TenEntity.HOA_DON));
+					
+				} else {
+					System.out.println("Them that bai");
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa nhập tiền khách trả");
+				txtTienKhachTra.requestFocus();
+				txtTienKhachTra.selectAll();
+
+			}
 
 		}
 
 		if (source == btnTaoMoi) {
 
-			for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
+			if(hoaDon != null) {
+				for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
 
-				XeMay xeMay = chiTietHoaDon.getXeMay();
-				xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong());
-				xeMayDao.capNhatXeMay(xeMay);
+					XeMay xeMay = chiTietHoaDon.getXeMay();
+					xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong());
+					xeMayDao.capNhatXeMay(xeMay);
+				}
+				this.hoaDon = null;
+				capNhatHoaDon();
+				capNhatKhachHang(null);
+				capNhatXeMaysTrongBang();
+				xoaThongTinsTimKiem();
 			}
-			this.hoaDon = null;
-			capNhatHoaDon();
-			capNhatKhachHang(null);
-			capNhatXeMaysTrongBang();
 
 		}
-		
-		if(source == btnXoa) {
+
+		if (source == btnXoa) {
 			int row = tblHoaDon.getSelectedRow();
 			ChiTietHoaDon chiTietHoaDon = hoaDon.getChiTietHoaDons().get(row);
 			XeMay xeMay = chiTietHoaDon.getXeMay();
-			xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong() );
+			xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong());
 			xeMayDao.capNhatXeMay(xeMay);
-			
+
 			hoaDon.getChiTietHoaDons().remove(row);
 			capNhatHoaDon();
 			capNhatXeMaysTrongBang();
-			
+
 		}
-		
-		if(source == btnSua) {
+
+		if (source == btnSua) {
 			int row = tblHoaDon.getSelectedRow();
 			int soLuong = Integer.valueOf(txtSoLuong.getText());
-			
+
 			ChiTietHoaDon chiTietHoaDon = hoaDon.getChiTietHoaDons().get(row);
 			XeMay xeMay = chiTietHoaDon.getXeMay();
-			
-			xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong() - soLuong );
+
+			xeMay.setSoLuong(xeMay.getSoLuong() + chiTietHoaDon.getSoLuong() - soLuong);
 			xeMayDao.capNhatXeMay(xeMay);
-			
+
 			chiTietHoaDon.setSoLuong(soLuong);
 			capNhatHoaDon();
 			capNhatXeMaysTrongBang();
-			
+
 		}
 
 	}
@@ -894,14 +946,17 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 				datas[0] = tblHoaDon.getRowCount() + 1;
 				datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
 				datas[2] = chiTietHoaDon.getSoLuong();
-				datas[3] = chiTietHoaDon.getGiaBan();
-				datas[4] = chiTietHoaDon.tinhTongTien();
+				datas[3] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
+				datas[4] = DinhDangTien.format(chiTietHoaDon.tinhTongTien());
 
 				modelHoaDon.addRow(datas);
 			}
 
 			lblTongTien.setText(DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
-			lblTienBangChu.setText(DocSo.readNum(hoaDon.tinhTongTienHoaDon() + ""));
+			
+			DecimalFormat df = new DecimalFormat("###.##");
+			System.out.println(DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())));
+			lblTienBangChu.setText("Bằng chữ: "  + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng"  );
 		} else {
 			lblTongTien.setText("0 VNĐ");
 			lblTienBangChu.setText("Không đồng");
@@ -926,7 +981,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, SIZE);
-		System.out.println("maxPage: " + maxPage);
+		// System.out.println("maxPage: " + maxPage);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, from, to);
 
@@ -956,7 +1011,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
 		datas[4] = xeMay.getMauXe();
 		datas[5] = xeMay.getSoLuong();
-		datas[6] = xeMay.getGiaNhap();
+		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
 		datas[7] = xeMay.getThoiGianBaoHanh();
 
 		modelXe.addRow(datas);
@@ -987,7 +1042,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private void xoaThongTinsTimKiem() {
 		cboTimKiem.setSelectedItem("Tên xe");
 		txtTimKiem.setText("");
-
 		cboHangXe.setSelectedItem("Tất cả");
 		cboLoaiXe.setSelectedItem("Tất cả");
 		cboMauXe.setSelectedItem("Tất cả");
@@ -1022,6 +1076,12 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
 		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
 				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+		cboMauXe.addItem("Tất cả");
+		for (String mauXe : xeMayDao.getMauXes()) {
+			System.out.println(mauXe);
+			cboMauXe.addItem(mauXe);
+		}
 
 	}
 

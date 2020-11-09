@@ -35,7 +35,7 @@ public class ChiTietHoaDonConverter {
 			throws SQLException {
 		preparedStatement.setString(1, chiTietHoaDon.getHoaDon().getMaHoaDon());
 		preparedStatement.setString(2, chiTietHoaDon.getXeMay().getMaXeMay());
-		preparedStatement.setDouble(3, chiTietHoaDon.getXeMay().tinhGiaBan());
+		preparedStatement.setDouble(3, chiTietHoaDon.getXeMay().getGiaNhap());
 		preparedStatement.setDouble(4, chiTietHoaDon.getSoLuong());
 
 	}
