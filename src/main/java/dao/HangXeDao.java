@@ -67,6 +67,26 @@ public class HangXeDao {
 
 		return hangXe;
 	}
+	
+	public HangXe getHangXeTheoTen(String tenHangXe) {
+
+		HangXe hangXe = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.GET_HANG_XE_THEO_MA);
+			preparedStatement.setString(1, tenHangXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				hangXe = HangXeConvert.getHangXe(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return hangXe;
+	}
 
 	public boolean capNhatHangXe(HangXe hangXe) {
 

@@ -67,6 +67,26 @@ public class XuatXuDao {
 		return xuatXu;
 	}
 	
+	public XuatXu getXuatXuTheoTen(String tenXuatXu) {
+
+		XuatXu xuatXu = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.GET_XUAT_XU_THEO_MA);
+			preparedStatement.setString(1, tenXuatXu);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				xuatXu = XuatXuConvert.getXuatXu(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return xuatXu;
+	}
+	
 	public boolean capNhatXuatXu(XuatXu xuatXu) {
 
 		int n = 0;

@@ -67,6 +67,26 @@ public class LoaiXeDao {
 		return loaiXe;
 	}
 	
+	public LoaiXe getLoaiXeTheoTen(String tenLoaiXe) {
+
+		LoaiXe loaiXe = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.GET_LOAI_XE_THEO_MA);
+			preparedStatement.setString(1, tenLoaiXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				loaiXe = LoaiXeConvert.getLoaiXe(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return loaiXe;
+	}
+	
 	public boolean capNhatLoaiXe(LoaiXe loaiXe) {
 
 		int n = 0;

@@ -56,14 +56,28 @@ public class DongXeDao {
 			preparedStatement.setString(1, maDongXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			if (resultSet.next())
 				dongXe = DongXeConvert.getDongXe(resultSet);
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return dongXe;
+	}
+	
+	public DongXe getDongXeTheoTen(String tenDongXe) {
 
+		DongXe dongXe = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_MA);
+			preparedStatement.setString(1, tenDongXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				dongXe = DongXeConvert.getDongXe(resultSet);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return dongXe;
 	}
 	
