@@ -62,6 +62,7 @@ public class XeMayDao {
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THEO_MA);
+			preparedStatement.setNString(1, maXeMay);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())

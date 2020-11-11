@@ -17,8 +17,6 @@ public class KhachHangDao {
 	private static KhachHangDao instance;
 	private Connection connection;
 
-	// pattern singleton: đảm bảo trong vòng đời 1 ứng dụng chỉ cho phép duy nhất 1
-	// đối tượng này đc tạo ra --> đảm bảo tiết kiệm bộ nhớ, tính hiệu năng
 	private KhachHangDao() {
 		connection = DatabaseConnect.getInstance();
 	}
@@ -93,13 +91,14 @@ public class KhachHangDao {
 
 		return khachHang;
 	}
-	
+
 	public KhachHang getKhachHangTheoSoDienThoai(String soDienThoai) {
 
 		KhachHang khachHang = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_SO_DIEN_THOAI);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_SO_DIEN_THOAI);
 			preparedStatement.setString(1, soDienThoai);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -113,13 +112,14 @@ public class KhachHangDao {
 
 		return khachHang;
 	}
-	
+
 	public KhachHang getKhachHangTheoSoCMT(String soCMT) {
 
 		KhachHang khachHang = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_SO_CMT);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.GET_KHACH_HANG_THEO_SO_CMT);
 			preparedStatement.setString(1, soCMT);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -204,6 +204,49 @@ public class KhachHangDao {
 		return true;
 	}
 
+	public int getMaxPageTimKiem(String timKiem, String field, int size) {
+
+		int maxPage = 0;
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_MA_KHACH_HANG);
+				break;
+			case KhachHangConstant.MA_KHACH_HANG:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_MA_KHACH_HANG_MAX_PAGE);
+				break;
+			case KhachHangConstant.SO_CMT:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_SO_CMT_MAX_PAGE);
+				break;
+
+			case KhachHangConstant.TEN_KHACH_HANG:
+				preparedStatement = connection
+						.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_TEN_KHACH_HANG_MAX_PAGE);
+				break;
+
+			case KhachHangConstant.SO_DIEN_THOAI:
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_SO_DIEN_THOAI_MAX_PAGE);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setNString(1, "%" + timKiem + "%");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				maxPage = Integer.valueOf(resultSet.getString("total"));
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return (int) Math.ceil(maxPage * 1.00 / size);
+	}
+
 	public List<KhachHang> timKiemKhachHangs(String timKiem, int from, int to, String field) {
 
 		List<KhachHang> khachHangs = new ArrayList<>();
@@ -213,7 +256,7 @@ public class KhachHangDao {
 
 			switch (field) {
 			case "":
-				preparedStatement = connection.prepareStatement(KhachHangConstant.GET_KHACH_HANGS_PHAN_TRANG);
+				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_MA_KHACH_HANG);
 				break;
 			case KhachHangConstant.MA_KHACH_HANG:
 				preparedStatement = connection.prepareStatement(KhachHangConstant.TIM_KIEM_THEO_MA_KHACH_HANG);
@@ -234,7 +277,7 @@ public class KhachHangDao {
 				break;
 			}
 
-			preparedStatement.setString(1, "%" + timKiem + "%");
+			preparedStatement.setNString(1, "%" + timKiem + "%");
 			preparedStatement.setInt(2, from);
 			preparedStatement.setInt(3, to);
 

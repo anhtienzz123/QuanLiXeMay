@@ -29,6 +29,7 @@ public class XuLyThoiGian {
 		java.util.Date date = null;
 		try {
 			date = simpleDateFormat.parse(ngayThang);
+	
 			@SuppressWarnings("deprecation")
 			Date source = new Date(date.getYear(), date.getMonth(), date.getDate());
 
