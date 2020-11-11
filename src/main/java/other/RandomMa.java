@@ -114,7 +114,7 @@ public class RandomMa {
 		String ma = "";
 
 		do {
-			ma = TenEntity.KHACH_HANG + sinhMaNgauNhien();
+			ma = TenEntity.NHAN_VIEN_HANH_CHINH + sinhMaNgauNhien();
 		} while (!nhanVienHanhChinhDao.kiemTraMaKhongTrung(ma));
 
 		return ma;

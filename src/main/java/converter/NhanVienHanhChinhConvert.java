@@ -46,7 +46,7 @@ public class NhanVienHanhChinhConvert {
 		preparedStatement.setString(9, NVHanhChinh.getChucVu());
 		preparedStatement.setString(10, NVHanhChinh.getTrinhDoHocVan());
 		preparedStatement.setBoolean(11, NVHanhChinh.isVaiTro());
-		preparedStatement.setBoolean(11, NVHanhChinh.isTrangThai());
+		preparedStatement.setBoolean(12, NVHanhChinh.isTrangThai());
 
 	}
 

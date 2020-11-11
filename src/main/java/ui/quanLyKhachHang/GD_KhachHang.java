@@ -298,7 +298,6 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	public void keyReleased(KeyEvent e) {
 		this.field = cboTimKiem.getSelectedItem().toString();
 		page = 1;
-
 		capNhatDuLieuTrongBang();
 
 	}
@@ -318,16 +317,16 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		}
 	}
 
-//	private void loadDuLieu() {
-//		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
-//
-//		if (khachHangs.size() > 0) {
-//			xoaDuLieuTrongBang();
-//			themKhachHangsVaoBang();
-//			txtTrang.setText(this.page + "");
-//		}
-//
-//	}
+	private void loadDuLieu() {
+		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
+
+		if (khachHangs.size() > 0) {
+			xoaDuLieuTrongBang();
+			themKhachHangsVaoBang();
+			txtTrang.setText(this.page + "");
+		}
+
+	}
 
 	private void themKhachHangsVaoBang() {
 		if (khachHangs != null) {

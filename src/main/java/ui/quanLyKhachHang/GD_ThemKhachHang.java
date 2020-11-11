@@ -356,9 +356,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 			
 			if(validateKhachHang(khachHang)) {
 				if(khachHangDao.themKhachHang(khachHang)) {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên", JOptionPane.INFORMATION_MESSAGE, null );
+					JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công", "Thông báo thêm khách hàng", JOptionPane.INFORMATION_MESSAGE, null );
 				}else {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE, null );
+					JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại", "Thêm khách hàng", JOptionPane.ERROR_MESSAGE, null );
 				}
 			}
 			

@@ -5,48 +5,43 @@ import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.EventObject;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
+import constant.TenEntity;
 import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import ui.quanLyBaoHanh.GD_BaoHanh;
-
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
-import com.toedter.calendar.JDateChooser;
+import dao.NhanVienHanhChinhDao;
+import dao.NhanVienKiThuatDao;
+import entity.NhanVienHanhChinh;
+import entity.NhanVienKiThuat;
+import other.RandomMa;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTabbedPane;
 
-public class GD_NhanVien extends JPanel implements ActionListener, MouseListener {
+public class GD_NhanVien extends JPanel implements ActionListener, MouseListener, KeyListener {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -64,10 +59,27 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private DefaultTableModel modelNVKyThuat;
 	private JTable tblNVKyThuat;
 
+	private List<NhanVienHanhChinh> nhanVienHanhChinhs;
+	private List<NhanVienKiThuat> nhanVienKiThuats;
+	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
+	private NhanVienKiThuatDao nhanVienKiThuatDao;
+
+	private int page = 1;
+	private int maxPage = 2;
+	private static final int SIZE = 20;
+	private String field = "";
+	private JComboBox cboTimKiem;
+	private String maNVThaoTac; //
+	private int bangLuaChon;
+
 	/**
 	 * Create the panel.
 	 */
 	public GD_NhanVien() {
+
+		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
+		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -101,11 +113,12 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(
-				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Số CMT" }));
+		cboTimKiem.setModel(
+				new DefaultComboBoxModel(new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
+
 		cboTimKiem.setBounds(151, 74, 274, 30);
 		add(cboTimKiem);
 
@@ -218,8 +231,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		scrollPaneNVHanhChinh = new JScrollPane();
 		tabbedPane.addTab("Nhân viên hành chính", null, scrollPaneNVHanhChinh, null);
 
-		String[] colHeaderNVHanhChinh = { "STT", "Mã nhân viên hành chính", "Tên nhân viên hành chính", "Chức vụ",
-				"Số điện thoại" };
+		String[] colHeaderNVHanhChinh = { "STT", "Mã nhân viên", "Tên nhân viên", "Chức vụ", "Số điện thoại" };
 		modelNVHanhChinh = new DefaultTableModel(colHeaderNVHanhChinh, 0);
 		tblNvHanhChinh = new JTable(modelNVHanhChinh) {
 			private static final long serialVersionUID = 1L;
@@ -239,15 +251,11 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for (int i = 1; i < 21; i++) {
-			modelNVHanhChinh.addRow(new Object[] { i, null, null, null });
-		}
 
 		scrollPaneNVKyThuat = new JScrollPane();
 		tabbedPane.addTab("Nhân viên kỹ thuật", null, scrollPaneNVKyThuat, null);
 
-		String[] colHeaderNVKyThuat = { "STT", "Mã nhân viên kỹ thuật", "Tên nhân viên kỹ thuật", "Số năm kinh nghiệm",
-				"Bậc thợ" };
+		String[] colHeaderNVKyThuat = { "STT", "Mã nhân viên ", "Tên nhân viên ", "Số năm kinh nghiệm", "Bậc thợ" };
 		modelNVKyThuat = new DefaultTableModel(colHeaderNVKyThuat, 0);
 		tblNVKyThuat = new JTable(modelNVKyThuat) {
 			private static final long serialVersionUID = 1L;
@@ -267,12 +275,10 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		tableHeaderNVKyThuat.setBackground(new Color(58, 181, 74));
 		tableHeaderNVKyThuat.setForeground(Color.white);
 		tableHeaderNVKyThuat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for (int i = 1; i < 21; i++) {
-			modelNVKyThuat.addRow(new Object[] { i, null, null, null });
-		}
+		tabbedPane.setSelectedIndex(0);
 
 		dangKiSuKien();
-
+		capNhatLaiDuLieuTrongBang();
 	}
 
 	private void dangKiSuKien() {
@@ -287,13 +293,37 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		btnTruoc.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
+		cboTimKiem.addActionListener(this);
+		tabbedPane.addMouseListener(this);
+
+		addMouseListener(this);
 
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 
+		getTabAndSetCbo();
+		this.bangLuaChon = getTabAndSetCbo();
+		this.page = 1;
+		capNhatLaiDuLieuTrongBang();
+
+	}
+
+	private Integer getTabAndSetCbo() {
+		int bangLuaChon = tabbedPane.getSelectedIndex();
+		if (bangLuaChon == 0) {
+			cboTimKiem.setModel(new DefaultComboBoxModel(
+					new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
+			return bangLuaChon;
+		}
+		if (bangLuaChon == 1) {
+			cboTimKiem.setModel(new DefaultComboBoxModel(
+					new String[] { "Mã nhân viên", "Tên nhân viên", "Số năm kinh nghiệm", "Bậc thợ" }));
+			return bangLuaChon;
+		}
+		return -1;
 	}
 
 	@Override
@@ -323,19 +353,198 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnThem)) {
+		if (o.equals(btnThem)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
 			this.add(new GD_ThemNhanVien());
 			this.validate();
 			this.repaint();
 		}
-		if(o.equals(btnSua)) {
+		if (o.equals(btnSua)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_SuaNhanVienHanhChinh());
+			try {
+				if (tabbedPane.getSelectedIndex() == 0) {
+					int row = tblNvHanhChinh.getSelectedRow();
+					this.add(new GD_SuaNhanVienHanhChinh(modelNVHanhChinh.getValueAt(row, 1).toString()));
+				} else {
+					int row = tblNVKyThuat.getSelectedRow();
+					this.add(new GD_SuaNhanVienKyThuat(modelNVKyThuat.getValueAt(row, 1).toString()));
+				}
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
 			this.validate();
 			this.repaint();
 		}
+
+		if (o == btnDau) {
+			this.page = 1;
+			capNhatLaiDuLieuTrongBang();
+		}
+
+		if (o == btnCuoi) {
+			this.page = maxPage;
+			capNhatLaiDuLieuTrongBang();
+		}
+
+		if (o == btnSau && page < maxPage) {
+			this.page++;
+			capNhatLaiDuLieuTrongBang();
+
+		}
+
+		if (o == btnTruoc && page > 1) {
+			this.page--;
+			capNhatLaiDuLieuTrongBang();
+		}
+
+		if (o.equals(btnXoa)) {
+
+			maNVThaoTac = getMaNVXoa();
+
+			if (tabbedPane.getSelectedIndex() == 0) {
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nhân viên?", "Chú ý",
+						JOptionPane.YES_NO_OPTION);
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(maNVThaoTac);
+					nhanVienHanhChinh.setTrangThai(false);
+					nhanVienHanhChinhDao.capNhatNhanVienHanhChinh(nhanVienHanhChinh);
+					JOptionPane.showMessageDialog(this, "Xóa thành công");
+					capNhatLaiDuLieuTrongBang();
+				}
+
+			} else {
+
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa nhân viên?", "Chú ý",
+						JOptionPane.YES_NO_OPTION);
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVThaoTac);
+					System.out.println("Nhana vien ki thuat" + nhanVienKiThuat);
+					nhanVienKiThuat.setTrangThai(false);
+					nhanVienKiThuatDao.capNhatNhanVienKiThuat(nhanVienKiThuat);
+					JOptionPane.showMessageDialog(this, "Xóa thành công");
+					capNhatLaiDuLieuTrongBang();
+				}
+			}
+		}
+	}
+
+	private String getMaNVXoa() {
+		String maXoa;
+		if (tabbedPane.getSelectedIndex() == 1) {
+			int row = tblNVKyThuat.getSelectedRow();
+			maXoa = (String) modelNVKyThuat.getValueAt(row, 1);
+
+		} else {
+			int row = tblNvHanhChinh.getSelectedRow();
+			maXoa = (String) modelNVHanhChinh.getValueAt(row, 1);
+		}
+		return maXoa;
+
+	}
+
+	private void themNVHanhChinhsVaoBang() {
+		if (nhanVienHanhChinhs != null) {
+			for (NhanVienHanhChinh nhanVienHanhChinh : nhanVienHanhChinhs) {
+				if (nhanVienHanhChinh.isTrangThai() == true) {
+					themNhanVienHanhChinhVaoBang(nhanVienHanhChinh);
+				}
+			}
+		}
+	}
+
+	private void themNVKiThuatsVaoBang() {
+		if (nhanVienKiThuats != null) {
+			for (NhanVienKiThuat nhanVienKiThuat : nhanVienKiThuats) {
+				if (nhanVienKiThuat.isTrangThai() == true) {
+					themNhanVienKiThuatVaoBang(nhanVienKiThuat);
+				}
+			}
+		}
+	}
+
+	public void capNhatLaiDuLieuTrongBang() {
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+
+		System.out.println(timKiem);
+		System.out.println(from);
+		System.out.println(to);
+		System.out.println(field);
+		System.out.println("b    " + bangLuaChon);
+
+		if (bangLuaChon == 0) {
+			nhanVienHanhChinhs = nhanVienHanhChinhDao.timKiemNhanVienHanhChinh(timKiem, from, to, field);
+			if (nhanVienHanhChinhs.size() > 0) {
+				xoaDuLieuTrongBangNVHanhChinh();
+				themNVHanhChinhsVaoBang();
+				txtTrang.setText(this.page + "");
+			}
+		} else {
+			nhanVienKiThuats = nhanVienKiThuatDao.timKiemNhanVienKiThuats(timKiem, from, to, field);
+			if (nhanVienKiThuats.size() > 0) {
+				xoaDuLieuTrongBangNVKiThuat();
+				themNVKiThuatsVaoBang();
+				txtTrang.setText(this.page + "");
+			}
+		}
+
+	}
+
+	private void themNhanVienHanhChinhVaoBang(NhanVienHanhChinh nhanVienHanhChinh) {
+		Object[] object = new Object[5];
+		object[0] = tblNvHanhChinh.getRowCount() + 1;
+		object[1] = nhanVienHanhChinh.getMaNVHanhChinh();
+		object[2] = nhanVienHanhChinh.getHoTenNV();
+		object[3] = nhanVienHanhChinh.getChucVu();
+		object[4] = nhanVienHanhChinh.getSoDienThoai();
+		modelNVHanhChinh.addRow(object);
+	}
+
+	private void themNhanVienKiThuatVaoBang(NhanVienKiThuat nhanVienKiThuat) {
+		Object[] object = new Object[5];
+		object[0] = tblNVKyThuat.getRowCount() + 1;
+		object[1] = nhanVienKiThuat.getMaNVKiThuat();
+		object[2] = nhanVienKiThuat.getHoTen();
+		object[3] = nhanVienKiThuat.getSoNamKinhNghiem();
+		object[4] = nhanVienKiThuat.getBacTho();
+		modelNVKyThuat.addRow(object);
+	}
+
+	private void xoaDuLieuTrongBangNVHanhChinh() {
+		while (modelNVHanhChinh.getRowCount() > 0) {
+			modelNVHanhChinh.removeRow(0);
+		}
+
+	}
+
+	private void xoaDuLieuTrongBangNVKiThuat() {
+		while (modelNVKyThuat.getRowCount() > 0) {
+			modelNVKyThuat.removeRow(0);
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.field = cboTimKiem.getSelectedItem().toString();
+		page = 1;
+		capNhatLaiDuLieuTrongBang();
+
 	}
 }

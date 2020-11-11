@@ -7,12 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.KhachHangConstant;
 import constant.NhanVienHanhChinhConstant;
 import constant.NhanVienKiThuatConstant;
 import constant.PhieuBaoHanhConstant;
+import converter.KhachHangConverter;
 import converter.NhanVienKiThuatConvert;
 import converter.PhieuBaoHanhConverter;
 import db.DatabaseConnect;
+import entity.KhachHang;
 import entity.NhanVienKiThuat;
 import entity.PhieuBaoHanh;
 
@@ -171,6 +174,53 @@ public class NhanVienKiThuatDao {
 		}
 
 		return true;
+	}
+	
+	public List<NhanVienKiThuat> timKiemNhanVienKiThuats(String timKiem, int from, int to, String field) {
+
+		List<NhanVienKiThuat> nhanVienKiThuats = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG);
+				break;
+			case NhanVienKiThuatConstant.MA_NHAN_VIEN_KI_THUAT:
+				preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.TIM_KIEM_THEO_MA_NHAN_VIEN_KI_THUAT);
+				break;
+			case NhanVienKiThuatConstant.TEN_NHAN_VIEN_KI_THUAT:
+				preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_KI_THUAT);
+				break;
+
+			case NhanVienKiThuatConstant.BAC_THO:
+				preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.TIM_KIEM_THEO_BAC_THO);
+				break;
+
+			case NhanVienKiThuatConstant.SO_NAM_KINH_NGHIEM:
+				preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.TIM_KIEM_THEO_SO_NAM_KINH_NGHIEM);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setString(1, "%" + timKiem + "%");
+			preparedStatement.setInt(2, from);
+			preparedStatement.setInt(3, to);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				
+				NhanVienKiThuat nhanVienKiThuat = NhanVienKiThuatConvert.getNhanVienKiThuat(resultSet);
+				nhanVienKiThuats.add(nhanVienKiThuat);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return nhanVienKiThuats;
 	}
 
 }
