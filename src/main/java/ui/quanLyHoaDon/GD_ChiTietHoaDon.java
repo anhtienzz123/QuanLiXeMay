@@ -23,6 +23,7 @@ import javax.swing.table.JTableHeader;
 import dao.HoaDonDao;
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
+import other.DinhDangTien;
 import other.XuLyThoiGian;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
@@ -302,11 +303,11 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			datas[0] = tblHoaDon.getRowCount() +1;
 			datas[1] = chiTietHoaDon.getXeMay().getMaXeMay();
 			datas[2] = chiTietHoaDon.getXeMay().getTenXeMay();
-			datas[3] = "Honda";
-			datas[4] = "Xe số";
-			datas[5] = "Đen đỏ";
+			datas[3] = chiTietHoaDon.getXeMay().getDongXe().getHangXe().getMaHangXe();
+			datas[4] = chiTietHoaDon.getXeMay().getLoaiXe().getTenLoaiXe();
+			datas[5] = chiTietHoaDon.getXeMay().getMauXe();
 			datas[6] = chiTietHoaDon.getSoLuong();
-			datas[7] = chiTietHoaDon.getGiaBan();
+			datas[7] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
 			datas[8] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh();
 			
 			modelHoaDon.addRow(datas);

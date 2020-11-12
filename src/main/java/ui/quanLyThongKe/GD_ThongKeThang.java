@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Vector;
@@ -31,7 +32,7 @@ import com.toedter.calendar.JDateChooser;
 
 import dao.ThongKeDao;
 
-public class GD_ThongKeThang extends JPanel{
+public class GD_ThongKeThang extends JPanel {
 
 	private JPanel pnlDoanhThuThang;
 	private Vector colHeaderDoanhThu;
@@ -44,8 +45,7 @@ public class GD_ThongKeThang extends JPanel{
 	private JPanel pnlTopXe;
 
 	private ThongKeDao thongKeDao;
-	private int thang;
-	private int nam;
+	private LocalDate date;
 
 	/**
 	 * Create the panel.
@@ -62,17 +62,8 @@ public class GD_ThongKeThang extends JPanel{
 		txtNgay.setBounds(218, 20, 146, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-		
 
-		txtNgay.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent e) {
-				
-				if(e.getPropertyName().equals("date")) {
-					
-				}
-			}
-		});
+		
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn tháng:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
@@ -105,41 +96,49 @@ public class GD_ThongKeThang extends JPanel{
 		pnlDoanhThuThang = new JPanel();
 		tabbedPaneDoanhThu.addTab("Doanh thu trong tháng", null, pnlDoanhThuThang, null);
 
-		dangKiSuKien();
-
 		khoiTao();
-
-		thongKeDoanhThuThang(pnlDoanhThuThang);
 
 		pnlTopXe = new JPanel();
 		pnlTopXe.setBackground(Color.WHITE);
 		tabbedPaneDoanhThu.addTab("Xe bán chạy trong tháng", null, pnlTopXe, null);
+		
+		thongKeDoanhThuThang(pnlDoanhThuThang);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
+		
+		txtNgay.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+			@Override
+			public void propertyChange(PropertyChangeEvent e) {
+
+				if (e.getPropertyName().equals("date")) {
+					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					
+					
+					thongKeDoanhThuThang(pnlDoanhThuThang);
+					thongKeTopXe(pnlTopXe);
+					thongKeTopDongXe(pnlTopDong);
+					thongKeTopHangXe(pnlTopHang);
+					
+					
+				}
+			}
+		});
 	}
 
 	public void khoiTao() {
 		thongKeDao = ThongKeDao.getInstance();
-		LocalDate date = LocalDate.now();
-		thang = date.getMonthValue();
-		nam = date.getYear();
-
-	}
-
-	public void dangKiSuKien() {
+		date = LocalDate.now();
 		
 
 	}
 
-	/**
-	 * Biểu đồ cột thống kê số doanh thu bán trong tháng
-	 * 
-	 * @param jpnItem
-	 */
 	public void thongKeDoanhThuThang(JPanel jpnItem) {
 
+		int thang = date.getMonthValue();
+		int nam = date.getYear();
 		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(thang, nam);
+		System.out.println("chay vao thong ke doanh thu thang");
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -160,13 +159,10 @@ public class GD_ThongKeThang extends JPanel{
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ cột thống kê top các xe bán chạy trong tháng
-	 * 
-	 * @param jpnItem
-	 */
 	public void thongKeTopXe(JPanel jpnItem) {
 
+		int thang = date.getMonthValue();
+		int nam = date.getYear();
 		Map<String, Long> result = thongKeDao.getTopXeBansTrongThang(5, thang, nam);
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -188,19 +184,17 @@ public class GD_ThongKeThang extends JPanel{
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ trò thống kê top các dòng xe bán chạy trong tháng
-	 * 
-	 * @param jpnItem
-	 */
+	
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
+		int thang = date.getMonthValue();
+		int nam = date.getYear();
 		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(thang, nam);
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		
-		result.forEach( (key,value) -> {
+
+		result.forEach((key, value) -> {
 			pieDataset.setValue(key, value);
-			
+
 		});
 
 		JFreeChart pieChart = ChartFactory.createPieChart("Các dòng xe bán chạy trong tháng", pieDataset, true, true,
@@ -217,13 +211,11 @@ public class GD_ThongKeThang extends JPanel{
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ trò thống kê top các hãng xe bán chạy trong tháng
-	 * 
-	 * @param jpnItem
-	 */
+	
 	public void thongKeTopHangXe(JPanel jpnItem) {
 
+		int thang = date.getMonthValue();
+		int nam = date.getYear();
 		Map<String, Long> result = thongKeDao.thongKeHangXeTrongThang(thang, nam);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
@@ -246,5 +238,4 @@ public class GD_ThongKeThang extends JPanel{
 		jpnItem.repaint();
 	}
 
-	
 }

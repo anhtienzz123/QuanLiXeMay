@@ -1,48 +1,51 @@
 package ui.quanLyHoaDon;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
-import java.util.Random;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
 
-public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
+import constant.HoaDonConstant;
+import dao.HoaDonDao;
+import entity.HoaDon;
+import other.XuLyThoiGian;
+import ui.App;
+
+public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, KeyListener {
+
+	private static final long serialVersionUID = 1L;
+
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -50,9 +53,19 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 	private JButton btnSau;
 	private JButton btnCuoi;
 	private JButton btnLapHoaDon;
-	private DefaultTableModel modelXe;
-	private JTable tblXeMay;
+	private DefaultTableModel modelHoaDon;
+	private JTable tblHoaDon;
 	private JButton btnXemChiTiet;
+
+	private JComboBox<String> cboTimKiem;
+
+	private JDateChooser txtNgay;
+	private LocalDate date;
+	private int page = 1;
+	private int maxPage = 2;
+	private static final int SIZE = 20;
+	private HoaDonDao hoaDonDao;
+	private List<HoaDon> hoaDons;
 
 	/**
 	 * Create the panel.
@@ -79,7 +92,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		scrollPaneHoaDon.setBounds(29, 200, 1385, 532);
 		add(scrollPaneHoaDon);
 
-		 btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
@@ -93,11 +106,13 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(
-				new String[] { "Mã hóa đơn", "Mã nhân viên lập hóa đơn", "Tên nhân viên lập hóa đơn" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(
+				new String[] { HoaDonConstant.MA_HOA_DON, HoaDonConstant.MA_NHAN_VIEN_LAP_HOA_DON,
+						HoaDonConstant.TEN_NHAN_VIEN_LAP_HOA_DON, HoaDonConstant.MA_KHACH_HANG,
+						HoaDonConstant.TEN_KHACH_HANG, HoaDonConstant.SO_DIEN_THOAI_KHACH_HANG }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -169,17 +184,17 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 
 		String[] colHeaderXeMay = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
 				"Tên khách hàng", "ngày lập hóa đơn" };
-		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
-		tblXeMay = new JTable(modelXe) {
+		modelHoaDon = new DefaultTableModel(colHeaderXeMay, 0);
+		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
 				return false;
 			}
 		};
-		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblXeMay.setRowHeight(25);
-		scrollPaneHoaDon.setViewportView(tblXeMay);
+		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblHoaDon.setRowHeight(25);
+		scrollPaneHoaDon.setViewportView(tblHoaDon);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hóa đơn:");
 		lblTngThuTrong_1_1.setForeground(Color.BLACK);
@@ -187,7 +202,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		lblTngThuTrong_1_1.setBounds(886, 83, 175, 30);
 		add(lblTngThuTrong_1_1);
 
-		JDateChooser txtNgay = new JDateChooser();
+		txtNgay = new JDateChooser();
 		txtNgay.setBounds(1073, 83, 189, 30);
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
@@ -211,14 +226,14 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		/**
 		 * Đổi màu header cho table
 		 */
-		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
+		JTableHeader tableHeader2 = tblHoaDon.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for (int i = 1; i < 21; i++) {
-			modelXe.addRow(new Object[] { i, null, null, null });
-		}
+
+		khoiTao();
 		dangKiSuKien();
+		capNhatHoaDonsTrongBang();
 
 	}
 
@@ -229,8 +244,126 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 		btnXemChiTiet.addActionListener(this);
 		btnLapHoaDon.addActionListener(this);
 		btnTruoc.addActionListener(this);
-		tblXeMay.addMouseListener(this);
+		tblHoaDon.addMouseListener(this);
 		
+		cboTimKiem.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
+		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("date")) {
+					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    capNhatHoaDonsTrongBang();
+				}
+
+			}
+		});
+
+	}
+
+	private void khoiTao() {
+		hoaDonDao = HoaDonDao.getInstance();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		if (source.equals(btnLapHoaDon)) {
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_LapHoaDon("1"));
+			this.validate();
+			this.repaint();
+		}
+		if (source.equals(btnXemChiTiet)) {
+			int row = tblHoaDon.getSelectedRow();
+			
+			String maHoaDon= hoaDons.get(row).getMaHoaDon();
+			
+
+			new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+		}
+
+		if (source == btnDau) {
+			this.page = 1;
+			capNhatHoaDonsTrongBang();
+		}
+
+		if (source == btnCuoi) {
+			this.page = maxPage;
+			capNhatHoaDonsTrongBang();
+		}
+
+		if (source == btnSau && page < maxPage) {
+			this.page++;
+			capNhatHoaDonsTrongBang();
+
+		}
+
+		if (source == btnTruoc && page > 1) {
+			this.page--;
+			capNhatHoaDonsTrongBang();
+		}
+		
+		if(source == cboTimKiem) {
+			txtTimKiem.setText("");
+			this.page = 1;
+			capNhatHoaDonsTrongBang();
+		}
+
+	}
+
+	private void capNhatHoaDonsTrongBang() {
+
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+
+		maxPage = hoaDonDao.getMaxPageTimKiemHoaDon(timKiem, field, date, SIZE);
+		hoaDons = hoaDonDao.timKiemHoaDons(timKiem, field, date, from, to);
+
+		xoaDuLieuTrongBang();
+		themHoaDonsVaoBang();
+		txtTrang.setText(this.page + "");
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+		this.page = 1;
+		capNhatHoaDonsTrongBang();
+
+	}
+
+	private void themHoaDonsVaoBang() {
+		if (hoaDons != null) {
+			for (HoaDon hoaDon : hoaDons) {
+				themHoaDonVaoBang(hoaDon);
+			}
+		}
+	}
+
+	private void themHoaDonVaoBang(HoaDon hoaDon) {
+
+		Object[] object = new Object[7];
+		object[0] = tblHoaDon.getRowCount() + 1;
+		object[1] = hoaDon.getMaHoaDon();
+		object[2] = hoaDon.getNhanVienHanhChinh().getMaNVHanhChinh();
+		object[3] = hoaDon.getNhanVienHanhChinh().getHoTenNV();
+		object[4] = hoaDon.getKhachHang().getHoTenKH();
+		object[5] = hoaDon.getKhachHang().getSoDienThoai();
+		object[6] = XuLyThoiGian.chuyenDateThanhString(hoaDon.getNgayLap());
+		modelHoaDon.addRow(object);
+	}
+
+	private void xoaDuLieuTrongBang() {
+		while (modelHoaDon.getRowCount() > 0) {
+			modelHoaDon.removeRow(0);
+		}
 
 	}
 
@@ -265,17 +398,15 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-		if (o.equals(btnLapHoaDon)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_LapHoaDon("1"));
-			this.validate();
-			this.repaint();
-		}
-		if (o.equals(btnXemChiTiet)) {
-			new GD_ChiTietHoaDon("1").setVisible(true);
-		}
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
 	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

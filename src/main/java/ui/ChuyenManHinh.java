@@ -109,7 +109,7 @@ public class ChuyenManHinh {
 				setPanel();
 				break;
 			case "ThemKhachHang":
-				new GD_ThemKhachHang().setVisible(true);
+				new GD_ThemKhachHang(null).setVisible(true);
 //				setPanel();
 				break;
 			case "QuanLyHangXe":

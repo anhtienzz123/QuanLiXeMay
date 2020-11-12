@@ -3,8 +3,8 @@ package ui.quanLyKhachHang;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -17,11 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextArea;
-import java.awt.Insets;
-import javax.swing.JTextField;
+
 import com.toedter.calendar.JDateChooser;
 
 import constant.TenEntity;
@@ -31,9 +31,7 @@ import other.RandomMa;
 
 public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnThoat;
@@ -44,30 +42,16 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 	private JTextField txtTenKH;
 	private JDateChooser txtNgaySinh;
 	private JButton btnLuu;
+
 	private KhachHangDao khachHangDao;
+	private String maKhachHang;
+	private GD_KhachHang gd_KhachHang;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GD_CapNhatKhachHang frame = new GD_CapNhatKhachHang();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public GD_CapNhatKhachHang() {
+	public GD_CapNhatKhachHang(String maKhachHang, GD_KhachHang gd_KhachHang) {
 		khachHangDao = KhachHangDao.getInstance();
-		
+		this.maKhachHang = maKhachHang;
+		this.gd_KhachHang = gd_KhachHang;
+
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 540);
 		setLocationRelativeTo(null);
@@ -117,7 +101,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(rigidArea_15);
 
 		lblMaKH = new JLabel();
-		
+
 		lblMaKH.setForeground(Color.BLACK);
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_1.add(lblMaKH);
@@ -195,7 +179,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 		horizontalBox_3.add(rigidArea_15_3);
 
 		txtSoDienThoai = new JTextField();
-		
+
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setPreferredSize(new Dimension(200, 40));
 		txtSoDienThoai.setMaximumSize(new Dimension(2147483647, 40));
@@ -318,14 +302,26 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 
 		Component verticalGlue = Box.createVerticalGlue();
 		verticalBox.add(verticalGlue);
-		
+
 		// tạo mã ngẫu nhiên
 		lblMaKH.setText(RandomMa.getMaNgauNhien(TenEntity.KHACH_HANG));
-	
-		
+
 		dangKiSuKien();
+		hienThiKhachHang();
 	}
-	
+
+	private void hienThiKhachHang() {
+		KhachHang khachHang = khachHangDao.getKhachHangTheoMa(maKhachHang);
+
+		lblMaKH.setText(khachHang.getMaKhachHang());
+		txtSoCMT.setText(khachHang.getSoCMT());
+		txtTenKH.setText(khachHang.getHoTenKH());
+		txtDiaChi.setText(khachHang.getDiaChiKH());
+		txtSoDienThoai.setText(khachHang.getSoDienThoai());
+		txtNgaySinh.setDate(khachHang.getNgaySinh());
+
+	}
+
 	private void dangKiSuKien() {
 		btnLuu.addActionListener(this);
 		btnThoat.addActionListener(this);
@@ -334,40 +330,53 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if(source.equals(btnThoat)) {
+		if (source.equals(btnThoat)) {
 			this.setVisible(false);
 		}
-		
-		if(source == btnLuu) {
+
+		if (source == btnLuu) {
 			KhachHang khachHang = getKhachHang();
-			
-			if(validateKhachHang(khachHang)) {
-				if(khachHangDao.themKhachHang(khachHang)) {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên", JOptionPane.INFORMATION_MESSAGE, null );
-				}else {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên", JOptionPane.ERROR_MESSAGE, null );
+
+			if (validateKhachHang(khachHang)) {
+
+				if (khachHangDao.capNhatKhachHang(khachHang)) {
+					int flag = JOptionPane.showConfirmDialog(null, "Bạn ó chắc chắn muốn cập nhật ?",
+							"Thông báo cập nhật khách hàng", JOptionPane.YES_NO_OPTION);
+
+					if (flag == JOptionPane.YES_OPTION) {
+
+						JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+						gd_KhachHang.capNhatDuLieuTrongBang();
+						this.setVisible(false);
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
 				}
 			}
-			
+
 		}
+		
+		if(source == btnThoat)
+			this.setVisible(false);
 	}
-	
+
 	private KhachHang getKhachHang() {
 		String maKhachHang = lblMaKH.getText();
 		String soCMT = txtSoCMT.getText();
 		String hoTenKH = txtTenKH.getText();
 		String soDienThoai = txtSoDienThoai.getText();
-		String ngaySinhString = txtNgaySinh.getName();
-		System.out.println("ngay sinh string: " + ngaySinhString);
+		@SuppressWarnings("deprecation")
+		Date ngaySinh = new Date(txtNgaySinh.getDate().getYear(), txtNgaySinh.getDate().getMonth(),
+				txtNgaySinh.getDate().getDate());
 		String diaChiKH = txtDiaChi.getText();
-		
-		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, new Date(2020, 10, 11), soDienThoai, diaChiKH);
+
+		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH);
 		return khachHang;
-		
+
 	}
-	
+
 	private boolean validateKhachHang(KhachHang khachHang) {
-		
+
 		return true;
 	}
 

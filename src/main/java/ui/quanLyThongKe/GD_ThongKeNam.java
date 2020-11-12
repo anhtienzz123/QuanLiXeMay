@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -106,15 +108,29 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 
 		khoiTao();
 
-		thongKeDoanhThuNam(pnlDoanhThuThang);
-		thongKeDoanhThuQuy(pnlDoanhThuQuy);
-
 		pnlTopXe = new JPanel();
 		pnlTopXe.setBackground(Color.WHITE);
 		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
+		thongKeDoanhThuNam(pnlDoanhThuThang);
+		thongKeDoanhThuQuy(pnlDoanhThuQuy);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
+
+		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+					thongKeDoanhThuNam(pnlDoanhThuThang);
+					thongKeDoanhThuQuy(pnlDoanhThuQuy);
+					thongKeTopXe(pnlTopXe);
+					thongKeTopDongXe(pnlTopDong);
+					thongKeTopHangXe(pnlTopHang);
+				}
+
+			}
+		});
 	}
 
 	public void dangKiSuKien() {
@@ -181,18 +197,13 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ cột thống kê top các xe bán chạy trong năm
-	 * 
-	 * @param jpnItem
-	 */
 	public void thongKeTopXe(JPanel jpnItem) {
 
 		Map<String, Long> result = thongKeDao.getTopXeBansTrongNam(TOP, nam);
-		
+
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		
-		result.forEach( (key, value) -> {
+
+		result.forEach((key, value) -> {
 			dataset.addValue(value, "Số lượng", key);
 		});
 
@@ -209,18 +220,13 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ trò thống kê top các dòng xe bán chạy trong năm
-	 * 
-	 * @param jpnItem
-	 */
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
 		Map<String, Long> result = thongKeDao.thongKeDongXeTrongNam(nam);
-		
+
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		
-		result.forEach(  (key,value) -> {
+
+		result.forEach((key, value) -> {
 			pieDataset.setValue(key, value);
 		});
 
@@ -238,18 +244,13 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		jpnItem.repaint();
 	}
 
-	/**
-	 * Biểu đồ trò thống kê top các hãng xe bán chạy trong năm
-	 * 
-	 * @param jpnItem
-	 */
 	public void thongKeTopHangXe(JPanel jpnItem) {
 
 		Map<String, Long> result = thongKeDao.thongKeHangXeTrongNam(nam);
-		
+
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
-		
-		result.forEach( (key,value) -> {
+
+		result.forEach((key, value) -> {
 			pieDataset.setValue(key, value);
 		});
 
