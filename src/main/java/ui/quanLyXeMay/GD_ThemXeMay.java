@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import org.apache.poi.ss.formula.functions.IPMT;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -39,6 +41,10 @@ import ui.DanhMuc;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
+
+import entity.XeMay;
+import other.ImportExcelFile;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -67,6 +73,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
 	private JButton btnImport;
+	private JComboBox<String> cboMauXe;
 
 	/**
 	 * Create the panel.
@@ -222,7 +229,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		lblMau.setBounds(428, 233, 111, 30);
 		add(lblMau);
 
-		JComboBox cboMauXe = new JComboBox();
+		cboMauXe = new JComboBox<String>();
 		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboMauXe.setBackground(Color.WHITE);
 		cboMauXe.setBounds(535, 233, 205, 30);
@@ -401,7 +408,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 
 		}
 		if (o.equals(btnXoaRong)) {
-			
+
 		}
 		if (o.equals(btnChonFile)) {
 			try {
@@ -428,17 +435,27 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 		}
-		if(o.equals(btnImport)) {
+		if (o.equals(btnImport)) {
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter( "xlsx", "xls");
+				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("xlsm", "xlsx", "xls");
 				fileChooser.setFileFilter(imgFilter);
 				fileChooser.setMultiSelectionEnabled(false);
 				fileChooser.setPreferredSize(new Dimension(900, 600));
 				if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 					File f = fileChooser.getSelectedFile();
 					txtPath.setText(f.getPath());
+					new ImportExcelFile();
+					try {
+						List<XeMay> listXeMay = ImportExcelFile.readExcel(f.getPath());
+						for (XeMay xeMay : listXeMay) {
+							System.out.println(xeMay);
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -450,7 +467,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 				e1.printStackTrace();
 			}
 		}
-		
 
 	}
 

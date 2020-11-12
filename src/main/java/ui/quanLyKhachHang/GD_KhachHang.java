@@ -247,9 +247,6 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-		if (source.equals(btnThem)) {
-			new GD_ThemKhachHang().setVisible(true);
-		}
 		if (source.equals(btnSua)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());

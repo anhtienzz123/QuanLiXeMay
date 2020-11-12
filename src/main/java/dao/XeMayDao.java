@@ -62,6 +62,7 @@ public class XeMayDao {
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THEO_MA);
+			preparedStatement.setString(1, maXeMay);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
@@ -268,7 +269,7 @@ public class XeMayDao {
 
 		}
 
-		//System.out.println(sql);
+		// System.out.println(sql);
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 
@@ -292,27 +293,25 @@ public class XeMayDao {
 		return xeMays;
 
 	}
-	
-	public Set<String> getMauXes(){
+
+	public Set<String> getMauXes() {
 		Set<String> mauXes = new TreeSet<String>();
-		
+
 		String sql = "select mauXe from XeMay";
-		
+
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()) {
-			     mauXes.add(resultSet.getString("mauXe"));	
+
+			while (resultSet.next()) {
+				mauXes.add(resultSet.getString("mauXe"));
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+
 		return mauXes;
 	}
 }

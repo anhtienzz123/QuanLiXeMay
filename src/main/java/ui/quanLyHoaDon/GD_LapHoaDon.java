@@ -49,6 +49,7 @@ import other.DocSo;
 import other.RandomMa;
 import other.XuLyChung;
 import other.XuLyThoiGian;
+import ui.quanLyXeMay.GD_ChiTietXeMay;
 
 public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener {
 	/**
@@ -112,6 +113,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private List<XeMay> xeMays;
 
 	private HoaDon hoaDon;
+	private JButton btnXemChiTiet;
 
 	public GD_LapHoaDon(String maNhanVienHanhChinh) {
 		this.maNhanVienHanhChinh = "NVHC222222";
@@ -443,7 +445,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		add(txtTrang);
 		txtTrang.setColumns(10);
 
-		JButton btnXemChiTiet = new JButton("Chi tiết");
+		 btnXemChiTiet = new JButton("Chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/information_30px.png")));
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -734,6 +736,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		btnLapHoaDon.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnSua.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
 
 	}
 
@@ -857,22 +860,21 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 		if (source == btnLapHoaDon) {
 
-			if(lblTienTraLai.getText().length() > 0) {
+			if (lblTienTraLai.getText().length() > 0) {
 				HoaDonDao hoaDonDao = HoaDonDao.getInstance();
 				System.out.println(hoaDon);
 				if (hoaDonDao.themHoaDon(this.hoaDon)) {
-					
-					
-					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
+
+//					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
 					hoaDon = null;
 					capNhatHoaDon();
 					capNhatKhachHang(null);
 					lblMaHoaDon.setText(RandomMa.getMaNgauNhien(TenEntity.HOA_DON));
-					
+
 				} else {
 					System.out.println("Them that bai");
 				}
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Bạn chưa nhập tiền khách trả");
 				txtTienKhachTra.requestFocus();
 				txtTienKhachTra.selectAll();
@@ -883,7 +885,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 		if (source == btnTaoMoi) {
 
-			if(hoaDon != null) {
+			if (hoaDon != null) {
 				for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
 
 					XeMay xeMay = chiTietHoaDon.getXeMay();
@@ -927,6 +929,17 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 			capNhatXeMaysTrongBang();
 
 		}
+		
+		if(source == btnXemChiTiet) {
+			int row = tblXeMay.getSelectedRow();
+			if(row !=-1 ) {
+				String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+				XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+				new GD_ChiTietXeMay(xeMay).setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
+			}
+		}
 
 	}
 
@@ -953,10 +966,10 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 			}
 
 			lblTongTien.setText(DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
-			
+
 			DecimalFormat df = new DecimalFormat("###.##");
 			System.out.println(DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())));
-			lblTienBangChu.setText("Bằng chữ: "  + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng"  );
+			lblTienBangChu.setText("Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng");
 		} else {
 			lblTongTien.setText("0 VNĐ");
 			lblTienBangChu.setText("Không đồng");

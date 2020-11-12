@@ -37,7 +37,7 @@ import other.DocSo;
 import other.DongHoAnalog;
 import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
-import ui.quanLyXeMay.GD_ChiTietXeMay;
+import ui.quanLyXeMay.GD_CTXM;
 import javax.swing.JSeparator;
 import javax.swing.border.LineBorder;
 import javax.swing.border.EmptyBorder;
