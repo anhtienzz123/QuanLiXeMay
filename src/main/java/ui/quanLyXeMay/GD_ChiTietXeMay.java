@@ -50,7 +50,7 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 	public GD_ChiTietXeMay(XeMay xeMay) {
 		this.xeMay = xeMay;
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1100, 705);
+		setBounds(100, 100, 1100, 747);
 		setLocationRelativeTo(null);
 		setTitle("Thông tin xe máy");
 		contentPane = new JPanel();
@@ -153,23 +153,23 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		
 		JLabel lblNewLabel_2_1_5 = new JLabel("Số lượng:");
 		lblNewLabel_2_1_5.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_5.setBounds(32, 228, 103, 30);
+		lblNewLabel_2_1_5.setBounds(352, 228, 103, 30);
 		contentPane.add(lblNewLabel_2_1_5);
 		
 		JLabel lblSoLuong = new JLabel("20 chiếc");
 		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoLuong.setBounds(147, 228, 106, 30);
+		lblSoLuong.setBounds(504, 228, 106, 30);
 		lblSoLuong.setText(xeMay.getSoLuong()+" chiếc");
 		contentPane.add(lblSoLuong);
 		
 		JLabel lblNewLabel_2_1_6 = new JLabel("Màu xe:");
 		lblNewLabel_2_1_6.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_6.setBounds(352, 228, 83, 30);
+		lblNewLabel_2_1_6.setBounds(32, 275, 83, 30);
 		contentPane.add(lblNewLabel_2_1_6);
 		
 		JLabel lblMauXe = new JLabel("Đỏ-Đen");
 		lblMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMauXe.setBounds(504, 228, 165, 30);
+		lblMauXe.setBounds(147, 275, 165, 30);
 		lblMauXe.setText(xeMay.getMauXe().trim());
 		contentPane.add(lblMauXe);
 		
@@ -186,48 +186,49 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		
 		JLabel lblNewLabel_2_1_8 = new JLabel("Số sườn:");
 		lblNewLabel_2_1_8.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_8.setBounds(32, 324, 106, 30);
+		lblNewLabel_2_1_8.setBounds(32, 379, 106, 30);
 		contentPane.add(lblNewLabel_2_1_8);
 		
 		JLabel lblSoSuon = new JLabel("123456789012");
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoSuon.setBounds(147, 324, 165, 30);
+		lblSoSuon.setBounds(147, 379, 165, 30);
 		lblSoSuon.setText(xeMay.getSoSuon());
 		contentPane.add(lblSoSuon);
 		
 		JLabel lblNewLabel_2_1_9 = new JLabel("Giá nhập:");
 		lblNewLabel_2_1_9.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_9.setBounds(32, 275, 103, 30);
+		lblNewLabel_2_1_9.setBounds(352, 275, 103, 30);
 		contentPane.add(lblNewLabel_2_1_9);
 		
 		JLabel lblGiaNhap = new JLabel("XM123456");
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblGiaNhap.setBounds(147, 275, 193, 30);
+		lblGiaNhap.setBounds(504, 275, 193, 30);
 		DecimalFormat df = new DecimalFormat("###.##");
 		lblGiaNhap.setText(df.format(xeMay.getGiaNhap())+" VNĐ");
 		contentPane.add(lblGiaNhap);
 		
 		JLabel lblNewLabel_2_1_10 = new JLabel("Bảo hành:");
 		lblNewLabel_2_1_10.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_10.setBounds(352, 275, 116, 30);
+		lblNewLabel_2_1_10.setBounds(32, 324, 116, 30);
 		contentPane.add(lblNewLabel_2_1_10);
 		
 		JLabel lblBaoHanh = new JLabel("36 tháng");
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(504, 275, 116, 30);
+		lblBaoHanh.setBounds(147, 324, 116, 30);
 		lblBaoHanh.setText(xeMay.getThoiGianBaoHanh()+" tháng");
 		contentPane.add(lblBaoHanh);
 		
 		JLabel lblNewLabel_2_1_12 = new JLabel("Mô tả:");
 		lblNewLabel_2_1_12.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_12.setBounds(32, 379, 83, 30);
+		lblNewLabel_2_1_12.setBounds(32, 430, 83, 30);
 		contentPane.add(lblNewLabel_2_1_12);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 435, 1009, 150);
+		scrollPane.setBounds(32, 473, 1009, 150);
 		contentPane.add(scrollPane);
 		
 		JTextArea txtMoTa = new JTextArea();
+		txtMoTa.setEditable(false);
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtMoTa.setText(xeMay.getMoTa());
@@ -237,7 +238,7 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setBounds(912, 605, 129, 35);
+		btnThoat.setBounds(912, 646, 129, 35);
 		contentPane.add(btnThoat);
 		btnThoat.addActionListener(this);
 		
@@ -250,6 +251,17 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHeSoBan.setBounds(504, 379, 55, 30);
 		contentPane.add(lblHeSoBan);
+		
+		JLabel lblNewLabel_2_1_2_1 = new JLabel("Xuất xứ:");
+		lblNewLabel_2_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_2_1_2_1.setBounds(32, 228, 106, 30);
+		contentPane.add(lblNewLabel_2_1_2_1);
+		
+		JLabel lblXuatXu = new JLabel("Việt Nam");
+		lblXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblXuatXu.setBounds(147, 228, 165, 30);
+		lblXuatXu.setText(xeMay.getXuatXu().getTenXuatXu().trim());
+		contentPane.add(lblXuatXu);
 		
 	}
 

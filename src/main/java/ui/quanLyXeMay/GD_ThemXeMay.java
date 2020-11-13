@@ -1,65 +1,57 @@
 package ui.quanLyXeMay;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.EventObject;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
-import org.apache.poi.ss.formula.functions.IPMT;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
-import com.toedter.calendar.JDateChooser;
-
+import constant.TenEntity;
+import dao.DongXeDao;
+import dao.HangXeDao;
+import dao.LoaiXeDao;
+import dao.XeMayDao;
+import dao.XuatXuDao;
+import entity.DongXe;
+import entity.LoaiXe;
 import entity.XeMay;
+import entity.XuatXu;
 import other.ImportExcelFile;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import java.awt.Insets;
+import other.RandomMa;
+import other.XuLyChung;
+import ui.App;
 
 public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JTextField txtTenXe;
-	private JButton btnThem;
-	private DefaultTableModel modelKhachHang;
-	private JButton btnXoaRong;
 	private JTextField txtSoLuong;
 	private JTextField txtGiaNhap;
 	private JTextField txtHeSoBan;
@@ -67,13 +59,30 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	private JTextField txtSoKhung;
 	private JTextField txtSoSuon;
 	private JTextField txtPath;
+
+	private JTextArea txtMoTa;
+
 	private JLabel lblThongBao;
 	private JLabel lblThngBo;
-	private JButton btnChonFile;
 	private JLabel lblAnh;
+	private JLabel lblMaXe;
+
 	private JPanel pnlAnh;
-	private JButton btnImport;
+
 	private JComboBox<String> cboMauXe;
+	private JComboBox<String> cboHangXe;
+	private JComboBox<String> cboLoaiXe;
+	private JComboBox<String> cboDongXe;
+	private JComboBox<String> cboSoPhanKhoi;
+	private JComboBox<String> cboXuatXu;
+
+	private JButton btnThem;
+	private JButton btnXoaRong;
+	private JButton btnImport;
+	private JButton btnChonFile;
+
+	private XeMayDao xeMayDao;
+
 
 	/**
 	 * Create the panel.
@@ -96,19 +105,17 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		lblNewLabel.setBounds(0, 0, 1450, 50);
 		panel.add(lblNewLabel);
 
-		JLabel lblMaXe = new JLabel("XM123456");
+		lblMaXe = new JLabel("XM123456");
 		lblMaXe.setBounds(139, 113, 112, 30);
 		add(lblMaXe);
 		lblMaXe.setForeground(Color.BLACK);
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
-		cboTimKiem.setBackground(Color.WHITE);
-		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(
-				new String[] { "Mã khách hàng", "Tên khách hàng", "Số điện thoại", "Số CMT" }));
-		cboTimKiem.setBounds(1140, 113, 274, 30);
-		add(cboTimKiem);
+		cboHangXe = new JComboBox<String>();
+		cboHangXe.setBackground(Color.WHITE);
+		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboHangXe.setBounds(1140, 113, 274, 30);
+		add(cboHangXe);
 
 		txtTenXe = new JTextField();
 		txtTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -172,25 +179,25 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		JLabel lblLoai = new JLabel("Loại xe:");
 		lblLoai.setForeground(Color.BLACK);
 		lblLoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLoai.setBounds(29, 174, 111, 30);
+		lblLoai.setBounds(428, 174, 111, 30);
 		add(lblLoai);
 
-		JComboBox cboLoaiXe = new JComboBox();
+		cboLoaiXe = new JComboBox<String>();
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
-		cboLoaiXe.setBounds(136, 174, 205, 30);
+		cboLoaiXe.setBounds(535, 174, 205, 30);
 		add(cboLoaiXe);
 
 		JLabel lblDong = new JLabel("Dòng xe:");
 		lblDong.setForeground(Color.BLACK);
 		lblDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDong.setBounds(428, 174, 111, 30);
+		lblDong.setBounds(29, 233, 111, 30);
 		add(lblDong);
 
-		JComboBox cboDongXe = new JComboBox();
+		cboDongXe = new JComboBox<String>();
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
-		cboDongXe.setBounds(535, 174, 205, 30);
+		cboDongXe.setBounds(136, 233, 205, 30);
 		add(cboDongXe);
 
 		JLabel lblSoPhanKhoi = new JLabel("Số phân khối:");
@@ -199,7 +206,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		lblSoPhanKhoi.setBounds(960, 174, 171, 30);
 		add(lblSoPhanKhoi);
 
-		JComboBox cboSoPhanKhoi = new JComboBox();
+		cboSoPhanKhoi = new JComboBox<String>();
+		cboSoPhanKhoi.setModel(new DefaultComboBoxModel<String>(new String[] {"50 cc", "110 cc", "125 cc", "150 cc", "175 cc"}));
 		cboSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboSoPhanKhoi.setBackground(Color.WHITE);
 		cboSoPhanKhoi.setBounds(1140, 174, 205, 30);
@@ -208,19 +216,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		JLabel lblSoLuong = new JLabel("Số lượng:");
 		lblSoLuong.setForeground(Color.BLACK);
 		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoLuong.setBounds(29, 233, 111, 30);
+		lblSoLuong.setBounds(29, 293, 111, 30);
 		add(lblSoLuong);
 
 		txtSoLuong = new JTextField();
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(136, 233, 73, 30);
+		txtSoLuong.setBounds(136, 293, 73, 30);
 		add(txtSoLuong);
 
 		JLabel lblChiec = new JLabel("chiếc xe.");
 		lblChiec.setForeground(Color.BLACK);
 		lblChiec.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblChiec.setBounds(218, 233, 87, 30);
+		lblChiec.setBounds(218, 293, 87, 30);
 		add(lblChiec);
 
 		JLabel lblMau = new JLabel("Màu xe:");
@@ -256,68 +264,68 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
 		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan.setBounds(777, 293, 111, 30);
+		lblHeSoBan.setBounds(428, 353, 111, 30);
 		add(lblHeSoBan);
 
 		txtHeSoBan = new JTextField();
 		txtHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHeSoBan.setColumns(10);
-		txtHeSoBan.setBounds(885, 293, 47, 30);
+		txtHeSoBan.setBounds(536, 353, 47, 30);
 		add(txtHeSoBan);
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(960, 293, 111, 30);
+		lblBaoHanh.setBounds(960, 353, 111, 30);
 		add(lblBaoHanh);
 
 		txtBaoHanh = new JTextField();
 		txtBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtBaoHanh.setColumns(10);
-		txtBaoHanh.setBounds(1140, 293, 55, 30);
+		txtBaoHanh.setBounds(1140, 353, 55, 30);
 		add(txtBaoHanh);
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThang.setBounds(1212, 293, 67, 30);
+		lblThang.setBounds(1212, 353, 67, 30);
 		add(lblThang);
 
 		JLabel lblSoKhung = new JLabel("Số khung:");
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoKhung.setBounds(29, 293, 111, 30);
+		lblSoKhung.setBounds(428, 293, 111, 30);
 		add(lblSoKhung);
 
 		txtSoKhung = new JTextField();
 		txtSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoKhung.setColumns(10);
-		txtSoKhung.setBounds(136, 293, 205, 30);
+		txtSoKhung.setBounds(535, 293, 205, 30);
 		add(txtSoKhung);
 
 		JLabel lblSoSuon = new JLabel("Số sườn:");
 		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoSuon.setBounds(428, 293, 111, 30);
+		lblSoSuon.setBounds(960, 293, 111, 30);
 		add(lblSoSuon);
 
 		txtSoSuon = new JTextField();
 		txtSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoSuon.setColumns(10);
-		txtSoSuon.setBounds(535, 293, 205, 30);
+		txtSoSuon.setBounds(1140, 293, 205, 30);
 		add(txtSoSuon);
 
 		JLabel lblMoTa = new JLabel("Mô tả:");
 		lblMoTa.setForeground(Color.BLACK);
 		lblMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMoTa.setBounds(535, 351, 111, 30);
+		lblMoTa.setBounds(535, 396, 111, 30);
 		add(lblMoTa);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(535, 396, 879, 310);
+		scrollPane.setBounds(535, 439, 879, 267);
 		add(scrollPane);
 
-		JTextArea txtMoTa = new JTextArea();
+		 txtMoTa = new JTextArea();
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtMoTa);
@@ -384,7 +392,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		btnImport.setBounds(846, 753, 168, 40);
 		add(btnImport);
 
+		JLabel lblXutX = new JLabel("Xuất xứ:");
+		lblXutX.setForeground(Color.BLACK);
+		lblXutX.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblXutX.setBounds(29, 174, 111, 30);
+		add(lblXutX);
+
+		cboXuatXu = new JComboBox<String>();
+		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboXuatXu.setBackground(Color.WHITE);
+		cboXuatXu.setBounds(136, 174, 205, 30);
+		add(cboXuatXu);
+
 		dangKiSuKien();
+		lblMaXe.setText(RandomMa.getMaNgauNhien(TenEntity.XE_MAY));
+		xeMayDao = XeMayDao.getInstance();
+		loadDuLieuVaoCombobox();
 
 	}
 
@@ -405,67 +428,16 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-
+			themXe();
 		}
 		if (o.equals(btnXoaRong)) {
-
+			xoaRong();
 		}
 		if (o.equals(btnChonFile)) {
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("jpg", "png", "jpg");
-				fileChooser.setFileFilter(imgFilter);
-				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.setPreferredSize(new Dimension(900, 600));
-				if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-					File f = fileChooser.getSelectedFile();
-					lblAnh.setIcon(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage()
-							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-					txtPath.setText(f.getPath());
-					lblAnh.setText("");
-				}
-
-				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
-//				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-					| UnsupportedLookAndFeelException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			chonAnh();
 		}
 		if (o.equals(btnImport)) {
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				JFileChooser fileChooser = new JFileChooser();
-				FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("xlsm", "xlsx", "xls");
-				fileChooser.setFileFilter(imgFilter);
-				fileChooser.setMultiSelectionEnabled(false);
-				fileChooser.setPreferredSize(new Dimension(900, 600));
-				if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-					File f = fileChooser.getSelectedFile();
-					txtPath.setText(f.getPath());
-					new ImportExcelFile();
-					try {
-						List<XeMay> listXeMay = ImportExcelFile.readExcel(f.getPath());
-						for (XeMay xeMay : listXeMay) {
-							System.out.println(xeMay);
-						}
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-
-				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-
-//				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-					| UnsupportedLookAndFeelException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			importFileExcel();
 		}
 
 	}
@@ -492,5 +464,148 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	/**
+	 * Load dữ liệu từ database vào combobox
+	 */
+	private void loadDuLieuVaoCombobox() {
+
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+		HangXeDao hangXeDao = HangXeDao.getInstance();
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+
+		cboXuatXu.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArrayThemXe(
+				xuatXuDao.getXuatXus().stream().map(s -> s.getTenXuatXu()).collect(Collectors.toList()))));
+		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArrayThemXe(
+				loaiXeDao.getLoaiXes().stream().map(s -> s.getTenLoaiXe()).collect(Collectors.toList()))));
+		cboHangXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArrayThemXe(
+				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
+		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArrayThemXe(
+				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+		for (String mauXe : xeMayDao.getMauXes()) {
+			cboMauXe.addItem(mauXe);
+		}
+
+	}
+	
+	/**
+	 * Thêm xe
+	 */
+	private void themXe() {
+		String tenXuatXu = cboXuatXu.getSelectedItem().toString().trim();
+		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString().trim();
+		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
+		String tenMauXe = cboMauXe.getSelectedItem().toString().trim();
+		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
+		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
+		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
+		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
+//		XeMay xeMay = new XeMay();
+//		xeMay.setMaXeMay(lblMaXe.getText().trim());
+//		xeMay.setTenXeMay(txtTenXe.getText().trim());
+//		xeMay.setXuatXu(xuatXu);
+//		xeMay.setLoaiXe(loaiXe);
+//		xeMay.setDongXe(dongXe);
+//		xeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
+//		xeMay.setMauXe(tenMauXe);
+//		xeMay.setSoKhung(txtSoKhung.getText().trim());
+//		xeMay.setSoSuon(txtSoSuon.getText().trim());
+//		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
+//		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
+//		xeMay.setSoLuong(Integer.parseInt(txtSoLuong.getText().trim()));
+//		xeMay.setMoTa(txtMoTa.getText().trim());
+//		System.out.println(xeMay);
+
+	}
+
+	/**
+	 * Xóa rỗng
+	 */
+	private void xoaRong() {
+		lblMaXe.setText(RandomMa.getMaNgauNhien(TenEntity.XE_MAY));
+		txtTenXe.setText("");
+		cboHangXe.setSelectedIndex(0);
+		cboDongXe.setSelectedIndex(0);
+		cboLoaiXe.setSelectedIndex(0);
+		cboSoPhanKhoi.setSelectedIndex(0);
+		cboXuatXu.setSelectedIndex(0);
+		cboMauXe.setSelectedIndex(0);
+		txtGiaNhap.setText("");
+		txtSoLuong.setText("");
+		txtSoKhung.setText("");
+		txtSoSuon.setText("");
+		txtHeSoBan.setText("");
+		txtBaoHanh.setText("");
+		txtPath.setText("");
+		txtMoTa.setText("");
+	}
+
+	/**
+	 * Chọn ảnh
+	 */
+	private void chonAnh() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("jpg", "png", "jpg");
+			fileChooser.setFileFilter(imgFilter);
+			fileChooser.setMultiSelectionEnabled(false);
+			fileChooser.setPreferredSize(new Dimension(900, 600));
+			if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File f = fileChooser.getSelectedFile();
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage()
+						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+				txtPath.setText(f.getPath());
+				lblAnh.setText("");
+			}
+
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Import file excel
+	 */
+	private void importFileExcel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			JFileChooser fileChooser = new JFileChooser();
+			FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("xlsm", "xlsx", "xls");
+			fileChooser.setFileFilter(imgFilter);
+			fileChooser.setMultiSelectionEnabled(false);
+			fileChooser.setPreferredSize(new Dimension(900, 600));
+			if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				File f = fileChooser.getSelectedFile();
+				txtPath.setText(f.getPath());
+				new ImportExcelFile();
+				try {
+					List<XeMay> listXeMay = ImportExcelFile.readExcel(f.getPath());
+					for (XeMay xeMay : listXeMay) {
+						System.out.println(xeMay);
+					}
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+
+//			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

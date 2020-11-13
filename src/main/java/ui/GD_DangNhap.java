@@ -18,10 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import db.DatabaseConnect;
+import other.SplashScreen;
 
 public class GD_DangNhap extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -187,7 +189,45 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			this.setVisible(false);
+			
+			
+//			JWindow window = new JWindow();
+//			window.getContentPane().add(
+//			    new JLabel("", new ImageIcon(this.getClass().getResource("/img/motorcycle-logo-on-a-green-background2.jpg")), SwingConstants.CENTER));
+//			window.setBounds(500, 150, 300, 200);
+//			window.setVisible(true);
+//			try {
+//			    Thread.sleep(3000);
+//			} catch (InterruptedException e2) {
+//			    e2.printStackTrace();
+//			}
+//			window.setVisible(false);
+			
+//			// Throw a nice little title page up on the screen first
+//	        SplashScreen splash = new SplashScreen(2000);
+//	 
+//	        // Normally, we'd call splash.showSplash() and get on 
+//	        // with the program. But, since this is only a test...
+//	        splash.showSplashAndExit();
+			
+			
+			JWindow window = new JWindow();
+			window.getContentPane().add(
+			    new JLabel("", new ImageIcon(this.getClass().getResource("/img/motorcycle-logo-on-a-green-background2.jpg")), SwingConstants.CENTER));
+			window.setBounds(500, 150, 300, 200);
+			window.setVisible(true);
+			try {
+			    Thread.sleep(5000);
+			} catch (InterruptedException e2) {
+			    e2.printStackTrace();
+			}
+			window.setVisible(false);
+			
+			
 			new App().setVisible(true);
+			window.dispose();
+			
+			
 		} else if (o.equals(btnHuy)) {
 			this.setVisible(false);
 		}
