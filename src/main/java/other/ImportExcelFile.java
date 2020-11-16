@@ -17,7 +17,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import constant.TenEntity;
+import dao.DongXeDao;
+import dao.HangXeDao;
+import dao.LoaiXeDao;
+import dao.XuatXuDao;
 import entity.DongXe;
+import entity.HangXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
@@ -34,13 +40,14 @@ public class ImportExcelFile {
 	public static final int COLUMN_PHANKHOI = 8;
 	public static final int COLUMN_MAUXE = 9;
 	public static final int COLUMN_LOAIXE = 10;
-	public static final int COLUMN_DONGXE = 11;
-	public static final int COLUMN_XUATXU = 12;
-//    public static final int COLUMN_HANGXE = "Hãng xe";
-	public static final int COLUMN_MOTA = 13;
+	public static final int COLUMN_HANGXE = 11;
+	public static final int COLUMN_DONGXE = 12;
+	public static final int COLUMN_XUATXU = 13;
+	public static final int COLUMN_MOTA = 14;
+	private static HangXe hangXe;
 
 	public static void main(String[] args) throws IOException {
-		final String excelFilePath = "Img/demo.xlsx";
+		final String excelFilePath = "Img\\demo.xlsx";
 		final List<XeMay> listXeMay = readExcel(excelFilePath);
 		for (XeMay xeMay : listXeMay) {
 			System.out.println(xeMay);
@@ -86,10 +93,10 @@ public class ImportExcelFile {
 
 				switch (columnIndex) {
 				case COLUMN_MAXE:
-					xeMay.setMaXeMay((String) getCellValue(cell));
+					xeMay.setMaXeMay(getCellValue(cell).toString().trim());
 					break;
 				case COLUMN_TENXE:
-					xeMay.setTenXeMay((String) getCellValue(cell));
+					xeMay.setTenXeMay(getCellValue(cell).toString().trim());
 					break;
 				case COLUMN_SOLUONG:
 					double soLuong = (double) getCellValue(cell);
@@ -106,36 +113,65 @@ public class ImportExcelFile {
 					xeMay.setThoiGianBaoHanh((int) Math.round(baoHanh));
 					break;
 				case COLUMN_SOKHUNG:
-					xeMay.setSoKhung((String) getCellValue(cell));
+					xeMay.setSoKhung(getCellValue(cell).toString().trim());
 					break;
 				case COLUMN_SOSUON:
-					xeMay.setSoSuon((String) getCellValue(cell));
+					xeMay.setSoSuon(getCellValue(cell).toString().trim());
 					break;
 				case COLUMN_PHANKHOI:
 					double phanKhoi = (double) getCellValue(cell);
 					xeMay.setSoPhanKhoi((int) Math.round(phanKhoi));
 					break;
 				case COLUMN_MAUXE:
-					xeMay.setMauXe((String) getCellValue(cell));
+					xeMay.setMauXe(getCellValue(cell).toString().trim());
 					break;
 				case COLUMN_LOAIXE:
-					LoaiXe loaiXe = new LoaiXe(null, (String) getCellValue(cell));
+					LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(getCellValue(cell).toString().trim());
+					if(loaiXe == null) {
+						loaiXe = new LoaiXe();
+						loaiXe.setMaLoaiXe(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+						loaiXe.setTenLoaiXe(getCellValue(cell).toString().trim());
+						
+						LoaiXeDao.getInstance().themLoaiXe(loaiXe);
+					}
 					xeMay.setLoaiXe(loaiXe);
 					break;
-//                case COLUMN_HANGXE:
-//                	HangXe hangXe = new HangXe(null, (String) getCellValue(cell));
-//                	xeMay.setHangXe(hangXe);
-//                	break;
+					
+				case COLUMN_HANGXE:
+					hangXe = HangXeDao.getInstance().getHangXeTheoTen(getCellValue(cell).toString().trim());
+					if(hangXe == null) {
+						hangXe = new HangXe();
+						hangXe.setMaHangXe(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+						hangXe.setTenHangXe(getCellValue(cell).toString().trim());
+						
+						HangXeDao.getInstance().themHangXe(hangXe);
+					}
+					break;
 				case COLUMN_DONGXE:
-					DongXe dongXe = new DongXe(null, (String) getCellValue(cell), 0, null);
+					DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(getCellValue(cell).toString().trim());
+					if(dongXe == null) {
+						dongXe = new DongXe();
+						dongXe.setMaDongXe(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
+						dongXe.setTenDongXe(getCellValue(cell).toString().trim());
+						dongXe.setThue(5);
+						dongXe.setHangXe(hangXe);
+						
+						DongXeDao.getInstance().themDongXe(dongXe);
+					}
 					xeMay.setDongXe(dongXe);
 					break;
 				case COLUMN_XUATXU:
-					XuatXu xuatXu = new XuatXu(null, (String) getCellValue(cell));
+					XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(getCellValue(cell).toString().trim());
+					if(xuatXu == null) {
+						xuatXu = new XuatXu();
+						xuatXu.setMaXuatXu(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
+						xuatXu.setTenXuatXu(getCellValue(cell).toString().trim());
+						XuatXuDao.getInstance().themXuatXu(xuatXu);
+					}
 					xeMay.setXuatXu(xuatXu);
 					break;
 				case COLUMN_MOTA:
-					xeMay.setMoTa((String) getCellValue(cell));
+					xeMay.setMoTa(getCellValue(cell).toString().trim());
 					break;
 				default:
 					break;

@@ -2,11 +2,11 @@ package other;
 import java.awt.*;
 import javax.swing.*;
  
-public class SplashScreen extends JWindow {
+public class SplashScreenn extends JWindow {
      
     private int duration;
      
-    public SplashScreen(int d) {
+    public SplashScreenn(int d) {
         duration = d;
     }
      
@@ -55,7 +55,7 @@ public class SplashScreen extends JWindow {
     public static void main(String[] args) {
          
         // Throw a nice little title page up on the screen first
-        SplashScreen splash = new SplashScreen(10000);
+        SplashScreenn splash = new SplashScreenn(10000);
  
         // Normally, we'd call splash.showSplash() and get on 
         // with the program. But, since this is only a test...

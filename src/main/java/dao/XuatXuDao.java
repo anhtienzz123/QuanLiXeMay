@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.LoaiXeConstant;
 import constant.XuatXuConstant;
 import converter.XuatXuConvert;
 import db.DatabaseConnect;
@@ -72,8 +73,9 @@ public class XuatXuDao {
 		XuatXu xuatXu = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.GET_XUAT_XU_THEO_MA);
-			preparedStatement.setString(1, tenXuatXu);
+			
+			String sql = XuatXuConstant.GET_XUAT_XU_THEO_TEN + tenXuatXu + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

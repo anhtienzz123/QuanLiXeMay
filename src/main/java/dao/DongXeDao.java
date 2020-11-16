@@ -11,7 +11,6 @@ import constant.DongXeConstant;
 import converter.DongXeConvert;
 import db.DatabaseConnect;
 import entity.DongXe;
-import entity.XeMay;
 
 public class DongXeDao {
 	private static DongXeDao instance;
@@ -71,8 +70,8 @@ public class DongXeDao {
 		DongXe dongXe = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_MA);
-			preparedStatement.setString(1, tenDongXe);
+			String sql = DongXeConstant.GET_DONG_XE_THEO_TEN + tenDongXe +"%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next())
 				dongXe = DongXeConvert.getDongXe(resultSet);

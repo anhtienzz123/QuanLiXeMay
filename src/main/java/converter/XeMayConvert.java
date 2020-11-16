@@ -63,8 +63,6 @@ public class XeMayConvert {
 		preparedStatement.setString(13, xeMay.getDongXe().getMaDongXe());
 		preparedStatement.setString(14, xeMay.getXuatXu().getMaXuatXu());
 		preparedStatement.setString(15, xeMay.getMoTa());
-	
-
 	}
 
 	public static void capNhatXeMay(PreparedStatement preparedStatement, XeMay xeMay) throws SQLException {

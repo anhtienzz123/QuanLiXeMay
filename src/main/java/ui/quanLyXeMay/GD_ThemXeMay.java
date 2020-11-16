@@ -7,8 +7,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -45,7 +46,7 @@ import other.RandomMa;
 import other.XuLyChung;
 import ui.App;
 
-public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListener {
+public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * 
 	 */
@@ -63,7 +64,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	private JTextArea txtMoTa;
 
 	private JLabel lblThongBao;
-	private JLabel lblThngBo;
 	private JLabel lblAnh;
 	private JLabel lblMaXe;
 
@@ -82,7 +82,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	private JButton btnChonFile;
 
 	private XeMayDao xeMayDao;
-
 
 	/**
 	 * Create the panel.
@@ -207,7 +206,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		add(lblSoPhanKhoi);
 
 		cboSoPhanKhoi = new JComboBox<String>();
-		cboSoPhanKhoi.setModel(new DefaultComboBoxModel<String>(new String[] {"50 cc", "110 cc", "125 cc", "150 cc", "175 cc"}));
+		cboSoPhanKhoi.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "50 cc", "110 cc", "125 cc", "150 cc", "175 cc" }));
 		cboSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboSoPhanKhoi.setBackground(Color.WHITE);
 		cboSoPhanKhoi.setBounds(1140, 174, 205, 30);
@@ -325,7 +325,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		scrollPane.setBounds(535, 439, 879, 267);
 		add(scrollPane);
 
-		 txtMoTa = new JTextArea();
+		txtMoTa = new JTextArea();
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtMoTa);
@@ -373,16 +373,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		lblThongTin.setBounds(29, 57, 211, 30);
 		add(lblThongTin);
 
-		lblThngBo = new JLabel("Thông báo:");
-		lblThngBo.setForeground(Color.RED);
-		lblThngBo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThngBo.setBounds(29, 753, 111, 30);
-		add(lblThngBo);
-
-		lblThongBao = new JLabel("Số khung không hợp lệ");
+		lblThongBao = new JLabel("");
 		lblThongBao.setForeground(Color.RED);
 		lblThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
-		lblThongBao.setBounds(139, 753, 377, 30);
+		lblThongBao.setBounds(29, 753, 805, 30);
 		add(lblThongBao);
 
 		btnImport = new JButton("Import file");
@@ -416,12 +410,15 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		btnChonFile.addActionListener(this);
 		btnXoaRong.addActionListener(this);
 		btnImport.addActionListener(this);
-	}
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		txtTenXe.addKeyListener(this);
+		txtGiaNhap.addKeyListener(this);
+		txtSoLuong.addKeyListener(this);
+		txtSoKhung.addKeyListener(this);
+		txtSoSuon.addKeyListener(this);
+		txtHeSoBan.addKeyListener(this);
+		txtBaoHanh.addKeyListener(this);
+		txtPath.addKeyListener(this);
 	}
 
 	@Override
@@ -443,25 +440,66 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		if (o.equals(txtTenXe)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtGiaNhap.requestFocus();
+			}
+		}
+		if (o.equals(txtGiaNhap)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtSoLuong.requestFocus();
+			}
+		}
+		if (o.equals(txtSoLuong)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtSoKhung.requestFocus();
+			}
+		}
+		if (o.equals(txtSoKhung)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtSoSuon.requestFocus();
+			}
+		}
+		if (o.equals(txtSoSuon)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtHeSoBan.requestFocus();
+			}
+		}
+		if (o.equals(txtHeSoBan)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtBaoHanh.requestFocus();
+			}
+		}
+		if (o.equals(txtBaoHanh)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtPath.requestFocus();
+			}
+		}
+		if (o.equals(txtPath)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				validData();
+				txtMoTa.requestFocus();
+			}
+		}
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}
@@ -490,7 +528,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		}
 
 	}
-	
+
 	/**
 	 * Thêm xe
 	 */
@@ -503,21 +541,29 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
 		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
 		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
-//		XeMay xeMay = new XeMay();
-//		xeMay.setMaXeMay(lblMaXe.getText().trim());
-//		xeMay.setTenXeMay(txtTenXe.getText().trim());
-//		xeMay.setXuatXu(xuatXu);
-//		xeMay.setLoaiXe(loaiXe);
-//		xeMay.setDongXe(dongXe);
-//		xeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
-//		xeMay.setMauXe(tenMauXe);
-//		xeMay.setSoKhung(txtSoKhung.getText().trim());
-//		xeMay.setSoSuon(txtSoSuon.getText().trim());
-//		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
-//		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
-//		xeMay.setSoLuong(Integer.parseInt(txtSoLuong.getText().trim()));
-//		xeMay.setMoTa(txtMoTa.getText().trim());
-//		System.out.println(xeMay);
+		XeMay xeMay = new XeMay();
+
+		xeMay.setMaXeMay(lblMaXe.getText().trim());
+		xeMay.setTenXeMay(txtTenXe.getText().trim());
+		xeMay.setTenAnh(txtPath.getText().trim());
+		xeMay.setSoLuong(Integer.parseInt(txtSoLuong.getText().trim()));
+		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
+		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
+		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
+		xeMay.setSoKhung(txtSoKhung.getText().trim());
+		xeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
+		xeMay.setSoSuon(txtSoSuon.getText().trim());
+		xeMay.setMauXe(tenMauXe);
+		xeMay.setLoaiXe(loaiXe);
+		xeMay.setDongXe(dongXe);
+		xeMay.setXuatXu(xuatXu);
+		xeMay.setMoTa(txtMoTa.getText().trim());
+		System.out.println(xeMay);
+		if (validData()) {
+			if (xeMayDao.themXeMay(xeMay)) {
+				JOptionPane.showMessageDialog(this, "Thêm xe máy thành công");
+			}
+		}
 
 	}
 
@@ -591,8 +637,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 				try {
 					List<XeMay> listXeMay = ImportExcelFile.readExcel(f.getPath());
 					for (XeMay xeMay : listXeMay) {
-						System.out.println(xeMay);
+//						System.out.println(xeMay);
+						xeMayDao.themXeMay(xeMay);
 					}
+					JOptionPane.showMessageDialog(this, "Xong!!!!!!!!!!");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -607,5 +655,37 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, MouseListene
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+	}
+
+	private boolean validData() {
+		if (!txtGiaNhap.getText().trim().matches("^\\d+(.{1}\\d+)?$")) {
+			txtGiaNhap.requestFocus();
+			txtGiaNhap.selectAll();
+			lblThongBao.setText("Thông báo: Giá nhập không hợp lệ (Giá nhập phải > 0 và không chứa kí tự đặc biệt)");
+			return false;
+		}
+		if (!txtSoLuong.getText().trim().matches("^\\d+$")) {
+			txtSoLuong.requestFocus();
+			txtSoLuong.selectAll();
+			lblThongBao.setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)");
+			return false;
+		}
+		/*
+		 * if (!txtSoKhung.getText().trim().matches("^\\d+$")) {
+		 * txtSoKhung.requestFocus(); txtSoKhung.selectAll(); lblThongBao.
+		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
+		 * ); return false; } if (!txtSoSuon.getText().trim().matches("^\\d+$")) {
+		 * txtSoSuon.requestFocus(); txtSoSuon.selectAll(); lblThongBao.
+		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
+		 * ); return false; } if (!txtHeSoBan.getText().trim().matches("^\\d+$")) {
+		 * txtHeSoBan.requestFocus(); txtHeSoBan.selectAll(); lblThongBao.
+		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
+		 * ); return false; } if (!txtBaoHanh.getText().trim().matches("^\\d+$")) {
+		 * txtBaoHanh.requestFocus(); txtBaoHanh.selectAll(); lblThongBao.
+		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
+		 * ); return false; }
+		 */
+		lblThongBao.setText("");
+		return true;
 	}
 }
