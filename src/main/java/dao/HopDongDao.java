@@ -83,7 +83,6 @@ public class HopDongDao {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(HopDongConstant.GET_HOP_DONG_THEO_MA_HOP_DONG);
 			preparedStatement.setString(1, maHopDong);
-
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())

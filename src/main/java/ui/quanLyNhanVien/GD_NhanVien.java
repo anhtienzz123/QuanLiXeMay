@@ -23,6 +23,8 @@ import javax.swing.table.JTableHeader;
 
 import constant.TenEntity;
 import ui.App;
+import ui.quanLyHopDong.GD_ChiTietHD;
+
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import dao.NhanVienHanhChinhDao;
@@ -71,6 +73,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private JComboBox cboTimKiem;
 	private String maNVThaoTac; //
 	private int bangLuaChon;
+	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
@@ -97,7 +100,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		lblNewLabel.setBounds(0, 0, 1450, 50);
 		panel.add(lblNewLabel);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setToolTipText("Xem chi tiết nhân viên");
 		btnXemChiTiet
 				.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_error_outline_white_18dp.png")));
@@ -296,6 +299,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		txtTimKiem.addKeyListener(this);
 		cboTimKiem.addActionListener(this);
 		tabbedPane.addMouseListener(this);
+		btnXemChiTiet.addActionListener(this);
 
 		addMouseListener(this);
 
@@ -359,6 +363,23 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 			this.add(new GD_ThemNhanVien());
 			this.validate();
 			this.repaint();
+		}
+
+		if (o.equals(btnXemChiTiet)) {
+
+			try {
+
+				if (tabbedPane.getSelectedIndex() == 0) {
+					int row = tblNvHanhChinh.getSelectedRow();
+					new GD_ChiTietNVHanhChinh(modelNVHanhChinh.getValueAt(row, 1).toString()).setVisible(true);
+				}else {
+					int row = tblNVKyThuat.getSelectedRow();
+					new GD_ChiTietNVKyThuat(modelNVKyThuat.getValueAt(row, 1).toString()).setVisible(true);
+				}
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(this, "Chọn vào nhân viên bạn muốn xem !");
+			}
+
 		}
 		if (o.equals(btnSua)) {
 			this.removeAll();
@@ -469,24 +490,23 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		int to = page * SIZE;
 		String timKiem = txtTimKiem.getText();
 		String field = cboTimKiem.getSelectedItem().toString();
-		
 
 		if (bangLuaChon == 0) {
 			maxPage = nhanVienHanhChinhDao.getMaxPageTimKiemNVHanhChinh(timKiem, field, SIZE);
 			nhanVienHanhChinhs = nhanVienHanhChinhDao.timKiemNhanVienHanhChinh(timKiem, from, to, field);
-			
-				xoaDuLieuTrongBangNVHanhChinh();
-				themNVHanhChinhsVaoBang();
-				txtTrang.setText(this.page + "");
-			
+
+			xoaDuLieuTrongBangNVHanhChinh();
+			themNVHanhChinhsVaoBang();
+			txtTrang.setText(this.page + "");
+
 		} else {
 			maxPage = nhanVienKiThuatDao.getMaxPageTimKiemNVKiThuat(timKiem, field, SIZE);
 			nhanVienKiThuats = nhanVienKiThuatDao.timKiemNhanVienKiThuats(timKiem, from, to, field);
-			
-				xoaDuLieuTrongBangNVKiThuat();
-				themNVKiThuatsVaoBang();
-				txtTrang.setText(this.page + "");
-			
+
+			xoaDuLieuTrongBangNVKiThuat();
+			themNVKiThuatsVaoBang();
+			txtTrang.setText(this.page + "");
+
 		}
 
 	}
@@ -524,7 +544,6 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		}
 
 	}
-	
 
 	@Override
 	public void keyTyped(KeyEvent e) {

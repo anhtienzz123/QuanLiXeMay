@@ -17,6 +17,12 @@ public class LoaiXeDao {
 	private Connection connection;
 
 	private LoaiXeDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -25,7 +31,7 @@ public class LoaiXeDao {
 			instance = new LoaiXeDao();
 		return instance;
 	}
-	
+
 	public List<LoaiXe> getLoaiXes() {
 
 		List<LoaiXe> loaiXes = new ArrayList<>();
@@ -46,7 +52,7 @@ public class LoaiXeDao {
 		}
 		return loaiXes;
 	}
-	
+
 	public LoaiXe getLoaiXeTheoMa(String maLoaiXe) {
 
 		LoaiXe loaiXe = null;
@@ -66,14 +72,14 @@ public class LoaiXeDao {
 
 		return loaiXe;
 	}
-	
+
 	public LoaiXe getLoaiXeTheoTen(String tenLoaiXe) {
 
 		LoaiXe loaiXe = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.GET_LOAI_XE_THEO_MA);
-			preparedStatement.setString(1, tenLoaiXe);
+			String sql = LoaiXeConstant.GET_LOAI_XE_THEO_TEN + tenLoaiXe + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -86,12 +92,12 @@ public class LoaiXeDao {
 
 		return loaiXe;
 	}
-	
+
 	public boolean capNhatLoaiXe(LoaiXe loaiXe) {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.CAP_NHAP_LOAI_XE);			
+			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.CAP_NHAP_LOAI_XE);
 			LoaiXeConvert.capNhatLoaiXe(preparedStatement, loaiXe);
 			n = preparedStatement.executeUpdate();
 
@@ -102,7 +108,7 @@ public class LoaiXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean themLoaiXe(LoaiXe loaiXe) {
 
 		int n = 0;
@@ -119,12 +125,11 @@ public class LoaiXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maLoaiXe) {
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(LoaiXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
 			preparedStatement.setString(1, maLoaiXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();

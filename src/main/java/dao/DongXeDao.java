@@ -32,6 +32,7 @@ public class DongXeDao {
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE);
+
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
@@ -46,7 +47,7 @@ public class DongXeDao {
 		}
 		return dongXes;
 	}
-	
+
 	public DongXe getDongXeTheoMa(String maDongXe) {
 
 		DongXe dongXe = null;
@@ -63,15 +64,14 @@ public class DongXeDao {
 		}
 		return dongXe;
 	}
-	
+
 	public DongXe getDongXeTheoTen(String tenDongXe) {
 
 		DongXe dongXe = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_MA);
-			preparedStatement.setString(1, tenDongXe);
-
+			String sql = DongXeConstant.GET_DONG_XE_THEO_TEN + tenDongXe +"%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next())
 				dongXe = DongXeConvert.getDongXe(resultSet);
@@ -80,12 +80,12 @@ public class DongXeDao {
 		}
 		return dongXe;
 	}
-	
+
 	public boolean capNhatDongXe(DongXe dongXe) {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.CAP_NHAP_DONG_XE);			
+			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.CAP_NHAP_DONG_XE);
 			DongXeConvert.capNhatDongXe(preparedStatement, dongXe);
 			n = preparedStatement.executeUpdate();
 
@@ -96,7 +96,7 @@ public class DongXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean themDongXe(DongXe dongXe) {
 
 		int n = 0;
@@ -113,12 +113,11 @@ public class DongXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maDongXe) {
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(DongXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
 			preparedStatement.setString(1, maDongXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();

@@ -70,7 +70,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener {
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 50));
-		panel.setBackground(new Color(0, 128, 0));
+		panel.setBackground(new Color(58, 181, 74));
 		panel.setPreferredSize(new Dimension(800, 50));
 		horizontalBox.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));

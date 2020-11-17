@@ -18,4 +18,15 @@ public class XuLyChung {
 
 		return arrays;
 	}
+	public static String[] doiListThanhArrayThemXe(List<String> listString) {
+		int size = listString.size();
+
+		String[] arrays = new String[size + 1];
+
+		for (int i = 0; i < listString.size(); i++) {
+			arrays[i] = listString.get(i);
+		}
+
+		return arrays;
+	}
 }
