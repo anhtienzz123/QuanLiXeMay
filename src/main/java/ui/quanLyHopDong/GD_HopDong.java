@@ -5,14 +5,22 @@ import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.EventObject;
@@ -37,6 +45,11 @@ import ui.quanLyBaoHanh.GD_BaoHanh;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
+
+import dao.HopDongDao;
+import entity.HopDong;
+import entity.KhachHang;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -44,22 +57,31 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 
-public class GD_HopDong extends JPanel implements ActionListener, MouseListener {
+public class GD_HopDong extends JPanel implements ActionListener, MouseListener,KeyListener {
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
-	private JButton btnBaoHanh;
 	private DefaultTableModel modelHopDong;
 	private JTable tblHopDong;
 	private JButton btnXemChiTiet;
+	private int page = 1;
+	private int maxPage = 0;
+	private JComboBox cboTimKiem;
+	private static final int SIZE = 20;
+	private HopDongDao hopDongDao;
+	private List<HopDong> hopDongs;
+	private LocalDate date;
+	private JDateChooser txtNgay;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_HopDong() {
+
+		hopDongDao = HopDongDao.getInstance();
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -81,12 +103,13 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		scrollPaneHopDong.setBounds(29, 200, 1385, 532);
 		add(scrollPaneHopDong);
 
-		 btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet
+				.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(937, 753, 218, 40);
+		btnXemChiTiet.setBounds(1196, 753, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -95,10 +118,11 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên",
+				"Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -159,15 +183,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		txtTrang.setBounds(178, 754, 60, 40);
 		add(txtTrang);
 
-		btnBaoHanh = new JButton("Bảo hành");
-		btnBaoHanh.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
-		btnBaoHanh.setForeground(Color.WHITE);
-		btnBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnBaoHanh.setBackground(new Color(58, 181, 74));
-		btnBaoHanh.setBounds(1204, 753, 203, 40);
-		add(btnBaoHanh);
-
-		String[] colHeaderHopDong = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
+		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng",
 				"Tên khách hàng", "ngày lập hóa đơn" };
 		modelHopDong = new DefaultTableModel(colHeaderHopDong, 0);
 		tblHopDong = new JTable(modelHopDong) {
@@ -187,7 +203,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		lblTngThuTrong_1_1.setBounds(886, 83, 175, 30);
 		add(lblTngThuTrong_1_1);
 
-		JDateChooser txtNgay = new JDateChooser();
+		txtNgay = new JDateChooser();
 		txtNgay.setBounds(1073, 83, 189, 30);
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
@@ -219,6 +235,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 			modelHopDong.addRow(new Object[] { i, null, null, null });
 		}
 		dangKiSuKien();
+		capNhatDuLieuTrongBangHopDong();
 
 	}
 
@@ -227,8 +244,65 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
-		btnBaoHanh.addActionListener(this);
 		btnTruoc.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
+		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					capNhatDuLieuTrongBangHopDong();
+				}
+
+			}
+		});
+
+	}
+
+	public void capNhatDuLieuTrongBangHopDong() {
+
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		maxPage = hopDongDao.getMaxPageTimKiemHopDong(timKiem, field, date, SIZE);
+		hopDongs = hopDongDao.timKiemHopDongs(timKiem, from, to, date, field);
+
+		xoaDuLieuTrongBang();
+		themHopDongsVaoBang();
+		txtTrang.setText(this.page + "");
+
+	}
+
+	private void xoaDuLieuTrongBang() {
+		while (modelHopDong.getRowCount() > 0) {
+			modelHopDong.removeRow(0);
+		}
+
+	}
+
+	private void themHopDongsVaoBang() {
+		if (hopDongs != null) {
+			for (HopDong hopDong : hopDongs) {
+				themHopDonggVaoBang(hopDong);
+			}
+		}
+	}
+
+	private void themHopDonggVaoBang(HopDong hopDong) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Object[] object = new Object[8];
+		object[0] = tblHopDong.getRowCount() + 1;
+		object[1] = hopDong.getMaHopDong();
+		object[2] = hopDong.getHoaDon().getMaHoaDon();
+		object[3] = hopDong.getHoaDon().getNhanVienHanhChinh().getMaNVHanhChinh();
+		object[4] = hopDong.getHoaDon().getNhanVienHanhChinh().getHoTenNV();
+		object[5] = hopDong.getHoaDon().getKhachHang().getMaKhachHang();
+		object[6] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[7] = simpleDateFormat.format(hopDong.getHoaDon().getNgayLap());
+
+		modelHopDong.addRow(object);
 
 	}
 
@@ -265,18 +339,61 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnBaoHanh)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_BaoHanh());
-			this.validate();
-			this.repaint();
+
+		if (o.equals(btnXemChiTiet)) {
+			try {
+				int row = tblHopDong.getSelectedRow();
+				new GD_ChiTietHD(modelHopDong.getValueAt(row, 1).toString()).setVisible(true);
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(null, "Chọn vào hợp đồng muốn xem");
+			}
 		}
-		
-		if(o.equals(btnXemChiTiet)) {
-			new GD_ChiTietHD().setVisible(true);
+
+		if (o == btnDau) {
+			this.page = 1;
+			capNhatDuLieuTrongBangHopDong();
 		}
+
+		if (o == btnCuoi) {
+			this.page = maxPage;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o == btnSau && page < maxPage) {
+			this.page++;
+			capNhatDuLieuTrongBangHopDong();
+
+		}
+
+		if (o == btnTruoc && page > 1) {
+			this.page--;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o == cboTimKiem) {
+			txtTimKiem.setText("");
+			this.page = 1;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.page = 1;
+		capNhatDuLieuTrongBangHopDong();
 		
 	}
 }

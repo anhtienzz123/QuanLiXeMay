@@ -54,6 +54,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 	private DefaultTableModel modelBaoHanh;
 	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
+	private JButton btnDanhMucBaoHanh;
 
 	/**
 	 * Create the panel.
@@ -80,8 +81,9 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		scrollPaneBaoHanh.setBounds(29, 200, 1385, 532);
 		add(scrollPaneBaoHanh);
 
-		 btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet.setIcon(
+				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -97,7 +99,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã phiếu bảo hành", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã phiếu bảo hành", "Mã hóa đơn", "Mã nhân viên",
+				"Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -107,10 +110,10 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
-		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách hợp đồng");
+		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách bảo hành");
 		lblTngThuTrong_1_1_2_2.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_2_2.setBounds(29, 133, 209, 30);
+		lblTngThuTrong_1_1_2_2.setBounds(29, 133, 189, 30);
 		add(lblTngThuTrong_1_1_2_2);
 
 		JSeparator separator = new JSeparator();
@@ -127,7 +130,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(
+				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -198,11 +202,11 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1450, 133);
 		pnlLogo.add(lblLogo);
-		
-		JButton btnDanhMucBaoHanh = new JButton("Danh mục bảo hành");
-		btnDanhMucBaoHanh.setForeground(Color.WHITE);
+
+		btnDanhMucBaoHanh = new JButton("Danh mục bảo hành");
+		btnDanhMucBaoHanh.setForeground(new Color(255, 255, 255));
 		btnDanhMucBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnDanhMucBaoHanh.setBackground(Color.GRAY);
+		btnDanhMucBaoHanh.setBackground(new Color(0, 153, 255));
 		btnDanhMucBaoHanh.setBounds(906, 753, 257, 40);
 		add(btnDanhMucBaoHanh);
 
@@ -226,6 +230,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		btnSau.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 		btnTruoc.addActionListener(this);
+		btnDanhMucBaoHanh.addActionListener(this);
 
 	}
 
@@ -268,6 +273,9 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 			this.add(new GD_BaoHanh());
 			this.validate();
 			this.repaint();
+		}
+		if (o.equals(btnDanhMucBaoHanh)) {
+			new GD_DanhMucBaoHanh().setVisible(true);
 		}
 
 	}

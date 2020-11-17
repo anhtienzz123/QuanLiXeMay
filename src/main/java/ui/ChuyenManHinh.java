@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import ui.quanLyBaoHanh.GD_QuanLyBaoHanh;
 import ui.quanLyHoaDon.GD_HoaDon;
 import ui.quanLyHoaDon.GD_LapHoaDon;
 import ui.quanLyHopDong.GD_HopDong;
@@ -108,7 +109,7 @@ public class ChuyenManHinh {
 				setPanel();
 				break;
 			case "ThemKhachHang":
-				new GD_ThemKhachHang().setVisible(true);
+				new GD_ThemKhachHang(null).setVisible(true);
 //				setPanel();
 				break;
 			case "QuanLyHangXe":
@@ -123,9 +124,9 @@ public class ChuyenManHinh {
 				node = new GD_ThemNhanVien();
 				setPanel();
 				break;
-			case "DoanhSoTheoNgay":
-//				node = new GD_NhanVien();
-//				setPanel();
+			case "BaoHanh":
+				node = new GD_QuanLyBaoHanh();
+				setPanel();
 				break;
 				
 				

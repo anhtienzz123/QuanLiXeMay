@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
@@ -51,11 +52,9 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 	private JTextField txtTenNV;
 	private JButton btnThem;
-	private DefaultTableModel modelNVHanhChinh;
 	private JButton btnXoaRong;
 	private JButton btnThoat;
 	private JLabel lblMaNV;
-	private DefaultTableModel modelNVKyThuat;
 	private JTextField txtSoDienThoai;
 	private JTextField txtAnh;
 	private JTextField txtDiaChi;
@@ -78,8 +77,6 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	private JComboBox cboBacTho;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
-	
-	
 
 	/**
 	 * Create the panel.
@@ -485,11 +482,13 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		String bacThoText = (String) cboBacTho.getSelectedItem();
 		int bacTho = Integer.parseInt(bacThoText);
 		String tenAnh = txtAnh.getText();
-	//	NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh, sdt, diaChi, soNamKN, bacTho, true);
+		// NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh,
+		// sdt, diaChi, soNamKN, bacTho, true);
 
-	//	return nhanVienKiThuat;
-		
-		NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh, sdt, diaChi, soNamKN, bacTho, true, tenAnh, gioiTinh);
+		// return nhanVienKiThuat;
+
+		NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh, sdt, diaChi, soNamKN, bacTho, true,
+				tenAnh, gioiTinh);
 		return nhanVienKiThuat;
 	}
 
@@ -558,7 +557,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 					if (nhanVienHanhChinhDao.themNhanVienHanhChinh(nvHanhChinh)) {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
 								JOptionPane.INFORMATION_MESSAGE, null);
-						lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
+						xoaRongText();
+						
 					} else {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thông báo thêm nhân viên",
 								JOptionPane.ERROR_MESSAGE, null);
@@ -572,7 +572,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 					if (nhanVienKiThuatDao.themNhanVienKiThuat(nvKiThuat)) {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
 								JOptionPane.INFORMATION_MESSAGE, null);
-						lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
+						xoaRongText();
+						
 					} else {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thông báo thêm nhân viên",
 								JOptionPane.ERROR_MESSAGE, null);
@@ -580,7 +581,38 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 				}
 			}
 		}
+		
+		if(o.equals(btnXoaRong)) {
+			xoaRongText();
+		}
 
+	}
+	
+	private void xoaRongText() {
+		if(cboLoaiNV.getSelectedIndex() == 0) {
+			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
+			txtTenNV.setText("");
+			rdbtnNam.setSelected(true);
+			txtNgaySinh.setDate(new java.util.Date());
+			txtSoDienThoai.setText("");
+			txtDiaChi.setText("");
+			txtChucVu.setText("");
+			txtTrinhDoHocVan.setText("");
+			cboQuyenTruyCap.setSelectedIndex(0);
+			txtMatKhau.setText("");
+			txtAnh.setText("");
+		}else {
+			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
+			txtTenNV.setText("");
+			rdbtnNam.setSelected(true);
+			txtNgaySinh.setDate(new java.util.Date());
+			txtSoDienThoai.setText("");
+			txtDiaChi.setText("");
+			txtAnh.setText("");
+			txtNamKinhNghiem.setText("");
+			cboBacTho.setSelectedIndex(0);
+			
+		}
 	}
 
 	private boolean validateNhanVienHanhChinh(NhanVienHanhChinh nhanVienHanhChinh) {

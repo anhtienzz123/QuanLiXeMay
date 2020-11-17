@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,6 +17,8 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import dao.HopDongDao;
+import entity.HopDong;
 import other.DocSo;
 
 public class GD_ChiTietHD extends JFrame implements ActionListener {
@@ -49,27 +53,21 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 	private JLabel lblGiaBan;
 	private JLabel lblBaoHanh;
 	private JLabel lblChu;
+	private String maHopDong;
+	private HopDongDao hopDongDao;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GD_ChiTietHD frame = new GD_ChiTietHD();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Create the frame.
 	 */
-	public GD_ChiTietHD() {
+	public GD_ChiTietHD(String maHopDong) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		hopDongDao = HopDongDao.getInstance();
+		this.maHopDong = maHopDong;
+		HopDong hopDong = hopDongDao.getHopDongTheoMa(maHopDong);
+		System.out.println(hopDong);
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GD_ChiTietHD.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
 		setTitle("Chi tiết hợp đồng");
@@ -119,7 +117,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1.setBounds(28, 63, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1);
 
-		 lblMaHD = new JLabel("HD123456");
+		lblMaHD = new JLabel(hopDong.getMaHopDong());
 		lblMaHD.setForeground(Color.BLACK);
 		lblMaHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaHD.setBounds(207, 63, 147, 30);
@@ -131,7 +129,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_1.setBounds(453, 63, 204, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_1);
 
-		 lblNgayLapHD = new JLabel("11-11-2020");
+		lblNgayLapHD = new JLabel(simpleDateFormat.format(hopDong.getHoaDon().getNgayLap()));
 		lblNgayLapHD.setForeground(Color.BLACK);
 		lblNgayLapHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNgayLapHD.setBounds(669, 63, 147, 30);
@@ -158,7 +156,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_2.setBounds(30, 159, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_2);
 
-		 lblMaNV = new JLabel("NV123456");
+		lblMaNV = new JLabel(hopDong.getHoaDon().getNhanVienHanhChinh().getMaNVHanhChinh());
 		lblMaNV.setForeground(Color.BLACK);
 		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaNV.setBounds(197, 159, 147, 30);
@@ -170,7 +168,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_3.setBounds(453, 159, 158, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_3);
 
-		 lblTenNV = new JLabel("Nguyễn Trần Nhật Hào");
+		 lblTenNV = new JLabel(hopDong.getHoaDon().getNhanVienHanhChinh().getHoTenNV());
 		lblTenNV.setForeground(Color.BLACK);
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenNV.setBounds(636, 159, 272, 30);
@@ -182,7 +180,8 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_4.setBounds(30, 209, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_4);
 
-		 lblNgaySinhNV = new JLabel("11-11-2000");
+
+		lblNgaySinhNV = new JLabel(simpleDateFormat.format(hopDong.getHoaDon().getNhanVienHanhChinh().getNgaySinh()));
 		lblNgaySinhNV.setForeground(Color.BLACK);
 		lblNgaySinhNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNgaySinhNV.setBounds(197, 209, 147, 30);
@@ -194,7 +193,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_5.setBounds(30, 263, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_5);
 
-		 lblDiaChiNV = new JLabel("12 Nguyễn Văn Bảo Phường 4 Gò Vấp Thành Phố Hồ Chí Minh");
+		 lblDiaChiNV = new JLabel(hopDong.getHoaDon().getNhanVienHanhChinh().getDiaChi());
 		lblDiaChiNV.setForeground(Color.BLACK);
 		lblDiaChiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDiaChiNV.setBounds(197, 263, 698, 30);
@@ -206,7 +205,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6.setBounds(453, 209, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6);
 
-		 lblSDTNhanVien = new JLabel("0123456789");
+		 lblSDTNhanVien = new JLabel(hopDong.getHoaDon().getNhanVienHanhChinh().getSoDienThoai());
 		lblSDTNhanVien.setForeground(Color.BLACK);
 		lblSDTNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSDTNhanVien.setBounds(636, 209, 147, 30);
@@ -218,7 +217,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_2_1.setBounds(30, 362, 169, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_2_1);
 
-		 lblMaKH = new JLabel("KH123456");
+		 lblMaKH = new JLabel(hopDong.getHoaDon().getKhachHang().getMaKhachHang());
 		lblMaKH.setForeground(Color.BLACK);
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaKH.setBounds(197, 362, 147, 30);
@@ -230,7 +229,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_3_1.setBounds(453, 362, 169, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_3_1);
 
-		 lblTenKH = new JLabel("Nguyễn Trần Nhật Hào");
+		 lblTenKH = new JLabel(hopDong.getHoaDon().getKhachHang().getHoTenKH());
 		lblTenKH.setForeground(Color.BLACK);
 		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenKH.setBounds(638, 362, 272, 30);
@@ -242,7 +241,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_4_1.setBounds(30, 412, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_4_1);
 
-		 lblNgaySinhKH = new JLabel("11-11-2000");
+		 lblNgaySinhKH = new JLabel(simpleDateFormat.format(hopDong.getHoaDon().getKhachHang().getNgaySinh()));
 		lblNgaySinhKH.setForeground(Color.BLACK);
 		lblNgaySinhKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNgaySinhKH.setBounds(197, 412, 147, 30);
@@ -254,7 +253,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6_1.setBounds(453, 412, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6_1);
 
-		 lblSDTKhachHang = new JLabel("0123456789");
+		lblSDTKhachHang = new JLabel(hopDong.getHoaDon().getKhachHang().getSoDienThoai());
 		lblSDTKhachHang.setForeground(Color.BLACK);
 		lblSDTKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSDTKhachHang.setBounds(638, 412, 147, 30);
@@ -266,7 +265,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_5_1.setBounds(30, 464, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_5_1);
 
-		 lblDiaChiKH = new JLabel("12 Nguyễn Văn Bảo Phường 4 Gò Vấp Thành Phố Hồ Chí Minh");
+		 lblDiaChiKH = new JLabel(hopDong.getHoaDon().getKhachHang().getDiaChiKH());
 		lblDiaChiKH.setForeground(Color.BLACK);
 		lblDiaChiKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDiaChiKH.setBounds(197, 464, 687, 30);
@@ -290,7 +289,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_4_1_1.setBounds(30, 610, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_4_1_1);
 
-		 lblHang = new JLabel("Honda");
+		 lblHang = new JLabel(hopDong.getXeMay().getDongXe().getHangXe().getTenHangXe());
 		lblHang.setForeground(Color.BLACK);
 		lblHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHang.setBounds(197, 610, 232, 30);
@@ -302,7 +301,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_2_1_1.setBounds(30, 560, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_2_1_1);
 
-		 lblMaXe = new JLabel("XM123456");
+		 lblMaXe = new JLabel(hopDong.getXeMay().getMaXeMay());
 		lblMaXe.setForeground(Color.BLACK);
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaXe.setBounds(197, 560, 147, 30);
@@ -314,7 +313,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_3_1_1.setBounds(453, 560, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_3_1_1);
 
-		 lblTenXe = new JLabel("Honda Air Blade 2020");
+		 lblTenXe = new JLabel(hopDong.getXeMay().getTenXeMay());
 		lblTenXe.setForeground(Color.BLACK);
 		lblTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenXe.setBounds(636, 560, 260, 30);
@@ -326,7 +325,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6_1_1.setBounds(453, 610, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6_1_1);
 
-		 lblXuatXu = new JLabel("Việt Nam");
+		 lblXuatXu = new JLabel(hopDong.getXeMay().getXuatXu().getTenXuatXu());
 		lblXuatXu.setForeground(Color.BLACK);
 		lblXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblXuatXu.setBounds(636, 610, 147, 30);
@@ -338,7 +337,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6_1_1_1.setBounds(453, 662, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6_1_1_1);
 
-		 lblDongXe = new JLabel("Air Blade");
+		 lblDongXe = new JLabel(hopDong.getXeMay().getDongXe().getTenDongXe());
 		lblDongXe.setForeground(Color.BLACK);
 		lblDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDongXe.setBounds(636, 662, 147, 30);
@@ -350,7 +349,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_2_1_1_1.setBounds(30, 709, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_2_1_1_1);
 
-		 lblMauXe = new JLabel("Đỏ-Đen");
+		 lblMauXe = new JLabel(hopDong.getXeMay().getMauXe());
 		lblMauXe.setForeground(Color.BLACK);
 		lblMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMauXe.setBounds(197, 709, 232, 30);
@@ -362,13 +361,13 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_3_1_1_1.setBounds(453, 709, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_3_1_1_1);
 
-		 lblSoPhanKhoi = new JLabel("150");
+		 lblSoPhanKhoi = new JLabel(String.valueOf(hopDong.getXeMay().getSoPhanKhoi())+" cc");
 		lblSoPhanKhoi.setForeground(Color.BLACK);
 		lblSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoPhanKhoi.setBounds(636, 709, 50, 30);
 		contentPane.add(lblSoPhanKhoi);
 
-		 lblSoSuon = new JLabel("123456789012345");
+		 lblSoSuon = new JLabel(hopDong.getXeMay().getSoSuon());
 		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoSuon.setBounds(636, 759, 260, 30);
@@ -380,7 +379,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6_1_1_2.setBounds(453, 759, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6_1_1_2);
 
-		 lblSoKhung = new JLabel("123456789012345");
+		 lblSoKhung = new JLabel(hopDong.getXeMay().getSoKhung());
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoKhung.setBounds(197, 759, 232, 30);
@@ -398,7 +397,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_5_1_1_1.setBounds(30, 811, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_5_1_1_1);
 
-		 lblGiaBan = new JLabel("1500000000");
+		 lblGiaBan = new JLabel(String.valueOf(hopDong.getXeMay().tinhGiaBan()));
 		lblGiaBan.setForeground(Color.BLACK);
 		lblGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGiaBan.setBounds(197, 811, 224, 30);
@@ -410,17 +409,17 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_6_1_1_1_1.setBounds(453, 811, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_6_1_1_1_1);
 
-		 lblBaoHanh = new JLabel("36 tháng");
+		 lblBaoHanh = new JLabel(String.valueOf(hopDong.getXeMay().getThoiGianBaoHanh())+" tháng");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBaoHanh.setBounds(636, 811, 147, 30);
 		contentPane.add(lblBaoHanh);
 
-		JLabel lblPK = new JLabel("cc.");
-		lblPK.setForeground(Color.BLACK);
-		lblPK.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPK.setBounds(698, 709, 67, 30);
-		contentPane.add(lblPK);
+//		JLabel lblPK = new JLabel("cc");
+//		lblPK.setForeground(Color.BLACK);
+//		lblPK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		lblPK.setBounds(698, 709, 67, 30);
+//		contentPane.add(lblPK);
 
 		JLabel lblNewLabel_1_1_1_1_5_1_1_1_1 = new JLabel("(Bằng chữ: ");
 		lblNewLabel_1_1_1_1_5_1_1_1_1.setForeground(Color.BLACK);
@@ -428,7 +427,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_5_1_1_1_1.setBounds(31, 851, 104, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_5_1_1_1_1);
 		
-		 lblChu = new JLabel(DocSo.readNum(lblGiaBan.getText())+"đồng)");
+		 lblChu = new JLabel(DocSo.readNum(lblGiaBan.getText())+")");
 		lblChu.setForeground(Color.BLACK);
 		lblChu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblChu.setBounds(135, 851, 749, 30);

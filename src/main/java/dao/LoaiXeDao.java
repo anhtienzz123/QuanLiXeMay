@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.HopDongConstant;
 import constant.LoaiXeConstant;
 import converter.LoaiXeConvert;
 import db.DatabaseConnect;
@@ -55,6 +54,26 @@ public class LoaiXeDao {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.GET_LOAI_XE_THEO_MA);
 			preparedStatement.setString(1, maLoaiXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				loaiXe = LoaiXeConvert.getLoaiXe(resultSet);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return loaiXe;
+	}
+	
+	public LoaiXe getLoaiXeTheoTen(String tenLoaiXe) {
+
+		LoaiXe loaiXe = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.GET_LOAI_XE_THEO_MA);
+			preparedStatement.setString(1, tenLoaiXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 

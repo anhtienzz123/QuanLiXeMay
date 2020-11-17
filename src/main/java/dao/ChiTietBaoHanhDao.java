@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ChiTietBaoHanhConstant;
-import constant.DanhMucBaoHanhConstant;
 import converter.ChiTietBaoHanhConverter;
-import converter.DanhMucBaoHanhConvert;
 import db.DatabaseConnect;
 import entity.ChiTietBaoHanh;
-import entity.DanhMucBaoHanh;
 
 public class ChiTietBaoHanhDao {
 	private static ChiTietBaoHanhDao instance;

@@ -1,6 +1,5 @@
 package ui.quanLyKhachHang;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -34,7 +34,9 @@ import entity.KhachHang;
 import ui.App;
 
 public class GD_KhachHang extends JPanel implements ActionListener, MouseListener, KeyListener {
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -50,20 +52,14 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	private JButton btnXemChiTiet;
 
 	private int page = 1;
-	private int maxPage = 2;
+	private int maxPage = 0;
 	private static final int SIZE = 20;
-	private String field = "";
 	private KhachHangDao khachHangDao;
 	private List<KhachHang> khachHangs;
 
 	private JComboBox<String> cboTimKiem;
 
-	/**
-	 * Create the panel.
-	 */
 	public GD_KhachHang() {
-
-		khachHangDao = KhachHangDao.getInstance();
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
@@ -223,6 +219,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnXoa.setBounds(843, 753, 168, 40);
 		add(btnXoa);
 
+		khoiTao();
 		dangKiSuKien();
 		capNhatDuLieuTrongBang();
 
@@ -244,22 +241,40 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	}
 
+	private void khoiTao() {
+
+		khachHangDao = KhachHangDao.getInstance();
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 		if (source.equals(btnThem)) {
-			new GD_ThemKhachHang().setVisible(true);
+			new GD_ThemKhachHang(this).setVisible(true);
 		}
 		if (source.equals(btnSua)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatKhachHang());
-			this.validate();
-			this.repaint();
+		
+			
+			int row = tblKhachHang.getSelectedRow();
+		
+			if(row >= 0) {
+				new GD_CapNhatKhachHang(modelKhachHang.getValueAt(row, 1).toString(), this).setVisible(true);;
+				
+			}else{
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần cập nhật");
+			}
 
 		}
 		if (source.equals(btnXemChiTiet)) {
-			new GD_ChiTietKhachHang().setVisible(true);
+			
+			int row = tblKhachHang.getSelectedRow();
+			
+			if(row >= 0) {
+				new GD_ChiTietKhachHang(modelKhachHang.getValueAt(row, 1).toString()).setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
+			}
 		}
 
 		if (source == btnDau) {
@@ -283,11 +298,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			capNhatDuLieuTrongBang();
 		}
 
-		if (source == btnThem) {
-			new GD_ThemKhachHang().setVisible(true);
-
-		}
-
+	
 		if (source == cboTimKiem) {
 
 		}
@@ -296,35 +307,24 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		this.field = cboTimKiem.getSelectedItem().toString();
 		page = 1;
 		capNhatDuLieuTrongBang();
 
 	}
 
-	private void capNhatDuLieuTrongBang() {
+	public void capNhatDuLieuTrongBang() {
 
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
 		String timKiem = txtTimKiem.getText();
 		String field = cboTimKiem.getSelectedItem().toString();
+		maxPage = khachHangDao.getMaxPageTimKiem(timKiem, field, SIZE);
 		khachHangs = khachHangDao.timKiemKhachHangs(timKiem, from, to, field);
 
-		if (khachHangs.size() > 0) {
-			xoaDuLieuTrongBang();
-			themKhachHangsVaoBang();
-			txtTrang.setText(this.page + "");
-		}
-	}
+		xoaDuLieuTrongBang();
+		themKhachHangsVaoBang();
+		txtTrang.setText(this.page + "");
 
-	private void loadDuLieu() {
-		khachHangs = khachHangDao.getKhachHangs((SIZE * (page - 1) + 1), page * SIZE);
-
-		if (khachHangs.size() > 0) {
-			xoaDuLieuTrongBang();
-			themKhachHangsVaoBang();
-			txtTrang.setText(this.page + "");
-		}
 
 	}
 

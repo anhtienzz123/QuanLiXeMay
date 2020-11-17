@@ -469,27 +469,24 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		int to = page * SIZE;
 		String timKiem = txtTimKiem.getText();
 		String field = cboTimKiem.getSelectedItem().toString();
-
-		System.out.println(timKiem);
-		System.out.println(from);
-		System.out.println(to);
-		System.out.println(field);
-		System.out.println("b    " + bangLuaChon);
+		
 
 		if (bangLuaChon == 0) {
+			maxPage = nhanVienHanhChinhDao.getMaxPageTimKiemNVHanhChinh(timKiem, field, SIZE);
 			nhanVienHanhChinhs = nhanVienHanhChinhDao.timKiemNhanVienHanhChinh(timKiem, from, to, field);
-			if (nhanVienHanhChinhs.size() > 0) {
+			
 				xoaDuLieuTrongBangNVHanhChinh();
 				themNVHanhChinhsVaoBang();
 				txtTrang.setText(this.page + "");
-			}
+			
 		} else {
+			maxPage = nhanVienKiThuatDao.getMaxPageTimKiemNVKiThuat(timKiem, field, SIZE);
 			nhanVienKiThuats = nhanVienKiThuatDao.timKiemNhanVienKiThuats(timKiem, from, to, field);
-			if (nhanVienKiThuats.size() > 0) {
+			
 				xoaDuLieuTrongBangNVKiThuat();
 				themNVKiThuatsVaoBang();
 				txtTrang.setText(this.page + "");
-			}
+			
 		}
 
 	}
@@ -527,6 +524,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		}
 
 	}
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {

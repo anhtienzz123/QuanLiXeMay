@@ -4,17 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.HangXeConstant;
 import constant.HoaDonConstant;
-import constant.HopDongConstant;
 import converter.HoaDonConverter;
-import converter.HopDongConverter;
 import db.DatabaseConnect;
 import entity.HoaDon;
-import entity.HopDong;
 
 public class HoaDonDao {
 
@@ -147,8 +144,9 @@ public class HoaDonDao {
 
 			try {
 
-				chiTietHoaDonDao.themChiTietHoaDons(hoaDon.getChiTietHoaDons());
+				HoaDonConverter.themHoaDon(preparedStatement, hoaDon);
 				n = preparedStatement.executeUpdate();
+				chiTietHoaDonDao.themChiTietHoaDons(hoaDon.getChiTietHoaDons());
 
 				connection.commit();
 			} catch (Exception e) {
@@ -182,4 +180,125 @@ public class HoaDonDao {
 		return true;
 	}
 
+	public int getMaxPageTimKiemHoaDon(String timKiem, String field, LocalDate localDate, int size) {
+
+		int maxPage = 0;
+
+		String result = "";
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_HOA_DON_MAX_PAGE;
+				break;
+			case HoaDonConstant.MA_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_HOA_DON_MAX_PAGE;
+				break;
+			case HoaDonConstant.MA_NHAN_VIEN_LAP_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_NHAN_VIEN_MAX_PAGE;
+				break;
+
+			case HoaDonConstant.TEN_NHAN_VIEN_LAP_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_MAX_PAGE;
+				break;
+
+			case HoaDonConstant.MA_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_KHACH_HANG_MAX_PAGE;
+				break;
+			case HoaDonConstant.TEN_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_TEN_KHACH_HANG_MAX_PAGE;
+				break;
+			case HoaDonConstant.SO_DIEN_THOAI_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_SO_DIEN_THOAI_MAX_PAGE;
+				break;
+
+			default:
+				break;
+			}
+
+			if (localDate != null) {
+				result += " and day(ngayLap)=" + localDate.getDayOfMonth() + " and month(ngayLap)="
+						+ localDate.getMonthValue() + " and year(ngayLap)=" + localDate.getYear();
+			}
+
+			preparedStatement = connection.prepareStatement(result);
+			preparedStatement.setString(1, "%" + timKiem + "%");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				maxPage = Integer.valueOf(resultSet.getString("total"));
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return (int) Math.ceil(maxPage * 1.00 / size);
+	}
+
+	public List<HoaDon> timKiemHoaDons(String timKiem, String field, LocalDate localDate, int from, int to) {
+
+		List<HoaDon> hoaDons = new ArrayList<>();
+
+		String result = "";
+
+		try {
+
+			switch (field) {
+			case "":
+
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_HOA_DON;
+				break;
+			case HoaDonConstant.MA_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_HOA_DON;
+				break;
+			case HoaDonConstant.MA_NHAN_VIEN_LAP_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_NHAN_VIEN;
+				break;
+
+			case HoaDonConstant.TEN_NHAN_VIEN_LAP_HOA_DON:
+				result = HoaDonConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN;
+				break;
+
+			case HoaDonConstant.MA_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_MA_KHACH_HANG;
+				break;
+			case HoaDonConstant.TEN_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_TEN_KHACH_HANG;
+				break;
+			case HoaDonConstant.SO_DIEN_THOAI_KHACH_HANG:
+				result = HoaDonConstant.TIM_KIEM_THEO_SO_DIEN_THOAI;
+				break;
+
+			default:
+				break;
+			}
+
+			if (localDate != null) {
+				result += " and day(ngayLap)=" + localDate.getDayOfMonth() + " and month(ngayLap)="
+						+ localDate.getMonthValue() + " and year(ngayLap)=" + localDate.getYear();
+			}
+
+			PreparedStatement preparedStatement = connection.prepareStatement(result);
+			preparedStatement.setInt(1, from);
+			preparedStatement.setInt(2, to);
+			preparedStatement.setNString(3, "%" + timKiem + "%");
+	
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				HoaDon hoaDon = HoaDonConverter.getHoaDon(resultSet);
+				
+				hoaDons.add(hoaDon);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return hoaDons;
+	}
 }

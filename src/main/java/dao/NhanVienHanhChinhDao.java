@@ -12,11 +12,9 @@ import constant.NhanVienHanhChinhConstant;
 import constant.NhanVienKiThuatConstant;
 import converter.KhachHangConverter;
 import converter.NhanVienHanhChinhConvert;
-import converter.NhanVienKiThuatConvert;
 import db.DatabaseConnect;
 import entity.KhachHang;
 import entity.NhanVienHanhChinh;
-import entity.NhanVienKiThuat;
 
 public class NhanVienHanhChinhDao {
 	private static NhanVienHanhChinhDao instance;
@@ -219,6 +217,54 @@ public class NhanVienHanhChinhDao {
 			e.printStackTrace();
 		}
 		return nhanVienHanhChinhs;
+	}
+	
+	
+	public int getMaxPageTimKiemNVHanhChinh(String timKiem, String field, int size) {
+
+		int maxPage = 0;
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG_MAX_PAGE);
+				break;
+			case NhanVienHanhChinhConstant.MA_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.TEN_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.SO_DIEN_THOAI:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_SO_DIEN_THOAI_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.CHUC_VU:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_CHUC_VU_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setNString(1, "%" + timKiem + "%");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				maxPage = Integer.valueOf(resultSet.getString("total"));
+			System.out.println(maxPage);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return (int) Math.ceil(maxPage * 1.00 / size);
 	}
 
 }

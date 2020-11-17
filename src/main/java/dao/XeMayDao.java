@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import constant.LoaiXeConstant;
-import constant.PhieuBaoHanhConstant;
 import constant.XeMayConstant;
 import converter.LoaiXeConvert;
 import converter.XeMayConvert;
@@ -61,6 +62,7 @@ public class XeMayDao {
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THEO_MA);
+			preparedStatement.setNString(1, maXeMay);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
@@ -154,32 +156,32 @@ public class XeMayDao {
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
-				sql += " and tenXeMay like '%" + timKiem + "%'";
+				sql += " and tenXeMay like N'%" + timKiem + "%'";
 			}
 
 			if (field.equalsIgnoreCase(MA_XE)) {
-				sql += " and maXeMay like '%" + timKiem + "%'";
+				sql += " and maXeMay like N'%" + timKiem + "%'";
 			}
 		}
 
 		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and mauXe = '" + mauXe + "'";
+			sql += " and mauXe = N'" + mauXe + "'";
 		}
 
 		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenXuatXu = '" + tenXuatXu + "'";
+			sql += " and tenXuatXu = N'" + tenXuatXu + "'";
 		}
 
 		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenLoaiXe = '" + tenLoaiXe + "'";
+			sql += " and tenLoaiXe = N'" + tenLoaiXe + "'";
 		}
 
 		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenDongXe = '" + tenDongXe + "'";
+			sql += " and tenDongXe = N'" + tenDongXe + "'";
 		}
 
 		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenHangXe = '" + tenHangXe + "'";
+			sql += " and tenHangXe = N'" + tenHangXe + "'";
 		}
 
 		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
@@ -227,32 +229,32 @@ public class XeMayDao {
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
-				sql += " and tenXeMay like '%" + timKiem + "%'";
+				sql += " and tenXeMay like N'%" + timKiem + "%'";
 			}
 
 			if (field.equalsIgnoreCase(MA_XE)) {
-				sql += " and maXeMay like '%" + timKiem + "%'";
+				sql += " and maXeMay like N'%" + timKiem + "%'";
 			}
 		}
 
 		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and mauXe = '" + mauXe + "'";
+			sql += " and mauXe = N'" + mauXe + "'";
 		}
 
 		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenXuatXu = '" + tenXuatXu + "'";
+			sql += " and tenXuatXu = N'" + tenXuatXu + "'";
 		}
 
 		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenLoaiXe = '" + tenLoaiXe + "'";
+			sql += " and tenLoaiXe = N'" + tenLoaiXe + "'";
 		}
 
 		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenDongXe = '" + tenDongXe + "'";
+			sql += " and tenDongXe = N'" + tenDongXe + "'";
 		}
 
 		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
-			sql += " and tenHangXe = '" + tenHangXe + "'";
+			sql += " and tenHangXe = N'" + tenHangXe + "'";
 		}
 
 		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
@@ -267,7 +269,7 @@ public class XeMayDao {
 
 		}
 
-		System.out.println(sql);
+		//System.out.println(sql);
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 
@@ -290,5 +292,28 @@ public class XeMayDao {
 
 		return xeMays;
 
+	}
+	
+	public Set<String> getMauXes(){
+		Set<String> mauXes = new TreeSet<String>();
+		
+		String sql = "select mauXe from XeMay";
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+			     mauXes.add(resultSet.getString("mauXe"));	
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return mauXes;
 	}
 }

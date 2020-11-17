@@ -181,7 +181,4 @@ public class DocSo {
 		return arrList;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(readNum("123"));
-	}
 }

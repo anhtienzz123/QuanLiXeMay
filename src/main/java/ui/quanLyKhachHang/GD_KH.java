@@ -281,7 +281,7 @@ public class GD_KH extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnXemChiTiet)) {
-			new GD_ChiTietKhachHang().setVisible(true);
+			new GD_ChiTietKhachHang("1").setVisible(true);
 		}
 //		else if (o.equals(btnThem)) {
 //			this.removeAll();
@@ -293,7 +293,7 @@ public class GD_KH extends JPanel implements ActionListener {
 		else if (o.equals(btnCapNhat)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_CapNhatKhachHang());
+			this.add(new GD_CapNhatKhachHang("",new GD_KhachHang()));
 			this.validate();
 			this.repaint();
 		}
