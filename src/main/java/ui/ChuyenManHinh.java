@@ -37,7 +37,7 @@ public class ChuyenManHinh {
 
 		pnlMHChinh.removeAll();
 		pnlMHChinh.setLayout(new BorderLayout());
-		pnlMHChinh.add(new GD_TrangChu());
+		pnlMHChinh.add(new GD_TrangChu("NVHC111111"));
 		pnlMHChinh.validate();
 		pnlMHChinh.repaint();
 	}
@@ -69,7 +69,7 @@ public class ChuyenManHinh {
 		public void mouseClicked(MouseEvent e) {
 			switch (chon) {
 			case "TrangChu":
-				node = new GD_TrangChu();
+				node = new GD_TrangChu("NVHC111111");
 				setPanel();
 
 				break;
@@ -135,7 +135,7 @@ public class ChuyenManHinh {
 			case "DangXuat":
 				break;
 			default:
-				node = new GD_TrangChu();
+				node = new GD_TrangChu("NVHC111111");
 
 				break;
 			}

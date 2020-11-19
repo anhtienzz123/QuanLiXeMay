@@ -1,7 +1,6 @@
 package ui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -9,43 +8,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.EventObject;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-import other.DocSo;
-import other.DongHoAnalog;
-import ui.quanLyHoaDon.GD_ChiTietHoaDon;
-import ui.quanLyKhachHang.GD_ThemKhachHang;
-import ui.quanLyXeMay.GD_ChiTietXeMay;
 import javax.swing.JSeparator;
-import javax.swing.border.LineBorder;
-import javax.swing.border.EmptyBorder;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import dao.NhanVienHanhChinhDao;
+import entity.NhanVienHanhChinh;
 
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private DefaultTableModel modelHoaDon;
 	private DefaultTableModel modelXe;
@@ -75,11 +53,14 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private List<DanhMuc> listDanhMuc;
 	private JPanel pnlAnh;
 	private JButton btnDoiMatKhau;
+	
+	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_TrangChu() {
+	public GD_TrangChu(String maNhanVienHanhChinh) {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -203,19 +184,17 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlLogo.add(lblLogo);
 
 //		JPanel pnlAnh = new DongHoAnalog();
-		 pnlAnh = new JPanel();
+		pnlAnh = new JPanel();
 		pnlAnh.setLayout(null);
 		pnlAnh.setBounds(991, 92, 317, 300);
 		add(pnlAnh);
 		/*
-		 * Giờ
-		 * lblGio = new JLabel("00 : 00 : 00"); lblGio.setForeground(Color.BLACK);
+		 * Giờ lblGio = new JLabel("00 : 00 : 00"); lblGio.setForeground(Color.BLACK);
 		 * lblGio.setFont(new Font("Tahoma", Font.PLAIN, 20)); lblGio.setBackground(new
 		 * Color(102, 102, 255)); lblGio.setBounds(1163, 395, 145, 50); add(lblGio);
 		 */
 		/*
-		 * Ngày
-		 * lblNgay = new JLabel(""); lblNgay.setForeground(Color.BLACK);
+		 * Ngày lblNgay = new JLabel(""); lblNgay.setForeground(Color.BLACK);
 		 * lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		 * lblNgay.setBackground(new Color(102, 102, 255)); lblNgay.setBounds(992, 395,
 		 * 159, 50); add(lblNgay);
@@ -343,22 +322,37 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblaCh.setBackground(new Color(102, 102, 255));
 		lblaCh.setBounds(87, 759, 1004, 50);
 		add(lblaCh);
-		
+
 		btnDoiMatKhau = new JButton("Đổi mật khẩu");
 		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/password_reset_30px.png")));
 		btnDoiMatKhau.setBackground(Color.GRAY);
 		btnDoiMatKhau.setForeground(Color.WHITE);
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnDoiMatKhau.setBounds(1224, 656, 201, 35);
+		
+		this.
 		add(btnDoiMatKhau);
 		chuyen.setSuKien(listDanhMuc);
 		dangKiSuKien();
+		
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
+		khoiTao();
 //		DongHo();
 	}
 
 	private void dangKiSuKien() {
 		btnDoiMatKhau.addActionListener(this);
 	}
+	
+	private void khoiTao() {
+		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
+		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
+		
+		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
+		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
+		lblChucVu.setText(nhanVienHanhChinh.isVaiTro() == false ? "Nhân viên bán hàng" : "Quản lí");
+	}
+	
 
 	/*
 	 * public void DongHo() { long millis = System.currentTimeMillis(); Date date =
@@ -379,7 +373,12 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 //			new GD_ChiTietXeMay().setVisible(true);
 //		} else if (o.equals(btnThemKH)) {
 //			new GD_ThemKhachHang().setVisible(true);
+
 //		}
+		
+		if(o == btnDoiMatKhau) {
+			
+		}
 	}
 
 	@Override

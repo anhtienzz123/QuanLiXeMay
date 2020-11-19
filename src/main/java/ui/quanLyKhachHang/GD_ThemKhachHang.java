@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -29,7 +31,7 @@ import dao.KhachHangDao;
 import entity.KhachHang;
 import other.RandomMa;
 
-public class GD_ThemKhachHang extends JFrame implements ActionListener {
+public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -45,6 +47,8 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 	private KhachHangDao khachHangDao;
 	private GD_KhachHang gd_KhachHang;
 
+	private JTextArea txtThongBao;
+	
 	public GD_ThemKhachHang(GD_KhachHang gd_KhachHang) {
 		khachHangDao = KhachHangDao.getInstance();
 		this.gd_KhachHang = gd_KhachHang;
@@ -254,7 +258,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		lblThongBao.setFont(new Font("Tahoma", Font.BOLD, 20));
 		horizontalBox_7_1.add(lblThongBao);
 
-		JTextArea txtThongBao = new JTextArea();
+		txtThongBao = new JTextArea();
 		txtThongBao.setPreferredSize(new Dimension(640, 130));
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
@@ -321,6 +325,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		btnThem.addActionListener(this);
 		btnThoat.addActionListener(this);
 		btnXoaRong.addActionListener(this);
+
+		txtSoCMT.addFocusListener(this);
+		txtTenKH.addFocusListener(this);
 	}
 
 	@Override
@@ -376,12 +383,41 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener {
 		txtSoDienThoai.setText("");
 		txtDiaChi.setText("");
 		txtSoCMT.requestFocus();
+		
 
 	}
 
 	private boolean validateKhachHang(KhachHang khachHang) {
 
 		return true;
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		Object source = e.getSource();
+
+		if (source.equals(txtSoCMT)) {
+			System.out.println("so cmt 1");
+		}
+
+		if (source.equals(txtTenKH)) {
+			System.out.println("ten khach hang 1");
+		}
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+
+		Object source = e.getSource();
+
+		if (source.equals(txtSoCMT)) {
+			System.out.println("so cmt 2");
+		}
+
+		if (source.equals(txtTenKH)) {
+			System.out.println("ten khach hang 2");
+		}
+
 	}
 
 }
