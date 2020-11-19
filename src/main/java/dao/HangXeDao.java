@@ -67,14 +67,14 @@ public class HangXeDao {
 
 		return hangXe;
 	}
-	
+
 	public HangXe getHangXeTheoTen(String tenHangXe) {
 
 		HangXe hangXe = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.GET_HANG_XE_THEO_MA);
-			preparedStatement.setString(1, tenHangXe);
+			String sql = HangXeConstant.GET_HANG_XE_THEO_TEN + tenHangXe + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -92,7 +92,7 @@ public class HangXeDao {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.CAP_NHAP_HANG_XE);			
+			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.CAP_NHAP_HANG_XE);
 			HangXeConvert.capNhatHangXe(preparedStatement, hangXe);
 			n = preparedStatement.executeUpdate();
 
@@ -103,7 +103,7 @@ public class HangXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean themHangXe(HangXe hangXe) {
 
 		int n = 0;
@@ -120,12 +120,11 @@ public class HangXeDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maHangXe) {
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(HangXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.KIEM_TRA_MA_KHONG_TRUNG);
 			preparedStatement.setString(1, maHangXe);
 
 			ResultSet resultSet = preparedStatement.executeQuery();

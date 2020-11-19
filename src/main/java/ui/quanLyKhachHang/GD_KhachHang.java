@@ -325,6 +325,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		themKhachHangsVaoBang();
 		txtTrang.setText(this.page + "");
 
+
 	}
 
 	private void themKhachHangsVaoBang() {

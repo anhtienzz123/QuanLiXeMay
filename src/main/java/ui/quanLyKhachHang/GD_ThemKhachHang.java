@@ -71,7 +71,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		JPanel panel = new JPanel();
 		panel.setMaximumSize(new Dimension(32767, 50));
-		panel.setBackground(new Color(0, 128, 0));
+		panel.setBackground(new Color(58, 181, 74));
 		panel.setPreferredSize(new Dimension(800, 50));
 		horizontalBox.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -340,6 +340,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		if (source == btnThem) {
 			KhachHang khachHang = getKhachHang();
 
+
 			if (validateKhachHang(khachHang)) {
 				if (khachHangDao.themKhachHang(khachHang)) {
 					JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
@@ -377,7 +378,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 	}
 
 	private void xoaRong() {
-		lblMaKH.setText("");
+		lblMaKH.setText(RandomMa.getMaNgauNhien(TenEntity.KHACH_HANG));
 		txtSoCMT.setText("");
 		txtTenKH.setText("");
 		txtSoDienThoai.setText("");

@@ -17,18 +17,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableModel;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
 
+
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
 	
 	private static final long serialVersionUID = 1L;
-	private DefaultTableModel modelHoaDon;
-	private DefaultTableModel modelXe;
-	private JLabel lblNgay;
-	private JLabel lblGio;
+//	private DefaultTableModel modelHoaDon;
+//	private DefaultTableModel modelXe;
+//	private JLabel lblNgay;
+//	private JLabel lblGio;
 	private JLabel lblMaNhanVien;
 	private JLabel lblTenNhanVien;
 	private JLabel lblChucVu;
@@ -367,6 +367,9 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+		if(o.equals(btnDoiMatKhau)) {
+			
+		}
 //		if (o.equals(btnThanhToan)) {
 //			new GD_ChiTietHoaDon().setVisible(true);
 //		} else if (o.equals(btnXemChiTiet)) {

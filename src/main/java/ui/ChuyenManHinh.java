@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -34,7 +35,6 @@ public class ChuyenManHinh {
 		chonTrang = "TrangChu";
 		pnlChon.setBackground(new Color(96, 100, 191));
 		lblChon.setBackground(new Color(96, 100, 191));
-
 		pnlMHChinh.removeAll();
 		pnlMHChinh.setLayout(new BorderLayout());
 		pnlMHChinh.add(new GD_TrangChu("NVHC111111"));
@@ -71,7 +71,7 @@ public class ChuyenManHinh {
 			case "TrangChu":
 				node = new GD_TrangChu("NVHC111111");
 				setPanel();
-
+				
 				break;
 			case "HoaDon":
 				node = new GD_HoaDon();
@@ -151,7 +151,6 @@ public class ChuyenManHinh {
 				pnlMHChinh.add(node);
 				pnlMHChinh.validate();
 				pnlMHChinh.repaint();
-				setThayDoiKichThuocMenu(pnlMenu);
 			}
 		}
 
@@ -200,14 +199,5 @@ public class ChuyenManHinh {
 			}
 		}
 
-	}
-
-	private void setThayDoiKichThuocMenu(JPanel pnlMenu) {
-//		App app = new App();
-//		if (pnlMenu.getPreferredSize().width >= 120) {
-//			pnlMenu.setPreferredSize(new Dimension(120, 900));
-//			app.setPnlMenu(pnlMenu);
-//		}
-//		System.out.println(pnlMenu.getPreferredSize().width);
 	}
 }

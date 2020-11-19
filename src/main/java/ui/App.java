@@ -34,7 +34,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel lblIconDanhMuc;
-	private JPanel pnlMenu;
+	public JPanel pnlMenu;
 	private JLabel lblDangXuat;
 	private JLabel lblDanhMuc;
 	private List<JLabel> lstLabel;
@@ -100,8 +100,8 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		pnlMenu = new JPanel();
 		pnlMenu.setBackground(new Color(58, 181, 74));
-		pnlMenu.setPreferredSize(new Dimension(300, 900));
-		pnlMenu.setMaximumSize(new Dimension(300, 32767));
+		pnlMenu.setPreferredSize(new Dimension(120, 900));
+		pnlMenu.setMaximumSize(new Dimension(120, 32767));
 		hB2.add(pnlMenu);
 		pnlMenu.setLayout(new BoxLayout(pnlMenu, BoxLayout.X_AXIS));
 
@@ -469,13 +469,5 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-	}
-
-	public JPanel getPnlMenu() {
-		return pnlMenu;
-	}
-
-	public void setPnlMenu(JPanel pnlMenu) {
-		this.pnlMenu = pnlMenu;
 	}
 }

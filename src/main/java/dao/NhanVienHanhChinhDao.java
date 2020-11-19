@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.KhachHangConstant;
 import constant.NhanVienHanhChinhConstant;
 import constant.NhanVienKiThuatConstant;
+import converter.KhachHangConverter;
 import converter.NhanVienHanhChinhConvert;
 import db.DatabaseConnect;
+import entity.KhachHang;
 import entity.NhanVienHanhChinh;
 
 public class NhanVienHanhChinhDao {
@@ -47,16 +50,17 @@ public class NhanVienHanhChinhDao {
 
 		return nvHanhChinhs;
 	}
-	
-	public List<NhanVienHanhChinh> getNhanVienHanhChinhs (int from, int to){
-		
+
+	public List<NhanVienHanhChinh> getNhanVienHanhChinhs(int from, int to) {
+
 		List<NhanVienHanhChinh> nhanVienHanhChinhs = new ArrayList<>();
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(NhanVienKiThuatConstant.GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG);
 			preparedStatement.setInt(1, from);
 			preparedStatement.setInt(2, to);
-			
+
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhConvert.getNhanVienHanhChinh(resultSet);
@@ -82,7 +86,7 @@ public class NhanVienHanhChinhDao {
 
 			if (resultSet.next())
 				nvHanhChinh = NhanVienHanhChinhConvert.getNhanVienHanhChinh(resultSet);
-
+	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +101,7 @@ public class NhanVienHanhChinhDao {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINH_THEO_TEN);
-			preparedStatement.setString(1,"%" +tenNVHanhChinh+"%");
+			preparedStatement.setString(1, "%" + tenNVHanhChinh + "%");
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -128,23 +132,24 @@ public class NhanVienHanhChinhDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean capNhatNhanVienHanhChinh(NhanVienHanhChinh nvHanhChinh) {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.CAP_NHAP_NHAN_VIEN_HANH_CHINH);			
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(NhanVienHanhChinhConstant.CAP_NHAP_NHAN_VIEN_HANH_CHINH);
 			NhanVienHanhChinhConvert.capNhatNhanVienHanhChinh(preparedStatement, nvHanhChinh);
 			n = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maNhanVienHanhChinh) {
 
 		try {
@@ -158,11 +163,108 @@ public class NhanVienHanhChinhDao {
 				return false;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return true;
+	}
+
+	public List<NhanVienHanhChinh> timKiemNhanVienHanhChinh(String timKiem, int from, int to, String field) {
+
+		List<NhanVienHanhChinh> nhanVienHanhChinhs = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG);
+				break;
+			case NhanVienHanhChinhConstant.MA_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINH);
+				break;
+
+			case NhanVienHanhChinhConstant.TEN_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINH);
+				break;
+
+			case NhanVienHanhChinhConstant.SO_DIEN_THOAI:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_SO_DIEN_THOAI);
+				break;
+
+			case NhanVienHanhChinhConstant.CHUC_VU:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_SO_CHUC_VU);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setString(1, "%" + timKiem + "%");
+			preparedStatement.setInt(2, from);
+			preparedStatement.setInt(3, to);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhConvert.getNhanVienHanhChinh(resultSet);
+				nhanVienHanhChinhs.add(nhanVienHanhChinh);
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return nhanVienHanhChinhs;
+	}
+	
+	
+	public int getMaxPageTimKiemNVHanhChinh(String timKiem, String field, int size) {
+
+		int maxPage = 0;
+
+		try {
+			PreparedStatement preparedStatement = null;
+
+			switch (field) {
+			case "":
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG_MAX_PAGE);
+				break;
+			case NhanVienHanhChinhConstant.MA_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.TEN_NHAN_VIEN_HANH_CHINH:
+				preparedStatement = connection
+						.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.SO_DIEN_THOAI:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_SO_DIEN_THOAI_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			case NhanVienHanhChinhConstant.CHUC_VU:
+				preparedStatement = connection.prepareStatement(NhanVienHanhChinhConstant.TIM_KIEM_THEO_CHUC_VU_NHAN_VIEN_HANH_CHINHS_MAX_PAGE);
+				break;
+
+			default:
+				break;
+			}
+
+			preparedStatement.setNString(1, "%" + timKiem + "%");
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				maxPage = Integer.valueOf(resultSet.getString("total"));
+			System.out.println(maxPage);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return (int) Math.ceil(maxPage * 1.00 / size);
 	}
 
 }

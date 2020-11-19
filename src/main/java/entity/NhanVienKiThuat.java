@@ -18,6 +18,9 @@ public class NhanVienKiThuat {
 	private String diaChi;
 	private int soNamKinhNghiem;
 	private int bacTho;
+	private boolean trangThai;
+	private String tenAnh;
+	private boolean gioiTinh;
 	
 	public NhanVienKiThuat(String maNVKiThuat) {
 		

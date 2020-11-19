@@ -18,10 +18,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import db.DatabaseConnect;
+import other.SplashScreenn;
 
 public class GD_DangNhap extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -57,9 +59,8 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		new GD_DangNhap().setVisible(true);
 	}
 
-	
 	public GD_DangNhap() {
-		
+
 		/*
 		 * // setLookAndFeel try {
 		 * UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -67,11 +68,9 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		 * IllegalAccessException | UnsupportedLookAndFeelException e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); }
 		 */
-		  
-		  
-		 
+
 		setTitle("Đăng nhập");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 666, 371);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -177,8 +176,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 //		Test
 		txtTaiKhoan.setText("18055671");
 		txtMatKhau.setText("123456");
-		
-		
+
 	}
 
 	@Override
@@ -187,7 +185,9 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			this.setVisible(false);
-			new App().setVisible(true);
+			new SplashScreen().name();
+			
+
 		} else if (o.equals(btnHuy)) {
 			this.setVisible(false);
 		}

@@ -10,7 +10,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.Date;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -19,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -31,16 +34,22 @@ import javax.swing.table.DefaultTableModel;
 
 import ui.App;
 import com.toedter.calendar.JDateChooser;
+
+import constant.TenEntity;
+import dao.NhanVienKiThuatDao;
+import entity.NhanVienKiThuat;
+import other.RandomMa;
+
 import java.awt.CardLayout;
 import javax.swing.JPasswordField;
 
 public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, MouseListener {
+
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTenNV;
 	private JButton btnThem;
-	private DefaultTableModel modelNVHanhChinh;
 	private JButton btnXoaRong;
 	private JButton btnThoat;
-	private DefaultTableModel modelNVKyThuat;
 	private JTextField txtSoDienThoai;
 	private JTextField txtAnh;
 	private JTextField txtDiaChi;
@@ -51,11 +60,20 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 	private JPanel pnlAnh;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
+	private String maNVThaoTac;
+	private NhanVienKiThuatDao nhanVienKiThuatDao;
+	private JLabel lblMaNV;
+	private JDateChooser txtNgaySinh;
+	private JComboBox cboBacTho;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_SuaNhanVienKyThuat() {
+	public GD_SuaNhanVienKyThuat(String maNVThaoTac) {
+		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
+		this.maNVThaoTac = maNVThaoTac;
+		NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVThaoTac);
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -79,7 +97,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		txtTenNV = new JTextField();
+		txtTenNV = new JTextField(nhanVienKiThuat.getHoTen());
 		txtTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenNV.setBounds(232, 136, 325, 30);
 		add(txtTenNV);
@@ -124,7 +142,8 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		btnThoat.setBounds(41, 753, 168, 40);
 		add(btnThoat);
 
-		JLabel lblMaNV = new JLabel("HC123456");
+		// set ma nhan viene
+		lblMaNV = new JLabel(nhanVienKiThuat.getMaNVKiThuat());
 		lblMaNV.setForeground(Color.BLACK);
 		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaNV.setBounds(232, 76, 126, 30);
@@ -167,7 +186,6 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		rdbtnNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		rdbtnNam.setBackground(Color.WHITE);
 		rdbtnNam.setBounds(802, 142, 127, 25);
-		rdbtnNam.setSelected(true);
 		add(rdbtnNam);
 
 		rdbtnNu = new JRadioButton("Nữ");
@@ -175,6 +193,11 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		rdbtnNu.setBackground(Color.WHITE);
 		rdbtnNu.setBounds(933, 142, 127, 25);
 		add(rdbtnNu);
+
+		if (nhanVienKiThuat.isGioiTinh() == true)
+			rdbtnNam.setSelected(true);
+		else
+			rdbtnNu.setSelected(false);
 
 		ButtonGroup btnG = new ButtonGroup();
 		btnG.add(rdbtnNu);
@@ -186,7 +209,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblNS.setBounds(41, 205, 147, 30);
 		add(lblNS);
 
-		JDateChooser txtNgaySinh = new JDateChooser();
+		txtNgaySinh = new JDateChooser();
 		txtNgaySinh.getCalendarButton().setBackground(Color.WHITE);
 		txtNgaySinh.setDateFormatString("dd-MM-yyyy");
 		txtNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -200,7 +223,8 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblSsss.setBounds(615, 205, 147, 30);
 		add(lblSsss);
 
-		txtSoDienThoai = new JTextField();
+		// set so dien thoai
+		txtSoDienThoai = new JTextField(nhanVienKiThuat.getSoDienThoai());
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setColumns(10);
 		txtSoDienThoai.setBounds(802, 205, 228, 30);
@@ -212,7 +236,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblanh.setBounds(41, 350, 147, 30);
 		add(lblanh);
 
-		txtAnh = new JTextField();
+		txtAnh = new JTextField(nhanVienKiThuat.getTenAnh());
 		txtAnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtAnh.setColumns(10);
 		txtAnh.setBounds(232, 350, 570, 30);
@@ -232,7 +256,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblaCh.setBounds(41, 279, 105, 30);
 		add(lblaCh);
 
-		txtDiaChi = new JTextField();
+		txtDiaChi = new JTextField(nhanVienKiThuat.getDiaChi());
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDiaChi.setColumns(10);
 		txtDiaChi.setBounds(232, 279, 798, 30);
@@ -255,7 +279,8 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblSNKN.setBounds(29, 13, 189, 30);
 		pnlNVKyThuat.add(lblSNKN);
 
-		txtNamKinhNghiem = new JTextField();
+		String soNamKNText = String.valueOf(nhanVienKiThuat.getSoNamKinhNghiem());
+		txtNamKinhNghiem = new JTextField(soNamKNText);
 		txtNamKinhNghiem.setHorizontalAlignment(SwingConstants.TRAILING);
 		txtNamKinhNghiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNamKinhNghiem.setColumns(10);
@@ -274,9 +299,15 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblBcTh.setBounds(615, 13, 152, 30);
 		pnlNVKyThuat.add(lblBcTh);
 
-		JComboBox cboBacTho = new JComboBox();
+		cboBacTho = new JComboBox();
 		cboBacTho.setBackground(Color.WHITE);
-		cboBacTho.setModel(new DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
+		String[] listBacTho = { "1", "2", "3", "4", "5", "6", "7" };
+		cboBacTho.setModel(new DefaultComboBoxModel(listBacTho));
+		for (int i = 0; i < listBacTho.length; i++) {
+			if (nhanVienKiThuat.getBacTho() == Integer.parseInt(listBacTho[i]))
+				cboBacTho.setSelectedIndex(i);
+		}
+		;
 		cboBacTho.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboBacTho.setBounds(796, 13, 228, 30);
 		pnlNVKyThuat.add(cboBacTho);
@@ -319,9 +350,28 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 
 	}
 
+	private NhanVienKiThuat getNhanVienKiThuat() {
+		String maNV = lblMaNV.getText();
+		String tenNV = txtTenNV.getText();
+		boolean gioiTinh = false;
+		if (rdbtnNam.isSelected())
+			gioiTinh = true;
+		Date ngaySinh = new Date(txtNgaySinh.getDate().getTime());
+		String sdt = txtSoDienThoai.getText();
+		String diaChi = txtDiaChi.getText();
+		int soNamKN = Integer.parseInt(txtNamKinhNghiem.getText());
+		String bacThoText = (String) cboBacTho.getSelectedItem();
+		int bacTho = Integer.parseInt(bacThoText);
+		String tenAnh = txtAnh.getText();
+
+		NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh, sdt, diaChi, soNamKN, bacTho, true,
+				tenAnh, gioiTinh);
+		return nhanVienKiThuat;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Object o = e.getSource();
+	
 
 	}
 
@@ -385,5 +435,22 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 			this.repaint();
 		}
 
+		if (o.equals(btnThem)) {
+			NhanVienKiThuat nhanVienKiThuat = getNhanVienKiThuat();
+			if (validateNVKiThuat(nhanVienKiThuat)) {
+				int confirm = JOptionPane.showConfirmDialog(null, "Bạn có thực sự muốn cập nhật không", "Thông báo",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					nhanVienKiThuatDao.capNhatNhanVienKiThuat(nhanVienKiThuat);
+					lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
+					JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công");
+				}
+			}
+		}
+
+	}
+
+	private boolean validateNVKiThuat(NhanVienKiThuat nhanVienKiThuat) {
+		return true;
 	}
 }

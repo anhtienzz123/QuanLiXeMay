@@ -7,10 +7,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.EventObject;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -18,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -28,7 +32,20 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
+import dao.DongXeDao;
+import dao.HangXeDao;
+import dao.LoaiXeDao;
+import dao.XeMayDao;
+import dao.XuatXuDao;
+import entity.XeMay;
+import other.DinhDangTien;
+import other.XuLyChung;
+
+public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -40,10 +57,27 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 	private JButton btnXoa;
 	private DefaultTableModel modelXe;
 	private JTable tblXeMay;
+
 	private JMenuItem mntmHang;
 	private JMenuItem mntmLoaiXe;
 	private JMenuItem mntmDongXe;
 	private JMenuItem mntmXuatXu;
+
+	private JComboBox<String> cboTimKiem;
+	private JComboBox<String> cboHangXe;
+	private JComboBox<String> cboLoaiXe;
+	private JComboBox<String> cboDongXe;
+	private JComboBox<String> cboXuatXu;
+
+	private int page = 1;
+	private int maxPage = 0;
+	private static final int SIZE = 15;
+
+	private XeMayDao xeMayDao;
+	private List<XeMay> xeMays;
+	private JComboBox<String> cboMauXe;
+	private JComboBox<String> cboGiaXe;
+	private JButton btnXemChiTiet;
 
 	/**
 	 * Create the panel.
@@ -70,7 +104,7 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		scrollPaneXeMay.setBounds(33, 272, 1385, 582);
 		add(scrollPaneXeMay);
 
-		JButton btnXemChiTiet = new JButton("Xem chi tiết");
+		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
@@ -84,10 +118,10 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Tên xe", "Mã xe" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên xe", "Mã xe" }));
 		cboTimKiem.setBounds(151, 83, 120, 30);
 		add(cboTimKiem);
 
@@ -103,16 +137,16 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		lblTngThuTrong_1_1.setBounds(676, 83, 83, 30);
 		add(lblTngThuTrong_1_1);
 
-		JComboBox cboHangXe = new JComboBox();
+		cboHangXe = new JComboBox<String>();
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setBounds(771, 83, 245, 30);
 		add(cboHangXe);
-		
+
 		JPopupMenu popupHang = new JPopupMenu();
 		addPopup(cboHangXe, popupHang);
-		
-		 mntmHang = new JMenuItem("Quản lý hãng xe");
+
+		mntmHang = new JMenuItem("Quản lý hãng xe");
 		mntmHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		popupHang.add(mntmHang);
 
@@ -122,17 +156,17 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		lblTngThuTrong_1_1_1.setBounds(1071, 83, 83, 30);
 		add(lblTngThuTrong_1_1_1);
 
-		JComboBox cboLoaiXe = new JComboBox();
+		cboLoaiXe = new JComboBox<String>();
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
 		cboLoaiXe.setBounds(1173, 83, 245, 30);
 		add(cboLoaiXe);
-		
+
 		JPopupMenu popupLoaiXe = new JPopupMenu();
 		popupLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		addPopup(cboLoaiXe, popupLoaiXe);
-		
-		 mntmLoaiXe = new JMenuItem("Quản lý loại xe");
+
+		mntmLoaiXe = new JMenuItem("Quản lý loại xe");
 		mntmLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		popupLoaiXe.add(mntmLoaiXe);
 
@@ -142,34 +176,34 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		lblTngThuTrong_1_1_2.setBounds(33, 142, 83, 30);
 		add(lblTngThuTrong_1_1_2);
 
-		JComboBox cboDongXe = new JComboBox();
+		cboDongXe = new JComboBox<String>();
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
-		cboDongXe.setBounds(151, 142, 265, 30);
+		cboDongXe.setBounds(151, 142, 197, 30);
 		add(cboDongXe);
-		
+
 		JPopupMenu popupDongXe = new JPopupMenu();
 		addPopup(cboDongXe, popupDongXe);
-		
-		 mntmDongXe = new JMenuItem("Quản lý dòng xe");
+
+		mntmDongXe = new JMenuItem("Quản lý dòng xe");
 		mntmDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		popupDongXe.add(mntmDongXe);
 
 		JLabel lblTngThuTrong_1_1_2_1 = new JLabel("Xuất xứ:");
 		lblTngThuTrong_1_1_2_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_2_1.setBounds(665, 142, 83, 30);
+		lblTngThuTrong_1_1_2_1.setBounds(407, 142, 83, 30);
 		add(lblTngThuTrong_1_1_2_1);
 
-		JComboBox cboXuatXu = new JComboBox();
+		cboXuatXu = new JComboBox<String>();
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
-		cboXuatXu.setBounds(772, 142, 244, 30);
+		cboXuatXu.setBounds(514, 142, 197, 30);
 		add(cboXuatXu);
-		
+
 		JPopupMenu popupXuatXu = new JPopupMenu();
 		addPopup(cboXuatXu, popupXuatXu);
-		
+
 		mntmXuatXu = new JMenuItem("Quản lý xuất xứ");
 		mntmXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		popupXuatXu.add(mntmXuatXu);
@@ -184,39 +218,39 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		separator.setForeground(new Color(58, 181, 74));
 		separator.setBounds(33, 248, 1385, 11);
 		add(separator);
-		
-		 btnDau = new JButton("");
+
+		btnDau = new JButton("");
 		btnDau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
 		btnDau.setBounds(33, 883, 50, 40);
 		add(btnDau);
-		
-		  btnTruoc = new JButton("");
+
+		btnTruoc = new JButton("");
 		btnTruoc.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
 		btnTruoc.setBounds(106, 883, 50, 40);
 		add(btnTruoc);
-		
-		  btnSau = new JButton("");
+
+		btnSau = new JButton("");
 		btnSau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
 		btnSau.setBounds(268, 883, 50, 40);
 		add(btnSau);
-		
-		  btnCuoi = new JButton("");
+
+		btnCuoi = new JButton("");
 		btnCuoi.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
 		btnCuoi.setBounds(346, 883, 50, 40);
 		add(btnCuoi);
-		
+
 		txtTrang = new JTextField();
 		txtTrang.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTrang.setText("1");
@@ -224,31 +258,31 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		txtTrang.setColumns(10);
 		txtTrang.setBounds(182, 884, 60, 40);
 		add(txtTrang);
-		
-		 btnThem = new JButton("Thêm");
+
+		btnThem = new JButton("Thêm");
 		btnThem.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
 		btnThem.setBounds(1258, 883, 160, 40);
 		add(btnThem);
-		
-		 btnSua = new JButton("Sửa");
+
+		btnSua = new JButton("Sửa");
 		btnSua.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_construction_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 102, 255));
 		btnSua.setBounds(1071, 883, 160, 40);
 		add(btnSua);
-		
-		 btnXoa = new JButton("Xóa");
+
+		btnXoa = new JButton("Xóa");
 		btnXoa.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
 		btnXoa.setBounds(886, 883, 160, 40);
 		add(btnXoa);
-		
+
 		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành" };
 		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
 		tblXeMay = new JTable(modelXe) {
@@ -261,65 +295,82 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblXeMay.setRowHeight(25);
 		scrollPaneXeMay.setViewportView(tblXeMay);
+
+		JLabel lblM = new JLabel("Màu xe:");
+		lblM.setForeground(Color.BLACK);
+		lblM.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblM.setBounds(771, 142, 103, 30);
+		add(lblM);
+
+		cboMauXe = new JComboBox<String>();
+		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboMauXe.setBackground(Color.WHITE);
+		cboMauXe.setBounds(889, 142, 120, 30);
+		add(cboMauXe);
+
+		JLabel lblTngThuTrong_1_3 = new JLabel("Giá:");
+		lblTngThuTrong_1_3.setForeground(Color.BLACK);
+		lblTngThuTrong_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_3.setBounds(1071, 142, 103, 30);
+		add(lblTngThuTrong_1_3);
+
+		cboGiaXe = new JComboBox<String>();
+		cboGiaXe.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "Tất cả", "Dưới 25tr", "Từ 25tr-60tr", "Trên 60tr" }));
+		cboGiaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboGiaXe.setBackground(Color.WHITE);
+		cboGiaXe.setBounds(1173, 142, 245, 30);
+		add(cboGiaXe);
 		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for(int i = 1; i<23; i++) {
-			modelXe.addRow(new Object[] { i, null, null, null });
-		}
-				
+//		for (int i = 1; i < 23; i++) {
+//			modelXe.addRow(new Object[] { i, null, null, null });
+//		}
+
 		dangKiSuKien();
+		khoiTao();
+		loadDuLieuThongTinTimKiem();
+		capNhatXeMaysTrongBang();
 
 	}
-	
-	
 
+	/**
+	 * Đăng kí sự kiện
+	 */
 	private void dangKiSuKien() {
+		// Phân Trang
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
 		btnSau.addActionListener(this);
+		btnTruoc.addActionListener(this);
+
+		// Chức năng chính
 		btnSua.addActionListener(this);
 		btnThem.addActionListener(this);
-		btnTruoc.addActionListener(this);
 		btnXoa.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
+
+		// Popupmenu
 		mntmDongXe.addActionListener(this);
 		mntmHang.addActionListener(this);
 		mntmLoaiXe.addActionListener(this);
 		mntmXuatXu.addActionListener(this);
+
+		// ComboBox
+		cboDongXe.addActionListener(this);
+		cboHangXe.addActionListener(this);
+		cboLoaiXe.addActionListener(this);
+		cboTimKiem.addActionListener(this);
+		cboXuatXu.addActionListener(this);
+		cboMauXe.addActionListener(this);
+		cboGiaXe.addActionListener(this);
+
+		// Tìm kiếm
+		txtTimKiem.addKeyListener(this);
 	}
 
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	public void setManHinh(JPanel newPanel) {
 		this.removeAll();
 		this.setLayout(new BorderLayout());
@@ -331,12 +382,17 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnThem)) {
+		if (o.equals(btnThem)) {
 			setManHinh(new GD_ThemXeMay());
-			
 		}
 		if (o.equals(btnSua)) {
 			setManHinh(new GD_CapNhatXeMay());
+		}
+		if (o.equals(btnXoa)) {
+//			
+		}
+		if(o.equals(btnXemChiTiet)) {
+			xemChiTiet();
 		}
 		if (o.equals(mntmDongXe)) {
 			new GD_DongXe().setVisible(true);
@@ -350,7 +406,56 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 		if (o.equals(mntmXuatXu)) {
 			new GD_XuatXu().setVisible(true);
 		}
+		if (o.equals(cboDongXe) || o.equals(cboGiaXe) || o.equals(cboHangXe) || o.equals(cboLoaiXe)
+				|| o.equals(cboMauXe) || o.equals(cboTimKiem) || o.equals(cboXuatXu)) {
+			this.page = 1;
+			capNhatXeMaysTrongBang();
+		}
+		if (o.equals(cboTimKiem)) {
+			this.page = 1;
+			txtTimKiem.setText("");
+			capNhatXeMaysTrongBang();
+		}
+		if (o.equals(btnTruoc) && this.page > 1) {
+
+			this.page--;
+			capNhatXeMaysTrongBang();
+		}
+
+		if (o.equals(btnSau) && this.page < maxPage) {
+			this.page++;
+			capNhatXeMaysTrongBang();
+		}
+
+		if (o.equals(btnDau)) {
+			this.page = 1;
+			capNhatXeMaysTrongBang();
+		}
+
+		if (o.equals(btnCuoi)) {
+			this.page = maxPage;
+		}
+
 	}
+
+	
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.page = 1;
+		capNhatXeMaysTrongBang();
+	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -358,14 +463,121 @@ public class GD_XeMay extends JPanel implements ActionListener, MouseListener{
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+	}
+
+	/**
+	 * Kết nối database
+	 */
+	public void khoiTao() {
+		xeMayDao = XeMayDao.getInstance();
+	}
+
+	/**
+	 * Cập nhật xe máy trong bảng
+	 */
+	private void capNhatXeMaysTrongBang() {
+
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		String gia = cboGiaXe.getSelectedItem().toString();
+		String mauXe = cboMauXe.getSelectedItem().toString();
+		String tenXuatXu = cboXuatXu.getSelectedItem().toString();
+		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
+		String tenDongXe = cboDongXe.getSelectedItem().toString();
+		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe, SIZE);
+		// System.out.println("maxPage: " + maxPage);
+		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe, from, to);
+
+		xoaDuLieuXeMayTrongBang();
+		themXeMayVaoBang();
+		txtTrang.setText(this.page + "");
+
+	}
+
+	private void themXeMayVaoBang() {
+
+		if (xeMays != null) {
+			for (XeMay xeMay : xeMays) {
+				themXeMayVaoBang(xeMay);
+			}
+		}
+
+	}
+
+	private void themXeMayVaoBang(XeMay xeMay) {
+
+		Object[] datas = new Object[8];
+		datas[0] = tblXeMay.getRowCount() + 1;
+		datas[1] = xeMay.getMaXeMay();
+		datas[2] = xeMay.getTenXeMay();
+		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
+		datas[4] = xeMay.getMauXe();
+		datas[5] = xeMay.getSoLuong();
+		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
+		datas[7] = xeMay.getThoiGianBaoHanh();
+		modelXe.addRow(datas);
+	}
+
+	/**
+	 * Xóa dữ liệu trong bảng
+	 */
+	private void xoaDuLieuXeMayTrongBang() {
+		while (modelXe.getRowCount() > 0) {
+			modelXe.removeRow(0);
+		}
+
+	}
+
+	private void loadDuLieuThongTinTimKiem() {
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+		HangXeDao hangXeDao = HangXeDao.getInstance();
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+
+		cboXuatXu.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				xuatXuDao.getXuatXus().stream().map(s -> s.getTenXuatXu()).collect(Collectors.toList()))));
+		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				loaiXeDao.getLoaiXes().stream().map(s -> s.getTenLoaiXe()).collect(Collectors.toList()))));
+		cboHangXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
+		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+		cboMauXe.addItem("Tất cả");
+		for (String mauXe : xeMayDao.getMauXes()) {
+			cboMauXe.addItem(mauXe);
+		}
+
+	}
+	/**
+	 * Xem chi tiết xe máy
+	 */
+	private void xemChiTiet() {
+		int row = tblXeMay.getSelectedRow();
+		if(row !=-1 ) {
+			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+			new GD_ChiTietXeMay(xeMay).setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
+		}
+		
 	}
 }
