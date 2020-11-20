@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -29,6 +31,7 @@ import com.toedter.calendar.JDateChooser;
 import constant.TenEntity;
 import dao.KhachHangDao;
 import entity.KhachHang;
+import other.BatRegex;
 import other.RandomMa;
 
 public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusListener {
@@ -48,7 +51,11 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 	private GD_KhachHang gd_KhachHang;
 
 	private JTextArea txtThongBao;
-	
+	private boolean isSoCMT = false;
+	private boolean isTenKhachHang = false;
+	private boolean isSoDienThoai = false;
+	private boolean isNgaySinh = false;
+
 	public GD_ThemKhachHang(GD_KhachHang gd_KhachHang) {
 		khachHangDao = KhachHangDao.getInstance();
 		this.gd_KhachHang = gd_KhachHang;
@@ -263,8 +270,6 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
 		txtThongBao.setForeground(Color.RED);
-		txtThongBao.setText(
-				"Số chứng minh thư phải gồm 9 hoặc 12 kí tự số.\r\nTên khách hàng không chứa số hoặc kí tự đặc biệt.\r\nKhách hàng phải >= 18 tuổi.\r\nSố điện thoại gồm có 10 kí tự số và bắt đầu bằng số 0.\r\nThêm khách hàng thành công.");
 		txtThongBao.setBorder(null);
 		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		horizontalBox_7_1.add(txtThongBao);
@@ -319,6 +324,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		lblMaKH.setText(RandomMa.getMaNgauNhien(TenEntity.KHACH_HANG));
 
 		dangKiSuKien();
+
 	}
 
 	private void dangKiSuKien() {
@@ -328,6 +334,21 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		txtSoCMT.addFocusListener(this);
 		txtTenKH.addFocusListener(this);
+		txtSoDienThoai.addFocusListener(this);
+		txtNgaySinh.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+
+					if (!BatRegex.kiemTraNgaySinh(txtNgaySinh))
+						isNgaySinh = true;
+
+				}
+
+			}
+		});
+
 	}
 
 	@Override
@@ -339,7 +360,6 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		if (source == btnThem) {
 			KhachHang khachHang = getKhachHang();
-
 
 			if (validateKhachHang(khachHang)) {
 				if (khachHangDao.themKhachHang(khachHang)) {
@@ -353,6 +373,12 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên",
 							JOptionPane.ERROR_MESSAGE, null);
 				}
+			} else {
+				isSoCMT = true;
+				isTenKhachHang = true;
+				isSoDienThoai = true;
+				isNgaySinh = true;
+				capNhatThongBaoLoi();
 			}
 
 		}
@@ -383,41 +409,56 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		txtTenKH.setText("");
 		txtSoDienThoai.setText("");
 		txtDiaChi.setText("");
-		txtSoCMT.requestFocus();
-		
 
 	}
 
 	private boolean validateKhachHang(KhachHang khachHang) {
 
-		return true;
+		if (BatRegex.kiemTraSoCMT(txtSoCMT) && BatRegex.kiemTraTen(txtTenKH)
+				&& BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && BatRegex.kiemTraNgaySinh(txtNgaySinh))
+			return true;
+
+		return false;
+
+	}
+
+	private void capNhatThongBaoLoi() {
+
+		txtThongBao.setText("");
+
+		if (!BatRegex.kiemTraSoCMT(txtSoCMT) && isSoCMT)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.SO_CMT);
+
+		if (!BatRegex.kiemTraTen(txtTenKH) && isTenKhachHang)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.TEN_KHACH_HANG);
+
+		if (!BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && isSoDienThoai)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.SO_DIEN_THOAI);
+
+		if (!BatRegex.kiemTraNgaySinh(txtNgaySinh) && isNgaySinh)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.NGAY_SINH);
+
 	}
 
 	@Override
 	public void focusGained(FocusEvent e) {
+
 		Object source = e.getSource();
 
-		if (source.equals(txtSoCMT)) {
-			System.out.println("so cmt 1");
-		}
+		if (source.equals(txtSoCMT))
+			isSoCMT = true;
 
-		if (source.equals(txtTenKH)) {
-			System.out.println("ten khach hang 1");
-		}
+		if (source.equals(txtTenKH))
+			isTenKhachHang = true;
+
+		if (source.equals(txtSoDienThoai))
+			isSoDienThoai = true;
+
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
-
-		Object source = e.getSource();
-
-		if (source.equals(txtSoCMT)) {
-			System.out.println("so cmt 2");
-		}
-
-		if (source.equals(txtTenKH)) {
-			System.out.println("ten khach hang 2");
-		}
+		capNhatThongBaoLoi();
 
 	}
 

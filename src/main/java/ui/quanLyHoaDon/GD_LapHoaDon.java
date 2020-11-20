@@ -1067,9 +1067,9 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private void hienThiNhanVien() {
 
 		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
-		System.out.println(nhanVienHanhChinh);
-//		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
-//		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
+		
+		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
+		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
 
 		String maHoaDon = RandomMa.getMaNgauNhien(TenEntity.HOA_DON);
 		lblMaHoaDon.setText(maHoaDon);
