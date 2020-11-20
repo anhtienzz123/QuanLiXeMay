@@ -46,20 +46,23 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
+	
 	private JButton btnDau;
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
-	private DefaultTableModel modelBaoHanh;
-	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
 	private JButton btnDanhMucBaoHanh;
+	
+	private DefaultTableModel modelBaoHanh;
+	private JTable tblBaoHanh;
+	
 	private JComboBox<String> cboTimKiem;
 
 	private int page = 1;
 	private int maxPage = 0;
 	private static final int SIZE = 20;
-
+	
 	private HopDongDao hopDongDao;
 	private List<HopDong> hopDongs;
 	private LocalDate date;
@@ -226,15 +229,15 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//		for (int i = 1; i < 21; i++) {
-//			modelBaoHanh.addRow(new Object[] { i, null, null, null });
-//		}
 		hopDongDao = HopDongDao.getInstance();
 		dangKiSuKien();
 		capNhatDuLieuTrongBangHopDong();
 
 	}
 
+	/**
+	 * Đăng ký sự kiện
+	 */
 	private void dangKiSuKien() {
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
@@ -258,6 +261,9 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 	}
 
+	/**
+	 * Cập nhật dữ liệu trong bảng
+	 */
 	public void capNhatDuLieuTrongBangHopDong() {
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
@@ -273,13 +279,17 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 	}
 
+	/**
+	 * Xóa hết dữ liệu trong bảng
+	 */
 	private void xoaDuLieuTrongBang() {
-		while (modelBaoHanh.getRowCount() > 0) {
-			modelBaoHanh.removeRow(0);
-		}
-
+		modelBaoHanh.getDataVector().removeAllElements();
+		modelBaoHanh.fireTableDataChanged();
 	}
 
+	/**
+	 * Thêm danh sách hợp đồng vào bảng
+	 */
 	private void themHopDongsVaoBang() {
 		if (hopDongs != null) {
 			for (HopDong hopDong : hopDongs) {
@@ -288,6 +298,10 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		}
 	}
 
+	/**
+	 * Thêm 1 hợp đồng vào bảng
+	 * @param hopDong
+	 */
 	private void themHopDonggVaoBang(HopDong hopDong) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		Object[] object = new Object[8];
@@ -356,13 +370,11 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

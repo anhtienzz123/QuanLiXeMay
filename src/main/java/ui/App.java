@@ -50,13 +50,13 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		new App().setVisible(true);
+		new App("NV180556").setVisible(true);
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public App() {
+	public App(String maNhanVien) {
 		try {
 			DatabaseConnect.connect();
 		} catch (SQLException e) {
@@ -346,7 +346,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		Component vG = Box.createVerticalGlue();
 		vB.add(vG);
 
-		ChuyenManHinh chuyen = new ChuyenManHinh(pnlManHinhChinh);
+		ChuyenManHinh chuyen = new ChuyenManHinh(pnlManHinhChinh, maNhanVien);
 		chuyen.setManHinh(pnlTrangChu, lblTrangChu);
 
 		List<DanhMuc> listDanhMuc = new ArrayList<>();

@@ -17,6 +17,12 @@ public class NhanVienHanhChinhDao {
 	private Connection connection;
 
 	private NhanVienHanhChinhDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 

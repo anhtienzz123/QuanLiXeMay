@@ -18,13 +18,13 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import dao.NhanVienHanhChinhDao;
+import entity.NhanVienHanhChinh;
+
+
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
-//	private DefaultTableModel modelHoaDon;
-//	private DefaultTableModel modelXe;
 //	private JLabel lblNgay;
 //	private JLabel lblGio;
 	private JLabel lblMaNhanVien;
@@ -51,11 +51,17 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private List<DanhMuc> listDanhMuc;
 	private JPanel pnlAnh;
 	private JButton btnDoiMatKhau;
+	
+	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_TrangChu() {
+	public GD_TrangChu(String maNhanVienHanhChinh) {
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
+//		maNhanVienHanhChinh = "NV180556";
+		
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -109,7 +115,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblMaNhanVien.setForeground(Color.BLACK);
 		lblMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblMaNhanVien.setBackground(new Color(102, 102, 255));
-		lblMaNhanVien.setBounds(1124, 457, 124, 50);
+		lblMaNhanVien.setBounds(1124, 457, 171, 50);
 		add(lblMaNhanVien);
 
 		JLabel lblTNV = new JLabel("Tên nhân viên:");
@@ -309,7 +315,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblIconBaoHanh));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblThemNhanVien));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblIconThemNhanVien));
-		ChuyenManHinh chuyen = new ChuyenManHinh(this);
+		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh);
 
 		JLabel lblaCh = new JLabel("Địa chỉ: 151 điện biên phủ, phường 15, quận bình thạnh, Thành phố Hồ Chí Minh");
 		lblaCh.setForeground(Color.BLACK);
@@ -324,15 +330,30 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		btnDoiMatKhau.setForeground(Color.WHITE);
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnDoiMatKhau.setBounds(1224, 656, 201, 35);
+		
+		this.
 		add(btnDoiMatKhau);
 		chuyen.setSuKien(listDanhMuc);
 		dangKiSuKien();
+		
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
+		khoiTao();
 //		DongHo();
 	}
 
 	private void dangKiSuKien() {
 		btnDoiMatKhau.addActionListener(this);
 	}
+	
+	private void khoiTao() {
+		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
+		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
+		
+		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
+		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
+		lblChucVu.setText(nhanVienHanhChinh.getChucVu());
+	}
+	
 
 	/*
 	 * public void DongHo() { long millis = System.currentTimeMillis(); Date date =
@@ -356,7 +377,12 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 //			new GD_ChiTietXeMay().setVisible(true);
 //		} else if (o.equals(btnThemKH)) {
 //			new GD_ThemKhachHang().setVisible(true);
+
 //		}
+		
+		if(o == btnDoiMatKhau) {
+			
+		}
 	}
 
 	@Override

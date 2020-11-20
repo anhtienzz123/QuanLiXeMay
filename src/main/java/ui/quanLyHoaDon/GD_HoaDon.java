@@ -65,11 +65,14 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 	private static final int SIZE = 20;
 	private HoaDonDao hoaDonDao;
 	private List<HoaDon> hoaDons;
+	
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_HoaDon() {
+	public GD_HoaDon(String maNhanVienHanhChinh) {
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
 		setLayout(null);
@@ -272,7 +275,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		if (source.equals(btnLapHoaDon)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_LapHoaDon("1"));
+			this.add(new GD_LapHoaDon(this.maNhanVienHanhChinh));
 			this.validate();
 			this.repaint();
 		}

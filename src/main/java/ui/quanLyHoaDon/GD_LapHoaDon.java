@@ -116,7 +116,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private JButton btnXemChiTiet;
 
 	public GD_LapHoaDon(String maNhanVienHanhChinh) {
-		this.maNhanVienHanhChinh = "NVHC222222";
 
 		try {
 			DatabaseConnect.connect();
@@ -193,7 +192,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		int ngay = localDate.getDayOfMonth();
 		int thang = localDate.getMonthValue();
 		int nam = localDate.getYear();
-		
+
 		lblNgayLapHoaDon.setText(ngay + "-" + thang + "-" + nam);
 		lblNgayLapHoaDon.setForeground(Color.BLACK);
 		lblNgayLapHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -446,7 +445,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		add(txtTrang);
 		txtTrang.setColumns(10);
 
-		 btnXemChiTiet = new JButton("Chi tiết");
+		btnXemChiTiet = new JButton("Chi tiết");
 		btnXemChiTiet.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/information_30px.png")));
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 21));
@@ -695,7 +694,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		cboGiaXe.setBackground(Color.WHITE);
 		cboGiaXe.setBounds(568, 373, 151, 30);
 		add(cboGiaXe);
-
+		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 		khoiTao();
 		dangKiSuKien();
 		hienThiNhanVien();
@@ -931,14 +930,14 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 			capNhatXeMaysTrongBang();
 
 		}
-		
-		if(source == btnXemChiTiet) {
+
+		if (source == btnXemChiTiet) {
 			int row = tblXeMay.getSelectedRow();
-			if(row !=-1 ) {
+			if (row != -1) {
 				String ma = tblXeMay.getValueAt(row, 1).toString().trim();
 				XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 				new GD_ChiTietXeMay(xeMay).setVisible(true);
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
 			}
 		}
@@ -1067,9 +1066,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	}
 
 	private void hienThiNhanVien() {
-
 		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
-		System.out.println(nhanVienHanhChinh);
 		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
 		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
 

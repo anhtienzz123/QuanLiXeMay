@@ -48,7 +48,6 @@ import entity.PhieuBaoHanh;
 import other.RandomMa;
 import other.XuLyThoiGian;
 import ui.App;
-import ui.GD_DangNhap;
 
 public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseListener, KeyListener {
 	/**
@@ -56,23 +55,32 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton btnLuu;
-	private DefaultTableModel modelBaoHanh;
-	private JTable tblBaoHanh;
 	private JButton btnQuayLai;
-	private JLabel lblMaHopDong;
-	private JTextField txtTen;
-	private JPopupMenu popupTenNV;
-	private JList<String> listTen;
-	private JPanel pnlTen;
-	private JScrollPane scrollPaneTen;
+	private JButton btnXoaMucBH;
+	private JButton btnThemMucBH;
 
+	private DefaultTableModel modelBaoHanh;
+	
+	private JTable tblBaoHanh;
+
+	private JLabel lblMaHopDong;
+	private JLabel lblMaPhieuBaoHanh;
+	private JLabel lblNgay;
 	private JLabel lblMaNV;
+	
+	private JTextField txtTen;
 	private JTextField txtMucBaoHanh;
+	
+	private JPanel pnlTen;
 	private JPanel pnlBaoHanh;
+	
+	private JPopupMenu popupTenNV;
 	private JPopupMenu popupMucBaoHanh;
+	
+	private JScrollPane scrollPaneTen;
 	private JScrollPane scrollPaneBaoHanh;
+
 	private DefaultListModel<String> defaultListModelTen;
-	private JList<String> listBaoHanh;
 	private DefaultListModel<String> defaultListModelBaoHanh;
 
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
@@ -81,10 +89,11 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 
 	private List<NhanVienKiThuat> nhanVienKiThuats;
 	private List<DanhMucBaoHanh> danhMucBaoHanhs;
-	private JButton btnXoaMucBH;
-	private JButton btnThemMucBH;
-	private JLabel lblMaPhieuBaoHanh;
-	private JLabel lblNgay;
+	
+	private JList<String> listBaoHanh;
+	private JList<String> listTen;
+
+	
 
 	/**
 	 * Create the panel.
@@ -148,13 +157,6 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 			}
 		};
 		tblBaoHanh = new JTable(modelBaoHanh);
-//		{
-//			private static final long serialVersionUID = 1L;
-//
-//			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-//				return false;
-//			}
-//		};
 		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblBaoHanh.setRowHeight(40);
 		scrollpaneBaoHanh.setViewportView(tblBaoHanh);
@@ -176,9 +178,6 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//		for (int i = 1; i < 7; i++) {
-//			modelBaoHanh.addRow(new Object[] { i, "Đợt " + i, true, false });
-//		}
 
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setBounds(0, 817, 1450, 133);
@@ -388,7 +387,6 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		add(txtMucBaoHanh);
 
 		pnlBaoHanh = new JPanel();
-//		pnlBaoHanh.setBounds(229, 732, 531, 205);
 		pnlBaoHanh.setBounds(229, 487, 371, 205);
 		pnlBaoHanh.setLayout(null);
 
@@ -527,8 +525,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 				new NhanVienKiThuat(lblMaNV.getText().trim()));
 
 		int count = tblBaoHanh.getRowCount();
-		if (count > 6) {
-
+		if (count >= 5) {
 			for (int i = 0; i < count; i++) {
 				String tenMucBH = tblBaoHanh.getValueAt(i, 1).toString().trim();
 				ChiTietBaoHanh chiTietBaoHanh = new ChiTietBaoHanh(new PhieuBaoHanh(lblMaPhieuBaoHanh.getText().trim()),
@@ -540,8 +537,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 			if (phieuBaoHanhDao.themPhieuBaoHanh(phieuBaoHanh)) {
 				JOptionPane.showMessageDialog(this, "Đã lưu");
 			}
-		}
-		else {
+		} else {
 			JOptionPane.showMessageDialog(this, "Chi tiết bảo hành phải có ít nhất 5 mục");
 		}
 	}
@@ -550,14 +546,16 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 	 * thoát
 	 */
 	private void thoat() {
-
-		if (tblBaoHanh.getRowCount() > 0) {
-
-			int tl = JOptionPane.showConfirmDialog(this, "Bạn có muốn lưu phiếu bảo hành không?", "Cảnh báo",
-					JOptionPane.YES_NO_OPTION);
-			if (tl == JOptionPane.YES_OPTION) {
-				themPhieuBaoHanh();
-				setManHinh();
+		if (phieuBaoHanhDao.getPhieuBaoHanhTheoMa(lblMaPhieuBaoHanh.getText().trim()) == null) {
+			if (tblBaoHanh.getRowCount() >= 5) {
+				int tl = JOptionPane.showConfirmDialog(this, "Bạn có muốn lưu phiếu bảo hành không?", "Cảnh báo",
+						JOptionPane.YES_NO_OPTION);
+				if (tl == JOptionPane.YES_OPTION) {
+					themPhieuBaoHanh();
+					setManHinh();
+				} else {
+					setManHinh();
+				}
 			} else {
 				setManHinh();
 			}
@@ -577,6 +575,9 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		this.repaint();
 	}
 
+	/**
+	 * Đăng ký sự kiện
+	 */
 	private void dangKiSuKien() {
 		btnLuu.addActionListener(this);
 		btnQuayLai.addActionListener(this);
@@ -584,10 +585,11 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		btnXoaMucBH.addActionListener(this);
 
 		tblBaoHanh.addMouseListener(this);
-		txtTen.addKeyListener(this);
 		listTen.addMouseListener(this);
 		listBaoHanh.addMouseListener(this);
 		txtTen.addMouseListener(this);
+		
+		txtTen.addKeyListener(this);
 		txtMucBaoHanh.addKeyListener(this);
 
 	}
@@ -648,25 +650,21 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 

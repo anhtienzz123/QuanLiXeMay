@@ -89,7 +89,7 @@ public class PhieuBaoHanhDao {
 		return phieuBaoHanh;
 	}
 
-	public PhieuBaoHanh getPhieuBaoHanhTheoMaHopDong(String maHopDong) {
+	public PhieuBaoHanh getPhieuBaoHanhTheoHopDong(String maHopDong) {
 
 		PhieuBaoHanh phieuBaoHanh = null;
 
@@ -108,6 +108,29 @@ public class PhieuBaoHanhDao {
 		}
 
 		return phieuBaoHanh;
+	}
+	public List<PhieuBaoHanh> getPhieuBaoHanhTheoMaHopDong(String maHopDong) {
+
+		List<PhieuBaoHanh> phieuBaoHanhs = new ArrayList<PhieuBaoHanh>();
+		
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(PhieuBaoHanhConstant.GET_PHIEU_BAO_HANH_THEO_MA_HOP_DONG);
+			preparedStatement.setString(1, maHopDong);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				PhieuBaoHanh phieuBaoHanh = PhieuBaoHanhConverter.getPhieuBaoHanh(resultSet);
+				phieuBaoHanhs.add(phieuBaoHanh);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return phieuBaoHanhs;
 	}
 
 	public boolean themPhieuBaoHanh(PhieuBaoHanh phieuBaoHanh) {

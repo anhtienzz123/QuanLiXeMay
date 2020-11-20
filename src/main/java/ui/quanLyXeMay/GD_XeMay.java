@@ -325,9 +325,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//		for (int i = 1; i < 23; i++) {
-//			modelXe.addRow(new Object[] { i, null, null, null });
-//		}
 
 		dangKiSuKien();
 		khoiTao();
@@ -336,6 +333,145 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	}
 
+	/**
+	 * Kết nối database
+	 */
+	public void khoiTao() {
+		xeMayDao = XeMayDao.getInstance();
+	}
+
+	/**
+	 * Cập nhật xe máy trong bảng
+	 */
+	private void capNhatXeMaysTrongBang() {
+
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		String gia = cboGiaXe.getSelectedItem().toString();
+		String mauXe = cboMauXe.getSelectedItem().toString();
+		String tenXuatXu = cboXuatXu.getSelectedItem().toString();
+		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
+		String tenDongXe = cboDongXe.getSelectedItem().toString();
+		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe, SIZE);
+		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe, from, to);
+
+		xoaDuLieuXeMayTrongBang();
+		themXeMayVaoBang();
+		txtTrang.setText(this.page + "");
+
+	}
+
+	/**
+	 * Thêm danh sách xe máy vào bảng
+	 */
+	private void themXeMayVaoBang() {
+
+		if (xeMays != null) {
+			for (XeMay xeMay : xeMays) {
+				themXeMayVaoBang(xeMay);
+			}
+		}
+
+	}
+
+	/**
+	 * Thêm một xe máy vào bảng
+	 * @param xeMay
+	 */
+	private void themXeMayVaoBang(XeMay xeMay) {
+
+		Object[] datas = new Object[8];
+		datas[0] = tblXeMay.getRowCount() + 1;
+		datas[1] = xeMay.getMaXeMay();
+		datas[2] = xeMay.getTenXeMay();
+		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
+		datas[4] = xeMay.getMauXe();
+		datas[5] = xeMay.getSoLuong();
+		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
+		datas[7] = xeMay.getThoiGianBaoHanh();
+		modelXe.addRow(datas);
+	}
+
+	/**
+	 * Xóa dữ liệu trong bảng
+	 */
+	private void xoaDuLieuXeMayTrongBang() {
+		modelXe.getDataVector().removeAllElements();
+		modelXe.fireTableDataChanged();
+	}
+
+	/**
+	 * load dữ liệu thông tin tìm kiếm
+	 */
+	private void loadDuLieuThongTinTimKiem() {
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+		HangXeDao hangXeDao = HangXeDao.getInstance();
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+
+		cboXuatXu.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				xuatXuDao.getXuatXus().stream().map(s -> s.getTenXuatXu()).collect(Collectors.toList()))));
+		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				loaiXeDao.getLoaiXes().stream().map(s -> s.getTenLoaiXe()).collect(Collectors.toList()))));
+		cboHangXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
+		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+		cboMauXe.addItem("Tất cả");
+		for (String mauXe : xeMayDao.getMauXes()) {
+			cboMauXe.addItem(mauXe);
+		}
+
+	}
+	
+	/**
+	 * Xem chi tiết xe máy
+	 */
+	private void xemChiTiet() {
+		int row = tblXeMay.getSelectedRow();
+		if(row !=-1 ) {
+			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+			new GD_ChiTietXeMay(xeMay).setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
+		}
+	}
+	
+	/**
+	 * Chuyển panel
+	 * @param newPanel
+	 */
+	public void setManHinh(JPanel newPanel) {
+		this.removeAll();
+		this.setLayout(new BorderLayout());
+		this.add(newPanel);
+		this.validate();
+		this.repaint();
+	}
+	
+	/**
+	 * Cập nhật thông tin xe máy
+	 */
+	private void capNhatThongTinXe() {
+		int row = tblXeMay.getSelectedRow();
+		if(row !=-1 ) {
+			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+			setManHinh(new GD_CapNhatXeMay(xeMay));
+		}else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
+		}
+	}
+	
+	
 	/**
 	 * Đăng kí sự kiện
 	 */
@@ -369,14 +505,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		// Tìm kiếm
 		txtTimKiem.addKeyListener(this);
-	}
-
-	public void setManHinh(JPanel newPanel) {
-		this.removeAll();
-		this.setLayout(new BorderLayout());
-		this.add(newPanel);
-		this.validate();
-		this.repaint();
 	}
 
 	@Override
@@ -439,8 +567,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -457,6 +583,11 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		capNhatXeMaysTrongBang();
 	}
 
+	/**
+	 * Menu popup
+	 * @param component
+	 * @param popup
+	 */
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -477,121 +608,5 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		});
 	}
 
-	/**
-	 * Kết nối database
-	 */
-	public void khoiTao() {
-		xeMayDao = XeMayDao.getInstance();
-	}
-
-	/**
-	 * Cập nhật xe máy trong bảng
-	 */
-	private void capNhatXeMaysTrongBang() {
-
-		int from = (SIZE * (page - 1) + 1);
-		int to = page * SIZE;
-
-		String timKiem = txtTimKiem.getText();
-		String field = cboTimKiem.getSelectedItem().toString();
-		String gia = cboGiaXe.getSelectedItem().toString();
-		String mauXe = cboMauXe.getSelectedItem().toString();
-		String tenXuatXu = cboXuatXu.getSelectedItem().toString();
-		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
-		String tenDongXe = cboDongXe.getSelectedItem().toString();
-		String tenHangXe = cboHangXe.getSelectedItem().toString();
-		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, SIZE);
-//		 System.out.println("maxPage: " + maxPage);
-		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, from, to);
-
-		xoaDuLieuXeMayTrongBang();
-		themXeMayVaoBang();
-		txtTrang.setText(this.page + "");
-
-	}
-
-	private void themXeMayVaoBang() {
-
-		if (xeMays != null) {
-			for (XeMay xeMay : xeMays) {
-				themXeMayVaoBang(xeMay);
-			}
-		}
-
-	}
-
-	private void themXeMayVaoBang(XeMay xeMay) {
-
-		Object[] datas = new Object[8];
-		datas[0] = tblXeMay.getRowCount() + 1;
-		datas[1] = xeMay.getMaXeMay();
-		datas[2] = xeMay.getTenXeMay();
-		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
-		datas[4] = xeMay.getMauXe();
-		datas[5] = xeMay.getSoLuong();
-		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
-		datas[7] = xeMay.getThoiGianBaoHanh();
-		modelXe.addRow(datas);
-	}
-
-	/**
-	 * Xóa dữ liệu trong bảng
-	 */
-	private void xoaDuLieuXeMayTrongBang() {
-		modelXe.getDataVector().removeAllElements();
-		modelXe.fireTableDataChanged();
-	}
-
-	private void loadDuLieuThongTinTimKiem() {
-		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
-		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
-		HangXeDao hangXeDao = HangXeDao.getInstance();
-		DongXeDao dongXeDao = DongXeDao.getInstance();
-
-		cboXuatXu.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
-				xuatXuDao.getXuatXus().stream().map(s -> s.getTenXuatXu()).collect(Collectors.toList()))));
-		cboLoaiXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
-				loaiXeDao.getLoaiXes().stream().map(s -> s.getTenLoaiXe()).collect(Collectors.toList()))));
-		cboHangXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
-				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
-		cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
-				dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
-
-		cboMauXe.addItem("Tất cả");
-		for (String mauXe : xeMayDao.getMauXes()) {
-			cboMauXe.addItem(mauXe);
-		}
-
-	}
-	/**
-	 * Xem chi tiết xe máy
-	 */
-	private void xemChiTiet() {
-		int row = tblXeMay.getSelectedRow();
-		if(row !=-1 ) {
-			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
-			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
-			new GD_ChiTietXeMay(xeMay).setVisible(true);
-		}else {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
-		}
-	}
-	
-	/**
-	 * Cập nhật thông tin xe máy
-	 */
-	private void capNhatThongTinXe() {
-		int row = tblXeMay.getSelectedRow();
-		if(row !=-1 ) {
-			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
-			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
-			setManHinh(new GD_CapNhatXeMay(xeMay));
-		}else {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
-		}
-	}
-	
 	
 }

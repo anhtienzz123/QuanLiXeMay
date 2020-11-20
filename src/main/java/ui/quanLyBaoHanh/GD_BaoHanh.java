@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.EventObject;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,7 +34,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import dao.HopDongDao;
+import dao.PhieuBaoHanhDao;
 import entity.HopDong;
+import entity.PhieuBaoHanh;
 import entity.XeMay;
 import ui.App;
 
@@ -42,21 +46,28 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton btnCapNhat;
-	private DefaultTableModel modelBaoHanh;
-	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
 	private JButton btnQuayLai;
-
-	private HopDongDao hopDongDao;
+	
+	private DefaultTableModel modelBaoHanh;
+	private JTable tblBaoHanh;
+	
 	private HopDong hopDong;
 	private JLabel lblMaHopDong;
+
+	private HopDongDao hopDongDao;
+	private PhieuBaoHanhDao phieuBaoHanhDao;
+	
+	private Date ngayLapHD;
+	private SimpleDateFormat simpleDateFormat;
+	private int dotBaoHanh;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_BaoHanh(String maHopDong) {
 		khoiTao();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1450, 950));
@@ -165,7 +176,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		add(lblNLHD);
 
 		hopDong = hopDongDao.getHopDongTheoMa(maHopDong);
-		Date ngayLapHD = hopDong.getHoaDon().getNgayLap();
+		ngayLapHD = hopDong.getHoaDon().getNgayLap();
 		JLabel lblNgay = new JLabel(simpleDateFormat.format(ngayLapHD));
 		lblNgay.setForeground(Color.BLACK);
 		lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -246,7 +257,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		JLabel lblMaXe = new JLabel(xeMay.getMaXeMay());
 		lblMaXe.setForeground(Color.BLACK);
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaXe.setBounds(837, 246, 127, 30);
+		lblMaXe.setBounds(855, 246, 127, 30);
 		add(lblMaXe);
 
 		JLabel lblSKhung = new JLabel("Số khung:");
@@ -258,7 +269,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		JLabel lblSoKhung = new JLabel(xeMay.getSoKhung());
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoKhung.setBounds(872, 358, 188, 30);
+		lblSoKhung.setBounds(855, 358, 188, 30);
 		add(lblSoKhung);
 
 		JLabel lblSSn = new JLabel("Số sườn:");
@@ -282,7 +293,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		JLabel lblSoSuon = new JLabel(xeMay.getSoSuon());
 		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoSuon.setBounds(872, 416, 188, 30);
+		lblSoSuon.setBounds(855, 416, 188, 30);
 		add(lblSoSuon);
 
 		JLabel lblHng = new JLabel("Xuất Xứ:");
@@ -300,7 +311,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		JLabel lblXuatXu = new JLabel(xeMay.getXuatXu().getTenXuatXu());
 		lblXuatXu.setForeground(Color.BLACK);
 		lblXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblXuatXu.setBounds(837, 300, 127, 30);
+		lblXuatXu.setBounds(855, 300, 127, 30);
 		add(lblXuatXu);
 
 		JLabel lblHang = new JLabel(xeMay.getDongXe().getHangXe().getTenHangXe());
@@ -335,19 +346,56 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		tblBaoHanh.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
 		/**
-		 * Tính đợt bào hành ngày
+		 * Đổi màu header cho table
+		 */
+		JTableHeader tableHeader2 = tblBaoHanh.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		dangKiSuKien();
+		khoiTao();
+
+		capNhatBangBaoHanh();
+
+	}
+
+	/**
+	 * Khởi tạo DAO
+	 */
+	private void khoiTao() {
+		hopDongDao = HopDongDao.getInstance();
+		phieuBaoHanhDao = PhieuBaoHanhDao.getInstance();
+	}
+
+	/**
+	 * Đăng kí sự kiện
+	 */
+	private void dangKiSuKien() {
+		btnCapNhat.addActionListener(this);
+		btnXemChiTiet.addActionListener(this);
+		btnQuayLai.addActionListener(this);
+	}
+
+	/**
+	 * Cập nhật bảng bảo hành
+	 */
+	private void capNhatBangBaoHanh() {
+		/**
+		 * Tính thời gian của các đợt bảo hành
 		 */
 		Calendar calendar = GregorianCalendar.getInstance();
+		System.out.println();
 		List<Date> ngayBH = new ArrayList<Date>(Arrays.asList(ngayLapHD));
 		for (int i = 1; i <= 6; i++) {
 			calendar.setTime(ngayBH.get(ngayBH.size() - 1));
 			calendar.add(GregorianCalendar.MONTH, 6);
 			ngayBH.add(calendar.getTime());
 		}
-//		ngayBH.forEach(d -> {
-//			System.out.println(simpleDateFormat.format(d));
-//		});
 
+		/**
+		 * Ghi các đợt bảo hành vào bảng
+		 */
 		String tgBH;
 		for (int i = 1; i < 7; i++) {
 			if (i != 1) {
@@ -364,51 +412,88 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		}
 
 		/**
-		 * Đổi màu header cho table
+		 * Thêm ghi chú các đợt đã lập phiếu bảo hành vào bảng
 		 */
-		JTableHeader tableHeader2 = tblBaoHanh.getTableHeader();
-		tableHeader2.setBackground(new Color(58, 181, 74));
-		tableHeader2.setForeground(Color.white);
-		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		List<PhieuBaoHanh> phieuBaoHanhs = phieuBaoHanhDao.getPhieuBaoHanhTheoMaHopDong(lblMaHopDong.getText().trim());
+		if (phieuBaoHanhs.size() > 0) {
+			for (int i = 0; i < 6; i++) {
+				for (PhieuBaoHanh phieuBaoHanh : phieuBaoHanhs) {
 
-		dangKiSuKien();
-		khoiTao();
+					try {
+						String[] temp = tblBaoHanh.getValueAt(i, 2).toString().trim().split(" ");
+						Date before = simpleDateFormat.parse(temp[5]);
+						Date after = simpleDateFormat.parse(temp[2]);
+						Date date = simpleDateFormat.parse(simpleDateFormat.format(phieuBaoHanh.getNgayBaoHanh()));
+						if (date.before(before) && date.after(after)) {
+							tblBaoHanh.setValueAt(
+									"Bảo hành ngày " + simpleDateFormat.format(phieuBaoHanh.getNgayBaoHanh()) + "_"
+											+ phieuBaoHanh.getMaPhieuBaoHanh(),
+									i, 3);
+						}
+						/**
+						 * Kiểm tra đợt bảo hành của ngày hiện tại
+						 */
+						Date currentDay = Calendar.getInstance().getTime();
+						if (currentDay.before(before) && currentDay.after(after)) {
+							dotBaoHanh = i;
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
-	}
-
-	private void khoiTao() {
-		hopDongDao = HopDongDao.getInstance();
-	}
-
-	private void dangKiSuKien() {
-		btnCapNhat.addActionListener(this);
-		btnXemChiTiet.addActionListener(this);
-		btnQuayLai.addActionListener(this);
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+				}
+			}
+		}
 
 	}
 
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+	/**
+	 * Chuyển màn hình
+	 * 
+	 * @param newJpanel
+	 */
+	private void chuyenManHinh(JPanel newJpanel) {
+		this.removeAll();
+		this.setLayout(new BorderLayout());
+		this.add(newJpanel);
+		this.validate();
+		this.repaint();
+	}
 
+	/**
+	 * Thêm phiếu bảo hành
+	 */
+	private void themPhieuBaoHanh() {
+
+		if (tblBaoHanh.getValueAt(dotBaoHanh, 3) == null) {
+			String dot = tblBaoHanh.getValueAt(dotBaoHanh, 1).toString().trim().split(" ")[1];
+			chuyenManHinh(new GD_CapNhatBaoHanh(lblMaHopDong.getText().trim(), dot));
+		} else {
+			JOptionPane.showMessageDialog(this, "Đợt " + (dotBaoHanh + 1) + " đã lập phiếu bảo hành");
+		}
+	}
+
+	/**
+	 * Xem chi tiết phiếu bảo hành
+	 */
+	private void xemChiTiet() {
+
+		int row = tblBaoHanh.getSelectedRow();
+		if (row != -1) {
+			if (tblBaoHanh.getValueAt(row, 3) != null) {
+				String maHopDong = lblMaHopDong.getText().trim();
+				String maPhieuBaoHanh = tblBaoHanh.getValueAt(row, 3).toString().split("_")[1].trim();
+				String dot = tblBaoHanh.getValueAt(row, 0).toString().trim();
+				chuyenManHinh(new GD_ChiTietBaoHanh(maHopDong, maPhieuBaoHanh, dot));
+			} else {
+				JOptionPane.showMessageDialog(this,
+						"Đợt " + tblBaoHanh.getValueAt(row, 0).toString() + " chưa lập phiếu bảo hành");
+			}
+
+		} else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn đợt bảo hành");
+		}
 	}
 
 	@Override
@@ -419,8 +504,6 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		}
 		if (o.equals(btnCapNhat)) {
 			themPhieuBaoHanh();
-			
-			
 		}
 
 		if (o.equals(btnXemChiTiet)) {
@@ -430,47 +513,27 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
-	
-	/**
-	 * Chuyển màn hình
-	 * @param newJpanel
-	 */
-	public void chuyenManHinh(JPanel newJpanel) {
-		this.removeAll();
-		this.setLayout(new BorderLayout());
-		this.add(newJpanel);
-		this.validate();
-		this.repaint();
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
 	}
 
-	/**
-	 * Thêm phiếu bào hành
-	 */
-	private void themPhieuBaoHanh() {
-		
-		int row = tblBaoHanh.getSelectedRow();
-		if(row != -1) {
-			String dot = tblBaoHanh.getValueAt(row, 1).toString().trim().split(" ")[1];
-			chuyenManHinh(new GD_CapNhatBaoHanh(lblMaHopDong.getText().trim(), dot));
-		}
-		else {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn đợt bảo hành");
-		}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
 	}
-	/**
-	 * Xem chi tiết phiếu bảo hành
-	 */
-	private void xemChiTiet() {
-		
-		int row = tblBaoHanh.getSelectedRow();
-		if(row != -1) {
-			chuyenManHinh(new GD_ChiTietBaoHanh());
-		}
-		else {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn đợt bảo hành");
-		}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
 	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
 }

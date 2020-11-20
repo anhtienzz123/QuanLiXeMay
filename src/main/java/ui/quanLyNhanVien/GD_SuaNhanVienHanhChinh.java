@@ -43,9 +43,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTenNV;
 	private JButton btnThem;
-//	private DefaultTableModel modelNVHanhChinh;
 	private JButton btnThoat;
-//	private DefaultTableModel modelNVKyThuat;
 	private JTextField txtSoDienThoai;
 	private JTextField txtAnh;
 	private JTextField txtDiaChi;
@@ -449,7 +447,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 			int t = JOptionPane.showConfirmDialog(null, "bạn có chắc chắn muốn reset mật khẩu không?", "Cảnh báo",
 					JOptionPane.YES_NO_OPTION);
 			if (t == JOptionPane.YES_OPTION) {
-				txtMatKhau.setText(nhanVienHanhChinh.getMatKhau());
+				txtMatKhau.setText("12345678");
 			}
 		}
 		if (o.equals(btnThoat)) {
