@@ -18,12 +18,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import db.DatabaseConnect;
-import other.SplashScreenn;
 
 public class GD_DangNhap extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -178,6 +176,25 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		txtMatKhau.setText("123456");
 
 	}
+	
+	public void name() {
+		this.setVisible(false);
+		SplashScreen splashScreen = new SplashScreen();
+		for(int i = 0; i<=100; i++) {
+			try {
+				Thread.sleep(15);
+				splashScreen.setVisible(true);
+				splashScreen.lblLoading.setText("Loading "+i+"%");
+				splashScreen.progressBar.setValue(i);
+				if(i==100)
+					new App().setVisible(true);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		splashScreen.setVisible(false);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -185,8 +202,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			this.setVisible(false);
-			new SplashScreen().name();
-			
+			name();
 
 		} else if (o.equals(btnHuy)) {
 			this.setVisible(false);
@@ -269,6 +285,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private Boolean valid() {
 		String taiKhoan = txtTaiKhoan.getText().trim();
 		if (taiKhoan.equals("")) {

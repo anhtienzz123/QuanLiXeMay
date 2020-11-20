@@ -1,6 +1,7 @@
 package ui.quanLyNhanVien;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -24,24 +24,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 
-import ui.App;
 import com.toedter.calendar.JDateChooser;
 
 import constant.TenEntity;
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
 import other.RandomMa;
-
-import java.awt.CardLayout;
-import javax.swing.JPasswordField;
+import ui.App;
 
 public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, MouseListener {
 
@@ -60,18 +55,16 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 	private JPanel pnlAnh;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
-	private String maNVThaoTac;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
 	private JLabel lblMaNV;
 	private JDateChooser txtNgaySinh;
-	private JComboBox cboBacTho;
+	private JComboBox<String> cboBacTho;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_SuaNhanVienKyThuat(String maNVThaoTac) {
 		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
-		this.maNVThaoTac = maNVThaoTac;
 		NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVThaoTac);
 
 		setBackground(Color.WHITE);
@@ -299,10 +292,10 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblBcTh.setBounds(615, 13, 152, 30);
 		pnlNVKyThuat.add(lblBcTh);
 
-		cboBacTho = new JComboBox();
+		cboBacTho = new JComboBox<String>();
 		cboBacTho.setBackground(Color.WHITE);
 		String[] listBacTho = { "1", "2", "3", "4", "5", "6", "7" };
-		cboBacTho.setModel(new DefaultComboBoxModel(listBacTho));
+		cboBacTho.setModel(new DefaultComboBoxModel<String>(listBacTho));
 		for (int i = 0; i < listBacTho.length; i++) {
 			if (nhanVienKiThuat.getBacTho() == Integer.parseInt(listBacTho[i]))
 				cboBacTho.setSelectedIndex(i);

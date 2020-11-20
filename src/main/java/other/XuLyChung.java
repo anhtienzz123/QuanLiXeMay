@@ -4,8 +4,6 @@ import java.util.List;
 
 public class XuLyChung {
 
-	
-	
 	public static String[] doiListThanhArray(List<String> listString) {
 		int size = listString.size();
 
@@ -18,6 +16,7 @@ public class XuLyChung {
 
 		return arrays;
 	}
+
 	public static String[] doiListThanhArrayThemXe(List<String> listString) {
 		int size = listString.size();
 
@@ -29,4 +28,19 @@ public class XuLyChung {
 
 		return arrays;
 	}
+
+//	Copy file
+//	public static void copyFile(String from, String to) {
+//		Path src = Paths.get(from);
+//		Path dest = Paths.get(to);
+//		try {
+//			Files.copy(src.toFile(), dest.toFile());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
+	
+
 }

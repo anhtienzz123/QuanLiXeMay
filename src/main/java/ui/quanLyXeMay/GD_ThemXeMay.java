@@ -41,6 +41,7 @@ import entity.DongXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
+import other.CopyTask;
 import other.ImportExcelFile;
 import other.RandomMa;
 import other.XuLyChung;
@@ -449,7 +450,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 	public void keyPressed(KeyEvent e) {
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				validData();
 				txtGiaNhap.requestFocus();
 			}
@@ -538,6 +539,9 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
 		String tenMauXe = cboMauXe.getSelectedItem().toString().trim();
 		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
+
+		String tenAnh = lblMaXe.getText().trim() + "." + txtPath.getText().trim().split("\\.")[1];
+
 		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
 		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
 		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
@@ -558,7 +562,9 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 		xeMay.setDongXe(dongXe);
 		xeMay.setXuatXu(xuatXu);
 		xeMay.setMoTa(txtMoTa.getText().trim());
-		System.out.println(xeMay);
+
+		xeMay.setTenAnh(tenAnh);
+
 		if (validData()) {
 			if (xeMayDao.themXeMay(xeMay)) {
 				JOptionPane.showMessageDialog(this, "Thêm xe máy thành công");
@@ -606,6 +612,11 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 				txtPath.setText(f.getPath());
 				lblAnh.setText("");
+
+				String to = f.getAbsolutePath().split("\\.")[1];
+				CopyTask task = new CopyTask(f.getAbsolutePath(), "ImgXe/" + lblMaXe.getText().trim() + "." + to);
+
+				task.execute();
 			}
 
 			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

@@ -8,14 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.HoaDonConstant;
 import constant.HopDongConstant;
-import constant.KhachHangConstant;
 import converter.HopDongConverter;
-import converter.KhachHangConverter;
 import db.DatabaseConnect;
 import entity.HopDong;
-import entity.KhachHang;
 
 public class HopDongDao {
 

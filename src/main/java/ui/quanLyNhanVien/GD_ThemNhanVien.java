@@ -1,6 +1,7 @@
 package ui.quanLyNhanVien;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
@@ -23,28 +23,23 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 
-import ui.App;
 import com.toedter.calendar.JDateChooser;
 
 import constant.TenEntity;
 import dao.NhanVienHanhChinhDao;
 import dao.NhanVienKiThuatDao;
-import entity.KhachHang;
 import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
 import other.RandomMa;
-
-import java.awt.CardLayout;
-import javax.swing.JPasswordField;
+import ui.App;
 
 public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseListener {
 
@@ -66,15 +61,15 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	private JLabel lblAnMK;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
-	private JComboBox cboLoaiNV;
+	private JComboBox<String> cboLoaiNV;
 	private JPanel pnlNVHanhChinh;
 	private JPanel pnlNVKyThuat;
 	private JButton btnChonFile;
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
 	private JDateChooser txtNgaySinh;
-	private JComboBox cboQuyenTruyCap;
-	private JComboBox cboBacTho;
+	private JComboBox<String> cboQuyenTruyCap;
+	private JComboBox<String> cboBacTho;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
 
@@ -163,9 +158,9 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		lblLNV.setBounds(615, 76, 147, 30);
 		add(lblLNV);
 
-		cboLoaiNV = new JComboBox();
+		cboLoaiNV = new JComboBox<String>();
 		cboLoaiNV.setBackground(Color.WHITE);
-		cboLoaiNV.setModel(new DefaultComboBoxModel(new String[] { "Nhân viên hành chính", "Nhân viên kỹ thuật" }));
+		cboLoaiNV.setModel(new DefaultComboBoxModel<String>(new String[] { "Nhân viên hành chính", "Nhân viên kỹ thuật" }));
 		cboLoaiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiNV.setBounds(802, 79, 228, 30);
 		add(cboLoaiNV);
@@ -318,8 +313,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		lblQuynTruyCp.setBounds(28, 81, 147, 30);
 		pnlNVHanhChinh.add(lblQuynTruyCp);
 
-		cboQuyenTruyCap = new JComboBox();
-		cboQuyenTruyCap.setModel(new DefaultComboBoxModel(new String[] { "Nhân viên bán hàng", "Người quản lý" }));
+		cboQuyenTruyCap = new JComboBox<String>();
+		cboQuyenTruyCap.setModel(new DefaultComboBoxModel<String>(new String[] { "Nhân viên bán hàng", "Người quản lý" }));
 		cboQuyenTruyCap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboQuyenTruyCap.setBounds(224, 81, 305, 30);
 		pnlNVHanhChinh.add(cboQuyenTruyCap);
@@ -384,9 +379,9 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		lblBcTh.setBounds(615, 13, 152, 30);
 		pnlNVKyThuat.add(lblBcTh);
 
-		cboBacTho = new JComboBox();
+		cboBacTho = new JComboBox<String>();
 		cboBacTho.setBackground(Color.WHITE);
-		cboBacTho.setModel(new DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
+		cboBacTho.setModel(new DefaultComboBoxModel<String>(new String[] { "1", "2", "3", "4", "5", "6", "7" }));
 		cboBacTho.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboBacTho.setBounds(796, 13, 228, 30);
 		pnlNVKyThuat.add(cboBacTho);
@@ -463,6 +458,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		String urlAnh = txtAnh.getText();
 		String chucVu = txtChucVu.getText();
 		String trinhDoHocVan = txtTrinhDoHocVan.getText();
+		@SuppressWarnings("deprecation")
 		String matKhau = txtMatKhau.getText();
 		NhanVienHanhChinh nvHanhChinh = new NhanVienHanhChinh(maNV, tenNV, matKhau, gioiTinh, ngaySinh, sdt, diaChi,
 				urlAnh, chucVu, trinhDoHocVan, vaiTro, true);
@@ -477,15 +473,11 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		Date ngaySinh = new Date(txtNgaySinh.getDate().getTime());
 		String sdt = txtSoDienThoai.getText();
 		String diaChi = txtDiaChi.getText();
-		String urlAnh = txtAnh.getText();
+//		String urlAnh = txtAnh.getText();
 		int soNamKN = Integer.parseInt(txtNamKinhNghiem.getText());
 		String bacThoText = (String) cboBacTho.getSelectedItem();
 		int bacTho = Integer.parseInt(bacThoText);
 		String tenAnh = txtAnh.getText();
-		// NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh,
-		// sdt, diaChi, soNamKN, bacTho, true);
-
-		// return nhanVienKiThuat;
 
 		NhanVienKiThuat nhanVienKiThuat = new NhanVienKiThuat(maNV, tenNV, ngaySinh, sdt, diaChi, soNamKN, bacTho, true,
 				tenAnh, gioiTinh);

@@ -1,50 +1,49 @@
 package ui.quanLyBaoHanh;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.text.DateFormat;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.EventObject;
 import java.util.List;
-import java.util.Random;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-import ui.App;
-import ui.ChuyenManHinh;
-import ui.DanhMuc;
-import ui.quanLyBaoHanh.GD_BaoHanh;
-
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
 
-public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseListener {
+import dao.HopDongDao;
+import entity.HopDong;
+import ui.App;
+
+public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
 	private JButton btnDau;
@@ -55,6 +54,16 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 	private JTable tblBaoHanh;
 	private JButton btnXemChiTiet;
 	private JButton btnDanhMucBaoHanh;
+	private JComboBox<String> cboTimKiem;
+
+	private int page = 1;
+	private int maxPage = 0;
+	private static final int SIZE = 20;
+
+	private HopDongDao hopDongDao;
+	private List<HopDong> hopDongs;
+	private LocalDate date;
+	private JDateChooser txtNgay;
 
 	/**
 	 * Create the panel.
@@ -96,11 +105,11 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox<String>();
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên",
+				"Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] { "Mã phiếu bảo hành", "Mã hóa đơn", "Mã nhân viên",
-				"Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -182,7 +191,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		lblTngThuTrong_1_1.setBounds(886, 83, 175, 30);
 		add(lblTngThuTrong_1_1);
 
-		JDateChooser txtNgay = new JDateChooser();
+		txtNgay = new JDateChooser();
 		txtNgay.setBounds(1073, 83, 189, 30);
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
@@ -217,10 +226,12 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		for (int i = 1; i < 21; i++) {
-			modelBaoHanh.addRow(new Object[] { i, null, null, null });
-		}
+//		for (int i = 1; i < 21; i++) {
+//			modelBaoHanh.addRow(new Object[] { i, null, null, null });
+//		}
+		hopDongDao = HopDongDao.getInstance();
 		dangKiSuKien();
+		capNhatDuLieuTrongBangHopDong();
 
 	}
 
@@ -231,52 +242,133 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, MouseLis
 		btnXemChiTiet.addActionListener(this);
 		btnTruoc.addActionListener(this);
 		btnDanhMucBaoHanh.addActionListener(this);
+		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					capNhatDuLieuTrongBangHopDong();
+				}
+
+			}
+		});
+		txtTimKiem.addKeyListener(this);
+		cboTimKiem.addActionListener(this);
 
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void capNhatDuLieuTrongBangHopDong() {
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString().trim();
+		maxPage = hopDongDao.getMaxPageTimKiemHopDong(timKiem, field, date, SIZE);
+
+		hopDongs = hopDongDao.timKiemHopDongs(timKiem, from, to, date, field);
+
+		xoaDuLieuTrongBang();
+		themHopDongsVaoBang();
+		txtTrang.setText(this.page + "");
 
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+	private void xoaDuLieuTrongBang() {
+		while (modelBaoHanh.getRowCount() > 0) {
+			modelBaoHanh.removeRow(0);
+		}
 
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+	private void themHopDongsVaoBang() {
+		if (hopDongs != null) {
+			for (HopDong hopDong : hopDongs) {
+				themHopDonggVaoBang(hopDong);
+			}
+		}
+	}
+
+	private void themHopDonggVaoBang(HopDong hopDong) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		Object[] object = new Object[8];
+		object[0] = tblBaoHanh.getRowCount() + 1;
+		object[1] = hopDong.getMaHopDong();
+		object[2] = hopDong.getHoaDon().getMaHoaDon();
+		object[3] = hopDong.getHoaDon().getNhanVienHanhChinh().getMaNVHanhChinh();
+		object[4] = hopDong.getHoaDon().getNhanVienHanhChinh().getHoTenNV();
+		object[5] = hopDong.getHoaDon().getKhachHang().getMaKhachHang();
+		object[6] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[7] = simpleDateFormat.format(hopDong.getHoaDon().getNgayLap());
+
+		modelBaoHanh.addRow(object);
 
 	}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+	/**
+	 * Xem chi tiết bảo hành
+	 */
+	private void xemChiTiet() {
+		int row = tblBaoHanh.getSelectedRow();
+		if (row != -1) {
+			String ma = tblBaoHanh.getValueAt(row, 1).toString().trim();
+			this.removeAll();
+			this.setLayout(new BorderLayout());
+			this.add(new GD_BaoHanh(ma));
+			this.validate();
+			this.repaint();
+		} else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnXemChiTiet)) {
-			this.removeAll();
-			this.setLayout(new BorderLayout());
-			this.add(new GD_BaoHanh());
-			this.validate();
-			this.repaint();
+			xemChiTiet();
 		}
 		if (o.equals(btnDanhMucBaoHanh)) {
 			new GD_DanhMucBaoHanh().setVisible(true);
 		}
 
+		if (o.equals(btnTruoc) && this.page > 1) {
+
+			this.page--;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o.equals(btnSau) && this.page < maxPage) {
+			this.page++;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o.equals(btnDau)) {
+			this.page = 1;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o.equals(btnCuoi)) {
+			this.page = maxPage;
+			capNhatDuLieuTrongBangHopDong();
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		this.page = 1;
+		capNhatDuLieuTrongBangHopDong();
 	}
 }

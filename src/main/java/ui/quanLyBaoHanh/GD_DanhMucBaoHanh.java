@@ -1,32 +1,37 @@
 package ui.quanLyBaoHanh;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.EventObject;
+import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 
-public class GD_DanhMucBaoHanh extends JFrame implements ActionListener {
+import constant.TenEntity;
+import dao.DanhMucBaoHanhDao;
+import entity.DanhMucBaoHanh;
+import other.RandomMa;
+
+public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseListener {
 
 	/**
 	 * 
@@ -41,6 +46,9 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener {
 	private JButton btnThem;
 	private JButton btnSua;
 	private JButton btnXoa;
+	private JButton btnXoaRong;
+
+	private List<DanhMucBaoHanh> danhMucBaoHanhs;
 
 	/**
 	 * Launch the application.
@@ -99,6 +107,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener {
 		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMa.setBounds(232, 65, 136, 30);
 		contentPane.add(lblMa);
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DANH_MUC_BAO_HANH));
 
 		JLabel lblNewLabel_1_2_5 = new JLabel("Tên mục bảo hành:");
 		lblNewLabel_1_2_5.setForeground(Color.BLACK);
@@ -153,28 +162,38 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener {
 		txtTen.setBounds(639, 65, 512, 30);
 		contentPane.add(txtTen);
 		txtTen.setColumns(10);
-		
+
 		btnThem = new JButton("Thêm");
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
 		btnThem.setBounds(1015, 566, 136, 30);
 		contentPane.add(btnThem);
-		
-		 btnSua = new JButton("Sửa");
+
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
-		btnSua.setBounds(838, 566, 136, 30);
+		btnSua.setBounds(670, 566, 136, 30);
 		contentPane.add(btnSua);
-		
+
 		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(661, 566, 136, 30);
+		btnXoa.setBounds(498, 566, 136, 30);
 		contentPane.add(btnXoa);
-		
+
+		btnXoaRong = new JButton("Xóa rỗng");
+		btnXoaRong.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnXoaRong.setForeground(Color.WHITE);
+		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXoaRong.setBackground(Color.RED);
+		btnXoaRong.setBounds(843, 566, 136, 30);
+		contentPane.add(btnXoaRong);
 
 		JTableHeader tableHearder = table.getTableHeader();
 		tableHearder.setBackground(new Color(58, 181, 74));
@@ -183,31 +202,113 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener {
 		for (int i = 1; i < 7; i++) {
 			model.addRow(new Object[] { i, null, null });
 		}
-		
+
 		dangKiSuKien();
+		capNhatBang();
+
 	}
 
+	/**
+	 * Đăng kí sự kiện
+	 */
 	private void dangKiSuKien() {
 		btnThoat.addActionListener(this);
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
+		btnXoaRong.addActionListener(this);
+		table.addMouseListener(this);
+	}
+
+	/**
+	 * Cập nhật dữ liệu trong bảng
+	 */
+	private void capNhatBang() {
+		model.getDataVector().removeAllElements();
+		model.fireTableDataChanged();
+		danhMucBaoHanhs = DanhMucBaoHanhDao.getInstance().getDanhMucBaoHanhs();
+		if (danhMucBaoHanhs != null) {
+			for (DanhMucBaoHanh danhMucBaoHanh : danhMucBaoHanhs) {
+				Object[] datas = new Object[3];
+				datas[0] = table.getRowCount() + 1;
+				datas[1] = danhMucBaoHanh.getMaDanhMucBaoHanh();
+				datas[2] = danhMucBaoHanh.getTenDanhMucBaoHanh();
+				model.addRow(datas);
+			}
+		}
+		table.clearSelection();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnThem)) {
-			
+		/**
+		 * Thêm
+		 */
+		if (o.equals(btnThem)) {
+			DanhMucBaoHanh danhMucBaoHanh = new DanhMucBaoHanh(lblMa.getText().trim(), txtTen.getText().trim());
+			if (DanhMucBaoHanhDao.getInstance().themDanhMucBaoHanh(danhMucBaoHanh)) {
+				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			}
+			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DANH_MUC_BAO_HANH));
+			capNhatBang();
 		}
-		if(o.equals(btnXoa)) {
-			
+		/**
+		 * Xóa
+		 */
+		if (o.equals(btnXoa)) {
+
 		}
-		if(o.equals(btnSua)) {
-			
+		/**
+		 * Xóa rỗng
+		 */
+		if (o.equals(btnXoaRong)) {
+			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DANH_MUC_BAO_HANH));
+			txtTen.setText("");
+
 		}
-		if(o.equals(btnThoat)) {
+		/**
+		 * Sửa
+		 */
+		if (o.equals(btnSua)) {
+			DanhMucBaoHanh danhMucBaoHanh = new DanhMucBaoHanh(lblMa.getText().trim(), txtTen.getText().trim());
+			if (DanhMucBaoHanhDao.getInstance().capNhatDanhMucBaoHanh(danhMucBaoHanh)) {
+				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			}
+			capNhatBang();
+		}
+		/**
+		 * Thoát
+		 */
+		if (o.equals(btnThoat)) {
 			this.setVisible(false);
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int row = table.getSelectedRow();
+		lblMa.setText(model.getValueAt(row, 1).toString().trim());
+		txtTen.setText(model.getValueAt(row, 2).toString().trim());
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
 	}
 }

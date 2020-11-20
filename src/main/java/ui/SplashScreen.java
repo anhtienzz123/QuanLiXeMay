@@ -19,8 +19,8 @@ public class SplashScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblLoading;
-	private JProgressBar progressBar;
+	public JLabel lblLoading;
+	public JProgressBar progressBar;
 
 	/**
 	 * Launch the application.

@@ -37,7 +37,6 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	public JPanel pnlMenu;
 	private JLabel lblDangXuat;
 	private JLabel lblDanhMuc;
-	private List<JLabel> lstLabel;
 	private JLabel lblThongKe;
 	private JLabel lblXeMay;
 	private JLabel lblHoaDon;

@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.EventObject;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,12 +22,16 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import ui.App;
-import javax.swing.JComboBox;
 
 public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private DefaultTableModel modelBaoHanh;
 	private JTable tblBaoHanh;
 	private JButton btnQuayLai;
+	private JLabel lblMaHopDong;
 
 	/**
 	 * Create the panel.
@@ -72,8 +75,10 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
 			Class[] columnTypes = new Class[] { Object.class, Object.class, Boolean.class, Boolean.class };
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
@@ -139,7 +144,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		lblMHD.setBounds(543, 77, 188, 30);
 		add(lblMHD);
 
-		JLabel lblMaHopDong = new JLabel("HD123456");
+		lblMaHopDong = new JLabel("HD123456");
 		lblMaHopDong.setForeground(Color.BLACK);
 		lblMaHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaHopDong.setBounds(772, 77, 111, 30);
@@ -265,12 +270,11 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 	/**
 	 * Đọc dữ liệu vào mo
 	 */
-	private void docDuLieuDatabaseVaoTable() {
-		// TODO Auto-generated method stub
-		modelBaoHanh.getDataVector().removeAllElements();
-		
-		
-	}
+	
+	/*
+	 * private void docDuLieuDatabaseVaoTable() { 
+	 * modelBaoHanh.getDataVector().removeAllElements(); }
+	 */
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -302,7 +306,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		if (o.equals(btnQuayLai)) {
 			this.removeAll();
 			this.setLayout(new BorderLayout());
-			this.add(new GD_BaoHanh());
+			this.add(new GD_BaoHanh(lblMaHopDong.getText().trim()));
 			this.validate();
 			this.repaint();
 		}

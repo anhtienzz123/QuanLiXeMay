@@ -7,13 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.KhachHangConstant;
 import constant.NhanVienHanhChinhConstant;
-import constant.NhanVienKiThuatConstant;
-import converter.KhachHangConverter;
 import converter.NhanVienHanhChinhConvert;
 import db.DatabaseConnect;
-import entity.KhachHang;
 import entity.NhanVienHanhChinh;
 
 public class NhanVienHanhChinhDao {

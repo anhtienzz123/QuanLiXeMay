@@ -1,12 +1,8 @@
 package ui.quanLyNhanVien;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -17,29 +13,28 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventObject;
 import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import constant.TenEntity;
-import ui.App;
-import ui.quanLyHopDong.GD_ChiTietHD;
-
-import javax.swing.ImageIcon;
-import javax.swing.JScrollPane;
 import dao.NhanVienHanhChinhDao;
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
-import other.RandomMa;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.JTabbedPane;
+import ui.App;
 
 public class GD_NhanVien extends JPanel implements ActionListener, MouseListener, KeyListener {
 
@@ -70,7 +65,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private int maxPage = 2;
 	private static final int SIZE = 20;
 	private String field = "";
-	private JComboBox cboTimKiem;
+	private JComboBox<String> cboTimKiem;
 	private String maNVThaoTac; //
 	private int bangLuaChon;
 	private JButton btnXemChiTiet;
@@ -116,11 +111,11 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		lblTngThuTrong_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		cboTimKiem = new JComboBox();
+		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setModel(
-				new DefaultComboBoxModel(new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
+				new DefaultComboBoxModel<String>(new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
 
 		cboTimKiem.setBounds(151, 74, 274, 30);
 		add(cboTimKiem);
@@ -318,12 +313,12 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private Integer getTabAndSetCbo() {
 		int bangLuaChon = tabbedPane.getSelectedIndex();
 		if (bangLuaChon == 0) {
-			cboTimKiem.setModel(new DefaultComboBoxModel(
+			cboTimKiem.setModel(new DefaultComboBoxModel<String>(
 					new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
 			return bangLuaChon;
 		}
 		if (bangLuaChon == 1) {
-			cboTimKiem.setModel(new DefaultComboBoxModel(
+			cboTimKiem.setModel(new DefaultComboBoxModel<String>(
 					new String[] { "Mã nhân viên", "Tên nhân viên", "Số năm kinh nghiệm", "Bậc thợ" }));
 			return bangLuaChon;
 		}

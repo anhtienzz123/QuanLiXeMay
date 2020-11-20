@@ -1,13 +1,11 @@
 package ui.quanLyHopDong;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,7 +51,6 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 	private JLabel lblGiaBan;
 	private JLabel lblBaoHanh;
 	private JLabel lblChu;
-	private String maHopDong;
 	private HopDongDao hopDongDao;
 
 	/**
@@ -65,7 +62,6 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 	public GD_ChiTietHD(String maHopDong) {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		hopDongDao = HopDongDao.getInstance();
-		this.maHopDong = maHopDong;
 		HopDong hopDong = hopDongDao.getHopDongTheoMa(maHopDong);
 		System.out.println(hopDong);
 		setIconImage(Toolkit.getDefaultToolkit()

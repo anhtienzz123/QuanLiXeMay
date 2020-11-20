@@ -1,13 +1,10 @@
 package ui.quanLyNhanVien;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
@@ -15,25 +12,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
-import entity.XeMay;
 
 public class GD_ChiTietNVHanhChinh extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
-	private String maNVHanhChinh;
 
 	public GD_ChiTietNVHanhChinh(String maNVHanhChinh) {
-		nhanVienHanhChinhDao = nhanVienHanhChinhDao.getInstance();
-		this.maNVHanhChinh = maNVHanhChinh;
+		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
 		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(maNVHanhChinh);
 		System.out.println(nhanVienHanhChinh);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

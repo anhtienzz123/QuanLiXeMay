@@ -4,22 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -34,9 +28,13 @@ import dao.ThongKeDao;
 
 public class GD_ThongKeThang extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel pnlDoanhThuThang;
-	private Vector colHeaderDoanhThu;
-	private DefaultTableModel modelDoanhThu;
+//	private Vector colHeaderDoanhThu;
+//	private DefaultTableModel modelDoanhThu;
 	private JPanel pnlTopDong;
 	private JPanel pnlTopHang;
 	private JTabbedPane tabbedPaneDoanhThu;

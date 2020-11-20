@@ -8,9 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ChiTietBaoHanhConstant;
+import constant.ChiTietHoaDonConstant;
+import constant.TenEntity;
 import converter.ChiTietBaoHanhConverter;
+import converter.ChiTietHoaDonConverter;
 import db.DatabaseConnect;
 import entity.ChiTietBaoHanh;
+import entity.ChiTietHoaDon;
+import entity.HopDong;
+import other.RandomMa;
 
 public class ChiTietBaoHanhDao {
 	private static ChiTietBaoHanhDao instance;
@@ -47,5 +53,46 @@ public class ChiTietBaoHanhDao {
 			e.printStackTrace();
 		}
 		return chiTietBaoHanhs;
+	}
+	
+	public boolean themChiTietBaoHanhs(List<ChiTietBaoHanh> chiTietBaoHanhs) {
+
+		for (ChiTietBaoHanh chiTietBaoHanh : chiTietBaoHanhs) {
+			boolean temp = themChiTietBaoHanh(chiTietBaoHanh);
+			if (temp == false)
+				return false;
+		}
+
+		return true;
+
+	}
+	
+	public boolean themChiTietBaoHanh(ChiTietBaoHanh chiTietBaoHanh) {
+
+		int n = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ChiTietBaoHanhConstant.THEM_CHI_TIET_BAO_HANH);
+			ChiTietBaoHanhConverter.themChiTietBaoHanh(preparedStatement, chiTietBaoHanh);
+
+			connection.setAutoCommit(false);
+			n = preparedStatement.executeUpdate();
+
+			connection.commit();
+
+		} catch (SQLException e) {
+
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
+			e.printStackTrace();
+		}
+		return n > 0;
+
 	}
 }

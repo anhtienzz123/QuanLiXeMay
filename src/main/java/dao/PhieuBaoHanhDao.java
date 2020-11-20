@@ -111,13 +111,24 @@ public class PhieuBaoHanhDao {
 	}
 
 	public boolean themPhieuBaoHanh(PhieuBaoHanh phieuBaoHanh) {
-
+		ChiTietBaoHanhDao chiTietBaoHanhDao = ChiTietBaoHanhDao.getInstance();
+		
 		int n = 0;
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(PhieuBaoHanhConstant.THEM_PHIEU_BAO_HANH);
-			PhieuBaoHanhConverter.themPhieuBaoHanh(preparedStatement, phieuBaoHanh);
-			n = preparedStatement.executeUpdate();
+			
+			connection.setAutoCommit(false);
+			
+			try {
+				PhieuBaoHanhConverter.themPhieuBaoHanh(preparedStatement, phieuBaoHanh);
+				n = preparedStatement.executeUpdate();
+				chiTietBaoHanhDao.themChiTietBaoHanhs(phieuBaoHanh.getChiTietBaoHanhs());
+				connection.commit();
+			} catch (Exception e) {
+				connection.rollback();
+			}
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();

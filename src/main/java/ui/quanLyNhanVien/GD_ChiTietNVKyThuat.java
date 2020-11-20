@@ -1,7 +1,6 @@
 package ui.quanLyNhanVien;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -24,10 +23,8 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
-	private String maNVKiThuat;
 
 	public GD_ChiTietNVKyThuat(String maNVKiThuat) {
-		this.maNVKiThuat = maNVKiThuat;
 		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
 		NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVKiThuat);
 

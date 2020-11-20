@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entity.DanhMucBaoHanh;
-import entity.XuatXu;
 
 public class DanhMucBaoHanhConvert {
 	private DanhMucBaoHanhConvert() {

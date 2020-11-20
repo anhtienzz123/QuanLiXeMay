@@ -2,7 +2,6 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
@@ -26,7 +25,7 @@ public class ChuyenManHinh {
 	private JPanel pnlMHChinh;
 	private String chonTrang = "";
 	private List<DanhMuc> dSTrang = null;
-	private JPanel pnlMenu;
+//	private JPanel pnlMenu;
 	public ChuyenManHinh(JPanel pnlMHChinh) {
 		this.pnlMHChinh = pnlMHChinh;
 	}

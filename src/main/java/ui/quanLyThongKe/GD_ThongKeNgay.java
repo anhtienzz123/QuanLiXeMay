@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,8 +35,12 @@ import other.OutputNhanVien_HoaDonLap;
 
 public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel pnlThongKe;
-	private Vector colHeaderDoanhThu;
+//	private Vector colHeaderDoanhThu;
 	private DefaultTableModel modelDoanhThu;
 	private JTable tblDoanhThu;
 	private JButton btnXemChiTiet;

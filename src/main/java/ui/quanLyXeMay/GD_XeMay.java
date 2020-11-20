@@ -71,7 +71,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 15;
+	private static final int SIZE = 22;
 
 	private XeMayDao xeMayDao;
 	private List<XeMay> xeMays;
@@ -386,7 +386,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			setManHinh(new GD_ThemXeMay());
 		}
 		if (o.equals(btnSua)) {
-			setManHinh(new GD_CapNhatXeMay());
+			capNhatThongTinXe();
 		}
 		if (o.equals(btnXoa)) {
 //			
@@ -434,6 +434,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		if (o.equals(btnCuoi)) {
 			this.page = maxPage;
+			capNhatXeMaysTrongBang();
 		}
 
 	}
@@ -501,7 +502,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, SIZE);
-		// System.out.println("maxPage: " + maxPage);
+//		 System.out.println("maxPage: " + maxPage);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, from, to);
 
@@ -539,10 +540,8 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 * Xóa dữ liệu trong bảng
 	 */
 	private void xoaDuLieuXeMayTrongBang() {
-		while (modelXe.getRowCount() > 0) {
-			modelXe.removeRow(0);
-		}
-
+		modelXe.getDataVector().removeAllElements();
+		modelXe.fireTableDataChanged();
 	}
 
 	private void loadDuLieuThongTinTimKiem() {
@@ -576,8 +575,23 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 			new GD_ChiTietXeMay(xeMay).setVisible(true);
 		}else {
-			JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
-		
 	}
+	
+	/**
+	 * Cập nhật thông tin xe máy
+	 */
+	private void capNhatThongTinXe() {
+		int row = tblXeMay.getSelectedRow();
+		if(row !=-1 ) {
+			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+			setManHinh(new GD_CapNhatXeMay(xeMay));
+		}else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
+		}
+	}
+	
+	
 }

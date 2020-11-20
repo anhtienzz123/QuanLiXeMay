@@ -1,8 +1,6 @@
 package ui.quanLyXeMay;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -10,23 +8,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.JSeparator;
-import javax.swing.ImageIcon;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class GD_DongXe extends JFrame implements ActionListener {
 
@@ -46,6 +42,8 @@ public class GD_DongXe extends JFrame implements ActionListener {
 	private JLabel lblNewLabel_1_2_1;
 	private JTextField txtThue;
 	private JTextField txtTimKiem;
+	private JComboBox<String> cboHang;
+	private JComboBox<String> cboTimKiem;
 
 	/**
 	 * Launch the application.
@@ -182,8 +180,8 @@ public class GD_DongXe extends JFrame implements ActionListener {
 		lblNewLabel_1_2_1.setBounds(23, 105, 87, 30);
 		contentPane.add(lblNewLabel_1_2_1);
 		
-		JComboBox cboHang = new JComboBox();
-		cboHang.setModel(new DefaultComboBoxModel(new String[] {"Honda", "Yamaha", "SYM"}));
+		 cboHang = new JComboBox<String>();
+		cboHang.setModel(new DefaultComboBoxModel<String>(new String[] {"Honda", "Yamaha", "SYM"}));
 		cboHang.setBackground(Color.WHITE);
 		cboHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHang.setBounds(169, 105, 200, 30);
@@ -215,8 +213,8 @@ public class GD_DongXe extends JFrame implements ActionListener {
 		lblNewLabel_1_2_1_2.setBounds(23, 170, 136, 30);
 		contentPane.add(lblNewLabel_1_2_1_2);
 		
-		JComboBox cboTimKiem = new JComboBox();
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Tên dòng xe", "Mã dòng xe", "Hãng", ""}));
+		 cboTimKiem = new JComboBox<String>();
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Tên dòng xe", "Mã dòng xe", "Hãng", ""}));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setBounds(169, 170, 147, 30);

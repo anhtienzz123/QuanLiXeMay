@@ -193,6 +193,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		int ngay = localDate.getDayOfMonth();
 		int thang = localDate.getMonthValue();
 		int nam = localDate.getYear();
+		
 		lblNgayLapHoaDon.setText(ngay + "-" + thang + "-" + nam);
 		lblNgayLapHoaDon.setForeground(Color.BLACK);
 		lblNgayLapHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -831,6 +832,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 		if (source == btnCuoi) {
 			this.page = maxPage;
+			capNhatXeMaysTrongBang();
 		}
 
 		if (source == txtTienKhachTra) {
@@ -1068,8 +1070,8 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
 		System.out.println(nhanVienHanhChinh);
-//		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
-//		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
+		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
+		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
 
 		String maHoaDon = RandomMa.getMaNgauNhien(TenEntity.HOA_DON);
 		lblMaHoaDon.setText(maHoaDon);

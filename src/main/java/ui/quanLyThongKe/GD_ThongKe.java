@@ -6,59 +6,33 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.TreeMap;
-import java.util.Vector;
 
-import javax.swing.ButtonGroup;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
-
-import com.toedter.calendar.JDateChooser;
 
 import dao.ThongKeDao;
 import other.DinhDangTien;
-import other.TableColorCellRender;
-import ui.quanLyHoaDon.GD_LapHoaDon;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
 
 public class GD_ThongKe extends JPanel implements MouseListener {
 
-	private JPanel pnlTKThang;
-	private Vector colHeaderDoanhThu;
-	private DefaultTableModel modelDoanhThu;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+//	private JPanel pnlTKThang;
+//	private Vector colHeaderDoanhThu;
+//	private DefaultTableModel modelDoanhThu;
 	private JLabel lblChiTietDTNgay;
 	private JLabel lblChiTietDTThang;
 	private JLabel lblChiTietDTNam;
 	private JPanel pnlXemChiTietDTNgay;
 	private JPanel pnlXemChiTietDTNam;
 	private JPanel pnlXemChiTietDTThang;
-	private DefaultTableModel modelHDNgay;
+//	private DefaultTableModel modelHDNgay;
 	private JPanel pnlTK;
 
 	private LocalDate localDate;
@@ -211,7 +185,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblThongKeNgay_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeNgay_1_1_1.setBounds(283, 0, 150, 107);
 		pnlThongKeNam.add(lblThongKeNgay_1_1_1);
-		DateFormat df = new SimpleDateFormat("MM-yyyy");
+//		DateFormat df = new SimpleDateFormat("MM-yyyy");
 
 		pnlTK = new JPanel();
 		pnlTK.setBounds(0, 244, 1450, 717);

@@ -1,6 +1,7 @@
 package ui.quanLyNhanVien;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,7 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
-import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -22,30 +22,30 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
 
-import ui.App;
 import com.toedter.calendar.JDateChooser;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
-
-import java.awt.CardLayout;
-import javax.swing.JPasswordField;
+import ui.App;
 
 public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, MouseListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField txtTenNV;
 	private JButton btnThem;
-	private DefaultTableModel modelNVHanhChinh;
+//	private DefaultTableModel modelNVHanhChinh;
 	private JButton btnThoat;
-	private DefaultTableModel modelNVKyThuat;
+//	private DefaultTableModel modelNVKyThuat;
 	private JTextField txtSoDienThoai;
 	private JTextField txtAnh;
 	private JTextField txtDiaChi;
@@ -59,21 +59,19 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	private JLabel lblAnh;
 	private JPanel pnlAnh;
 	private JButton btnResetMK;
-	private String maNVThaoTac;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private NhanVienHanhChinh nhanVienHanhChinh;
 	private JLabel lblMaNV;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
 	private JDateChooser txtNgaySinh;
-	private JComboBox cboQuyenTruyCap;
+	private JComboBox<String> cboQuyenTruyCap;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_SuaNhanVienHanhChinh(String maNVThaoTac) {
 		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
-		this.maNVThaoTac = maNVThaoTac;
 		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(maNVThaoTac);
 		this.nhanVienHanhChinh = nhanVienHanhChinh;
 
@@ -302,8 +300,8 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		lblQuynTruyCp.setBounds(28, 81, 147, 30);
 		pnlNVHanhChinh.add(lblQuynTruyCp);
 
-		cboQuyenTruyCap = new JComboBox();
-		cboQuyenTruyCap.setModel(new DefaultComboBoxModel(new String[] { "Nhân viên bán hàng", "Người quản lý" }));
+		cboQuyenTruyCap = new JComboBox<String>();
+		cboQuyenTruyCap.setModel(new DefaultComboBoxModel<String>(new String[] { "Nhân viên bán hàng", "Người quản lý" }));
 
 		// set quyền truy cập
 		if (nhanVienHanhChinh.isVaiTro() == false)
@@ -488,6 +486,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		String urlAnh = txtAnh.getText();
 		String chucVu = txtChucVu.getText();
 		String trinhDoHocVan = txtTrinhDoHocVan.getText();
+		@SuppressWarnings("deprecation")
 		String matKhau = txtMatKhau.getText();
 		NhanVienHanhChinh nvHanhChinh = new NhanVienHanhChinh(maNV, tenNV, matKhau, gioiTinh, ngaySinh, sdt, diaChi,
 				urlAnh, chucVu, trinhDoHocVan, vaiTro, true);

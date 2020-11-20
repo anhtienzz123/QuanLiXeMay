@@ -8,15 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.DanhMucBaoHanhConstant;
+import constant.HangXeConstant;
 import converter.DanhMucBaoHanhConvert;
+import converter.HangXeConvert;
 import db.DatabaseConnect;
 import entity.DanhMucBaoHanh;
+import entity.HangXe;
 
 public class DanhMucBaoHanhDao {
 	private static DanhMucBaoHanhDao instance;
 	private Connection connection;
 
 	private DanhMucBaoHanhDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -54,7 +63,8 @@ public class DanhMucBaoHanhDao {
 		DanhMucBaoHanh danhMucBaoHanh = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DanhMucBaoHanhConstant.GET_DANH_MUC_BAO_HANH_THEO_MA);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(DanhMucBaoHanhConstant.GET_DANH_MUC_BAO_HANH_THEO_MA);
 			preparedStatement.setString(1, maDanhMucBaoHanh);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -69,12 +79,53 @@ public class DanhMucBaoHanhDao {
 		return danhMucBaoHanh;
 	}
 
+	public DanhMucBaoHanh getDanhMucBaoHanhTheoTen(String tenDanhMucBaoHanh) {
+		DanhMucBaoHanh danhMucBaoHanh = null;
+
+		try {
+			String sql = DanhMucBaoHanhConstant.GET_DANH_MUC_BAO_HANH_THEO_TEN + tenDanhMucBaoHanh + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				danhMucBaoHanh = DanhMucBaoHanhConvert.getDanhMucBaoHanh(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhMucBaoHanh;
+	}
+
+	public List<DanhMucBaoHanh> getDanhMucBaoHanhTheoTens(String tenDanhMucBaoHanh) {
+
+		List<DanhMucBaoHanh> danhMucBaoHanhs = new ArrayList<DanhMucBaoHanh>();
+
+		try {
+			String sql = DanhMucBaoHanhConstant.GET_DANH_MUC_BAO_HANH_THEO_TEN + tenDanhMucBaoHanh + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				DanhMucBaoHanh danhMucBaoHanh = DanhMucBaoHanhConvert.getDanhMucBaoHanh(resultSet);
+				danhMucBaoHanhs.add(danhMucBaoHanh);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return danhMucBaoHanhs;
+	}
+
 	public boolean themDanhMucBaoHanh(DanhMucBaoHanh danhMucBaoHanh) {
 
 		int n = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DanhMucBaoHanhConstant.THEM_DANH_MUC_BAO_HANH);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(DanhMucBaoHanhConstant.THEM_DANH_MUC_BAO_HANH);
 			DanhMucBaoHanhConvert.themDanhMucBaoHanh(preparedStatement, danhMucBaoHanh);
 			n = preparedStatement.executeUpdate();
 
@@ -90,7 +141,8 @@ public class DanhMucBaoHanhDao {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DanhMucBaoHanhConstant.CAP_NHAP_DANH_MUC_BAO_HANH);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(DanhMucBaoHanhConstant.CAP_NHAP_DANH_MUC_BAO_HANH);
 			DanhMucBaoHanhConvert.capDanhMucBaoHanh(preparedStatement, danhMucBaoHanh);
 			n = preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -100,7 +152,7 @@ public class DanhMucBaoHanhDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maDanhMucBaoHanh) {
 
 		try {
@@ -120,6 +172,5 @@ public class DanhMucBaoHanhDao {
 
 		return true;
 	}
-	
 
 }

@@ -8,18 +8,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.Random;
-import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JTabbedPane;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -31,17 +26,17 @@ import org.jfree.data.general.DefaultPieDataset;
 import com.toedter.calendar.JDateChooser;
 
 import dao.ThongKeDao;
-import lombok.Value;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JScrollPane;
 
 public class GD_ThongKeNam extends JPanel implements MouseListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final int TOP = 5;
 	private JPanel pnlDoanhThuThang;
-	private Vector colHeaderDoanhThu;
-	private DefaultTableModel modelDoanhThu;
+//	private Vector colHeaderDoanhThu;
+//	private DefaultTableModel modelDoanhThu;
 	private JPanel pnlTopDong;
 	private JPanel pnlTopHang;
 	private JPanel pnlDoanhThuQuy;
@@ -68,7 +63,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		txtNgay.setBounds(218, 20, 146, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
-		DateFormat df = new SimpleDateFormat("yyyy");
+//		DateFormat df = new SimpleDateFormat("yyyy");
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn năm:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
@@ -178,7 +173,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	public void thongKeDoanhThuQuy(JPanel jpnItem) {
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-		Random r = new Random();
+//		Random r = new Random();
 		dataset.addValue(110, "Doanh thu", "Quý 1");
 		dataset.addValue(90, "Doanh thu", "Quý 2");
 		dataset.addValue(130, "Doanh thu", "Quý 3");
@@ -270,7 +265,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Object o = e.getSource();
+//		Object o = e.getSource();
 
 	}
 
@@ -288,13 +283,13 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		Object o = e.getSource();
+//		Object o = e.getSource();
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		Object o = e.getSource();
+//		Object o = e.getSource();
 
 	}
 }

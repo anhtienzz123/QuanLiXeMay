@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import constant.KhachHangConstant;
 import constant.NhanVienKiThuatConstant;
 import converter.NhanVienKiThuatConvert;
 import db.DatabaseConnect;
@@ -98,7 +97,7 @@ public class NhanVienKiThuatDao {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(NhanVienKiThuatConstant.GET_NHAN_VIEN_KI_THUAT_THEO_TEN);
-			System.out.println(preparedStatement);
+//			System.out.println(preparedStatement);
 			preparedStatement.setString(1, "%" + tenNVKiThuat + "%");
 
 			ResultSet resultSet = preparedStatement.executeQuery();

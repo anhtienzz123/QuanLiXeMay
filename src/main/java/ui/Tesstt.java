@@ -12,6 +12,8 @@ public class Tesstt {
 //		DongXeDao dongXeDao = DongXeDao.getInstance();
 //		System.out.println(dongXeDao.getDongXes());
 		new SplashScreen().name();
+		
+		
 
 	}
 

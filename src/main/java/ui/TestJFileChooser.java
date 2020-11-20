@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.Box;
@@ -22,7 +25,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.Color;
+
+import other.CopyTask;
+import other.XuLyChung;
 
 public class TestJFileChooser extends JFrame implements ActionListener, MouseListener {
 
@@ -121,6 +126,11 @@ public class TestJFileChooser extends JFrame implements ActionListener, MouseLis
 				File f = fileChooser.getSelectedFile();
 				lblImg.setIcon(new ImageIcon(
 						new ImageIcon(f.getAbsolutePath()).getImage().getScaledInstance(pnlImg.getWidth(), pnlImg.getHeight(), Image.SCALE_DEFAULT)));
+				
+				String to = f.getAbsolutePath().split("\\.")[1];
+				CopyTask task = new CopyTask(f.getAbsolutePath(), "ImgXe/123."+to);
+				task.execute();
+				
 			}
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e1) {
