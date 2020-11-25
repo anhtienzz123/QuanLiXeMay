@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import entity.NhanVienHanhChinh;
+import ui.HuongDanSuDung.GD_HuongDanSuDung;
 import ui.quanLyBaoHanh.GD_QuanLyBaoHanh;
 import ui.quanLyHoaDon.GD_HoaDon;
 import ui.quanLyHoaDon.GD_LapHoaDon;
@@ -28,6 +29,7 @@ public class ChuyenManHinh {
 	private List<DanhMuc> dSTrang = null;
 //	private JPanel pnlMenu;
 	private String maNV;
+
 	public ChuyenManHinh(JPanel pnlMHChinh, String maNV) {
 		this.pnlMHChinh = pnlMHChinh;
 		this.maNV = maNV;
@@ -56,7 +58,7 @@ public class ChuyenManHinh {
 
 		private JPanel node;
 		private String chon;
-		
+
 		private JPanel pnlChon;
 		private JLabel lblChon;
 
@@ -64,7 +66,7 @@ public class ChuyenManHinh {
 			this.chon = chon;
 			this.pnlChon = pnlChon;
 			this.lblChon = lblChon;
-			
+
 		}
 
 		@Override
@@ -73,7 +75,7 @@ public class ChuyenManHinh {
 			case "TrangChu":
 				node = new GD_TrangChu(maNV);
 				setPanel();
-				
+
 				break;
 			case "HoaDon":
 				node = new GD_HoaDon(maNV);
@@ -104,19 +106,16 @@ public class ChuyenManHinh {
 				node = new GD_NhanVien();
 				setPanel();
 				break;
-				
-				
+
 			case "LapHoaDon":
 				node = new GD_LapHoaDon(maNV);
 				setPanel();
 				break;
 			case "ThemKhachHang":
 				new GD_ThemKhachHang(null).setVisible(true);
-//				setPanel();
 				break;
-			case "QuanLyHangXe":
-//				node = new GD_NhanVien();
-//				setPanel();
+			case "TroGiup":
+				new GD_HuongDanSuDung().setVisible(true);
 				break;
 			case "ThemXeMay":
 				node = new GD_ThemXeMay();
@@ -130,10 +129,7 @@ public class ChuyenManHinh {
 				node = new GD_QuanLyBaoHanh();
 				setPanel();
 				break;
-				
-				
-				
-				
+
 			case "DangXuat":
 				break;
 			default:

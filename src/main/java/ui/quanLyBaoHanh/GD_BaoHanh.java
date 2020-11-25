@@ -48,16 +48,16 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 	private JButton btnCapNhat;
 	private JButton btnXemChiTiet;
 	private JButton btnQuayLai;
-	
+
 	private DefaultTableModel modelBaoHanh;
 	private JTable tblBaoHanh;
-	
+
 	private HopDong hopDong;
 	private JLabel lblMaHopDong;
 
 	private HopDongDao hopDongDao;
 	private PhieuBaoHanhDao phieuBaoHanhDao;
-	
+
 	private Date ngayLapHD;
 	private SimpleDateFormat simpleDateFormat;
 	private int dotBaoHanh;
@@ -424,7 +424,8 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 						Date before = simpleDateFormat.parse(temp[5]);
 						Date after = simpleDateFormat.parse(temp[2]);
 						Date date = simpleDateFormat.parse(simpleDateFormat.format(phieuBaoHanh.getNgayBaoHanh()));
-						if (date.before(before) && date.after(after)) {
+						if (date.before(before) && date.after(after) || date.equals(before)
+								|| date.equals(after)) {
 							tblBaoHanh.setValueAt(
 									"Bảo hành ngày " + simpleDateFormat.format(phieuBaoHanh.getNgayBaoHanh()) + "_"
 											+ phieuBaoHanh.getMaPhieuBaoHanh(),
@@ -434,7 +435,8 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 						 * Kiểm tra đợt bảo hành của ngày hiện tại
 						 */
 						Date currentDay = Calendar.getInstance().getTime();
-						if (currentDay.before(before) && currentDay.after(after)) {
+						if (currentDay.before(before) && currentDay.after(after) || currentDay.equals(before)
+								|| currentDay.equals(after)) {
 							dotBaoHanh = i;
 						}
 					} catch (ParseException e) {
@@ -466,12 +468,28 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 	 */
 	private void themPhieuBaoHanh() {
 
-		if (tblBaoHanh.getValueAt(dotBaoHanh, 3) == null) {
-			String dot = tblBaoHanh.getValueAt(dotBaoHanh, 1).toString().trim().split(" ")[1];
-			chuyenManHinh(new GD_CapNhatBaoHanh(lblMaHopDong.getText().trim(), dot));
-		} else {
-			JOptionPane.showMessageDialog(this, "Đợt " + (dotBaoHanh + 1) + " đã lập phiếu bảo hành");
+		try {
+			String[] temp = tblBaoHanh.getValueAt(5, 2).toString().trim().split(" ");
+			Date after = simpleDateFormat.parse(temp[5]);
+			Date currentDay = Calendar.getInstance().getTime();
+			System.out.println(dotBaoHanh);
+
+			if (currentDay.before(after) || currentDay.equals(after)) {
+				if (tblBaoHanh.getValueAt(dotBaoHanh, 3) == null) {
+					String dot = tblBaoHanh.getValueAt(dotBaoHanh, 1).toString().trim().split(" ")[1];
+					chuyenManHinh(new GD_CapNhatBaoHanh(lblMaHopDong.getText().trim(), dot));
+				} else {
+					JOptionPane.showMessageDialog(this, "Đợt " + (dotBaoHanh + 1) + " đã lập phiếu bảo hành");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Đã hết thời gian bảo hành");
+			}
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 	/**

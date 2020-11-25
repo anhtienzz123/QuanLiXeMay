@@ -13,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Optional;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -35,8 +36,10 @@ import com.toedter.calendar.JDateChooser;
 import constant.TenEntity;
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
+import other.CopyTask;
 import other.RandomMa;
 import ui.App;
+import ui.quanLyXeMay.GD_ThemXeMay;
 
 public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, MouseListener {
 
@@ -161,19 +164,34 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		add(lblGT);
 
 		pnlAnh = new JPanel();
+		pnlAnh.setBackground(Color.WHITE);
 		pnlAnh.setBounds(1082, 79, 325, 301);
 		add(pnlAnh);
 		pnlAnh.setLayout(null);
 
-		lblAnh = new JLabel("img");
+		lblAnh = new JLabel("");
 		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/pictures_folder_30px.png")));
-//		lblAnh.setIcon(new ImageIcon(new ImageIcon("/img/athlete_male_127px.png").getImage()
-//				.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setBounds(0, 0, 325, 301);
 		pnlAnh.add(lblAnh);
+
+		// Kiểm tra xem ảnh có null không
+		Optional<String> optional = Optional.ofNullable(nhanVienKiThuat.getTenAnh());
+		if (!optional.isPresent()) {
+			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienKiThuat.getTenAnh().trim()).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			if (nhanVienKiThuat.isGioiTinh()) {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
+						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			} else {
+				lblAnh.setIcon(new ImageIcon(
+						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			}
+		}
 
 		rdbtnNam = new JRadioButton("Nam");
 		rdbtnNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -317,18 +335,6 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		lblLoaiNV.setBounds(802, 76, 228, 30);
 		add(lblLoaiNV);
 
-		/*
-		 * if (rdbtnNam.isSelected()) { // lblAnh.setIcon(new ImageIcon(new
-		 * ImageIcon("/img/athlete_male_127px.png").getImage() //
-		 * .getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(),
-		 * Image.SCALE_DEFAULT))); lblAnh.setIcon(new
-		 * ImageIcon("/img/athlete_male_127px.png")); lblAnh.setText(""); }else { //
-		 * lblAnh.setIcon(new ImageIcon(new
-		 * ImageIcon("/img/athlete_female_127px.png").getImage() //
-		 * .getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(),
-		 * Image.SCALE_DEFAULT))); lblAnh.setIcon(new
-		 * ImageIcon("/img/athlete_female_127px.png")); lblAnh.setText(""); }
-		 */
 		dangKiSuKien();
 
 	}
@@ -338,8 +344,8 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		btnXoaRong.addActionListener(this);
 		btnThoat.addActionListener(this);
 		btnChonFile.addActionListener(this);
-		rdbtnNam.addActionListener(this);
-		rdbtnNu.addActionListener(this);
+		rdbtnNam.addMouseListener(this);
+		rdbtnNu.addMouseListener(this);
 
 	}
 
@@ -364,7 +370,17 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-	
+		Object o = e.getSource();
+		
+		if (o.equals(rdbtnNam)) {
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		}
+		if (o.equals(rdbtnNu)) {
+			lblAnh.setIcon(
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		}
 
 	}
 
@@ -408,6 +424,12 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 					lblAnh.setIcon(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage()
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 					txtAnh.setText(f.getPath());
+
+					String to = f.getAbsolutePath().split("\\.")[1];
+					CopyTask task = new CopyTask(f.getAbsolutePath(),
+							"ImgNhanVien/" + lblMaNV.getText().trim() + "." + to);
+
+					task.execute();
 				}
 
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

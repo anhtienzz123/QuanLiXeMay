@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
+import ui.quanLyXeMay.GD_ThemXeMay;
 
 public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 
@@ -52,19 +54,32 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 		panel.add(lblNewLabel);
 
 		JPanel pnlAnh = new JPanel();
-		pnlAnh.setBackground(Color.LIGHT_GRAY);
+		pnlAnh.setBackground(Color.WHITE);
 		pnlAnh.setBounds(33, 75, 302, 300);
 		contentPane.add(pnlAnh);
 		pnlAnh.setLayout(null);
 
-		JLabel lblAnh = new JLabel("img");
+		JLabel lblAnh = new JLabel();
 		lblAnh.setBounds(0, 0, 302, 300);
 		pnlAnh.add(lblAnh);
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setForeground(Color.WHITE);
 		lblAnh.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblAnh.setIcon(new ImageIcon(new ImageIcon(nhanVienKiThuat.getTenAnh()).getImage()
-				.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		
+		// Kiểm tra xem ảnh có null không
+				Optional<String> optional = Optional.ofNullable(nhanVienKiThuat.getTenAnh());
+				if (!optional.isPresent()) {
+					lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienKiThuat.getTenAnh().trim()).getImage()
+							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+				}else {
+					if(nhanVienKiThuat.isGioiTinh()) {
+						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+					}else {
+						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+					}
+				}
 
 		JLabel lblNewLabel_2 = new JLabel("Mã nhân viên:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 20));

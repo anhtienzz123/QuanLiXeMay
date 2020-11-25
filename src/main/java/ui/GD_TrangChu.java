@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
+import ui.quanLyXeMay.GD_ThemXeMay;
 
 
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
@@ -36,9 +38,9 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private JPanel pnlLapHoaDon;
 	private JLabel lblThemKhachHang;
 	private JLabel lblIconThemKhachHang;
-	private JPanel pnlQuanLyHangXe;
-	private JLabel lblQuanLyHangXe;
-	private JLabel lblIconQuanLyHangXe;
+	private JPanel pnlTroGiup;
+	private JLabel lblTroGiup;
+	private JLabel lblIconTroGiup;
 	private JPanel pnlBaoHanh;
 	private JLabel lblBaoHanh;
 	private JLabel lblIconBaoHanh;
@@ -54,6 +56,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private String maNhanVienHanhChinh;
+	private JLabel lblAnh;
 
 	/**
 	 * Create the panel.
@@ -186,9 +189,15 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 //		JPanel pnlAnh = new DongHoAnalog();
 		pnlAnh = new JPanel();
+		pnlAnh.setBackground(Color.WHITE);
 		pnlAnh.setLayout(null);
 		pnlAnh.setBounds(991, 92, 317, 300);
 		add(pnlAnh);
+		
+		lblAnh = new JLabel();
+		lblAnh.setBackground(Color.WHITE);
+		lblAnh.setBounds(0, 0, 317, 300);
+		pnlAnh.add(lblAnh);
 		/*
 		 * Giờ lblGio = new JLabel("00 : 00 : 00"); lblGio.setForeground(Color.BLACK);
 		 * lblGio.setFont(new Font("Tahoma", Font.PLAIN, 20)); lblGio.setBackground(new
@@ -219,29 +228,29 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblIconThemKhachHang.setBounds(0, 0, 278, 123);
 		pnlThemKhachHang.add(lblIconThemKhachHang);
 
-		pnlQuanLyHangXe = new JPanel();
-		pnlQuanLyHangXe.setLayout(null);
-		pnlQuanLyHangXe.setBackground(new Color(58, 181, 74));
-		pnlQuanLyHangXe.setBounds(87, 314, 278, 165);
-		add(pnlQuanLyHangXe);
+		pnlTroGiup = new JPanel();
+		pnlTroGiup.setLayout(null);
+		pnlTroGiup.setBackground(new Color(58, 181, 74));
+		pnlTroGiup.setBounds(87, 517, 278, 165);
+		add(pnlTroGiup);
 
-		lblQuanLyHangXe = new JLabel("Quản lý hãng xe");
-		lblQuanLyHangXe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblQuanLyHangXe.setForeground(Color.WHITE);
-		lblQuanLyHangXe.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblQuanLyHangXe.setBounds(0, 102, 278, 63);
-		pnlQuanLyHangXe.add(lblQuanLyHangXe);
+		lblTroGiup = new JLabel("Trợ giúp");
+		lblTroGiup.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTroGiup.setForeground(Color.WHITE);
+		lblTroGiup.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblTroGiup.setBounds(0, 102, 278, 63);
+		pnlTroGiup.add(lblTroGiup);
 
-		lblIconQuanLyHangXe = new JLabel("");
-		lblIconQuanLyHangXe.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/supplier_100px.png")));
-		lblIconQuanLyHangXe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconQuanLyHangXe.setBounds(0, 0, 278, 123);
-		pnlQuanLyHangXe.add(lblIconQuanLyHangXe);
+		lblIconTroGiup = new JLabel("");
+		lblIconTroGiup.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/supplier_100px.png")));
+		lblIconTroGiup.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIconTroGiup.setBounds(0, 0, 278, 123);
+		pnlTroGiup.add(lblIconTroGiup);
 
 		pnlBaoHanh = new JPanel();
 		pnlBaoHanh.setLayout(null);
 		pnlBaoHanh.setBackground(new Color(58, 181, 74));
-		pnlBaoHanh.setBounds(87, 517, 278, 165);
+		pnlBaoHanh.setBounds(87, 314, 278, 165);
 		add(pnlBaoHanh);
 
 		lblBaoHanh = new JLabel("Bảo hành");
@@ -307,8 +316,8 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("LapHoaDon", pnlLapHoaDon, lblIconLapHoaDon));
 		listDanhMuc.add(new DanhMuc("ThemKhachHang", pnlThemKhachHang, lblThemKhachHang));
 		listDanhMuc.add(new DanhMuc("ThemKhachHang", pnlThemKhachHang, lblIconThemKhachHang));
-		listDanhMuc.add(new DanhMuc("QuanLyHangXe", pnlQuanLyHangXe, lblQuanLyHangXe));
-		listDanhMuc.add(new DanhMuc("QuanLyHangXe", pnlQuanLyHangXe, lblIconQuanLyHangXe));
+		listDanhMuc.add(new DanhMuc("TroGiup", pnlTroGiup, lblTroGiup));
+		listDanhMuc.add(new DanhMuc("TroGiup", pnlTroGiup, lblIconTroGiup));
 		listDanhMuc.add(new DanhMuc("ThemXeMay", pnlThemXeMay, lblThemXeMay));
 		listDanhMuc.add(new DanhMuc("ThemXeMay", pnlThemXeMay, lblIconThemXeMay));
 		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblBaoHanh));
@@ -352,6 +361,21 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
 		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
 		lblChucVu.setText(nhanVienHanhChinh.getChucVu());
+		
+		// Kiểm tra xem ảnh có null không
+		Optional<String> optional = Optional.ofNullable(nhanVienHanhChinh.getTenAnh());
+		if (!optional.isPresent()) {
+			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienHanhChinh.getTenAnh().trim()).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		}else {
+			if(nhanVienHanhChinh.isGioiTinh()) {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			}else {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			}
+		}
 	}
 	
 

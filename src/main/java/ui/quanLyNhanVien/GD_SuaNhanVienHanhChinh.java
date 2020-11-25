@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.sql.Date;
+import java.util.Optional;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -34,7 +35,9 @@ import com.toedter.calendar.JDateChooser;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
+import other.CopyTask;
 import ui.App;
+import ui.quanLyXeMay.GD_ThemXeMay;
 
 public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, MouseListener {
 	/**
@@ -157,17 +160,33 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		add(lblGT);
 
 		pnlAnh = new JPanel();
+		pnlAnh.setBackground(Color.WHITE);
 		pnlAnh.setBounds(1082, 79, 325, 301);
 		add(pnlAnh);
 		pnlAnh.setLayout(null);
 
-		lblAnh = new JLabel("img");
+		lblAnh = new JLabel();
 		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/pictures_folder_30px.png")));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setBounds(0, 0, 325, 301);
 		pnlAnh.add(lblAnh);
+		// Kiểm tra xem ảnh có null không
+				Optional<String> optional = Optional.ofNullable(nhanVienHanhChinh.getTenAnh());
+				if (!optional.isPresent()) {
+					lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienHanhChinh.getTenAnh().trim()).getImage()
+							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+				}else {
+					if(nhanVienHanhChinh.isGioiTinh()) {
+						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+					}else {
+						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+					}
+				}
+		
 
 		rdbtnNam = new JRadioButton("Nam");
 		rdbtnNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -373,7 +392,9 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		lblAnMK.addMouseListener(this);
 		btnChonFile.addActionListener(this);
 		btnResetMK.addActionListener(this);
-
+		rdbtnNam.addMouseListener(this);
+		rdbtnNu.addMouseListener(this);
+		
 	}
 
 	@Override
@@ -383,10 +404,21 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 			txtMatKhau.setEchoChar((char) 0);
 			lblHienMK.setVisible(false);
 			lblAnMK.setVisible(true);
-		} else if (o.equals(lblAnMK)) {
+		} 
+		
+		if (o.equals(lblAnMK)) {
 			txtMatKhau.setEchoChar('●');
 			lblAnMK.setVisible(false);
 			lblHienMK.setVisible(true);
+		}
+		
+		if(o.equals(rdbtnNam)) {
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		}
+		if(o.equals(rdbtnNu)){
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 	}
 
@@ -430,6 +462,11 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 					lblAnh.setIcon(new ImageIcon(new ImageIcon(f.getAbsolutePath()).getImage()
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 					txtAnh.setText(f.getPath());
+					
+					String to = f.getAbsolutePath().split("\\.")[1];
+					CopyTask task = new CopyTask(f.getAbsolutePath(), "ImgNhanVien/" + lblMaNV.getText().trim() + "." + to);
+
+					task.execute();
 				}
 
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());

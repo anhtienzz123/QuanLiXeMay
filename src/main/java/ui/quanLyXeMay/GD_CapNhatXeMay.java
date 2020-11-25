@@ -552,8 +552,12 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
 		String tenMauXe = cboMauXe.getSelectedItem().toString().trim();
 		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
-
-		String tenAnh = lblMaXe.getText().trim() + "." + txtPath.getText().trim().split("\\.")[1];
+		
+		String path = txtPath.getText().trim();
+		String tenAnh = null;
+		if(!path.equals("")) {
+			tenAnh = lblMaXe.getText().trim() + "." + path.split("\\.")[1];
+		}
 
 		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
 		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);

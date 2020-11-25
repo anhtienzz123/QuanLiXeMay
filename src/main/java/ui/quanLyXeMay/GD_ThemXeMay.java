@@ -593,6 +593,9 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 		txtBaoHanh.setText("");
 		txtPath.setText("");
 		txtMoTa.setText("");
+		lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setText("img");
+		
 	}
 
 	/**
