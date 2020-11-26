@@ -14,7 +14,7 @@ public class JTreeUtil {
 	}
 
 	public static void setNodeExpandedState(JTree tree, DefaultMutableTreeNode node, boolean expanded) {
-		for (DefaultMutableTreeNode treeNode : children(node)) {
+		for (DefaultMutableTreeNode treeNode : nodeChildren(node)) {
 			setNodeExpandedState(tree, treeNode, expanded);
 		}
 		if (!expanded && node.isRoot()) {
@@ -30,7 +30,7 @@ public class JTreeUtil {
 
 	public static DefaultMutableTreeNode copyNode(DefaultMutableTreeNode oldNode) {
 		DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(oldNode.getUserObject());
-		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.children(oldNode)) {
+		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.nodeChildren(oldNode)) {
 			DefaultMutableTreeNode newChildNode = new DefaultMutableTreeNode(oldChildNode.getUserObject());
 			newNode.add(newChildNode);
 			if (!oldChildNode.isLeaf()) {
@@ -41,7 +41,7 @@ public class JTreeUtil {
 	}
 
 	public static void copyChildrenTo(DefaultMutableTreeNode from, DefaultMutableTreeNode to) {
-		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.children(from)) {
+		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.nodeChildren(from)) {
 			DefaultMutableTreeNode newChildNode = new DefaultMutableTreeNode(oldChildNode.getUserObject());
 			to.add(newChildNode);
 			if (!oldChildNode.isLeaf()) {
@@ -49,9 +49,11 @@ public class JTreeUtil {
 			}
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public static List<DefaultMutableTreeNode> children(DefaultMutableTreeNode node) {
+	public static List<DefaultMutableTreeNode> nodeChildren(DefaultMutableTreeNode node) {
 		return Collections.list(node.children());
 	}
+
+	
 }
