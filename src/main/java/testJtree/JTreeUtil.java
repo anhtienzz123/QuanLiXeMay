@@ -48,10 +48,13 @@ public class JTreeUtil {
 				copyChildrenTo(oldChildNode, newChildNode);
 			}
 		}
+		
 	}
 
 	@SuppressWarnings("unchecked")
 	public static List<DefaultMutableTreeNode> children(DefaultMutableTreeNode node) {
 		return Collections.list(node.children());
+		
+		// lúc nãy tao thấy nó có cái thư viện gì mà bị lỗi ắ, xong t remove cái nó lỗi code cái swwingx -all đó m coi cái project cua m cos thu vien do k
 	}
 }
