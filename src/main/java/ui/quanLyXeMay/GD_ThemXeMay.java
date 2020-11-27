@@ -242,6 +242,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener 
 		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboMauXe.setBackground(Color.WHITE);
 		cboMauXe.setBounds(535, 233, 205, 30);
+		cboMauXe.addItem("Đỏ");
+		cboMauXe.addItem("Đen");
+		cboMauXe.addItem("Xanh dương");
+		cboMauXe.addItem("Đỏ-đen");
+		cboMauXe.addItem("Vàng");
+		cboMauXe.addItem("Trắng");
+		cboMauXe.addItem("Xanh lá");
 		add(cboMauXe);
 
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");

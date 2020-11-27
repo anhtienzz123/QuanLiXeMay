@@ -56,6 +56,4 @@ public class JTreeUtil {
 		 return Collections.list(node.children());
 		//return Collections.list(node.children());
 	}
-
-	
 }
