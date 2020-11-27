@@ -5,7 +5,6 @@ public class TenEntity {
 	private TenEntity() {
 		
 	}
-
 	public static final String KHACH_HANG = "KH";
 	public static final String NHAN_VIEN_HANH_CHINH = "NVHC";
 	public static final String NHAN_VIEN_KI_THUAT = "NVKT";

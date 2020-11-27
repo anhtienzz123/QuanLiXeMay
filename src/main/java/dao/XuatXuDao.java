@@ -17,6 +17,12 @@ public class XuatXuDao {
 	private Connection connection;
 
 	private XuatXuDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -46,7 +52,7 @@ public class XuatXuDao {
 		}
 		return xuatXus;
 	}
-	
+
 	public XuatXu getXuatXuTheoMa(String maXuatXu) {
 
 		XuatXu xuatXu = null;
@@ -66,13 +72,13 @@ public class XuatXuDao {
 
 		return xuatXu;
 	}
-	
+
 	public XuatXu getXuatXuTheoTen(String tenXuatXu) {
 
 		XuatXu xuatXu = null;
 
 		try {
-			
+
 			String sql = XuatXuConstant.GET_XUAT_XU_THEO_TEN + tenXuatXu + "%'";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
@@ -87,12 +93,12 @@ public class XuatXuDao {
 
 		return xuatXu;
 	}
-	
+
 	public boolean capNhatXuatXu(XuatXu xuatXu) {
 
 		int n = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.CAP_NHAP_XUAT_XU);			
+			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.CAP_NHAP_XUAT_XU);
 			XuatXuConvert.capNhatXuatXu(preparedStatement, xuatXu);
 			n = preparedStatement.executeUpdate();
 
@@ -103,7 +109,7 @@ public class XuatXuDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean themXuatXu(XuatXu xuatXu) {
 
 		int n = 0;
@@ -120,12 +126,11 @@ public class XuatXuDao {
 
 		return n > 0;
 	}
-	
+
 	public boolean kiemTraMaKhongTrung(String maXuatXu) {
 
 		try {
-			PreparedStatement preparedStatement = connection
-					.prepareStatement(XuatXuConstant.KIEM_TRA_MA_KHONG_TRUNG);
+			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.KIEM_TRA_MA_KHONG_TRUNG);
 			preparedStatement.setString(1, maXuatXu);
 
 			ResultSet resultSet = preparedStatement.executeQuery();

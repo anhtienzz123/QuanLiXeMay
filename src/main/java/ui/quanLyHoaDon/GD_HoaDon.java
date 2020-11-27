@@ -62,7 +62,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 	private LocalDate date;
 	private int page = 1;
 	private int maxPage = 2;
-	private static final int SIZE = 20;
+	private static final int SIZE = 16;
 	private HoaDonDao hoaDonDao;
 	private List<HoaDon> hoaDons;
 	
@@ -184,8 +184,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnLapHoaDon.setBounds(1204, 753, 203, 40);
 		add(btnLapHoaDon);
 
-		String[] colHeaderXeMay = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
-				"Tên khách hàng", "ngày lập hóa đơn" };
+		String[] colHeaderXeMay = { "STT", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
+				"SĐT khách hàng", "ngày lập hóa đơn" };
 		modelHoaDon = new DefaultTableModel(colHeaderXeMay, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -195,7 +195,12 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 			}
 		};
 		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblHoaDon.setRowHeight(25);
+		tblHoaDon.setRowHeight(35);
+		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(74);
+		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(600);
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(300);
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);
 		scrollPaneHoaDon.setViewportView(tblHoaDon);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hóa đơn:");

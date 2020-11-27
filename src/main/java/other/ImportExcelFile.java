@@ -29,7 +29,7 @@ import entity.XeMay;
 import entity.XuatXu;
 
 public class ImportExcelFile {
-	public static final int COLUMN_MAXE = 0;
+//	public static final int COLUMN_MAXE = 0;
 	public static final int COLUMN_TENXE = 1;
 	public static final int COLUMN_SOLUONG = 2;
 	public static final int COLUMN_GIANHAP = 3;
@@ -80,6 +80,7 @@ public class ImportExcelFile {
 
 			// Read cells and set value for book object
 			XeMay xeMay = new XeMay();
+			xeMay.setMaXeMay(RandomMa.getMaNgauNhien(TenEntity.XE_MAY).trim());
 			while (cellIterator.hasNext()) {
 				// Read cell
 				Cell cell = cellIterator.next();
@@ -92,9 +93,9 @@ public class ImportExcelFile {
 				int columnIndex = cell.getColumnIndex();
 
 				switch (columnIndex) {
-				case COLUMN_MAXE:
-					xeMay.setMaXeMay(getCellValue(cell).toString().trim());
-					break;
+//				case COLUMN_MAXE:
+//					xeMay.setMaXeMay(getCellValue(cell).toString().trim());
+//					break;
 				case COLUMN_TENXE:
 					xeMay.setTenXeMay(getCellValue(cell).toString().trim());
 					break;

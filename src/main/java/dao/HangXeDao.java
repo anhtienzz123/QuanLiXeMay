@@ -18,6 +18,12 @@ public class HangXeDao {
 	private Connection connection;
 
 	private HangXeDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 

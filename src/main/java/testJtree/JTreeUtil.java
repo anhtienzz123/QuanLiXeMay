@@ -54,6 +54,4 @@ public class JTreeUtil {
 	public static List<DefaultMutableTreeNode> nodeChildren(DefaultMutableTreeNode node) {
 		return Collections.list(node.children());
 	}
-
-	
 }

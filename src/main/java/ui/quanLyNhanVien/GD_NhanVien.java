@@ -63,12 +63,14 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 	private int page = 1;
 	private int maxPage = 2;
-	private static final int SIZE = 20;
+	private static final int SIZE = 14;
 	private String field = "";
 	private JComboBox<String> cboTimKiem;
 	private String maNVThaoTac; //
 	private int bangLuaChon;
 	private JButton btnXemChiTiet;
+	
+	
 
 	/**
 	 * Create the panel.
@@ -114,8 +116,8 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(
+				new String[] { "Mã nhân viên", "Tên nhân viên", "Số điện thoại", "Chức vụ" }));
 
 		cboTimKiem.setBounds(151, 74, 274, 30);
 		add(cboTimKiem);
@@ -220,7 +222,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		add(btnXoa);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(33, 165, 1374, 569);
+		tabbedPane.setBounds(33, 165, 1374, 560);
 		tabbedPane.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPane.setBackground(new Color(58, 181, 74));
 		tabbedPane.setForeground(Color.WHITE);
@@ -239,7 +241,12 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 			}
 		};
 		tblNvHanhChinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblNvHanhChinh.setRowHeight(25);
+		tblNvHanhChinh.setRowHeight(35);
+		tblNvHanhChinh.getColumnModel().getColumn(0).setPreferredWidth(74);
+		tblNvHanhChinh.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblNvHanhChinh.getColumnModel().getColumn(2).setPreferredWidth(600);
+		tblNvHanhChinh.getColumnModel().getColumn(3).setPreferredWidth(300);
+		tblNvHanhChinh.getColumnModel().getColumn(4).setPreferredWidth(200);
 		scrollPaneNVHanhChinh.setViewportView(tblNvHanhChinh);
 
 		/**
@@ -263,7 +270,12 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 			}
 		};
 		tblNVKyThuat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblNVKyThuat.setRowHeight(25);
+		tblNVKyThuat.setRowHeight(35);
+		tblNVKyThuat.getColumnModel().getColumn(0).setPreferredWidth(74);
+		tblNVKyThuat.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblNVKyThuat.getColumnModel().getColumn(2).setPreferredWidth(600);
+		tblNVKyThuat.getColumnModel().getColumn(3).setPreferredWidth(300);
+		tblNVKyThuat.getColumnModel().getColumn(4).setPreferredWidth(200);
 		scrollPaneNVKyThuat.setViewportView(tblNVKyThuat);
 
 		/**
@@ -295,9 +307,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		cboTimKiem.addActionListener(this);
 		tabbedPane.addMouseListener(this);
 		btnXemChiTiet.addActionListener(this);
-
 		addMouseListener(this);
-
 	}
 
 	@Override
@@ -367,7 +377,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 				if (tabbedPane.getSelectedIndex() == 0) {
 					int row = tblNvHanhChinh.getSelectedRow();
 					new GD_ChiTietNVHanhChinh(modelNVHanhChinh.getValueAt(row, 1).toString()).setVisible(true);
-				}else {
+				} else {
 					int row = tblNVKyThuat.getSelectedRow();
 					new GD_ChiTietNVKyThuat(modelNVKyThuat.getValueAt(row, 1).toString()).setVisible(true);
 				}
@@ -376,7 +386,9 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 			}
 
 		}
-		if (o.equals(btnSua)) {
+		if (o.equals(btnSua))
+
+		{
 			this.removeAll();
 			this.setLayout(new BorderLayout());
 			try {
