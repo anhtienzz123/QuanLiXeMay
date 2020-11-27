@@ -53,7 +53,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 20;
+	private static final int SIZE = 16;
 	private KhachHangDao khachHangDao;
 	private List<KhachHang> khachHangs;
 

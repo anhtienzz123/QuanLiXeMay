@@ -40,6 +40,7 @@ import dao.XuatXuDao;
 import entity.XeMay;
 import other.DinhDangTien;
 import other.XuLyChung;
+import javax.swing.ScrollPaneConstants;
 
 public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	/**
@@ -71,7 +72,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 22;
+	private static final int SIZE = 16;
 
 	private XeMayDao xeMayDao;
 	private List<XeMay> xeMays;
@@ -101,7 +102,9 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneXeMay = new JScrollPane();
-		scrollPaneXeMay.setBounds(33, 272, 1385, 582);
+		scrollPaneXeMay.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scrollPaneXeMay.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneXeMay.setBounds(33, 269, 1385, 590);
 		add(scrollPaneXeMay);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -288,13 +291,22 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
 
-			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table 1385
 				return false;
 			}
 		};
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblXeMay.setRowHeight(25);
+		tblXeMay.setRowHeight(35);
 		scrollPaneXeMay.setViewportView(tblXeMay);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+		
 
 		JLabel lblM = new JLabel("Màu xe:");
 		lblM.setForeground(Color.BLACK);

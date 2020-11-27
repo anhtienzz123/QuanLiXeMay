@@ -67,13 +67,9 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 	public GD_HuongDanSuDung() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1140, 647);
+		setBounds(100, 100, 1800, 1000);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,7 +79,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		JPanel pnlTimKiem = new JPanel();
 		pnlTimKiem.setBackground(Color.WHITE);
-		pnlTimKiem.setBounds(0, 0, 1122, 54);
+		pnlTimKiem.setBounds(0, 0, 1782, 54);
 		contentPane.add(pnlTimKiem);
 		pnlTimKiem.setLayout(null);
 
@@ -100,17 +96,17 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		btnDong = new JButton("");
 		btnDong.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/minus_30px.png")));
-		btnDong.setBounds(966, 13, 40, 30);
+		btnDong.setBounds(1626, 13, 40, 30);
 		pnlTimKiem.add(btnDong);
 
 		btnHome = new JButton("");
 		btnHome.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/home_page_30px.png")));
-		btnHome.setBounds(1070, 13, 40, 30);
+		btnHome.setBounds(1730, 13, 40, 30);
 		pnlTimKiem.add(btnHome);
 
 		JPanel pnlTree = new JPanel();
 		pnlTree.setBackground(Color.WHITE);
-		pnlTree.setBounds(0, 56, 300, 544);
+		pnlTree.setBounds(0, 56, 363, 897);
 		contentPane.add(pnlTree);
 		pnlTree.setLayout(new BoxLayout(pnlTree, BoxLayout.X_AXIS));
 
@@ -124,7 +120,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		btnMo = new JButton("");
 		btnMo.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/plus_30px.png")));
-		btnMo.setBounds(1018, 13, 40, 30);
+		btnMo.setBounds(1678, 13, 40, 30);
 		pnlTimKiem.add(btnMo);
 		tree.setCellRenderer(new TradingProjectTreeRenderer(() -> filterDecorator.getFilterField().getText()));
 
@@ -135,7 +131,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		JPanel pnlHDSD = new JPanel();
 		pnlHDSD.setBackground(Color.WHITE);
-		pnlHDSD.setBounds(299, 56, 823, 544);
+		pnlHDSD.setBounds(365, 56, 1417, 897);
 		contentPane.add(pnlHDSD);
 		pnlHDSD.setLayout(new BoxLayout(pnlHDSD, BoxLayout.X_AXIS));
 
@@ -144,12 +140,21 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		txtText = new JEditorPane();
 		txtText.setContentType("text/html");
-		txtText.setText(HuongDanSuDungConstant.GIOI_THIEU);
+		txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
 		txtText.setEditable(false);
 		txtText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtText);
 
 		dangKySuKien();
+		JTreeUtil.setTreeExpandedState(tree, false);
+		
+		
+		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static BiPredicate<Object, String> createUserObjectMatcher() {
@@ -186,12 +191,146 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-		if (selectedNode.getUserObject().toString().equals("Lập hóa đơn")) {
-			txtText.setText(HuongDanSuDungConstant.TEST);
-		} else {
-			txtText.setText(selectedNode.getUserObject().toString());
+		try {
+			DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getSelectionPath()
+					.getLastPathComponent();
+			
+			switch (selectedNode.getUserObject().toString()) {
+//			Hóa đơn
+			case "Lập hóa đơn":
+				txtText.setText(HuongDanSuDungConstant.TEST);
+				break;
+			case "Tìm kiếm hóa đơn":
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
+				break;
+//				Xe máy
+			case "Thêm xe máy":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa xe máy":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật xe máy":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Tìm kiếm xe máy":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Nhân viên
+			case "Thêm nhân viên hành chính":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật nhân viên hành chính":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa nhân viên hành chính":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Tìm kiếm nhân viên hành chính":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Thêm nhân viên kỹ thuật":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật nhân viên kỹ thuật":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa nhân viên kỹ thuật":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Tìm kiếm nhân viên kỹ thuật":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Đổi mật khẩu":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Khách hàng
+			case "Thêm khách hàng":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật khách hàng":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa khách hàng":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Tìm kiếm khách hàng":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Dòng xe
+			case "Thêm dòng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật dòng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa dòng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Hãng xe
+			case "Thêm hãng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật hãng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa hãng xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Loại xe
+			case "Thêm loại xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật loại xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa loại xe":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Xuất xứ
+			case "Thêm xuất xứ":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật xuất xứ":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa xuất xứ":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Thống kê
+			case "Thống kê":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Bảo hành
+			case "Thêm phiếu bảo hành":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Thêm mục bảo hành":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Cập nhật mục bảo hành":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+			case "Xóa mục bảo hành":
+				txtText.setText(selectedNode.getUserObject().toString());
+				break;
+//				Hợp đồng
+			case "Tìm kiếm hợp đồng":
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
+				break;
+			case "Tìm kiếm hợp đồng theo ngày":
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG_THEO_NGAY);
+				break;
+			case "Xem chi tiết hợp đồng":
+				txtText.setText(HuongDanSuDungConstant.XEM_CHI_TIET_HOP_DONG);
+				break;
+				
+			}
+			
+		} catch (Exception e2) {
+			// TODO: handle exception
 		}
+
 	}
 
 	@Override

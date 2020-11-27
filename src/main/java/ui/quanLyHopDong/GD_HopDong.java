@@ -57,7 +57,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 	private int page = 1;
 	private int maxPage = 0;
 	private JComboBox<String> cboTimKiem;
-	private static final int SIZE = 20;
+	private static final int SIZE = 16;
 	private HopDongDao hopDongDao;
 	private List<HopDong> hopDongs;
 	private LocalDate date;
@@ -180,7 +180,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 			}
 		};
 		tblHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblHopDong.setRowHeight(25);
+		tblHopDong.setRowHeight(35);
 		scrollPaneHopDong.setViewportView(tblHopDong);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");

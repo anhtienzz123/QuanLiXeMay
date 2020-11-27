@@ -17,6 +17,12 @@ public class DongXeDao {
 	private Connection connection;
 
 	private DongXeDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -70,7 +76,7 @@ public class DongXeDao {
 		DongXe dongXe = null;
 
 		try {
-			String sql = DongXeConstant.GET_DONG_XE_THEO_TEN + tenDongXe +"%'";
+			String sql = DongXeConstant.GET_DONG_XE_THEO_TEN + tenDongXe + "%'";
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next())

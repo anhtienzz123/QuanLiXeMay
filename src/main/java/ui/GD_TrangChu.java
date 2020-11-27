@@ -365,8 +365,11 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		// Kiểm tra xem ảnh có null không
 		// trả về true nếu như mà nó khác null
 		Optional<String> optional = Optional.ofNullable(nhanVienHanhChinh.getTenAnh());
+<<<<<<< HEAD
 		System.out.println(  nhanVienHanhChinh.getTenAnh()   );
 		System.out.println(optional.isPresent());
+=======
+>>>>>>> a6b6d299b799a1aa2e6a5117da5760eb7d1cc2c7
 		if (optional.isPresent()) {
 			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienHanhChinh.getTenAnh().trim()).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));

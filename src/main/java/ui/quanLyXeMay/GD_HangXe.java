@@ -6,12 +6,16 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.EventObject;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,7 +25,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-public class GD_HangXe extends JFrame implements ActionListener {
+import constant.TenEntity;
+import dao.HangXeDao;
+import entity.HangXe;
+import other.RandomMa;
+
+public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 
 	/**
 	 * 
@@ -31,11 +40,13 @@ public class GD_HangXe extends JFrame implements ActionListener {
 	private JTable table;
 	private DefaultTableModel model;
 	private JLabel lblMa;
-	private JButton btnThoat;
+	private JButton btnXoaRong;
 	private JTextField txtTen;
 	private JButton btnThem;
 	private JButton btnSua;
 	private JButton btnXoa;
+
+	private List<HangXe> hangXes;
 
 	/**
 	 * Launch the application.
@@ -44,7 +55,7 @@ public class GD_HangXe extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GD_LoaiXe frame = new GD_LoaiXe();
+					GD_HangXe frame = new GD_HangXe();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -93,6 +104,7 @@ public class GD_HangXe extends JFrame implements ActionListener {
 		lblMa.setForeground(Color.BLACK);
 		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMa.setBounds(157, 65, 105, 30);
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
 		contentPane.add(lblMa);
 
 		JLabel lblNewLabel_1_2_5 = new JLabel("Tên hãng xe:");
@@ -101,13 +113,13 @@ public class GD_HangXe extends JFrame implements ActionListener {
 		lblNewLabel_1_2_5.setBounds(294, 65, 136, 30);
 		contentPane.add(lblNewLabel_1_2_5);
 
-		btnThoat = new JButton("Thoát");
-		btnThoat.setBackground(Color.RED);
-		btnThoat.setIcon(new ImageIcon(GD_LoaiXe.class.getResource("/img/baseline_close_white_24dp.png")));
-		btnThoat.setForeground(Color.WHITE);
-		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setBounds(23, 334, 136, 30);
-		contentPane.add(btnThoat);
+		btnXoaRong = new JButton("Xóa Trắng");
+		btnXoaRong.setBackground(Color.RED);
+		btnXoaRong.setIcon(new ImageIcon(GD_LoaiXe.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnXoaRong.setForeground(Color.WHITE);
+		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXoaRong.setBounds(186, 334, 171, 30);
+		contentPane.add(btnXoaRong);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
@@ -136,28 +148,27 @@ public class GD_HangXe extends JFrame implements ActionListener {
 		txtTen.setBounds(428, 65, 256, 30);
 		contentPane.add(txtTen);
 		txtTen.setColumns(10);
-		
+
 		btnThem = new JButton("Thêm");
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
-		btnThem.setBounds(547, 334, 136, 30);
+		btnThem.setBounds(563, 334, 120, 30);
 		contentPane.add(btnThem);
-		
-		 btnSua = new JButton("Sửa");
+
+		btnSua = new JButton("Sửa");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
-		btnSua.setBounds(370, 334, 136, 30);
+		btnSua.setBounds(402, 334, 110, 30);
 		contentPane.add(btnSua);
-		
+
 		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(193, 334, 136, 30);
+		btnXoa.setBounds(23, 334, 110, 30);
 		contentPane.add(btnXoa);
-		
 
 		JTableHeader tableHearder = table.getTableHeader();
 		tableHearder.setBackground(new Color(58, 181, 74));
@@ -166,31 +177,97 @@ public class GD_HangXe extends JFrame implements ActionListener {
 		for (int i = 1; i < 7; i++) {
 			model.addRow(new Object[] { i, null, null });
 		}
-		
+
 		dangKiSuKien();
+		capNhatBang();
+	}
+
+	/**
+	 * Cập nhật dữ liệu trong bảng
+	 */
+	private void capNhatBang() {
+		model.getDataVector().removeAllElements();
+		model.fireTableDataChanged();
+		hangXes = HangXeDao.getInstance().getHangXes();
+		if (hangXes != null) {
+			for (HangXe hangXe : hangXes) {
+				Object[] datas = new Object[3];
+				datas[0] = table.getRowCount() + 1;
+				datas[1] = hangXe.getMaHangXe();
+				datas[2] = hangXe.getTenHangXe();
+				model.addRow(datas);
+			}
+		}
+		table.clearSelection();
+
 	}
 
 	private void dangKiSuKien() {
-		btnThoat.addActionListener(this);
+		btnXoaRong.addActionListener(this);
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
+		table.addMouseListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnThem)) {
-			
+		if (o.equals(btnThem)) {
+			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
+			if (HangXeDao.getInstance().themHangXe(hangXe)) {
+				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			}
+			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+			capNhatBang();
 		}
-		if(o.equals(btnXoa)) {
-			
+		if (o.equals(btnXoa)) {
+
 		}
-		if(o.equals(btnSua)) {
-			
+		if (o.equals(btnSua)) {
+
+			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
+			if (HangXeDao.getInstance().capNhatHangXe(hangXe)) {
+				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			}
+			capNhatBang();
+
 		}
-		if(o.equals(btnThoat)) {
-			this.setVisible(false);
+		if (o.equals(btnXoaRong)) {
+			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+			txtTen.setText("");
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int row = table.getSelectedRow();
+		lblMa.setText(model.getValueAt(row, 1).toString().trim());
+		txtTen.setText(model.getValueAt(row, 2).toString().trim());
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 }
