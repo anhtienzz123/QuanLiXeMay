@@ -18,6 +18,8 @@ public class HuongDanSuDungConstant {
 			+ "' align=\"left\" width=\"70\" height=\"70\" alt=\"img\">\r\n"
 			+ "	<p>A smile is a facial expression formed primarily by flexing the muscles at the sides of the mouth. It is  believed it takes about 80 muscles to smile. Some smiles include a contraction of the muscles at the corner of the eyes, an action known as a \"Duchenne smile\". Smiles performed without the eye contraction may be perceived as insincere.</p>\r\n"
 			+ "	<hr>\r\n" + "	\r\n" + "</body>\r\n" + "</html>";
+	
+	public static final String LAP_HOA_DON = "";
 
 	public static final String GIOI_THIEU = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "\r\n" + "<head>\r\n"
 			+ "    <meta charset=\"UTF-8\">\r\n"

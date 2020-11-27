@@ -19,6 +19,10 @@ public class KhachHangConstant {
 	public static final String XOA_KHACH_HANG = "delete from KhachHang where maKhachHang = ?";
 	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maKhachHang from KhachHang\r\n"
 			+ "where maKhachHang = ? ";
+	public static final String KIEM_TRA_SO_DIEN_THOAI_KHONG_TRUNG = "select maKhachHang from KhachHang\r\n"
+			+ "where soDienThoai = ? ";
+	public static final String KIEM_TRA_SO_CMT_KHONG_TRUNG = "select maKhachHang from KhachHang\r\n"
+			+ "where soCMT = ? ";
 
 	// Phaan trang
 	public static final String TIM_KIEM_THEO_MA_KHACH_HANG = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maKhachHang)\r\n"

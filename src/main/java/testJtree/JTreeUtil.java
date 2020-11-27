@@ -52,7 +52,9 @@ public class JTreeUtil {
 	
 	@SuppressWarnings("unchecked")
 	public static List<DefaultMutableTreeNode> nodeChildren(DefaultMutableTreeNode node) {
-		return Collections.list(node.children());
+		
+		 return Collections.list(node.children());
+		//return Collections.list(node.children());
 	}
 
 	
