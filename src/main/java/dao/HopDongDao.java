@@ -221,11 +221,9 @@ public class HopDongDao {
 			case HopDongConstant.TEN_NHAN_VIEN:
 				result =  HopDongConstant.TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINH;
 				break;
-
 			case HopDongConstant.MA_KHACH_HANG:
 				result = HopDongConstant.TIM_KIEM_THEO_MA_KHACH_HANG;
 				break;
-
 			case HopDongConstant.TEN_KHACH_HANG:
 				result = HopDongConstant.TIM_KIEM_THEO_TEN_KHACH_HANG;
 				break;
@@ -234,6 +232,7 @@ public class HopDongDao {
 				break;
 			case HopDongConstant.MA_HOA_DON:
 				result = HopDongConstant.TIM_KIEM_THEO_MA_HOA_DON;
+				break;
 			case HopDongConstant.SO_DIEN_THOAI:
 				result = HopDongConstant.TIM_KIEM_THEO_SO_DIEN_THOAI;
 			default:
@@ -254,8 +253,8 @@ public class HopDongDao {
 			while (resultSet.next()) {
 				HopDong hopDong = HopDongConverter.getHopDong(resultSet);
 				hopDongs.add(hopDong);
-				
 			}
+			
 		} catch (SQLException e) {
 
 			e.printStackTrace();

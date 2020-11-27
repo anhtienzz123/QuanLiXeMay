@@ -373,6 +373,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 				}
 			} catch (Exception e2) {
 				JOptionPane.showMessageDialog(this, "Chọn vào nhân viên bạn muốn xem !");
+				e2.printStackTrace();
 			}
 
 		}

@@ -7,11 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.BiPredicate;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -25,15 +24,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
 
 import constant.HuongDanSuDungConstant;
 import testJtree.JTreeUtil;
 import testJtree.TradingProjectDataService;
 import testJtree.TradingProjectTreeRenderer;
 import testJtree.TreeFilterDecorator;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 
 public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseListener {
 
@@ -163,41 +159,6 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 	}
 
 	/**
-	 * Mở rộng/ đóng jtree
-	 * 
-	 * @param tree
-	 * @param expanded
-	 */
-	public static void moRongTree(JTree tree, boolean expanded) {
-		DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getModel().getRoot();
-		moRongNode(tree, node, expanded);
-	}
-
-	/**
-	 * Mở rộng/ đóng tất cả các node
-	 * 
-	 * @param tree
-	 * @param node
-	 * @param expanded
-	 */
-	@SuppressWarnings("unchecked")
-	public static void moRongNode(JTree tree, DefaultMutableTreeNode node, boolean expanded) {
-		ArrayList<DefaultMutableTreeNode> list = Collections.list(node.children());
-		for (DefaultMutableTreeNode treeNode : list) {
-			moRongNode(tree, treeNode, expanded);
-		}
-		if (!expanded && node.isRoot()) {
-			return;
-		}
-		TreePath path = new TreePath(node.getPath());
-		if (expanded) {
-			tree.expandPath(path);
-		} else {
-			tree.collapsePath(path);
-		}
-	}
-
-	/**
 	 * Đăng ký sự kiện
 	 */
 	private void dangKySuKien() {
@@ -216,20 +177,19 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			txtTimKiem.setText("");
 		}
 		if (o.equals(btnDong)) {
-			moRongTree(tree, false);
+			JTreeUtil.setTreeExpandedState(tree, false);
 		}
 		if (o.equals(btnMo)) {
-			moRongTree(tree, true);
+			JTreeUtil.setTreeExpandedState(tree, true);
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree.getSelectionPath().getLastPathComponent();
-		if(selectedNode.getUserObject().toString().equals("Lập hóa đơn")) {
+		if (selectedNode.getUserObject().toString().equals("Lập hóa đơn")) {
 			txtText.setText(HuongDanSuDungConstant.TEST);
-		}
-		else {
+		} else {
 			txtText.setText(selectedNode.getUserObject().toString());
 		}
 	}

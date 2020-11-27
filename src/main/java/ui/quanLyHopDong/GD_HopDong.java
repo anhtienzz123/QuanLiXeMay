@@ -108,7 +108,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Tên khách hàng", "Số điện thoại"}));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -169,8 +169,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		txtTrang.setBounds(178, 754, 60, 40);
 		add(txtTrang);
 
-		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng",
-				"Tên khách hàng", "ngày lập hóa đơn" };
+		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
+				"Số điện thoại KH", "ngày lập hóa đơn" };
 		modelHopDong = new DefaultTableModel(colHeaderHopDong, 0);
 		tblHopDong = new JTable(modelHopDong) {
 			private static final long serialVersionUID = 1L;
@@ -283,8 +283,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		object[2] = hopDong.getHoaDon().getMaHoaDon();
 		object[3] = hopDong.getHoaDon().getNhanVienHanhChinh().getMaNVHanhChinh();
 		object[4] = hopDong.getHoaDon().getNhanVienHanhChinh().getHoTenNV();
-		object[5] = hopDong.getHoaDon().getKhachHang().getMaKhachHang();
-		object[6] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[5] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[6] = hopDong.getHoaDon().getKhachHang().getSoDienThoai();
 		object[7] = simpleDateFormat.format(hopDong.getHoaDon().getNgayLap());
 
 		modelHopDong.addRow(object);

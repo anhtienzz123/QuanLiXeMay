@@ -99,7 +99,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		add(txtTenNV);
 		txtTenNV.setColumns(10);
 
-		btnThem = new JButton("Thêm");
+		btnThem = new JButton("Sửa");
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setIcon(new ImageIcon(
 				GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));

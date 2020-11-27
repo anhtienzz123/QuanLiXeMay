@@ -1,5 +1,7 @@
 package testJtree;
 
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,8 +16,7 @@ public class JTreeUtil {
 	}
 
 	public static void setNodeExpandedState(JTree tree, DefaultMutableTreeNode node, boolean expanded) {
-		for (DefaultMutableTreeNode treeNode : children(node)) {
-			setNodeExpandedState(tree, treeNode, expanded);
+		for (DefaultMutableTreeNode treeNode : nodeChildren(node)) {	
 		}
 		if (!expanded && node.isRoot()) {
 			return;
@@ -30,7 +31,7 @@ public class JTreeUtil {
 
 	public static DefaultMutableTreeNode copyNode(DefaultMutableTreeNode oldNode) {
 		DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(oldNode.getUserObject());
-		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.children(oldNode)) {
+		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.nodeChildren(oldNode)) {
 			DefaultMutableTreeNode newChildNode = new DefaultMutableTreeNode(oldChildNode.getUserObject());
 			newNode.add(newChildNode);
 			if (!oldChildNode.isLeaf()) {
@@ -41,7 +42,7 @@ public class JTreeUtil {
 	}
 
 	public static void copyChildrenTo(DefaultMutableTreeNode from, DefaultMutableTreeNode to) {
-		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.children(from)) {
+		for (DefaultMutableTreeNode oldChildNode : JTreeUtil.nodeChildren(from)) {
 			DefaultMutableTreeNode newChildNode = new DefaultMutableTreeNode(oldChildNode.getUserObject());
 			to.add(newChildNode);
 			if (!oldChildNode.isLeaf()) {
@@ -50,11 +51,12 @@ public class JTreeUtil {
 		}
 		
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public static List<DefaultMutableTreeNode> children(DefaultMutableTreeNode node) {
+	public static List<DefaultMutableTreeNode> nodeChildren(DefaultMutableTreeNode node) {
 		return Collections.list(node.children());
 		
-		// lúc nãy tao thấy nó có cái thư viện gì mà bị lỗi ắ, xong t remove cái nó lỗi code cái swwingx -all đó m coi cái project cua m cos thu vien do k
 	}
+
+	
 }

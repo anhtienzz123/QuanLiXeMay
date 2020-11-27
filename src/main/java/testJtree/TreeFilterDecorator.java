@@ -72,7 +72,7 @@ public class TreeFilterDecorator {
 		}
 		DefaultMutableTreeNode newMatchedNode = oldNode.isRoot() ? new DefaultMutableTreeNode(oldNode.getUserObject())
 				: null;
-		for (DefaultMutableTreeNode childOldNode : JTreeUtil.children(oldNode)) {
+		for (DefaultMutableTreeNode childOldNode : JTreeUtil.nodeChildren(oldNode)) {
 			DefaultMutableTreeNode newMatchedChildNode = matchAndBuildNode(text, childOldNode);
 			if (newMatchedChildNode != null) {
 				if (newMatchedNode == null) {
