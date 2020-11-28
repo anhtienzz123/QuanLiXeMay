@@ -1,8 +1,17 @@
 package other;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -53,11 +62,133 @@ public class RandomThongTin {
 
 	}
 
+	public static Date randomNgaySinh() {
+
+		Random random = new Random();
+		int namSinh = random.nextInt(21) + 1975;
+		int thangSinh = random.nextInt(12) + 1;
+		int ngaySinh = 1;
+
+		if (thangSinh == 2)
+			ngaySinh = random.nextInt(28) + 1;
+		else if (thangSinh == 1 || thangSinh == 3 || thangSinh == 5 || thangSinh == 7 || thangSinh == 8
+				|| thangSinh == 10 || thangSinh == 12)
+			ngaySinh = random.nextInt(31) + 1;
+		else
+			ngaySinh = random.nextInt(30) + 1;
+
+		String result = String.valueOf(ngaySinh) + "-" + String.valueOf(thangSinh) + "-" + String.valueOf(namSinh);
+		Date nSinh = XuLyThoiGian.chuyenStringThanhDate(result);
+		return nSinh;
+	}
+
+	public static final String randomHoTenConTrai() {
+
+		Random random = new Random();
+
+		List<String> hos = Arrays.asList("Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Trần", "Lê", "Lê",
+				"Lê", "Phạm", "Phạm", "Phạm", "Huỳnh", "Huỳnh", "Huỳnh", "Huỳnh", "Phan", "Võ", "Đặng", "Bùi", "Đỗ",
+				"Hồ", "Ngô", "Dương", "Lý");
+
+		List<String> dems = Arrays.asList("Quốc", "Tuấn", "Thanh", "Thế", "Anh", "Mạnh", "Ngọc", "Trung", "Anh", "Anh",
+				"Tấn", "Đông", "Nhật", "Đức", "Văn", "Xuân", "Quốc", "Hàng", "Mỹ", "Quang", "Thành", "Văn", "Đình");
+		List<String> tens = Arrays.asList("An", "Ân", "Anh", "Bình", "Cường", "Đăng", "Đạt", "Đức", "Hải", "Hào",
+				"Hiển", "Hoài", "Hoàng", "Hoang", "Hưng", "Huy", "Kha", "Khải", "Khang", "Khánh", "Lâm", "Liêm", "Linh",
+				"Long", "Minh", "Nam", "Nghĩa", "Nghiêm", "Phong", "Phúc", "Phước", "Sơn", "Tài", "Tâm", "Thiện",
+				"Thông", "Thọ", "Tuấn", "Thanh", "Khương", "Toàn", "Tôn", "Tồn", "Trọng", "Tú", "Vinh", "Vượng", "Tòng",
+				"Giáp", "Đoàn", "Trường", "Duy", "Mạnh", "Ngọc");
+
+		String ho = hos.get(random.nextInt(hos.size()));
+		String dem = "";
+		String ten = "";
+
+		do {
+			dem = dems.get(random.nextInt(dems.size()));
+		} while (dem.equalsIgnoreCase(ho));
+
+		do {
+			ten = tens.get(random.nextInt(tens.size()));
+		} while (ten.equalsIgnoreCase(ho) || ten.equalsIgnoreCase(dem));
+
+		String result = ho + " " + dem + " " + ten;
+
+		return result;
+	}
+
+	public static final String randomHoTenConGai() {
+
+		Random random = new Random();
+
+		List<String> hos = Arrays.asList("Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Nguyễn", "Trần", "Lê", "Lê",
+				"Lê", "Phạm", "Phạm", "Phạm", "Huỳnh", "Huỳnh", "Huỳnh", "Huỳnh", "Phan", "Võ", "Đặng", "Bùi", "Đỗ",
+				"Hồ", "Ngô", "Dương", "Lý");
+
+		List<String> temp = Arrays.asList("Minh Anh", "Nguyệt Ánh", "Kim Chi", "Mỹ Duyên", "Mỹ Dung", "Ánh Dương",
+				"Linh Đan", "Hải Đường", "Nhật Hạ", "Thanh Hà", "Đinh Hương", "Gia Hân", "Thanh Hà", "Ngọc Hoa",
+				"Lan Hương", "Thiên Hà", "Ngân Tú", "Tuệ Lâm", "Mỹ Lệ", "Kim Ngân", "An Nhiên", "Thảo Nguyên",
+				"Tuyết Nhung", "Nhã Phương", "Cát Tiên", "Anh Thư", "Thanh Tú", "Tú Vi", "Hạ Vũ", "Yến Nhi", "An Chi",
+				"Hải Yến", "Thảo Phương", "Thanh Thúy", "Vân Khánh", "Bảo Ái", "Đa Quỳnh", "Tố Như", "Diệp Thảo",
+				"Diệu Tú", "Mộc Miên", "Diệp Bích", "Hương Tràm", "An Diệp", "Thiên Kim", "Nhã Lan", "Mỹ Ngọc",
+				"Hoài Phương", "Thảo Linh", "Quế Anh");
+
+		List<String> dems = temp.stream().map(s -> s.split(" ")[0]).collect(Collectors.toList());
+		List<String> tens = temp.stream().map(s -> s.split(" ")[1]).collect(Collectors.toList());
+
+		String ho = hos.get(random.nextInt(hos.size()));
+		String dem = "";
+		String ten = "";
+
+		do {
+			dem = dems.get(random.nextInt(dems.size()));
+		} while (dem.equalsIgnoreCase(ho));
+
+		do {
+			ten = tens.get(random.nextInt(tens.size()));
+		} while (ten.equalsIgnoreCase(ho) || ten.equalsIgnoreCase(dem));
+
+		String result = ho + " " + dem + " " + ten;
+
+		return result;
+	}
+
+	public static final String randomDiaChi() {
+
+		List<String> diaChis = new ArrayList<String>();
+
+		String url = "data/diachi.txt";
+		// Đọc dữ liệu từ File với Scanner
+		FileInputStream fileInputStream;
+		try {
+			fileInputStream = new FileInputStream(url);
+
+			Scanner scanner = new Scanner(fileInputStream);
+
+			try {
+				while (scanner.hasNextLine()) {
+					diaChis.add(scanner.nextLine());
+				}
+			} finally {
+				try {
+					scanner.close();
+					fileInputStream.close();
+				} catch (IOException ex) {
+
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String result = diaChis.get(new Random().nextInt(diaChis.size()));
+
+		return result;
+	}
+
 	public static String randomSoKhungXeMay() {
 		Random random = new Random();
 		List<String> quocGiaSanXuats = Arrays.asList("1", "4", "5", "2", "3", "J", "K", "S", "W", "Y");
 		List<String> nhaSanXuats = Arrays.asList("A", "B", "G", "L", "N");
-
 		StringBuffer result = new StringBuffer("");
 		result.append(quocGiaSanXuats.get(random.nextInt(quocGiaSanXuats.size())));
 		result.append(nhaSanXuats.get(random.nextInt(nhaSanXuats.size())));
@@ -66,7 +197,6 @@ public class RandomThongTin {
 		result.append(RandomStringUtils.randomNumeric(2));
 		result.append(RandomStringUtils.randomAlphabetic(1));
 		result.append(RandomStringUtils.randomNumeric(9));
-
 		return result.toString().toUpperCase();
 	}
 
@@ -76,5 +206,9 @@ public class RandomThongTin {
 		return result;
 	}
 
-	
+	public static void main(String[] args) {
+
+		System.out.println(randomDiaChi());
+	}
+
 }

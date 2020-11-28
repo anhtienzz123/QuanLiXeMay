@@ -23,4 +23,23 @@ public class KhachHang {
 		this.maKhachHang = maKhachHang;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		
+		KhachHang khachHang = (KhachHang) obj;
+		
+		if( khachHang.getMaKhachHang().equalsIgnoreCase(maKhachHang) ||  khachHang.getSoCMT().equalsIgnoreCase(soCMT) || khachHang.getHoTenKH().equalsIgnoreCase(hoTenKH) || khachHang.getSoDienThoai().equalsIgnoreCase(soDienThoai)  )
+			return true;
+		
+		return false;
+	}
+
+
+	@Override
+	public int hashCode() {
+		
+		return super.hashCode();
+	}
+	
+
 }

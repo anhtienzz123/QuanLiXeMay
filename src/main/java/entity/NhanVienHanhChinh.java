@@ -28,6 +28,22 @@ public class NhanVienHanhChinh {
 		this.maNVHanhChinh = maNVHanhChinh;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		
+		NhanVienHanhChinh nhanVienHanhChinh = (NhanVienHanhChinh) obj;
+		
+		if( nhanVienHanhChinh.getMaNVHanhChinh().equalsIgnoreCase(maNVHanhChinh) ||  nhanVienHanhChinh.getHoTenNV().equalsIgnoreCase(hoTenNV) || nhanVienHanhChinh.getSoDienThoai().equalsIgnoreCase(soDienThoai)  )
+			return true;
+		
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		
+		return super.hashCode();
+	}
 	
 
 }

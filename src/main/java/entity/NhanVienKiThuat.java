@@ -21,11 +21,28 @@ public class NhanVienKiThuat {
 	private boolean trangThai;
 	private String tenAnh;
 	private boolean gioiTinh;
-	
+
 	public NhanVienKiThuat(String maNVKiThuat) {
-		
+
 		this.maNVKiThuat = maNVKiThuat;
 	}
-	
-	
+
+	@Override
+	public boolean equals(Object obj) {
+
+		NhanVienKiThuat nhanVienKiThuat = (NhanVienKiThuat) obj;
+
+		if (nhanVienKiThuat.getMaNVKiThuat().equalsIgnoreCase(maNVKiThuat)
+				|| nhanVienKiThuat.getHoTen().equalsIgnoreCase(hoTen)
+				|| nhanVienKiThuat.getSoDienThoai().equalsIgnoreCase(soDienThoai))
+			return true;
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		
+		return super.hashCode();
+	}
 }
