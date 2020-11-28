@@ -204,6 +204,46 @@ public class KhachHangDao {
 		return true;
 	}
 
+	public boolean kiemTraSoDienThoaiKhongTrung(String soDienThoai) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.KIEM_TRA_SO_DIEN_THOAI_KHONG_TRUNG);
+			preparedStatement.setString(1, soDienThoai);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
+	public boolean kiemTraSoCMTKhongTrung(String soCMT) {
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(KhachHangConstant.KIEM_TRA_SO_CMT_KHONG_TRUNG);
+			preparedStatement.setString(1, soCMT);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return true;
+	}
+
 	public int getMaxPageTimKiem(String timKiem, String field, int size) {
 
 		int maxPage = 0;
