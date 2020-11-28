@@ -1,7 +1,7 @@
 package testJtree;
 
 
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class JTreeUtil {
 	}
 
 	public static void setNodeExpandedState(JTree tree, DefaultMutableTreeNode node, boolean expanded) {
-		for (DefaultMutableTreeNode treeNode : nodeChildren(node)) {	
+		for (@SuppressWarnings("unused") DefaultMutableTreeNode treeNode : nodeChildren(node)) {	
 		}
 		if (!expanded && node.isRoot()) {
 			return;

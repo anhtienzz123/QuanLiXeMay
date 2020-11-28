@@ -294,7 +294,6 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private void dangKiSuKien() {
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
-		btnSau.addActionListener(this);
 		btnThem.addActionListener(this);
 		btnCuoi.addActionListener(this);
 		btnDau.addActionListener(this);
