@@ -37,6 +37,7 @@ import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
+import entity.DongXe;
 import entity.XeMay;
 import other.DinhDangTien;
 import other.XuLyChung;
@@ -291,7 +292,8 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
 
-			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table 1385
+			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+																			// 1385
 				return false;
 			}
 		};
@@ -306,7 +308,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
 		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
 		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
-		
 
 		JLabel lblM = new JLabel("Màu xe:");
 		lblM.setForeground(Color.BLACK);
@@ -394,6 +395,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	/**
 	 * Thêm một xe máy vào bảng
+	 * 
 	 * @param xeMay
 	 */
 	private void themXeMayVaoBang(XeMay xeMay) {
@@ -442,23 +444,24 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		}
 
 	}
-	
+
 	/**
 	 * Xem chi tiết xe máy
 	 */
 	private void xemChiTiet() {
 		int row = tblXeMay.getSelectedRow();
-		if(row !=-1 ) {
+		if (row != -1) {
 			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
 			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 			new GD_ChiTietXeMay(xeMay).setVisible(true);
-		}else {
+		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
 	}
-	
+
 	/**
 	 * Chuyển panel
+	 * 
 	 * @param newPanel
 	 */
 	public void setManHinh(JPanel newPanel) {
@@ -468,22 +471,21 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		this.validate();
 		this.repaint();
 	}
-	
+
 	/**
 	 * Cập nhật thông tin xe máy
 	 */
 	private void capNhatThongTinXe() {
 		int row = tblXeMay.getSelectedRow();
-		if(row !=-1 ) {
+		if (row != -1) {
 			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
 			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 			setManHinh(new GD_CapNhatXeMay(xeMay));
-		}else {
+		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
 		}
 	}
-	
-	
+
 	/**
 	 * Đăng kí sự kiện
 	 */
@@ -531,7 +533,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		if (o.equals(btnXoa)) {
 //			
 		}
-		if(o.equals(btnXemChiTiet)) {
+		if (o.equals(btnXemChiTiet)) {
 			xemChiTiet();
 		}
 		if (o.equals(mntmDongXe)) {
@@ -548,6 +550,45 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		}
 		if (o.equals(cboDongXe) || o.equals(cboGiaXe) || o.equals(cboHangXe) || o.equals(cboLoaiXe)
 				|| o.equals(cboMauXe) || o.equals(cboTimKiem) || o.equals(cboXuatXu)) {
+
+			if (o.equals(cboHangXe)  ) {
+
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				if (cboHangXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+							dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+				} else {
+					String tenHangXe = cboHangXe.getSelectedItem().toString();
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+
+					List<String> tenDongXes = dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+							.map(s -> s.getTenDongXe()).collect(Collectors.toList());
+
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(
+							XuLyChung.doiListThanhArray(dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+									.map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+					if (tenDongXes.contains(tenDongXe)) {
+						cboDongXe.setSelectedItem(tenDongXe);
+					}
+
+				}
+
+			}
+
+			if (o.equals(cboDongXe) ) {
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+
+				if (cboDongXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+
+				} else {
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+					DongXe dongXe = dongXeDao.getDongXeTheoTen(tenDongXe);
+					cboHangXe.setSelectedItem(dongXe.getHangXe().getTenHangXe());
+				}
+
+			}
+
 			this.page = 1;
 			capNhatXeMaysTrongBang();
 		}
@@ -597,6 +638,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	/**
 	 * Menu popup
+	 * 
 	 * @param component
 	 * @param popup
 	 */
@@ -620,5 +662,4 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		});
 	}
 
-	
 }
