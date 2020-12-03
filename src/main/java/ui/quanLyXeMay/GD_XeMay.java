@@ -28,7 +28,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -41,7 +43,6 @@ import entity.DongXe;
 import entity.XeMay;
 import other.DinhDangTien;
 import other.XuLyChung;
-import javax.swing.ScrollPaneConstants;
 
 public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	/**
@@ -73,7 +74,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 16;
+	private static final int SIZE = 17;
 
 	private XeMayDao xeMayDao;
 	private List<XeMay> xeMays;
@@ -86,12 +87,12 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	public GD_XeMay() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -99,13 +100,13 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneXeMay = new JScrollPane();
 		scrollPaneXeMay.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scrollPaneXeMay.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneXeMay.setBounds(33, 269, 1385, 590);
+		scrollPaneXeMay.setBounds(33, 278, 1727, 626);
 		add(scrollPaneXeMay);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -113,7 +114,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(641, 883, 218, 40);
+		btnXemChiTiet.setBounds(977, 937, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -131,20 +132,20 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTimKiem.setBounds(302, 83, 311, 30);
+		txtTimKiem.setBounds(273, 83, 526, 30);
 		add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Hãng:");
 		lblTngThuTrong_1_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1.setBounds(676, 83, 83, 30);
+		lblTngThuTrong_1_1.setBounds(920, 83, 83, 30);
 		add(lblTngThuTrong_1_1);
 
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHangXe.setBackground(Color.WHITE);
-		cboHangXe.setBounds(771, 83, 245, 30);
+		cboHangXe.setBounds(1015, 83, 245, 30);
 		add(cboHangXe);
 
 		JPopupMenu popupHang = new JPopupMenu();
@@ -157,13 +158,13 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		JLabel lblTngThuTrong_1_1_1 = new JLabel("Loại xe:");
 		lblTngThuTrong_1_1_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_1.setBounds(1071, 83, 83, 30);
+		lblTngThuTrong_1_1_1.setBounds(1404, 83, 83, 30);
 		add(lblTngThuTrong_1_1_1);
 
 		cboLoaiXe = new JComboBox<String>();
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
-		cboLoaiXe.setBounds(1173, 83, 245, 30);
+		cboLoaiXe.setBounds(1515, 83, 245, 30);
 		add(cboLoaiXe);
 
 		JPopupMenu popupLoaiXe = new JPopupMenu();
@@ -196,13 +197,13 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		JLabel lblTngThuTrong_1_1_2_1 = new JLabel("Xuất xứ:");
 		lblTngThuTrong_1_1_2_1.setForeground(Color.BLACK);
 		lblTngThuTrong_1_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_2_1.setBounds(407, 142, 83, 30);
+		lblTngThuTrong_1_1_2_1.setBounds(495, 142, 83, 30);
 		add(lblTngThuTrong_1_1_2_1);
 
 		cboXuatXu = new JComboBox<String>();
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
-		cboXuatXu.setBounds(514, 142, 197, 30);
+		cboXuatXu.setBounds(602, 142, 197, 30);
 		add(cboXuatXu);
 
 		JPopupMenu popupXuatXu = new JPopupMenu();
@@ -220,7 +221,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(33, 248, 1385, 11);
+		separator.setBounds(33, 248, 1727, 11);
 		add(separator);
 
 		btnDau = new JButton("");
@@ -228,7 +229,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
-		btnDau.setBounds(33, 883, 50, 40);
+		btnDau.setBounds(33, 937, 50, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
@@ -236,7 +237,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
-		btnTruoc.setBounds(106, 883, 50, 40);
+		btnTruoc.setBounds(106, 937, 50, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
@@ -244,7 +245,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
-		btnSau.setBounds(268, 883, 50, 40);
+		btnSau.setBounds(268, 937, 50, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
@@ -252,7 +253,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
-		btnCuoi.setBounds(346, 883, 50, 40);
+		btnCuoi.setBounds(346, 937, 50, 40);
 		add(btnCuoi);
 
 		txtTrang = new JTextField();
@@ -260,7 +261,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		txtTrang.setText("1");
 		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTrang.setColumns(10);
-		txtTrang.setBounds(182, 884, 60, 40);
+		txtTrang.setBounds(182, 938, 60, 40);
 		add(txtTrang);
 
 		btnThem = new JButton("Thêm");
@@ -268,7 +269,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
-		btnThem.setBounds(1258, 883, 160, 40);
+		btnThem.setBounds(1594, 937, 160, 40);
 		add(btnThem);
 
 		btnSua = new JButton("Sửa");
@@ -276,7 +277,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 102, 255));
-		btnSua.setBounds(1071, 883, 160, 40);
+		btnSua.setBounds(1407, 937, 160, 40);
 		add(btnSua);
 
 		btnXoa = new JButton("Xóa");
@@ -284,7 +285,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(886, 883, 160, 40);
+		btnXoa.setBounds(1222, 937, 160, 40);
 		add(btnXoa);
 
 		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành" };
@@ -308,23 +309,33 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
 		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
 		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblXeMay.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 
+		
 		JLabel lblM = new JLabel("Màu xe:");
 		lblM.setForeground(Color.BLACK);
 		lblM.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblM.setBounds(771, 142, 103, 30);
+		lblM.setBounds(920, 142, 83, 30);
 		add(lblM);
 
 		cboMauXe = new JComboBox<String>();
 		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboMauXe.setBackground(Color.WHITE);
-		cboMauXe.setBounds(889, 142, 120, 30);
+		cboMauXe.setBounds(1015, 142, 245, 30);
 		add(cboMauXe);
 
 		JLabel lblTngThuTrong_1_3 = new JLabel("Giá:");
 		lblTngThuTrong_1_3.setForeground(Color.BLACK);
 		lblTngThuTrong_1_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_3.setBounds(1071, 142, 103, 30);
+		lblTngThuTrong_1_3.setBounds(1404, 142, 103, 30);
 		add(lblTngThuTrong_1_3);
 
 		cboGiaXe = new JComboBox<String>();
@@ -332,7 +343,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 				new DefaultComboBoxModel<String>(new String[] { "Tất cả", "Dưới 25tr", "Từ 25tr-60tr", "Trên 60tr" }));
 		cboGiaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboGiaXe.setBackground(Color.WHITE);
-		cboGiaXe.setBounds(1173, 142, 245, 30);
+		cboGiaXe.setBounds(1515, 142, 245, 30);
 		add(cboGiaXe);
 		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));

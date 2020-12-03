@@ -18,10 +18,10 @@ import javax.swing.border.EmptyBorder;
 
 import dao.KhachHangDao;
 import entity.KhachHang;
+import other.DocSo;
 import other.XuLyThoiGian;
 
 public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
-
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -42,10 +42,11 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		this.maKhachHang = maKhachHang;
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 540);
+		setBounds(100, 100, 800, 415);
 		setLocationRelativeTo(null);
 		setTitle("Thông tin khách hàng");
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -89,8 +90,8 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(rigidArea_15);
 
 		lblMaKH = new JLabel("KH123456");
-		lblMaKH.setForeground(Color.GRAY);
-		lblMaKH.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblMaKH.setForeground(Color.BLACK);
+		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_1.add(lblMaKH);
 
 		Component horizontalGlue_1 = Box.createHorizontalGlue();
@@ -107,8 +108,8 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_1.add(rigidArea_15_1);
 
 		lblSoCMT = new JLabel("123456789012");
-		lblSoCMT.setForeground(Color.GRAY);
-		lblSoCMT.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblSoCMT.setForeground(Color.BLACK);
+		lblSoCMT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_1.add(lblSoCMT);
 
 		Component rigidArea_6 = Box.createRigidArea(new Dimension(20, 20));
@@ -132,8 +133,8 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_2.add(rigidArea_15_2);
 
 		lblTenKH = new JLabel("Nguyễn Trần Nhật Hào");
-		lblTenKH.setForeground(Color.GRAY);
-		lblTenKH.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTenKH.setForeground(Color.BLACK);
+		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_2.add(lblTenKH);
 
 		Component horizontalGlue_2 = Box.createHorizontalGlue();
@@ -150,8 +151,8 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_2.add(rigidArea_15_1_1);
 
 		lblNgaySinh = new JLabel("20/20/2020");
-		lblNgaySinh.setForeground(Color.GRAY);
-		lblNgaySinh.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNgaySinh.setForeground(Color.BLACK);
+		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_2.add(lblNgaySinh);
 
 		Component rigidArea_8 = Box.createRigidArea(new Dimension(20, 20));
@@ -175,8 +176,8 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_3.add(rigidArea_15_3);
 
 		lblSDT = new JLabel("0123456789");
-		lblSDT.setForeground(Color.GRAY);
-		lblSDT.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblSDT.setForeground(Color.BLACK);
+		lblSDT.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_3.add(lblSDT);
 
 		Component horizontalGlue_3 = Box.createHorizontalGlue();
@@ -200,15 +201,16 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_7.add(rigidArea_15_1_2);
 
 		lblDiaChi = new JLabel("Nơ Trang Long, Bình Thạnh, Thành phố Hồ Chí Minh");
-		lblDiaChi.setForeground(Color.GRAY);
-		lblDiaChi.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblDiaChi.setVerticalAlignment(SwingConstants.TOP);
+		lblDiaChi.setForeground(Color.BLACK);
+		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_7.add(lblDiaChi);
 
 		Component horizontalGlue_6 = Box.createHorizontalGlue();
 		horizontalBox_7.add(horizontalGlue_6);
 
 		Component rigidArea_18 = Box.createRigidArea(new Dimension(20, 20));
-		rigidArea_18.setPreferredSize(new Dimension(20, 130));
+		rigidArea_18.setPreferredSize(new Dimension(20, 40));
 		verticalBox.add(rigidArea_18);
 
 		Box horizontalBox_6 = Box.createHorizontalBox();
@@ -249,7 +251,7 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		lblTenKH.setText(khachHang.getHoTenKH());
 		lblSoCMT.setText(khachHang.getSoCMT());
 		lblSDT.setText(khachHang.getSoDienThoai());
-		lblDiaChi.setText(khachHang.getDiaChiKH());
+		lblDiaChi.setText("<html>" + khachHang.getDiaChiKH() + "</html>");
 		lblNgaySinh.setText(XuLyThoiGian.chuyenDateThanhString(khachHang.getNgaySinh()));
 	}
 

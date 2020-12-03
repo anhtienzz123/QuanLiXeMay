@@ -30,6 +30,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -38,6 +39,7 @@ import com.toedter.calendar.JDateChooser;
 import dao.HopDongDao;
 import entity.HopDong;
 import ui.App;
+import ui.quanLyHopDong.GD_HopDong;
 
 public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListener {
 	/**
@@ -46,39 +48,40 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
-	
+
 	private JButton btnDau;
 	private JButton btnTruoc;
 	private JButton btnSau;
 	private JButton btnCuoi;
 	private JButton btnXemChiTiet;
 	private JButton btnDanhMucBaoHanh;
-	
+
 	private DefaultTableModel modelBaoHanh;
 	private JTable tblBaoHanh;
-	
+
 	private JComboBox<String> cboTimKiem;
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 20;
-	
+	private static final int SIZE = 15;
+
 	private HopDongDao hopDongDao;
 	private List<HopDong> hopDongs;
 	private LocalDate date;
 	private JDateChooser txtNgay;
+	private JButton btnBoLoc;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_QuanLyBaoHanh() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -86,11 +89,11 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneBaoHanh = new JScrollPane();
-		scrollPaneBaoHanh.setBounds(29, 200, 1385, 532);
+		scrollPaneBaoHanh.setBounds(29, 213, 1736, 557);
 		add(scrollPaneBaoHanh);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -99,7 +102,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(1196, 753, 218, 40);
+		btnXemChiTiet.setBounds(1547, 805, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -138,7 +141,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
-		btnDau.setBounds(29, 753, 50, 40);
+		btnDau.setBounds(29, 805, 50, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
@@ -147,7 +150,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
-		btnTruoc.setBounds(102, 753, 50, 40);
+		btnTruoc.setBounds(102, 805, 50, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
@@ -155,7 +158,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
-		btnSau.setBounds(264, 753, 50, 40);
+		btnSau.setBounds(264, 805, 50, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
@@ -163,7 +166,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
-		btnCuoi.setBounds(342, 753, 50, 40);
+		btnCuoi.setBounds(342, 805, 50, 40);
 		add(btnCuoi);
 
 		txtTrang = new JTextField();
@@ -171,7 +174,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		txtTrang.setText("1");
 		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTrang.setColumns(10);
-		txtTrang.setBounds(178, 754, 60, 40);
+		txtTrang.setBounds(178, 805, 60, 40);
 		add(txtTrang);
 
 		String[] colHeaderHopDong = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
@@ -185,7 +188,25 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 			}
 		};
 		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblBaoHanh.setRowHeight(25);
+		tblBaoHanh.setRowHeight(35);
+		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(136);
+		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(3).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);
+		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);
+//		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(160);
+
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		tblBaoHanh.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblBaoHanh.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblBaoHanh.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		tblBaoHanh.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+		tblBaoHanh.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+//		tblBaoHanh.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 		scrollPaneBaoHanh.setViewportView(tblBaoHanh);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");
@@ -203,7 +224,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(txtNgay);
 
 		JPanel pnlLogo = new JPanel();
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
 		pnlLogo.setLayout(null);
 
@@ -212,15 +233,23 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnDanhMucBaoHanh = new JButton("Danh mục bảo hành");
 		btnDanhMucBaoHanh.setForeground(new Color(255, 255, 255));
 		btnDanhMucBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDanhMucBaoHanh.setBackground(new Color(0, 153, 255));
-		btnDanhMucBaoHanh.setBounds(906, 753, 257, 40);
+		btnDanhMucBaoHanh.setBounds(1219, 805, 257, 40);
 		add(btnDanhMucBaoHanh);
+
+		btnBoLoc = new JButton("Xóa tìm kiếm");
+		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnBoLoc.setForeground(Color.WHITE);
+		btnBoLoc.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnBoLoc.setBackground(Color.GRAY);
+		btnBoLoc.setBounds(1547, 81, 218, 35);
+		add(btnBoLoc);
 
 		/**
 		 * Đổi màu header cho table
@@ -300,6 +329,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 	/**
 	 * Thêm 1 hợp đồng vào bảng
+	 * 
 	 * @param hopDong
 	 */
 	private void themHopDonggVaoBang(HopDong hopDong) {

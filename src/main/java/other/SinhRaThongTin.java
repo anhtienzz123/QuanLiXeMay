@@ -1,6 +1,7 @@
 package other;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,7 @@ import constant.TenEntity;
 import dao.KhachHangDao;
 import dao.NhanVienHanhChinhDao;
 import dao.NhanVienKiThuatDao;
+import db.DatabaseConnect;
 import entity.KhachHang;
 import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
@@ -178,9 +180,9 @@ public class SinhRaThongTin {
 //	public static void main(String[] args) throws SQLException {
 //		DatabaseConnect.connect();
 //
-//		sinhVaLuuDanhSachThongTinKhachHang(10);
-//		sinhVaLuuDanhSachThongTinNhanVienHanhChinh(10);
-//		sinhVaLuuDanhSachThongTinNhanVienKiThuat(10);
+//		sinhVaLuuDanhSachThongTinKhachHang(50);
+//		sinhVaLuuDanhSachThongTinNhanVienHanhChinh(50);
+//		sinhVaLuuDanhSachThongTinNhanVienKiThuat(50);
 //
 //	}
 
