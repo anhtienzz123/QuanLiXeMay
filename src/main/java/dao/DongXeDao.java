@@ -54,6 +54,30 @@ public class DongXeDao {
 		return dongXes;
 	}
 
+	public List<DongXe> getDongXesTheoTenHangXe(String tenHangXe) {
+
+		List<DongXe> dongXes = new ArrayList<>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_TEN_HANG_XE);
+
+			preparedStatement.setString(1, tenHangXe);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				DongXe dongXe = DongXeConvert.getDongXe(resultSet);
+				dongXes.add(dongXe);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return dongXes;
+	}
+
 	public DongXe getDongXeTheoMa(String maDongXe) {
 
 		DongXe dongXe = null;
@@ -138,4 +162,5 @@ public class DongXeDao {
 
 		return true;
 	}
+
 }

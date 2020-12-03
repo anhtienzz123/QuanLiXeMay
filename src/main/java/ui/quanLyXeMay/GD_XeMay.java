@@ -39,6 +39,7 @@ import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
+import entity.DongXe;
 import entity.XeMay;
 import other.DinhDangTien;
 import other.XuLyChung;
@@ -560,6 +561,45 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		}
 		if (o.equals(cboDongXe) || o.equals(cboGiaXe) || o.equals(cboHangXe) || o.equals(cboLoaiXe)
 				|| o.equals(cboMauXe) || o.equals(cboTimKiem) || o.equals(cboXuatXu)) {
+
+			if (o.equals(cboHangXe)  ) {
+
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				if (cboHangXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
+							dongXeDao.getDongXes().stream().map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+				} else {
+					String tenHangXe = cboHangXe.getSelectedItem().toString();
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+
+					List<String> tenDongXes = dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+							.map(s -> s.getTenDongXe()).collect(Collectors.toList());
+
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(
+							XuLyChung.doiListThanhArray(dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+									.map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+
+					if (tenDongXes.contains(tenDongXe)) {
+						cboDongXe.setSelectedItem(tenDongXe);
+					}
+
+				}
+
+			}
+
+			if (o.equals(cboDongXe) ) {
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+
+				if (cboDongXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+
+				} else {
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+					DongXe dongXe = dongXeDao.getDongXeTheoTen(tenDongXe);
+					cboHangXe.setSelectedItem(dongXe.getHangXe().getTenHangXe());
+				}
+
+			}
+
 			this.page = 1;
 			capNhatXeMaysTrongBang();
 		}

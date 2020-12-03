@@ -41,6 +41,7 @@ import dao.XeMayDao;
 import dao.XuatXuDao;
 import db.DatabaseConnect;
 import entity.ChiTietHoaDon;
+import entity.DongXe;
 import entity.HoaDon;
 import entity.KhachHang;
 import entity.NhanVienHanhChinh;
@@ -67,7 +68,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	private JTextField txtTrang;
 	private JTextField txtTienKhachTra;
 	private JTextField txtSoLuong;
-	private JLabel lblBangChu;
+	//private JLabel lblBangChu;
 
 	private JButton btnThem;
 	private JButton btnDau;
@@ -815,11 +816,57 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 		if (source == cboHangXe || source == cboLoaiXe || source == cboMauXe || source == cboDongXe
 				|| source == cboXuatXu || source == cboGiaXe) {
+
+			if (source == cboHangXe) {
+				
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				if (cboHangXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(
+							XuLyChung.doiListThanhArray(dongXeDao.getDongXes().stream()
+									.map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+				} else {
+					String tenHangXe = cboHangXe.getSelectedItem().toString();
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+					
+					List<String> tenDongXes = dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+							.map(s -> s.getTenDongXe()).collect(Collectors.toList());
+					
+					cboDongXe.setModel(new DefaultComboBoxModel<String>(
+							XuLyChung.doiListThanhArray(dongXeDao.getDongXesTheoTenHangXe(tenHangXe).stream()
+									.map(s -> s.getTenDongXe()).collect(Collectors.toList()))));
+					
+					if(tenDongXes.contains(tenDongXe)) {
+						cboDongXe.setSelectedItem(tenDongXe);
+					}
+					
+					
+				}
+
+			}
+			
+			if(source == cboDongXe) {
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				
+				if(cboDongXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
+					
+				}else {
+					String tenDongXe = cboDongXe.getSelectedItem().toString();
+					DongXe dongXe = dongXeDao.getDongXeTheoTen(tenDongXe);
+					cboHangXe.setSelectedItem(dongXe.getHangXe().getTenHangXe());
+				}
+				
+			}
+			
 			this.page = 1;
 			capNhatXeMaysTrongBang();
+
+			
+
 		}
 
-		if (source == cboTimKiem) {
+		if (source == cboTimKiem)
+
+		{
 			this.page = 1;
 			txtTimKiem.setText("");
 			capNhatXeMaysTrongBang();
@@ -878,7 +925,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 				System.out.println(hoaDon);
 				if (hoaDonDao.themHoaDon(this.hoaDon)) {
 
-//					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
+					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
 					hoaDon = null;
 					capNhatHoaDon();
 					capNhatKhachHang(null);
@@ -1008,7 +1055,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, SIZE);
-		// System.out.println("maxPage: " + maxPage);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, from, to);
 
