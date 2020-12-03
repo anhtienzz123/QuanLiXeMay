@@ -65,6 +65,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 	private int page = 1;
 	private int maxPage = 0;
 	private static final int SIZE = 16;
+	@SuppressWarnings("unused")
 	private String field = "";
 	private JComboBox<String> cboTimKiem;
 	private String maNVThaoTac; //

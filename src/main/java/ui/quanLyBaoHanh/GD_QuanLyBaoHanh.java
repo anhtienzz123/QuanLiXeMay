@@ -177,8 +177,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		txtTrang.setBounds(178, 805, 60, 40);
 		add(txtTrang);
 
-		String[] colHeaderHopDong = { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhân viên", "Mã khách hàng",
-				"Tên khách hàng", "ngày lập hóa đơn" };
+		String[] colHeaderHopDong = {"STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng",
+				"Tên khách hàng", "ngày lập hóa đơn"};
 		modelBaoHanh = new DefaultTableModel(colHeaderHopDong, 0);
 		tblBaoHanh = new JTable(modelBaoHanh) {
 			private static final long serialVersionUID = 1L;
@@ -196,7 +196,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);
 		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);
 		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);
-//		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(160);
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -206,7 +206,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		tblBaoHanh.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 		tblBaoHanh.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 		tblBaoHanh.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
-//		tblBaoHanh.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
+		tblBaoHanh.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 		scrollPaneBaoHanh.setViewportView(tblBaoHanh);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");
