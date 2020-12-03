@@ -64,7 +64,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 	private LocalDate date;
 	private int page = 1;
 	private int maxPage = 2;
-	private static final int SIZE = 16;
+	private static final int SIZE = 15;
 	private HoaDonDao hoaDonDao;
 	private List<HoaDon> hoaDons;
 	
@@ -95,7 +95,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneHoaDon = new JScrollPane();
-		scrollPaneHoaDon.setBounds(29, 200, 1727, 575);
+		scrollPaneHoaDon.setBounds(29, 218, 1727, 557);
 		add(scrollPaneHoaDon);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");

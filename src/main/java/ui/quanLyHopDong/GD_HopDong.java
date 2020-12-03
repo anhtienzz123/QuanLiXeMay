@@ -58,7 +58,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 	private int page = 1;
 	private int maxPage = 0;
 	private JComboBox<String> cboTimKiem;
-	private static final int SIZE = 16;
+	private static final int SIZE = 15;
 	private HopDongDao hopDongDao;
 	private List<HopDong> hopDongs;
 	private LocalDate date;
@@ -89,7 +89,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneHopDong = new JScrollPane();
-		scrollPaneHopDong.setBounds(29, 200, 1736, 570);
+		scrollPaneHopDong.setBounds(29, 213, 1736, 557);
 		add(scrollPaneHopDong);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
