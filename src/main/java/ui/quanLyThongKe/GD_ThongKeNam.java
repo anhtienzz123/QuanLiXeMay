@@ -192,10 +192,10 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 //		Random r = new Random();
-		dataset.addValue(110, "Doanh thu", "Quý 1");
-		dataset.addValue(90, "Doanh thu", "Quý 2");
-		dataset.addValue(130, "Doanh thu", "Quý 3");
-		dataset.addValue(140, "Doanh thu", "Quý 4");
+		dataset.addValue(thongKeDao.getDoanhThuQuyTrongNam(1, this.nam), "Doanh thu", "Quý 1");
+		dataset.addValue(thongKeDao.getDoanhThuQuyTrongNam(2, this.nam), "Doanh thu", "Quý 2");
+		dataset.addValue(thongKeDao.getDoanhThuQuyTrongNam(3, this.nam), "Doanh thu", "Quý 3");
+		dataset.addValue(thongKeDao.getDoanhThuQuyTrongNam(4, this.nam), "Doanh thu", "Quý 4");
 
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu các quý trong năm".toUpperCase(), "Quý",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
@@ -236,7 +236,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		renderer.setDefaultItemLabelsVisible(true);
 		ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.TOP_CENTER);
 		renderer.setDefaultNegativeItemLabelPosition(position);
-		
+
 //		Đổi màu các cột
 		BarRenderer render = (BarRenderer) barChart.getCategoryPlot().getRenderer();
 

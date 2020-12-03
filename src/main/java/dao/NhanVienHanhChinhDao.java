@@ -268,5 +268,7 @@ public class NhanVienHanhChinhDao {
 		}
 		return (int) Math.ceil(maxPage * 1.00 / size);
 	}
+	
+	
 
 }

@@ -324,7 +324,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		JScrollPane scrollPaneHoaDon = new JScrollPane();
 		scrollPaneHoaDon.setBounds(911, 277, 849, 316);
 		add(scrollPaneHoaDon);
-		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số lượng", "Giá Bán", "Tổng tiền" };
+		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số lượng", "Giá Bán", "Thuế", "Tổng tiền" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -797,7 +797,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 
 				if (xeMay.getSoLuong() >= soLuong) {
 					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(lblMaHoaDon.getText()), xeMay,
-							xeMay.getGiaNhap(), soLuong);
+							xeMay.tinhGiaBan() + xeMay.getThue(), soLuong);
 					xeMay.setSoLuong(xeMay.getSoLuong() - soLuong);
 					xeMayDao.capNhatXeMay(xeMay);
 
@@ -1015,12 +1015,13 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		xoaDuLieuChiTietHoaDonsTrongBang();
 		if (hoaDon != null) {
 			for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
-				Object[] datas = new Object[5];
+				Object[] datas = new Object[6];
 				datas[0] = tblHoaDon.getRowCount() + 1;
 				datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
 				datas[2] = chiTietHoaDon.getSoLuong();
-				datas[3] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
-				datas[4] = DinhDangTien.format(chiTietHoaDon.tinhTongTien());
+				datas[3] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhGiaBan());
+				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().getThue());
+				datas[5] = DinhDangTien.format(chiTietHoaDon.tinhTongTien());
 
 				modelHoaDon.addRow(datas);
 			}
