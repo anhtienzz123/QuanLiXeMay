@@ -24,12 +24,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -68,18 +70,20 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 	
 	private String maNhanVienHanhChinh;
 
+	private JButton btnBoloc;
+
 	/**
 	 * Create the panel.
 	 */
 	public GD_HoaDon(String maNhanVienHanhChinh) {
 		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -87,11 +91,11 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneHoaDon = new JScrollPane();
-		scrollPaneHoaDon.setBounds(29, 200, 1385, 532);
+		scrollPaneHoaDon.setBounds(29, 200, 1727, 575);
 		add(scrollPaneHoaDon);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -99,7 +103,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(937, 753, 218, 40);
+		btnXemChiTiet.setBounds(1286, 809, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -132,7 +136,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(29, 176, 1385, 11);
+		separator.setBounds(29, 176, 1727, 11);
 		add(separator);
 
 		btnDau = new JButton("");
@@ -140,7 +144,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
-		btnDau.setBounds(29, 753, 50, 40);
+		btnDau.setBounds(29, 809, 50, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
@@ -148,7 +152,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
-		btnTruoc.setBounds(102, 753, 50, 40);
+		btnTruoc.setBounds(102, 809, 50, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
@@ -156,7 +160,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
-		btnSau.setBounds(264, 753, 50, 40);
+		btnSau.setBounds(264, 809, 50, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
@@ -164,7 +168,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
-		btnCuoi.setBounds(342, 753, 50, 40);
+		btnCuoi.setBounds(342, 809, 50, 40);
 		add(btnCuoi);
 
 		txtTrang = new JTextField();
@@ -172,7 +176,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		txtTrang.setText("1");
 		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTrang.setColumns(10);
-		txtTrang.setBounds(178, 754, 60, 40);
+		txtTrang.setBounds(178, 810, 60, 40);
 		add(txtTrang);
 
 		btnLapHoaDon = new JButton("Lập hóa đơn");
@@ -181,7 +185,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnLapHoaDon.setForeground(Color.WHITE);
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLapHoaDon.setBackground(new Color(58, 181, 74));
-		btnLapHoaDon.setBounds(1204, 753, 203, 40);
+		btnLapHoaDon.setBounds(1553, 809, 203, 40);
 		add(btnLapHoaDon);
 
 		String[] colHeaderXeMay = { "STT", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
@@ -198,10 +202,23 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		tblHoaDon.setRowHeight(35);
 		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(74);
 		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(600);
-		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(300);
-		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(475);
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(475);
+		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(200);
 		scrollPaneHoaDon.setViewportView(tblHoaDon);
+		
+
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
+//		tblHoaDon.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hóa đơn:");
 		lblTngThuTrong_1_1.setForeground(Color.BLACK);
@@ -218,7 +235,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(txtNgay);
 
 		JPanel pnlLogo = new JPanel();
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
 		pnlLogo.setLayout(null);
 
@@ -227,8 +244,17 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
+		
+		 btnBoloc = new JButton("Xóa tìm kiếm");
+		 btnBoloc.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnBoloc.setToolTipText("Xóa tìm kiếm\r\n");
+		btnBoloc.setForeground(Color.WHITE);
+		btnBoloc.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnBoloc.setBackground(Color.GRAY);
+		btnBoloc.setBounds(1538, 81, 218, 35);
+		add(btnBoloc);
 
 		/**
 		 * Đổi màu header cho table
@@ -252,6 +278,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		btnLapHoaDon.addActionListener(this);
 		btnTruoc.addActionListener(this);
 		tblHoaDon.addMouseListener(this);
+		
+		btnBoloc.addActionListener(this);
 		
 		cboTimKiem.addActionListener(this);
 		txtTimKiem.addKeyListener(this);
@@ -286,11 +314,13 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		}
 		if (source.equals(btnXemChiTiet)) {
 			int row = tblHoaDon.getSelectedRow();
-			
-			String maHoaDon= hoaDons.get(row).getMaHoaDon();
-			
-
-			new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+			if(row >= 0) {
+				String maHoaDon= hoaDons.get(row).getMaHoaDon();
+				new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "Bạn chưa chọn hóa đơn để xem");
+			}
 		}
 
 		if (source == btnDau) {
@@ -415,5 +445,4 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		// TODO Auto-generated method stub
 
 	}
-
 }

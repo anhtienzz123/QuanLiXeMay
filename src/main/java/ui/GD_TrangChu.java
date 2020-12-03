@@ -22,6 +22,7 @@ import javax.swing.SwingConstants;
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
 import ui.quanLyXeMay.GD_ThemXeMay;
+import javax.swing.JSpinner;
 
 
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
@@ -66,12 +67,12 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 //		maNhanVienHanhChinh = "NV180556";
 		
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -80,14 +81,14 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBackground(Color.WHITE);
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Thông tin nhân viên:");
 		lblNewLabel_1.setForeground(new Color(58, 181, 74));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblNewLabel_1.setBackground(new Color(102, 102, 255));
-		lblNewLabel_1.setBounds(924, 410, 266, 50);
+		lblNewLabel_1.setBounds(1096, 410, 266, 50);
 		add(lblNewLabel_1);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Liên kết nhanh:");
@@ -99,7 +100,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JSeparator separator = new JSeparator();
 		separator.setBackground(new Color(58, 181, 74));
-		separator.setBounds(924, 450, 501, 30);
+		separator.setBounds(1096, 450, 501, 30);
 		add(separator);
 
 		JSeparator separator_1 = new JSeparator();
@@ -111,52 +112,52 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblMNV.setForeground(Color.BLACK);
 		lblMNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblMNV.setBackground(new Color(102, 102, 255));
-		lblMNV.setBounds(924, 457, 159, 50);
+		lblMNV.setBounds(1096, 457, 159, 50);
 		add(lblMNV);
 
 		lblMaNhanVien = new JLabel("NV123456");
 		lblMaNhanVien.setForeground(Color.BLACK);
 		lblMaNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblMaNhanVien.setBackground(new Color(102, 102, 255));
-		lblMaNhanVien.setBounds(1124, 457, 171, 50);
+		lblMaNhanVien.setBounds(1296, 457, 171, 50);
 		add(lblMaNhanVien);
 
 		JLabel lblTNV = new JLabel("Tên nhân viên:");
 		lblTNV.setForeground(Color.BLACK);
 		lblTNV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTNV.setBackground(new Color(102, 102, 255));
-		lblTNV.setBounds(924, 502, 188, 50);
+		lblTNV.setBounds(1096, 502, 188, 50);
 		add(lblTNV);
 
 		lblTenNhanVien = new JLabel("ABCDE");
 		lblTenNhanVien.setForeground(Color.BLACK);
 		lblTenNhanVien.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblTenNhanVien.setBackground(new Color(102, 102, 255));
-		lblTenNhanVien.setBounds(1124, 502, 264, 50);
+		lblTenNhanVien.setBounds(1296, 502, 264, 50);
 		add(lblTenNhanVien);
 
 		JSeparator separator_1_1 = new JSeparator();
 		separator_1_1.setBackground(new Color(58, 181, 74));
-		separator_1_1.setBounds(25, 710, 1400, 12);
+		separator_1_1.setBounds(25, 752, 1738, 12);
 		add(separator_1_1);
 
 		JLabel lblChcV = new JLabel("Chức vụ:");
 		lblChcV.setForeground(Color.BLACK);
 		lblChcV.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblChcV.setBackground(new Color(102, 102, 255));
-		lblChcV.setBounds(924, 547, 159, 50);
+		lblChcV.setBounds(1096, 547, 159, 50);
 		add(lblChcV);
 
 		lblChucVu = new JLabel("Nhân viên bán hàng");
 		lblChucVu.setForeground(Color.BLACK);
 		lblChucVu.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblChucVu.setBackground(new Color(102, 102, 255));
-		lblChucVu.setBounds(1124, 547, 264, 50);
+		lblChucVu.setBounds(1296, 547, 264, 50);
 		add(lblChucVu);
 
 		pnlLapHoaDon = new JPanel();
 		pnlLapHoaDon.setBackground(new Color(58, 181, 74));
-		pnlLapHoaDon.setBounds(87, 115, 278, 165);
+		pnlLapHoaDon.setBounds(87, 131, 278, 165);
 		add(pnlLapHoaDon);
 		pnlLapHoaDon.setLayout(null);
 
@@ -175,7 +176,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setLayout(null);
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 874, 1800, 133);
 		add(pnlLogo);
 
 		JLabel lblLogo = new JLabel("");
@@ -184,14 +185,14 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 //		JPanel pnlAnh = new DongHoAnalog();
 		pnlAnh = new JPanel();
 		pnlAnh.setBackground(Color.WHITE);
 		pnlAnh.setLayout(null);
-		pnlAnh.setBounds(991, 92, 317, 300);
+		pnlAnh.setBounds(1163, 92, 317, 300);
 		add(pnlAnh);
 		
 		lblAnh = new JLabel();
@@ -212,7 +213,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemKhachHang = new JPanel();
 		pnlThemKhachHang.setLayout(null);
 		pnlThemKhachHang.setBackground(new Color(58, 181, 74));
-		pnlThemKhachHang.setBounds(549, 115, 278, 165);
+		pnlThemKhachHang.setBounds(549, 131, 278, 165);
 		add(pnlThemKhachHang);
 
 		lblThemKhachHang = new JLabel("Thêm khách hàng");
@@ -231,7 +232,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlTroGiup = new JPanel();
 		pnlTroGiup.setLayout(null);
 		pnlTroGiup.setBackground(new Color(58, 181, 74));
-		pnlTroGiup.setBounds(87, 517, 278, 165);
+		pnlTroGiup.setBounds(87, 537, 278, 165);
 		add(pnlTroGiup);
 
 		lblTroGiup = new JLabel("Trợ giúp");
@@ -250,7 +251,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlBaoHanh = new JPanel();
 		pnlBaoHanh.setLayout(null);
 		pnlBaoHanh.setBackground(new Color(58, 181, 74));
-		pnlBaoHanh.setBounds(87, 314, 278, 165);
+		pnlBaoHanh.setBounds(87, 330, 278, 165);
 		add(pnlBaoHanh);
 
 		lblBaoHanh = new JLabel("Bảo hành");
@@ -269,7 +270,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemXeMay = new JPanel();
 		pnlThemXeMay.setLayout(null);
 		pnlThemXeMay.setBackground(new Color(58, 181, 74));
-		pnlThemXeMay.setBounds(549, 314, 278, 165);
+		pnlThemXeMay.setBounds(549, 330, 278, 165);
 		add(pnlThemXeMay);
 
 		lblIconThemXeMay = new JLabel("");
@@ -288,7 +289,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemNhanVien = new JPanel();
 		pnlThemNhanVien.setLayout(null);
 		pnlThemNhanVien.setBackground(new Color(58, 181, 74));
-		pnlThemNhanVien.setBounds(549, 517, 278, 165);
+		pnlThemNhanVien.setBounds(549, 537, 278, 165);
 		add(pnlThemNhanVien);
 
 		lblThemNhanVien = new JLabel("Thêm nhân viên");
@@ -308,7 +309,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblCaHngMotor.setForeground(Color.BLACK);
 		lblCaHngMotor.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblCaHngMotor.setBackground(new Color(102, 102, 255));
-		lblCaHngMotor.setBounds(87, 714, 364, 50);
+		lblCaHngMotor.setBounds(87, 756, 364, 50);
 		add(lblCaHngMotor);
 
 		listDanhMuc = new ArrayList<DanhMuc>();
@@ -330,7 +331,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblaCh.setForeground(Color.BLACK);
 		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblaCh.setBackground(new Color(102, 102, 255));
-		lblaCh.setBounds(87, 759, 1004, 50);
+		lblaCh.setBounds(87, 801, 1004, 50);
 		add(lblaCh);
 
 		btnDoiMatKhau = new JButton("Đổi mật khẩu");
@@ -338,7 +339,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		btnDoiMatKhau.setBackground(Color.GRAY);
 		btnDoiMatKhau.setForeground(Color.WHITE);
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnDoiMatKhau.setBounds(1224, 656, 201, 35);
+		btnDoiMatKhau.setBounds(1396, 647, 201, 35);
 		
 		this.
 		add(btnDoiMatKhau);

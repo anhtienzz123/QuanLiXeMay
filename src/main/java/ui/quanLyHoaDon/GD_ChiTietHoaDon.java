@@ -17,6 +17,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -261,16 +262,25 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		tblHoaDon.setBackground(Color.WHITE);
 		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHoaDon.setRowHeight(30);
-		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(35);
-		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(70);
-		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(80);
-		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(85);
-		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(85);
-		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(61);
-		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(80);
-		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(63);
+		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(100);
+		
+		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(300);
+		
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(100);
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(100);
+		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(100);
+		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(78);
+		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(100);
 		scrollPane.setViewportView(tblHoaDon);
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
+		tblHoaDon.getColumnModel().getColumn(8).setCellRenderer( centerRenderer );
 
 		JTableHeader tableHeaderNVKyThuat = tblHoaDon.getTableHeader();
 		tableHeaderNVKyThuat.setBackground(new Color(58, 181, 74));

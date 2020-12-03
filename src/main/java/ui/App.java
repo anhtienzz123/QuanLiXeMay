@@ -66,7 +66,8 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(App.class.getResource("/img/motorbike_helmet_100px.png")));
 		setTitle("Quản Lý mua bán xe máy");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1600, 1000);
+		setBounds(100, 100, 1920, 1060);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);

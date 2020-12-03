@@ -68,7 +68,7 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 		
 		// Kiểm tra xem ảnh có null không
 				Optional<String> optional = Optional.ofNullable(nhanVienKiThuat.getTenAnh());
-				if (!optional.isPresent()) {
+				if (optional.isPresent()) {
 					lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienKiThuat.getTenAnh().trim()).getImage()
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 				}else {

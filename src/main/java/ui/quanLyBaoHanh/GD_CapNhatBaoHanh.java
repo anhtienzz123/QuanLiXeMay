@@ -168,6 +168,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		
 		tblBaoHanh.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		tblBaoHanh.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 

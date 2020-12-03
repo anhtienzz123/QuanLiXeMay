@@ -190,13 +190,13 @@ public class RandomThongTin {
 		List<String> quocGiaSanXuats = Arrays.asList("1", "4", "5", "2", "3", "J", "K", "S", "W", "Y");
 		List<String> nhaSanXuats = Arrays.asList("A", "B", "G", "L", "N");
 		StringBuffer result = new StringBuffer("");
-		result.append(quocGiaSanXuats.get(random.nextInt(quocGiaSanXuats.size())));
-		result.append(nhaSanXuats.get(random.nextInt(nhaSanXuats.size())));
-		result.append(random.nextInt(10));
-		result.append(RandomStringUtils.randomAlphabetic(2));
-		result.append(RandomStringUtils.randomNumeric(2));
-		result.append(RandomStringUtils.randomAlphabetic(1));
-		result.append(RandomStringUtils.randomNumeric(9));
+		result.append(quocGiaSanXuats.get(random.nextInt(quocGiaSanXuats.size())));//1
+		result.append(nhaSanXuats.get(random.nextInt(nhaSanXuats.size())));//2
+		result.append(random.nextInt(10));//3
+		result.append(RandomStringUtils.randomAlphabetic(2));//4-5
+		result.append(RandomStringUtils.randomNumeric(2));//6-7
+		result.append(RandomStringUtils.randomAlphabetic(1));//8
+		result.append(RandomStringUtils.randomNumeric(9));//9-17
 		return result.toString().toUpperCase();
 	}
 
@@ -208,7 +208,7 @@ public class RandomThongTin {
 
 	public static void main(String[] args) {
 
-		System.out.println(randomDiaChi());
+		System.out.println(randomSoKhungXeMay());
+		System.out.println(randomSoSuon());
 	}
-
 }
