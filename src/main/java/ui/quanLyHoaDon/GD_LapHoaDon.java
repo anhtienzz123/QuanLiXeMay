@@ -1085,7 +1085,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
 		datas[4] = xeMay.getMauXe();
 		datas[5] = xeMay.getSoLuong();
-		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
+		datas[6] = DinhDangTien.format(xeMay.tinhGiaBan());
 
 		modelXe.addRow(datas);
 	}
