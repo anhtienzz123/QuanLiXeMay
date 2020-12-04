@@ -64,7 +64,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	/**
 	 * Create the panel.
 	 */
-	public GD_TrangChu(String maNhanVienHanhChinh) {
+	public GD_TrangChu(String maNhanVienHanhChinh, JPanel pnlMenu) {
 		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 //		maNhanVienHanhChinh = "NV180556";
 
@@ -107,7 +107,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(58, 181, 74));
-		separator_1.setBounds(67, 92, 790, 30);
+		separator_1.setBounds(67, 92, 945, 30);
 		add(separator_1);
 
 		JLabel lblMNV = new JLabel("Mã nhân viên:");
@@ -159,7 +159,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		pnlLapHoaDon = new JPanel();
 		pnlLapHoaDon.setBackground(new Color(58, 181, 74));
-		pnlLapHoaDon.setBounds(87, 131, 278, 165);
+		pnlLapHoaDon.setBounds(177, 131, 278, 165);
 		add(pnlLapHoaDon);
 		pnlLapHoaDon.setLayout(null);
 
@@ -215,7 +215,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemKhachHang = new JPanel();
 		pnlThemKhachHang.setLayout(null);
 		pnlThemKhachHang.setBackground(new Color(58, 181, 74));
-		pnlThemKhachHang.setBounds(549, 131, 278, 165);
+		pnlThemKhachHang.setBounds(639, 131, 278, 165);
 		add(pnlThemKhachHang);
 
 		lblThemKhachHang = new JLabel("Thêm khách hàng");
@@ -234,7 +234,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlTroGiup = new JPanel();
 		pnlTroGiup.setLayout(null);
 		pnlTroGiup.setBackground(new Color(58, 181, 74));
-		pnlTroGiup.setBounds(87, 537, 278, 165);
+		pnlTroGiup.setBounds(177, 537, 278, 165);
 		add(pnlTroGiup);
 
 		lblTroGiup = new JLabel("Trợ giúp");
@@ -253,7 +253,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlBaoHanh = new JPanel();
 		pnlBaoHanh.setLayout(null);
 		pnlBaoHanh.setBackground(new Color(58, 181, 74));
-		pnlBaoHanh.setBounds(87, 330, 278, 165);
+		pnlBaoHanh.setBounds(177, 330, 278, 165);
 		add(pnlBaoHanh);
 
 		lblBaoHanh = new JLabel("Bảo hành");
@@ -272,7 +272,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemXeMay = new JPanel();
 		pnlThemXeMay.setLayout(null);
 		pnlThemXeMay.setBackground(new Color(58, 181, 74));
-		pnlThemXeMay.setBounds(549, 330, 278, 165);
+		pnlThemXeMay.setBounds(639, 330, 278, 165);
 		add(pnlThemXeMay);
 
 		lblIconThemXeMay = new JLabel("");
@@ -291,7 +291,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemNhanVien = new JPanel();
 		pnlThemNhanVien.setLayout(null);
 		pnlThemNhanVien.setBackground(new Color(58, 181, 74));
-		pnlThemNhanVien.setBounds(549, 537, 278, 165);
+		pnlThemNhanVien.setBounds(639, 537, 278, 165);
 		add(pnlThemNhanVien);
 
 		lblThemNhanVien = new JLabel("Thêm nhân viên");
@@ -327,7 +327,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblIconBaoHanh));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblThemNhanVien));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblIconThemNhanVien));
-		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh);
+		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh, pnlMenu);
 
 		JLabel lblaCh = new JLabel("Địa chỉ: 151 điện biên phủ, phường 15, quận bình thạnh, Thành phố Hồ Chí Minh");
 		lblaCh.setForeground(Color.BLACK);

@@ -6,6 +6,9 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="ImgNhanVien"/>
+	<classpathentry kind="src" path="Img"/>
+	<classpathentry kind="src" path="ImgXe"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="test" value="true"/>

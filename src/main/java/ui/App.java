@@ -347,7 +347,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		Component vG = Box.createVerticalGlue();
 		vB.add(vG);
 
-		ChuyenManHinh chuyen = new ChuyenManHinh(pnlManHinhChinh, maNhanVien);
+		ChuyenManHinh chuyen = new ChuyenManHinh(pnlManHinhChinh, maNhanVien, pnlMenu);
 		chuyen.setManHinh(pnlTrangChu, lblTrangChu);
 
 		List<DanhMuc> listDanhMuc = new ArrayList<>();

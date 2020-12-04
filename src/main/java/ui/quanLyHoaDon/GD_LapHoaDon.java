@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -55,7 +57,7 @@ import ui.quanLyXeMay.GD_ChiTietXeMay;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
 
-public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener {
+public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener, MouseListener {
 	/**
 	 * 
 	 */
@@ -725,6 +727,9 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	}
 
 	private void dangKiSuKien() {
+		txtSoDienThoai.addMouseListener(this);
+		txtSoCMT.addMouseListener(this);
+		
 		txtSoDienThoai.addActionListener(this);
 		txtSoCMT.addActionListener(this);
 		txtTienKhachTra.addActionListener(this);
@@ -1180,6 +1185,39 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener 
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getClickCount()==2) {
+			txtSoDienThoai.setEditable(true);
+			txtSoCMT.setEditable(true);
+		}
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
