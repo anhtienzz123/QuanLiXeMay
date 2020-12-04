@@ -42,7 +42,7 @@ public class BatRegex {
 
 	public static boolean kiemTraSoDienThoai(JTextField text) {
 
-		String regex = "^0\\d{9}$";
+		String regex = ("(^(03)[2-9]\\d{7})|(^(07)[06-9]\\d{7})|(^(08)[1-5]\\d{7})|(^(056)\\d{7})|(^(058)\\d{7})|(^(059)\\d{7})|(^(09)[0-46-9]\\d{7})");
 
 		if (text.getText().matches(regex))
 			return true;

@@ -208,7 +208,7 @@ public class RandomThongTin {
 
 	public static void main(String[] args) {
 
-		System.out.println(randomDiaChi());
+		
 	}
 
 }

@@ -367,13 +367,13 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		btnResetMK.setBackground(Color.GRAY);
 		btnResetMK.setBounds(790, 139, 227, 35);
 		pnlNVHanhChinh.add(btnResetMK);
+		
+				JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
+				lblThongBao.setBounds(12, 197, 1043, 30);
+				pnlNVHanhChinh.add(lblThongBao);
+				lblThongBao.setForeground(Color.RED);
+				lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnMK.setVisible(false);
-
-		JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThongBao.setBounds(41, 693, 1043, 30);
-		add(lblThongBao);
 
 		JLabel lblLoaiNV = new JLabel("Nhân viên hành chính");
 		lblLoaiNV.setForeground(Color.BLACK);
