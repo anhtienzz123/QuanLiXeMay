@@ -24,7 +24,13 @@ import javax.swing.table.JTableHeader;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
@@ -53,14 +59,14 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	 */
 	public GD_ThongKeNgay() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 717));
+		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
 
 		JScrollPane scrollPaneDoanhThu = new JScrollPane();
-		scrollPaneDoanhThu.setBounds(854, 104, 562, 532);
+		scrollPaneDoanhThu.setBounds(854, 104, 870, 571);
 		add(scrollPaneDoanhThu);
 
-		String[] colHeaderDoanhThu = {"Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
+		String[] colHeaderDoanhThu = { "STT", "Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
 		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
 		tblDoanhThu = new JTable(modelDoanhThu) {
 			private static final long serialVersionUID = 1L;
@@ -74,7 +80,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 			}
 		};
 		tblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblDoanhThu.setRowHeight(25);
+		tblDoanhThu.setRowHeight(35);
 		scrollPaneDoanhThu.setViewportView(tblDoanhThu);
 
 		/**
@@ -87,16 +93,20 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 //		Auto setSize
 //		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(150);
-		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(50);
-		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(200);
-	
+		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(50);
+		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(140);
+		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(300);
+		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(180);
+		tblDoanhThu.getColumnModel().getColumn(4).setPreferredWidth(200);
+
 		tblDoanhThu.setShowGrid(false);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		Center value
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblDoanhThu.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblDoanhThu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 		/**
 		 * Đổi màu các dòng chẵn
 		 */
@@ -121,7 +131,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 		khoiTao();
 		pnlThongKe = new JPanel();
-		pnlThongKe.setBounds(31, 51, 777, 620);
+		pnlThongKe.setBounds(0, 51, 808, 684);
 		add(pnlThongKe);
 		setDataToChart1(pnlThongKe);
 
@@ -130,7 +140,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnXemChiTiet.setBounds(1249, 649, 166, 30);
+		btnXemChiTiet.setBounds(1558, 705, 166, 30);
 		add(btnXemChiTiet);
 		btnXemChiTiet.addActionListener(this);
 
@@ -155,10 +165,11 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 		for (OutputNhanVien_HoaDonLap outputNhanVien_HoaDonLap : result) {
 			Object[] datas = new Object[5];
-			datas[0] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
-			datas[1] = outputNhanVien_HoaDonLap.getHoTenNV();
-			datas[2] = outputNhanVien_HoaDonLap.getSoLuong();
-			datas[3] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
+			datas[0] = tblDoanhThu.getRowCount() + 1;
+			datas[1] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
+			datas[2] = outputNhanVien_HoaDonLap.getHoTenNV();
+			datas[3] = outputNhanVien_HoaDonLap.getSoLuong();
+			datas[4] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
 
 			modelDoanhThu.addRow(datas);
 		}
@@ -166,7 +177,6 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	}
 
 	public void setDataToChart1(JPanel jpnItem) {
-
 		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(localDate.getMonthValue(),
 				localDate.getYear());
 
@@ -178,6 +188,13 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu của tháng hiện tại".toUpperCase(), "Ngày",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+
+//		Điền giá trị lên trên cột
+		CategoryItemRenderer renderer = ((CategoryPlot) barChart.getPlot()).getRenderer();
+		renderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		renderer.setDefaultItemLabelsVisible(true);
+		ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.TOP_CENTER);
+		renderer.setDefaultNegativeItemLabelPosition(position);
 
 		ChartPanel chartPanel = new ChartPanel(barChart);
 		chartPanel.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));

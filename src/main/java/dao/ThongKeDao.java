@@ -313,4 +313,30 @@ public class ThongKeDao {
 		return result;
 	}
 
+	public double getDoanhThuQuyTrongNam(int quy, int nam) {
+
+		double doanhThu = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeConstant.GET_DOANH_THU_QUY_THEO_NAM);
+			int thang1 = (quy - 1) * 3 + 1;
+			int thang2 = quy * 3;
+			preparedStatement.setInt(1, thang1);
+			preparedStatement.setInt(2, thang2);
+			preparedStatement.setInt(3, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				doanhThu = resultSet.getDouble("doanhThu");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return doanhThu;
+	}
+
 }

@@ -29,6 +29,8 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 	private String maNVKiThuat;
 	
 
+	
+
 	public GD_ChiTietNVKyThuat(String maNVKiThuat) {
 		this.maNVKiThuat = maNVKiThuat;
 		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
@@ -82,8 +84,7 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			} else {
 				lblAnh.setIcon(new ImageIcon(
-						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
-								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()));
 			}
 		}
 

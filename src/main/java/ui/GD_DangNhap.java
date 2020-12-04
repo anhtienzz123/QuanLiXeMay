@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienHanhChinhDao;
-import dao.NhanVienKiThuatDao;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
 
@@ -179,17 +178,17 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		txtMatKhau.setText("55555");
 
 	}
-	
+
 	public void name() {
 		this.setVisible(false);
 		SplashScreen splashScreen = new SplashScreen();
-		for(int i = 0; i<=100; i++) {
+		for (int i = 0; i <= 100; i++) {
 			try {
 				Thread.sleep(15);
 				splashScreen.setVisible(true);
-				splashScreen.lblLoading.setText("Loading "+i+"%");
+				splashScreen.lblLoading.setText("Loading " + i + "%");
 				splashScreen.progressBar.setValue(i);
-				if(i==100)
+				if (i == 100)
 					new App(txtTaiKhoan.getText().trim()).setVisible(true);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -241,25 +240,21 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(txtTaiKhoan)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -289,13 +284,13 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 	private boolean KiemTraTaiKhoan(String taiKhoan, String matKhau) {
 		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(taiKhoan);
-		
-		if(nhanVienHanhChinh != null) {
-			if(nhanVienHanhChinh.getMatKhau().equals(matKhau)) {
+
+		if (nhanVienHanhChinh != null) {
+			if (nhanVienHanhChinh.getMatKhau().equals(matKhau)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -314,7 +309,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		} else if (txtMatKhau.getText().equals("")) {
 			thongBao(txtMatKhau, "Bạn chưa nhập mật khẩu");
 			return false;
-		} 
+		}
 //		else if (!taiKhoan.matches("^180[0-9]{5}")) {
 //			thongBao(txtTaiKhoan, "Tài khoản không hợp lệ!");
 //			return false;

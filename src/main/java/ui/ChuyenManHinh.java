@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import entity.NhanVienHanhChinh;
 import ui.HuongDanSuDung.GD_HuongDanSuDung;
 import ui.quanLyBaoHanh.GD_QuanLyBaoHanh;
 import ui.quanLyHoaDon.GD_HoaDon;
@@ -27,12 +26,13 @@ public class ChuyenManHinh {
 	private JPanel pnlMHChinh;
 	private String chonTrang = "";
 	private List<DanhMuc> dSTrang = null;
-//	private JPanel pnlMenu;
+	private JPanel pnlMenu;
 	private String maNV;
 
-	public ChuyenManHinh(JPanel pnlMHChinh, String maNV) {
+	public ChuyenManHinh(JPanel pnlMHChinh, String maNV, JPanel pnlMenu) {
 		this.pnlMHChinh = pnlMHChinh;
 		this.maNV = maNV;
+		this.pnlMenu = pnlMenu;
 	}
 
 	public void setManHinh(JPanel pnlChon, JLabel lblChon) {
@@ -41,7 +41,7 @@ public class ChuyenManHinh {
 		lblChon.setBackground(new Color(96, 100, 191));
 		pnlMHChinh.removeAll();
 		pnlMHChinh.setLayout(new BorderLayout());
-		pnlMHChinh.add(new GD_TrangChu(maNV));
+		pnlMHChinh.add(new GD_TrangChu(maNV, pnlMenu));
 		pnlMHChinh.validate();
 		pnlMHChinh.repaint();
 	}
@@ -73,7 +73,7 @@ public class ChuyenManHinh {
 		public void mouseClicked(MouseEvent e) {
 			switch (chon) {
 			case "TrangChu":
-				node = new GD_TrangChu(maNV);
+				node = new GD_TrangChu(maNV, pnlMenu);
 				setPanel();
 
 				break;
@@ -133,7 +133,7 @@ public class ChuyenManHinh {
 			case "DangXuat":
 				break;
 			default:
-				node = new GD_TrangChu(maNV);
+				node = new GD_TrangChu(maNV, pnlMenu);
 
 				break;
 			}
@@ -144,11 +144,17 @@ public class ChuyenManHinh {
 		public void setPanel() {
 
 			if (!chon.equals("DangXuat")) {
+
 				pnlMHChinh.removeAll();
 				pnlMHChinh.setLayout(new BorderLayout());
 				pnlMHChinh.add(node);
 				pnlMHChinh.validate();
 				pnlMHChinh.repaint();
+
+				if (pnlMenu.getSize().getWidth() > 120) {
+					pnlMenu.setSize(120, pnlMenu.getHeight());
+					pnlMenu.setSize(300, pnlMenu.getHeight());
+				}
 			}
 		}
 

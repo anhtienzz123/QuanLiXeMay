@@ -18,7 +18,13 @@ import javax.swing.JTabbedPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.labels.ItemLabelAnchor;
+import org.jfree.chart.labels.ItemLabelPosition;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.CategoryItemRenderer;
+import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -50,7 +56,7 @@ public class GD_ThongKeThang extends JPanel {
 	 */
 	public GD_ThongKeThang() {
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 717));
+		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
 
 		txtNgay = new JDateChooser();
@@ -61,8 +67,6 @@ public class GD_ThongKeThang extends JPanel {
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
 
-		
-
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn tháng:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -70,7 +74,7 @@ public class GD_ThongKeThang extends JPanel {
 		add(lblTngThuTrong_2_1_1);
 
 		tabbedPaneXe = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneXe.setBounds(843, 20, 571, 671);
+		tabbedPaneXe.setBounds(912, 20, 812, 714);
 		tabbedPaneXe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPaneXe.setBackground(new Color(58, 181, 74));
 		tabbedPaneXe.setForeground(Color.WHITE);
@@ -85,7 +89,7 @@ public class GD_ThongKeThang extends JPanel {
 		tabbedPaneXe.addTab("Hãng xe", null, pnlTopHang, null);
 
 		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneDoanhThu.setBounds(48, 63, 777, 628);
+		tabbedPaneDoanhThu.setBounds(0, 63, 852, 671);
 		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
 		tabbedPaneDoanhThu.setForeground(Color.WHITE);
@@ -99,26 +103,24 @@ public class GD_ThongKeThang extends JPanel {
 		pnlTopXe = new JPanel();
 		pnlTopXe.setBackground(Color.WHITE);
 		tabbedPaneDoanhThu.addTab("Xe bán chạy trong tháng", null, pnlTopXe, null);
-		
+
 		thongKeDoanhThuThang(pnlDoanhThuThang);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
-		
+
 		txtNgay.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
 			@Override
 			public void propertyChange(PropertyChangeEvent e) {
 
 				if (e.getPropertyName().equals("date")) {
 					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-					
-					
+
 					thongKeDoanhThuThang(pnlDoanhThuThang);
 					thongKeTopXe(pnlTopXe);
 					thongKeTopDongXe(pnlTopDong);
 					thongKeTopHangXe(pnlTopHang);
-					
-					
+
 				}
 			}
 		});
@@ -127,7 +129,6 @@ public class GD_ThongKeThang extends JPanel {
 	public void khoiTao() {
 		thongKeDao = ThongKeDao.getInstance();
 		date = LocalDate.now();
-		
 
 	}
 
@@ -146,6 +147,13 @@ public class GD_ThongKeThang extends JPanel {
 
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu trong tháng".toUpperCase(), "Tháng",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+
+//		Điền giá trị lên trên cột
+		CategoryItemRenderer renderer = ((CategoryPlot) barChart.getPlot()).getRenderer();
+		renderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		renderer.setDefaultItemLabelsVisible(true);
+		ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.TOP_CENTER);
+		renderer.setDefaultNegativeItemLabelPosition(position);
 
 		ChartPanel chartPanel1 = new ChartPanel(barChart);
 		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
@@ -172,6 +180,14 @@ public class GD_ThongKeThang extends JPanel {
 		JFreeChart barChart = ChartFactory.createBarChart("Thống kê các xe bán chạy trong tháng".toUpperCase(), "Xe",
 				"Số lượng", dataset, PlotOrientation.VERTICAL, false, true, false);
 
+//		Điền giá trị lên trên cột
+		CategoryItemRenderer renderer = ((CategoryPlot) barChart.getPlot()).getRenderer();
+		renderer.setDefaultItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+		renderer.setDefaultItemLabelsVisible(true);
+		ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.TOP_CENTER);
+		renderer.setDefaultNegativeItemLabelPosition(position);
+
+		
 		ChartPanel chartPanel1 = new ChartPanel(barChart);
 		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
 
@@ -182,7 +198,6 @@ public class GD_ThongKeThang extends JPanel {
 		jpnItem.repaint();
 	}
 
-	
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
 		int thang = date.getMonthValue();
@@ -209,7 +224,6 @@ public class GD_ThongKeThang extends JPanel {
 		jpnItem.repaint();
 	}
 
-	
 	public void thongKeTopHangXe(JPanel jpnItem) {
 
 		int thang = date.getMonthValue();

@@ -32,8 +32,11 @@ public class XeMay {
 	}
 
 	public double tinhGiaBan() {
-		return giaNhap * heSoBan;
+		return giaNhap * (1 + (heSoBan / 100));
 	}
 
+	public double getThue() {
+		return (tinhGiaBan() / 100) * dongXe.getThue();
+	}
 
 }

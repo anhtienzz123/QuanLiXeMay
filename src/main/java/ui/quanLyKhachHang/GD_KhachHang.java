@@ -25,6 +25,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -53,7 +54,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 16;
+	private static final int SIZE = 15;
 	private KhachHangDao khachHangDao;
 	private List<KhachHang> khachHangs;
 
@@ -62,12 +63,12 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 	public GD_KhachHang() {
 
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -75,11 +76,11 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneKhachHang = new JScrollPane();
-		scrollPaneKhachHang.setBounds(29, 200, 1385, 532);
+		scrollPaneKhachHang.setBounds(29, 217, 1740, 557);
 		add(scrollPaneKhachHang);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -88,7 +89,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(592, 753, 218, 40);
+		btnXemChiTiet.setBounds(954, 809, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -119,7 +120,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(29, 176, 1385, 11);
+		separator.setBounds(29, 176, 1740, 11);
 		add(separator);
 
 		btnDau = new JButton("");
@@ -127,7 +128,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
-		btnDau.setBounds(29, 753, 50, 40);
+		btnDau.setBounds(29, 809, 50, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
@@ -135,7 +136,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
-		btnTruoc.setBounds(102, 753, 50, 40);
+		btnTruoc.setBounds(102, 809, 50, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
@@ -143,7 +144,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
-		btnSau.setBounds(264, 753, 50, 40);
+		btnSau.setBounds(264, 809, 50, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
@@ -151,7 +152,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
-		btnCuoi.setBounds(342, 753, 50, 40);
+		btnCuoi.setBounds(342, 809, 50, 40);
 		add(btnCuoi);
 
 		txtTrang = new JTextField();
@@ -159,7 +160,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		txtTrang.setText("1");
 		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTrang.setColumns(10);
-		txtTrang.setBounds(178, 754, 60, 40);
+		txtTrang.setBounds(178, 810, 60, 40);
 		add(txtTrang);
 
 		btnThem = new JButton("Thêm");
@@ -168,7 +169,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
-		btnThem.setBounds(1239, 753, 168, 40);
+		btnThem.setBounds(1601, 809, 168, 40);
 		add(btnThem);
 
 		String[] colHeaderKhachHang = { "STT", "Mã khách hàng", "Tên khách hàng", "Số CMT", "Số điện thoại" };
@@ -181,7 +182,20 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		};
 		tblKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblKhachHang.setRowHeight(25);
+		tblKhachHang.setRowHeight(35);
+		tblKhachHang.getColumnModel().getColumn(0).setPreferredWidth(140);
+		tblKhachHang.getColumnModel().getColumn(1).setPreferredWidth(300);
+		tblKhachHang.getColumnModel().getColumn(2).setPreferredWidth(700);
+		tblKhachHang.getColumnModel().getColumn(3).setPreferredWidth(300);
+		tblKhachHang.getColumnModel().getColumn(4).setPreferredWidth(300);
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblKhachHang.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		tblKhachHang.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblKhachHang.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+		tblKhachHang.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
+
 		scrollPaneKhachHang.setViewportView(tblKhachHang);
 
 		/**
@@ -193,7 +207,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JPanel pnlLogo = new JPanel();
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
 		pnlLogo.setLayout(null);
 
@@ -202,21 +216,21 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnSua = new JButton("Sửa");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
-		btnSua.setBounds(1041, 753, 168, 40);
+		btnSua.setBounds(1403, 809, 168, 40);
 		add(btnSua);
 
 		btnXoa = new JButton("Xóa");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(843, 753, 168, 40);
+		btnXoa.setBounds(1205, 809, 168, 40);
 		add(btnXoa);
 
 		khoiTao();
@@ -335,6 +349,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 			}
 		}
 	}
+	
 
 	private void themKhachHangVaoBang(KhachHang khachHang) {
 

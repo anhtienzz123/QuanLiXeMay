@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import constant.NhanVienKiThuatConstant;
 import converter.NhanVienKiThuatConvert;
 import db.DatabaseConnect;
@@ -125,7 +127,7 @@ public class NhanVienKiThuatDao {
 			n = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
 
 		return n > 0;

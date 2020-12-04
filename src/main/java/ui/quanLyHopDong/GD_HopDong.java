@@ -31,6 +31,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -57,11 +58,12 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 	private int page = 1;
 	private int maxPage = 0;
 	private JComboBox<String> cboTimKiem;
-	private static final int SIZE = 16;
+	private static final int SIZE = 15;
 	private HopDongDao hopDongDao;
 	private List<HopDong> hopDongs;
 	private LocalDate date;
 	private JDateChooser txtNgay;
+	private JButton btnBoLoc;
 
 	/**
 	 * Create the panel.
@@ -70,12 +72,12 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 
 		hopDongDao = HopDongDao.getInstance();
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -83,11 +85,11 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(0, 0, 1450, 50);
+		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneHopDong = new JScrollPane();
-		scrollPaneHopDong.setBounds(29, 200, 1385, 532);
+		scrollPaneHopDong.setBounds(29, 213, 1736, 557);
 		add(scrollPaneHopDong);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -96,7 +98,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXemChiTiet.setBounds(1196, 753, 218, 40);
+		btnXemChiTiet.setBounds(1547, 805, 218, 40);
 		add(btnXemChiTiet);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tìm kiếm:");
@@ -126,7 +128,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(29, 176, 1385, 11);
+		separator.setBounds(29, 176, 1736, 11);
 		add(separator);
 
 		btnDau = new JButton("");
@@ -134,7 +136,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
-		btnDau.setBounds(29, 753, 50, 40);
+		btnDau.setBounds(29, 805, 50, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
@@ -142,7 +144,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
-		btnTruoc.setBounds(102, 753, 50, 40);
+		btnTruoc.setBounds(102, 805, 50, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
@@ -150,7 +152,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
-		btnSau.setBounds(264, 753, 50, 40);
+		btnSau.setBounds(264, 805, 50, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
@@ -158,7 +160,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
-		btnCuoi.setBounds(342, 753, 50, 40);
+		btnCuoi.setBounds(342, 805, 50, 40);
 		add(btnCuoi);
 
 		txtTrang = new JTextField();
@@ -166,7 +168,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		txtTrang.setText("1");
 		txtTrang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTrang.setColumns(10);
-		txtTrang.setBounds(178, 754, 60, 40);
+		txtTrang.setBounds(178, 806, 60, 40);
 		add(txtTrang);
 
 		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
@@ -181,6 +183,24 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		};
 		tblHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHopDong.setRowHeight(35);
+		tblHopDong.getColumnModel().getColumn(0).setPreferredWidth(136);
+		tblHopDong.getColumnModel().getColumn(1).setPreferredWidth(160);
+		tblHopDong.getColumnModel().getColumn(2).setPreferredWidth(160);
+		tblHopDong.getColumnModel().getColumn(3).setPreferredWidth(160);
+		tblHopDong.getColumnModel().getColumn(4).setPreferredWidth(400);
+		tblHopDong.getColumnModel().getColumn(5).setPreferredWidth(160);
+		tblHopDong.getColumnModel().getColumn(6).setPreferredWidth(400);
+		tblHopDong.getColumnModel().getColumn(7).setPreferredWidth(160);
+
+//		center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		tblHopDong.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
+		tblHopDong.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblHopDong.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+		tblHopDong.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
+		tblHopDong.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
+		tblHopDong.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
 		scrollPaneHopDong.setViewportView(tblHopDong);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");
@@ -198,7 +218,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		add(txtNgay);
 
 		JPanel pnlLogo = new JPanel();
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
 		pnlLogo.setLayout(null);
 
@@ -207,8 +227,16 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
+		
+		btnBoLoc = new JButton("Xóa tìm kiếm");
+		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnBoLoc.setForeground(Color.WHITE);
+		btnBoLoc.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnBoLoc.setBackground(Color.GRAY);
+		btnBoLoc.setBounds(1547, 81, 218, 35);
+		add(btnBoLoc);
 
 		/**
 		 * Đổi màu header cho table

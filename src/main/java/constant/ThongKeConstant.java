@@ -20,6 +20,10 @@ public class ThongKeConstant {
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " where YEAR(HoaDon.ngayLap) = ?\r\n" + " group by YEAR(HoaDon.ngayLap)";
 
+	public static final String GET_DOANH_THU_QUY_THEO_NAM = "select SUM(giaBan * soLuong) as doanhThu   from\r\n" + 
+			"HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where MONTH(HoaDon.ngayLap) between ? and ? and YEAR(HoaDon.ngayLap) = ?";
+	
 	// Doanh thu Map
 	public static final String DOANH_THU_NGAYS_THEO_THANG = " select  DAY(HoaDon.ngayLap) as ngay , SUM(giaBan*soLuong)as doanhThu from \r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
@@ -44,13 +48,13 @@ public class ThongKeConstant {
 			+ " group by HangXe.tenHangXe";
 
 	// Thống kê dòng xe
-	public static final String THONG_KE_DONG_XE_TRONG_THANG = "select tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
+	public static final String THONG_KE_DONG_XE_TRONG_THANG = "select top 5 tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " inner join XeMay on ChiTietHoaDon.maXeMay = XeMay.maXeMay\r\n"
 			+ " inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n"
 			+ " where MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap) = ?\r\n" + " group by DongXe.tenDongXe";
 
-	public static final String THONG_KE_DONG_XE_TRONG_NAM = " select tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
+	public static final String THONG_KE_DONG_XE_TRONG_NAM = " select top 5 tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " inner join XeMay on ChiTietHoaDon.maXeMay = XeMay.maXeMay\r\n"
 			+ " inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n" + " where YEAR(HoaDon.ngayLap) = ?\r\n"

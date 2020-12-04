@@ -177,13 +177,6 @@ public class SinhRaThongTin {
 
 	}
 
-	public static void main(String[] args) throws SQLException {
-		DatabaseConnect.connect();
 
-		sinhVaLuuDanhSachThongTinKhachHang(70);
-		sinhVaLuuDanhSachThongTinNhanVienHanhChinh(20);
-		sinhVaLuuDanhSachThongTinNhanVienKiThuat(20);
-
-	}
 
 }
