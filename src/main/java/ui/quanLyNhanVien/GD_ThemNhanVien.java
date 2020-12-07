@@ -17,7 +17,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -37,8 +36,6 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
 import com.toedter.calendar.JDateChooser;
 
 import constant.TenEntity;
@@ -46,7 +43,6 @@ import dao.NhanVienHanhChinhDao;
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
-import other.BatRegex;
 import other.CopyTask;
 import other.RandomMa;
 import other.RegexNVKiThuat;
@@ -142,7 +138,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 		btnThem = new JButton("Thêm");
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -156,14 +152,14 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnXoaRong.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setToolTipText("Xóa trắng các trường nhập dữ liệu");
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -172,7 +168,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 		add(btnXoaRong);
 
 		btnThoat = new JButton("Thoát");
-		btnThoat.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -221,7 +217,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel();
-		lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+		lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 				.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -285,7 +281,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 		add(txtAnh);
 
 		btnChonFile = new JButton("Chọn file");
-		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -368,7 +364,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 		pnlNVHanhChinh.add(txtMatKhau);
 
 		lblHienMK = new JLabel("");
-		lblHienMK.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_black_36dp.png")));
+		lblHienMK.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_visibility_black_36dp.png")));
 		lblHienMK.setForeground(Color.BLACK);
 		lblHienMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHienMK.setBounds(1188, 84, 40, 30);
@@ -376,7 +372,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 
 		lblAnMK = new JLabel("");
 		lblAnMK.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_off_black_36dp.png")));
+				new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_visibility_off_black_36dp.png")));
 		lblAnMK.setForeground(Color.BLACK);
 		lblAnMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnMK.setBounds(1188, 84, 40, 30);
@@ -516,12 +512,12 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 			lblHienMK.setVisible(true);
 		}
 		if (o.equals(rdbtnNam)) {
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 		if (o.equals(rdbtnNu)) {
 			lblAnh.setIcon(
-					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png"))
 							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 	}
@@ -651,10 +647,6 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 					txtAnh.setText(f.getPath());
 
-					String to = f.getAbsolutePath().split("\\.")[1];
-					CopyTask task = new CopyTask(f.getAbsolutePath(),
-							"ImgNhanVien/" + lblMaNV.getText().trim() + "." + to);
-
 					filePath = f.getAbsolutePath();
 				}
 
@@ -741,37 +733,34 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 
 	private void xoaRongText() {
 
-	
+		if (check == 0) {
+			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
+			txtTenNV.setText("");
+			rdbtnNam.setSelected(true);
+			txtNgaySinh.setDate(new java.util.Date());
+			txtSoDienThoai.setText("");
+			txtDiaChi.setText("");
+			txtChucVu.setText("");
+			txtTrinhDoHocVan.setText("");
+			cboQuyenTruyCap.setSelectedIndex(0);
+			txtMatKhau.setText("12345678");
+			txtAnh.setText("");
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
+			txtTenNV.setText("");
+			rdbtnNam.setSelected(true);
+			txtNgaySinh.setDate(new java.util.Date());
+			txtSoDienThoai.setText("");
+			txtDiaChi.setText("");
+			txtAnh.setText("");
+			txtNamKinhNghiem.setText("");
+			cboBacTho.setSelectedIndex(0);
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 
-			if (check == 0) {
-				lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
-				txtTenNV.setText("");
-				rdbtnNam.setSelected(true);
-				txtNgaySinh.setDate(new java.util.Date());
-				txtSoDienThoai.setText("");
-				txtDiaChi.setText("");
-				txtChucVu.setText("");
-				txtTrinhDoHocVan.setText("");
-				cboQuyenTruyCap.setSelectedIndex(0);
-				txtMatKhau.setText("12345678");
-				txtAnh.setText("");
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
-						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-			} else {
-				lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
-				txtTenNV.setText("");
-				rdbtnNam.setSelected(true);
-				txtNgaySinh.setDate(new java.util.Date());
-				txtSoDienThoai.setText("");
-				txtDiaChi.setText("");
-				txtAnh.setText("");
-				txtNamKinhNghiem.setText("");
-				cboBacTho.setSelectedIndex(0);
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
-						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-
-			}
-		
+		}
 
 	}
 

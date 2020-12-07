@@ -69,7 +69,7 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 	 */
 	public GD_HangXe() {
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_LoaiXe.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
+				.getImage(GD_LoaiXe.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Quản lý hãng xe");
 		setSize(718, 428);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -115,7 +115,7 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 
 		btnXoaRong = new JButton("Xóa Trắng");
 		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setIcon(new ImageIcon(GD_LoaiXe.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnXoaRong.setIcon(new ImageIcon(GD_LoaiXe.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaRong.setBounds(186, 334, 171, 30);

@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -40,13 +41,11 @@ import com.toedter.calendar.JDateChooser;
 import constant.TenEntity;
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
-import other.BatRegex;
 import other.CopyTask;
 import other.RandomMa;
 import other.RegexNVKiThuat;
 import ui.App;
 import ui.quanLyXeMay.GD_ThemXeMay;
-import javax.swing.JTextArea;
 
 public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, FocusListener, MouseListener {
 
@@ -117,11 +116,11 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		btnThem = new JButton("Sửa");
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setIcon(new ImageIcon(
-				GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 
 		btnThem = new JButton("Lưu");
 		btnThem.setToolTipText("Cập nhật nhân viên");
-		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/restore_page_30px.png")));
+		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/restore_page_30px.png")));
 
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -136,7 +135,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
@@ -144,7 +143,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 
 		btnXoaRong = new JButton("Xóa rỗng");
 		btnXoaRong.setIcon(
-				new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+				new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setToolTipText("Xóa trắng các trường nhập dữ liệu");
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -153,7 +152,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		add(btnXoaRong);
 
 		btnThoat = new JButton("Thoát");
-		btnThoat.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -193,7 +192,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel("");
-		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/pictures_folder_30px.png")));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
@@ -207,11 +206,11 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
 			if (nhanVienKiThuat.isGioiTinh()) {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
 						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			} else {
 				lblAnh.setIcon(new ImageIcon(
-						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()
 								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			}
 		}
@@ -277,7 +276,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		add(txtAnh);
 
 		btnChonFile = new JButton("Chọn file");
-		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -423,12 +422,12 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		Object o = e.getSource();
 
 		if (o.equals(rdbtnNam)) {
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 		if (o.equals(rdbtnNu)) {
 			lblAnh.setIcon(
-					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png"))
 							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 

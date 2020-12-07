@@ -1,12 +1,25 @@
 package other;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JWindow;
  
-public class SplashScreenn extends JWindow {
+public class SplashScreen extends JWindow {
      
-    private int duration;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int duration;
      
-    public SplashScreenn(int d) {
+    public SplashScreen(int d) {
         duration = d;
     }
      
@@ -55,7 +68,7 @@ public class SplashScreenn extends JWindow {
     public static void main(String[] args) {
          
         // Throw a nice little title page up on the screen first
-        SplashScreenn splash = new SplashScreenn(10000);
+        SplashScreen splash = new SplashScreen(10000);
  
         // Normally, we'd call splash.showSplash() and get on 
         // with the program. But, since this is only a test...

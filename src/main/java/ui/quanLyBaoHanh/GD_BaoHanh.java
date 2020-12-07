@@ -91,7 +91,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet
-				.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -111,7 +111,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 
 		btnCapNhat = new JButton("Thêm");
 		btnCapNhat
-				.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnCapNhat.setForeground(Color.WHITE);
 		btnCapNhat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCapNhat.setBackground(new Color(58, 181, 74));
@@ -125,14 +125,14 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnQuayLai = new JButton("Quay lại");
-		btnQuayLai.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnQuayLai.setIcon(new ImageIcon(GD_BaoHanh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuayLai.setBackground(Color.RED);

@@ -67,7 +67,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		HopDong hopDong = hopDongDao.getHopDongTheoMa(maHopDong);
 		System.out.println(hopDong);
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_ChiTietHD.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
+				.getImage(GD_ChiTietHD.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Chi tiết hợp đồng");
 		setSize(950, 981);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

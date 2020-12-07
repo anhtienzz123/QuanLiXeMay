@@ -2,9 +2,6 @@ package ui;
 
 import java.sql.SQLException;
 
-import dao.DongXeDao;
-import db.DatabaseConnect;
-
 public class Tesstt {
 
 	public static void main(String[] args) throws SQLException {
@@ -12,8 +9,6 @@ public class Tesstt {
 //		DongXeDao dongXeDao = DongXeDao.getInstance();
 //		System.out.println(dongXeDao.getDongXes());
 		new SplashScreen().name();
-		
-		
 
 	}
 

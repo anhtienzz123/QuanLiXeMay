@@ -28,6 +28,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -54,8 +55,6 @@ import other.RandomMa;
 import other.XuLyChung;
 import other.XuLyThoiGian;
 import ui.quanLyXeMay.GD_ChiTietXeMay;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
 
 public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener, MouseListener {
 	/**
@@ -434,25 +433,25 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		add(cboXuatXu);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setBackground(Color.GRAY);
 		btnDau.setBounds(30, 870, 51, 40);
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setBackground(Color.GRAY);
 		btnTruoc.setBounds(93, 870, 51, 40);
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setBackground(Color.GRAY);
 		btnSau.setBounds(230, 870, 51, 40);
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setBackground(Color.GRAY);
 		btnCuoi.setBounds(293, 870, 51, 40);
 		add(btnCuoi);
@@ -466,7 +465,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		txtTrang.setColumns(10);
 
 		btnXemChiTiet = new JButton("Chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/information_30px.png")));
+		btnXemChiTiet.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/information_30px.png")));
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnXemChiTiet.setBackground(Color.GRAY);
@@ -577,7 +576,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		btnThem = new JButton("Thêm");
 		btnThem.setIcon(
-				new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_add_shopping_cart_white_18dp.png")));
+				new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_add_shopping_cart_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnThem.setBackground(new Color(51, 204, 255));
@@ -585,7 +584,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		add(btnThem);
 
 		btnSua = new JButton("Sửa");
-		btnSua.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_edit_white_18dp.png")));
+		btnSua.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_edit_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnSua.setBackground(new Color(51, 204, 255));
@@ -594,7 +593,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		btnXoa = new JButton("Xóa");
 		btnXoa.setIcon(
-				new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_remove_shopping_cart_white_18dp.png")));
+				new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_remove_shopping_cart_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnXoa.setBackground(new Color(255, 0, 0));
@@ -657,7 +656,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		btnLapHoaDon = new JButton("Lập hóa đơn");
 		btnLapHoaDon
-				.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_monetization_on_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_monetization_on_white_18dp.png")));
 		btnLapHoaDon.setBounds(1378, 944, 382, 42);
 		add(btnLapHoaDon);
 		btnLapHoaDon.setForeground(Color.WHITE);
@@ -666,7 +665,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		btnTaoMoi = new JButton("Tạo mới hóa đơn");
 		btnTaoMoi.setIcon(
-				new ImageIcon(GD_LapHoaDon.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				new ImageIcon(GD_LapHoaDon.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnTaoMoi.setForeground(Color.WHITE);
 		btnTaoMoi.setFont(new Font("Tahoma", Font.BOLD, 21));
 		btnTaoMoi.setBackground(new Color(51, 204, 255));

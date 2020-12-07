@@ -64,7 +64,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setIconImage(Toolkit.getDefaultToolkit().getImage(App.class.getResource("/img/motorbike_helmet_100px.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(App.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Quản Lý mua bán xe máy");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1920, 1060);
@@ -89,9 +89,9 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		panel_1.setVisible(false);
 
 		JLabel lblNewLabel = new JLabel("");
-//		lblNewLabel.setIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg")));
+//		lblNewLabel.setIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg")));
 		lblNewLabel.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(panel_1.getPreferredSize().width - 500,
 								panel_1.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		panel_1.add(lblNewLabel);
@@ -118,7 +118,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		lblIconDanhMuc = new JLabel("");
 		lblIconDanhMuc.setMinimumSize(new Dimension(120, 70));
-		lblIconDanhMuc.setIcon(new ImageIcon(App.class.getResource("/img/menu_50px.png")));
+		lblIconDanhMuc.setIcon(new ImageIcon(App.class.getResource("/icon/menu_50px.png")));
 		lblIconDanhMuc.setPreferredSize(new Dimension(120, 70));
 		lblIconDanhMuc.setMaximumSize(new Dimension(120, 70));
 		lblIconDanhMuc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -144,7 +144,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 		JLabel lblIconTrangChu = new JLabel("");
 		lblIconTrangChu.setMinimumSize(new Dimension(120, 70));
 		lblIconTrangChu.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconTrangChu.setIcon(new ImageIcon(App.class.getResource("/img/home_page_50px.png")));
+		lblIconTrangChu.setIcon(new ImageIcon(App.class.getResource("/icon/home_page_50px.png")));
 		lblIconTrangChu.setPreferredSize(new Dimension(120, 70));
 		lblIconTrangChu.setMaximumSize(new Dimension(120, 70));
 		lblIconTrangChu.setForeground(Color.WHITE);
@@ -168,7 +168,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconXeMay = new JLabel("");
 		lblIconXeMay.setMinimumSize(new Dimension(120, 70));
-		lblIconXeMay.setIcon(new ImageIcon(App.class.getResource("/img/motorcycle_50px.png")));
+		lblIconXeMay.setIcon(new ImageIcon(App.class.getResource("/icon/motorcycle_50px.png")));
 		lblIconXeMay.setPreferredSize(new Dimension(120, 70));
 		lblIconXeMay.setMaximumSize(new Dimension(120, 70));
 		lblIconXeMay.setHorizontalAlignment(SwingConstants.CENTER);
@@ -193,7 +193,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconHoaDon = new JLabel("");
 		lblIconHoaDon.setMinimumSize(new Dimension(120, 70));
-		lblIconHoaDon.setIcon(new ImageIcon(App.class.getResource("/img/bill_50px.png")));
+		lblIconHoaDon.setIcon(new ImageIcon(App.class.getResource("/icon/bill_50px.png")));
 		lblIconHoaDon.setPreferredSize(new Dimension(120, 70));
 		lblIconHoaDon.setMaximumSize(new Dimension(120, 70));
 		lblIconHoaDon.setHorizontalAlignment(SwingConstants.CENTER);
@@ -218,7 +218,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconHopDong = new JLabel("");
 		lblIconHopDong.setMinimumSize(new Dimension(120, 70));
-		lblIconHopDong.setIcon(new ImageIcon(App.class.getResource("/img/handshake_50px.png")));
+		lblIconHopDong.setIcon(new ImageIcon(App.class.getResource("/icon/handshake_50px.png")));
 		lblIconHopDong.setPreferredSize(new Dimension(120, 70));
 		lblIconHopDong.setMaximumSize(new Dimension(120, 70));
 		lblIconHopDong.setHorizontalAlignment(SwingConstants.CENTER);
@@ -243,7 +243,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconKhachHang = new JLabel("");
 		lblIconKhachHang.setMinimumSize(new Dimension(120, 70));
-		lblIconKhachHang.setIcon(new ImageIcon(App.class.getResource("/img/member_50px.png")));
+		lblIconKhachHang.setIcon(new ImageIcon(App.class.getResource("/icon/member_50px.png")));
 		lblIconKhachHang.setPreferredSize(new Dimension(120, 70));
 		lblIconKhachHang.setMaximumSize(new Dimension(120, 70));
 		lblIconKhachHang.setHorizontalAlignment(SwingConstants.CENTER);
@@ -268,7 +268,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconNhanVien = new JLabel("");
 		lblIconNhanVien.setMinimumSize(new Dimension(120, 70));
-		lblIconNhanVien.setIcon(new ImageIcon(App.class.getResource("/img/worker_50px.png")));
+		lblIconNhanVien.setIcon(new ImageIcon(App.class.getResource("/icon/worker_50px.png")));
 		lblIconNhanVien.setPreferredSize(new Dimension(120, 70));
 		lblIconNhanVien.setMaximumSize(new Dimension(120, 70));
 		lblIconNhanVien.setHorizontalAlignment(SwingConstants.CENTER);
@@ -293,7 +293,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		JLabel lblIconThongKe = new JLabel("");
 		lblIconThongKe.setMinimumSize(new Dimension(120, 70));
-		lblIconThongKe.setIcon(new ImageIcon(App.class.getResource("/img/combo_chart_50px.png")));
+		lblIconThongKe.setIcon(new ImageIcon(App.class.getResource("/icon/combo_chart_50px.png")));
 		lblIconThongKe.setPreferredSize(new Dimension(120, 70));
 		lblIconThongKe.setMaximumSize(new Dimension(120, 70));
 		lblIconThongKe.setHorizontalAlignment(SwingConstants.CENTER);
@@ -318,7 +318,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 
 		lblIconDangXuat = new JLabel("");
 		lblIconDangXuat.setMinimumSize(new Dimension(120, 70));
-		lblIconDangXuat.setIcon(new ImageIcon(App.class.getResource("/img/export_50px.png")));
+		lblIconDangXuat.setIcon(new ImageIcon(App.class.getResource("/icon/export_50px.png")));
 		lblIconDangXuat.setPreferredSize(new Dimension(120, 70));
 		lblIconDangXuat.setMaximumSize(new Dimension(120, 70));
 		lblIconDangXuat.setHorizontalAlignment(SwingConstants.CENTER);

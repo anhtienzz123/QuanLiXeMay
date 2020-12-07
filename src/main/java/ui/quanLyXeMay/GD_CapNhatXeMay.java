@@ -146,7 +146,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(separator);
 
 		btnLuu = new JButton("Lưu");
-		btnLuu.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnLuu.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnLuu.setForeground(Color.WHITE);
 		btnLuu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLuu.setBackground(new Color(58, 181, 74));
@@ -160,14 +160,14 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnHuy = new JButton("Hủy");
-		btnHuy.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnHuy.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnHuy.setForeground(Color.WHITE);
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnHuy.setBackground(Color.RED);
@@ -369,7 +369,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		// Kiểm tra xem ảnh có null không
 		Optional<String> optional = Optional.ofNullable(xeMay.getTenAnh());
 		if (!optional.isPresent()) {
-			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 			lblAnh.setText("img");
 		} else {
 			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgXe/" + anh).getImage().getScaledInstance(pnlAnh.getWidth(),
@@ -391,7 +391,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		txtPath.setText(anh);
 
 		btnChonFile = new JButton("chọn ảnh");
-		btnChonFile.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnChonFile.setBackground(Color.GRAY);
