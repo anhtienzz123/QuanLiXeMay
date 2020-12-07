@@ -148,7 +148,7 @@ public class XeMayDao {
 	}
 
 	public int getMaxPageTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe, String tenXuatXu,
-			String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
+			String tenLoaiXe, String tenDongXe, String tenHangXe, String cboTenXe, int size) {
 
 		String sql = "SELECT count(maXeMay) as total\r\n" + "from XeMay\r\n"
 				+ "inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n"
@@ -198,6 +198,12 @@ public class XeMayDao {
 
 		}
 
+		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
+
+			sql += " and tenXeMay = N'" + cboTenXe+"'";
+
+		}
+
 		int count = 0;
 
 		try {
@@ -220,7 +226,7 @@ public class XeMayDao {
 	}
 
 	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe,
-			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, int from, int to) {
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, String cboTenXe, int from, int to) {
 
 		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n" + "as row FROM XeMay) as a\r\n"
 				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
@@ -271,7 +277,14 @@ public class XeMayDao {
 
 		}
 
-		// System.out.println(sql);
+		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
+
+			sql += " and tenXeMay = N'" + cboTenXe+ "'";
+
+		}
+
+		System.out.println("===== Cau Sql =====");
+		System.out.println(sql);
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 

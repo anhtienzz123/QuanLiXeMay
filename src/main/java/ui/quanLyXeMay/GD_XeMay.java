@@ -381,9 +381,9 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, SIZE);
+				tenHangXe, "", SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, from, to);
+				tenHangXe,"", from, to);
 
 		xoaDuLieuXeMayTrongBang();
 		themXeMayVaoBang();

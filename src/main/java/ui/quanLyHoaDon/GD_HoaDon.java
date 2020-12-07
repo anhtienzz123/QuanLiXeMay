@@ -378,6 +378,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 	private void themHoaDonsVaoBang() {
 		if (hoaDons != null) {
+			System.out.println("==== Hoa Don ====");
+			System.out.println("Hoa don: " + hoaDons.size());
 			for (HoaDon hoaDon : hoaDons) {
 				themHoaDonVaoBang(hoaDon);
 			}
