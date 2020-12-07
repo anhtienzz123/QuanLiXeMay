@@ -1,4 +1,4 @@
-package testJtree;
+package other;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -20,18 +20,15 @@ public class TreeFilterDecorator {
 		this.filterField = filterField;
 	}
 
-	public static TreeFilterDecorator decorate(JTree tree, BiPredicate<Object, String> userObjectMatcher, JTextField filterField) {
+	public static TreeFilterDecorator decorate(JTree tree, BiPredicate<Object, String> userObjectMatcher,
+			JTextField filterField) {
 		TreeFilterDecorator tfd = new TreeFilterDecorator(tree, userObjectMatcher, filterField);
-		tfd.init();
+		tfd.initFilterField();
 		return tfd;
 	}
 
 	public JTextField getFilterField() {
 		return filterField;
-	}
-
-	private void init() {
-		initFilterField();
 	}
 
 	private void initFilterField() {
@@ -58,21 +55,21 @@ public class TreeFilterDecorator {
 		String text = filterField.getText().trim().toLowerCase();
 		if (text.equals("") && tree.getModel().getRoot() != originalRootNode) {
 			model.setRoot(originalRootNode);
-			JTreeUtil.setTreeExpandedState(tree, true);
+			TreeUtil.setTreeExpandedState(tree, true);
 		} else {
 			DefaultMutableTreeNode newRootNode = matchAndBuildNode(text, originalRootNode);
 			model.setRoot(newRootNode);
-			JTreeUtil.setTreeExpandedState(tree, true);
+			TreeUtil.setTreeExpandedState(tree, true);
 		}
 	}
 
 	private DefaultMutableTreeNode matchAndBuildNode(final String text, DefaultMutableTreeNode oldNode) {
 		if (!oldNode.isRoot() && userObjectMatcher.test(oldNode.getUserObject(), text)) {
-			return JTreeUtil.copyNode(oldNode);
+			return TreeUtil.copyNode(oldNode);
 		}
 		DefaultMutableTreeNode newMatchedNode = oldNode.isRoot() ? new DefaultMutableTreeNode(oldNode.getUserObject())
 				: null;
-		for (DefaultMutableTreeNode childOldNode : JTreeUtil.nodeChildren(oldNode)) {
+		for (DefaultMutableTreeNode childOldNode : TreeUtil.children(oldNode)) {
 			DefaultMutableTreeNode newMatchedChildNode = matchAndBuildNode(text, childOldNode);
 			if (newMatchedChildNode != null) {
 				if (newMatchedNode == null) {
