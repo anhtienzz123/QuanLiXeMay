@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import dao.DanhMucBaoHanhDao;
 import entity.ChiTietBaoHanh;
-import entity.ChiTietHoaDon;
 import entity.DanhMucBaoHanh;
 import entity.PhieuBaoHanh;
 

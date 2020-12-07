@@ -8,8 +8,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Calendar;
@@ -25,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -38,10 +43,11 @@ import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
 import other.CopyTask;
 import other.RandomMa;
+import other.RegexNVKiThuat;
 import ui.App;
 import ui.quanLyXeMay.GD_ThemXeMay;
 
-public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, MouseListener {
+public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, FocusListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTenNV;
@@ -63,6 +69,13 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 	private JDateChooser txtNgaySinh;
 	private JComboBox<String> cboBacTho;
 	private String filePath;
+
+	private boolean isTenNVKiThuat = false;
+	private boolean isSoDTNhanVienKT = false;
+	private boolean isDiaChiNVKiThuat = false;
+	private boolean isSoNamKNKiThuat = false;
+	private boolean isNgaySinhKiThuat = false;
+	private JTextArea taThongBao;
 
 	/**
 	 * Create the panel.
@@ -100,9 +113,15 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		add(txtTenNV);
 		txtTenNV.setColumns(10);
 
+		btnThem = new JButton("Sửa");
+		btnThem.setToolTipText("Thêm nhân viên");
+		btnThem.setIcon(new ImageIcon(
+				GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
+
 		btnThem = new JButton("Lưu");
 		btnThem.setToolTipText("Cập nhật nhân viên");
-		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/restore_page_30px.png")));
+		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/restore_page_30px.png")));
+
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -116,14 +135,15 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnXoaRong.setIcon(
+				new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setToolTipText("Xóa trắng các trường nhập dữ liệu");
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -132,7 +152,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		add(btnXoaRong);
 
 		btnThoat = new JButton("Thoát");
-		btnThoat.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -172,7 +192,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel("");
-		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienKyThuat.class.getResource("/icon/pictures_folder_30px.png")));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
@@ -186,11 +206,11 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
 			if (nhanVienKiThuat.isGioiTinh()) {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
 						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			} else {
 				lblAnh.setIcon(new ImageIcon(
-						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()
 								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			}
 		}
@@ -256,7 +276,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		add(txtAnh);
 
 		btnChonFile = new JButton("Chọn file");
-		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -326,18 +346,17 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		cboBacTho.setBounds(942, 13, 228, 30);
 		pnlNVKyThuat.add(cboBacTho);
 
-		JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
-		lblThongBao.setVerticalAlignment(SwingConstants.TOP);
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThongBao.setBounds(41, 693, 1043, 81);
-		add(lblThongBao);
-
 		JLabel lblLoaiNV = new JLabel("Nhân viên kỹ thuật");
 		lblLoaiNV.setForeground(Color.BLACK);
 		lblLoaiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLoaiNV.setBounds(942, 79, 228, 30);
 		add(lblLoaiNV);
+
+		taThongBao = new JTextArea();
+		taThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		taThongBao.setForeground(Color.RED);
+		taThongBao.setBounds(12, 680, 725, 105);
+		add(taThongBao);
 
 		dangKiSuKien();
 
@@ -351,6 +370,23 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		rdbtnNam.addMouseListener(this);
 		rdbtnNu.addMouseListener(this);
 
+		txtDiaChi.addFocusListener(this);
+		txtNamKinhNghiem.addFocusListener(this);
+		txtSoDienThoai.addFocusListener(this);
+		txtTenNV.addFocusListener(this);
+
+		txtNgaySinh.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+
+					if (RegexNVKiThuat.ktraNgaySinh(txtNgaySinh))
+						isNgaySinhKiThuat = true;
+
+				}
+			}
+		});
 	}
 
 	private NhanVienKiThuat getNhanVienKiThuat() {
@@ -386,12 +422,12 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 		Object o = e.getSource();
 
 		if (o.equals(rdbtnNam)) {
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 		if (o.equals(rdbtnNu)) {
 			lblAnh.setIcon(
-					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png"))
 							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 
@@ -461,11 +497,11 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 
 		if (o.equals(btnThem)) {
 			NhanVienKiThuat nhanVienKiThuat = getNhanVienKiThuat();
-			if (validateNVKiThuat(nhanVienKiThuat)) {
+			if (validateNhanVienKiThuat(nhanVienKiThuat)) {
 				int confirm = JOptionPane.showConfirmDialog(null, "Bạn có thực sự muốn cập nhật không", "Thông báo",
 						JOptionPane.YES_NO_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					if(filePath!=null) {
+					if (filePath != null) {
 						// Lưu ảnh
 						String fileNameExtentions = filePath.split("\\.")[1];
 						CopyTask task = new CopyTask(filePath,
@@ -477,12 +513,58 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Mou
 					lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
 					JOptionPane.showMessageDialog(null, "Cập nhật nhân viên thành công");
 				}
+			} else {
+				isTenNVKiThuat = true;
+				isSoDTNhanVienKT = true;
+				isSoNamKNKiThuat = true;
+				isDiaChiNVKiThuat = true;
+				isNgaySinhKiThuat = true;
+				thongbaoLoi();
 			}
 		}
 
 	}
 
-	private boolean validateNVKiThuat(NhanVienKiThuat nhanVienKiThuat) {
-		return true;
+	private void thongbaoLoi() {
+		taThongBao.setText("");
+		if (!RegexNVKiThuat.ktraTenNV(txtTenNV) && isTenNVKiThuat)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.TEN_NV);
+		if (!RegexNVKiThuat.ktraSDT(txtSoDienThoai) && isSoDTNhanVienKT)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.SO_DT);
+		if (!RegexNVKiThuat.KtraDiaChi(txtDiaChi) && isDiaChiNVKiThuat)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.DIA_CHI);
+		if (!RegexNVKiThuat.KtraSoNamKN(txtNamKinhNghiem) && isSoNamKNKiThuat)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.SO_NAM_KN);
+		if (!RegexNVKiThuat.ktraNgaySinh(txtNgaySinh) && isNgaySinhKiThuat)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.NGAY_SINH);
+
+	}
+
+	private boolean validateNhanVienKiThuat(NhanVienKiThuat nhanVienKiThuat) {
+		if (RegexNVKiThuat.ktraTenNV(txtTenNV) && RegexNVKiThuat.ktraSDT(txtSoDienThoai)
+				&& RegexNVKiThuat.KtraDiaChi(txtDiaChi) && RegexNVKiThuat.KtraSoNamKN(txtNamKinhNghiem) && RegexNVKiThuat.ktraNgaySinh(txtNgaySinh))
+			return true;
+		return false;
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		Object o = e.getSource();
+		if (o.equals(txtTenNV))
+			isTenNVKiThuat = true;
+		if (o.equals(txtSoDienThoai))
+			isSoDTNhanVienKT = true;
+		if (o.equals(txtDiaChi))
+			isDiaChiNVKiThuat = true;
+		if (o.equals(txtNamKinhNghiem))
+			isSoNamKNKiThuat = true;
+		if (o.equals(txtNgaySinh))
+			isNgaySinhKiThuat = true;
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		thongbaoLoi();
+
 	}
 }

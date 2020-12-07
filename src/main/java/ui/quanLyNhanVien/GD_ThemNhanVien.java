@@ -8,8 +8,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Calendar;
@@ -25,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -40,10 +45,12 @@ import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
 import other.CopyTask;
 import other.RandomMa;
+import other.RegexNVKiThuat;
+import other.RegexNhanVienHanhChinh;
 import ui.App;
 import ui.quanLyXeMay.GD_ThemXeMay;
 
-public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseListener {
+public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -74,6 +81,24 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	private JComboBox<String> cboBacTho;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
+
+	private boolean isTenNVHanhChinh = false;
+	private boolean isSoDTNhanVienHC = false;
+	private boolean isDiaChiNVHanhChinh = false;
+	private boolean isChucVuNVHanhChinh = false;
+	private boolean isTrinhDoNVHanhChinh = false;
+	private boolean isNgaySinhNVHanhChinh = false;
+	private boolean isMatKhau = false;
+
+	private boolean isTenNVKiThuat = false;
+	private boolean isSoDTNhanVienKT = false;
+	private boolean isDiaChiNVKiThuat = false;
+	private boolean isSoNamKNKiThuat = false;
+	private boolean isNgaySinhKiThuat = false;
+
+	private int check;
+
+	private JTextArea taThongBao;
 
 	private String filePath;
 
@@ -113,11 +138,11 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		btnThem = new JButton("Thêm");
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
-		btnThem.setBounds(1575, 798, 168, 40);
+		btnThem.setBounds(1575, 808, 168, 40);
 		add(btnThem);
 
 		JPanel pnlLogo = new JPanel();
@@ -127,28 +152,28 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnXoaRong.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setToolTipText("Xóa trắng các trường nhập dữ liệu");
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setBounds(1333, 798, 168, 40);
+		btnXoaRong.setBounds(1332, 808, 168, 40);
 		add(btnXoaRong);
 
 		btnThoat = new JButton("Thoát");
-		btnThoat.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThoat.setBackground(Color.RED);
-		btnThoat.setBounds(41, 798, 168, 40);
+		btnThoat.setBounds(41, 808, 168, 40);
 		add(btnThoat);
 
 		lblMaNV = new JLabel();
@@ -173,12 +198,6 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		add(cboLoaiNV);
 		lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
 
-		// tạo mã nhân viên
-//		if(cboLoaiNV.getSelectedIndex() == 0)
-//			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
-//		else
-//			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
-
 		JLabel lblTNV = new JLabel("Tên nhân viên:");
 		lblTNV.setForeground(Color.BLACK);
 		lblTNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -198,7 +217,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel();
-		lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+		lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 				.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -262,7 +281,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		add(txtAnh);
 
 		btnChonFile = new JButton("Chọn file");
-		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -345,7 +364,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		pnlNVHanhChinh.add(txtMatKhau);
 
 		lblHienMK = new JLabel("");
-		lblHienMK.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_black_36dp.png")));
+		lblHienMK.setIcon(new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_visibility_black_36dp.png")));
 		lblHienMK.setForeground(Color.BLACK);
 		lblHienMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHienMK.setBounds(1188, 84, 40, 30);
@@ -353,7 +372,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 		lblAnMK = new JLabel("");
 		lblAnMK.setIcon(
-				new ImageIcon(GD_ThemNhanVien.class.getResource("/img/baseline_visibility_off_black_36dp.png")));
+				new ImageIcon(GD_ThemNhanVien.class.getResource("/icon/baseline_visibility_off_black_36dp.png")));
 		lblAnMK.setForeground(Color.BLACK);
 		lblAnMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnMK.setBounds(1188, 84, 40, 30);
@@ -397,15 +416,46 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		cboBacTho.setBounds(942, 13, 228, 30);
 		pnlNVKyThuat.add(cboBacTho);
 
-		JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
-		lblThongBao.setVerticalAlignment(SwingConstants.TOP);
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThongBao.setBounds(41, 693, 1043, 81);
-		add(lblThongBao);
+		taThongBao = new JTextArea();
+		taThongBao.setForeground(Color.RED);
+		taThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		taThongBao.setBounds(38, 693, 929, 76);
+		add(taThongBao);
 
 		dangKiSuKien();
 
+	}
+
+	private void thongbaoLoi() {
+		if (check == 0) {
+			taThongBao.setText("");
+			if (!RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && isTenNVHanhChinh)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.TEN_NV);
+			if (!RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai) && isSoDTNhanVienHC)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.SO_DT);
+			if (!RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && isDiaChiNVHanhChinh)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.DIA_CHI);
+			if (!RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan) && isTrinhDoNVHanhChinh)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.TRINH_DO_HV);
+			if (!RegexNhanVienHanhChinh.ktraChucVu(txtChucVu) && isChucVuNVHanhChinh)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.CHUC_VU);
+			if (!RegexNhanVienHanhChinh.ktraNgaySinh(txtNgaySinh) && isNgaySinhNVHanhChinh)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.NGAY_SINH);
+			if (!RegexNhanVienHanhChinh.ktraMatKhau(txtMatKhau) && isMatKhau)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.MAT_KHAU);
+		} else {
+			taThongBao.setText("");
+			if (!RegexNVKiThuat.ktraTenNV(txtTenNV) && isTenNVKiThuat)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.TEN_NV);
+			if (!RegexNVKiThuat.ktraSDT(txtSoDienThoai) && isSoDTNhanVienKT)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.SO_DT);
+			if (!RegexNVKiThuat.KtraDiaChi(txtDiaChi) && isDiaChiNVKiThuat)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.DIA_CHI);
+			if (!RegexNVKiThuat.KtraSoNamKN(txtNamKinhNghiem) && isSoNamKNKiThuat)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.SO_NAM_KN);
+			if (!RegexNVKiThuat.ktraNgaySinh(txtNgaySinh) && isNgaySinhKiThuat)
+				taThongBao.setText(taThongBao.getText() + "\n" + RegexNVKiThuat.NGAY_SINH);
+		}
 	}
 
 	private void dangKiSuKien() {
@@ -421,6 +471,31 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		rdbtnNam.addMouseListener(this);
 		rdbtnNu.addMouseListener(this);
 
+		txtTenNV.addFocusListener(this);
+		txtSoDienThoai.addFocusListener(this);
+		txtDiaChi.addFocusListener(this);
+		txtTrinhDoHocVan.addFocusListener(this);
+		txtChucVu.addFocusListener(this);
+		txtMatKhau.addFocusListener(this);
+		txtNamKinhNghiem.addFocusListener(this);
+		txtNgaySinh.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+
+					if (check == 0) {
+						if (!RegexNhanVienHanhChinh.ktraNgaySinh(txtNgaySinh))
+							isNgaySinhNVHanhChinh = true;
+					} else {
+						if (!RegexNVKiThuat.ktraNgaySinh(txtNgaySinh))
+							isNgaySinhKiThuat = true;
+					}
+
+				}
+
+			}
+		});
 	}
 
 	@Override
@@ -437,12 +512,12 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 			lblHienMK.setVisible(true);
 		}
 		if (o.equals(rdbtnNam)) {
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 		if (o.equals(rdbtnNu)) {
 			lblAnh.setIcon(
-					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png"))
 							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 	}
@@ -526,6 +601,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 		}
 
 		int soNamKN = Integer.parseInt(txtNamKinhNghiem.getText());
+
 		String bacThoText = (String) cboBacTho.getSelectedItem();
 		int bacTho = Integer.parseInt(bacThoText);
 
@@ -537,17 +613,25 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
+		check = cboLoaiNV.getSelectedIndex();
 		if (o.equals(cboLoaiNV)) {
+			check = cboLoaiNV.getSelectedIndex();
+
 			if (cboLoaiNV.getSelectedIndex() == 1) {
 				lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
 				pnlNVHanhChinh.setVisible(false);
 				pnlNVKyThuat.setVisible(true);
+				taThongBao.setText("");
+
 			} else {
 
 				lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
 				pnlNVHanhChinh.setVisible(true);
 				pnlNVKyThuat.setVisible(false);
+				taThongBao.setText("");
 			}
+
 		}
 		if (o.equals(btnChonFile)) {
 			try {
@@ -568,10 +652,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
 
-//				UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 					| UnsupportedLookAndFeelException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			lblAnh.setText("");
@@ -598,21 +680,31 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 
 				if (validateNhanVienHanhChinh(nvHanhChinh)) {
 
-					if (nhanVienHanhChinhDao.themNhanVienHanhChinh(nvHanhChinh)) {
-						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
-								JOptionPane.INFORMATION_MESSAGE, null);
-						xoaRongText();
+					try {
+						if (nhanVienHanhChinhDao.themNhanVienHanhChinh(nvHanhChinh)) {
+							JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
+									JOptionPane.INFORMATION_MESSAGE, null);
+							xoaRongText();
 
-					} else {
+						}
+					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thông báo thêm nhân viên",
 								JOptionPane.ERROR_MESSAGE, null);
 					}
+				}
 
+				else {
+					isTenNVHanhChinh = true;
+					isChucVuNVHanhChinh = true;
+					isSoDTNhanVienHC = true;
+					isTrinhDoNVHanhChinh = true;
+					isDiaChiNVHanhChinh = true;
+					thongbaoLoi();
 				}
 			} else {
-				nvKiThuat = getNhanVienKiThuat();
 
 				if (validateNhanVienKiThuat(nvKiThuat)) {
+					nvKiThuat = getNhanVienKiThuat();
 					if (nhanVienKiThuatDao.themNhanVienKiThuat(nvKiThuat)) {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
 								JOptionPane.INFORMATION_MESSAGE, null);
@@ -622,6 +714,13 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thông báo thêm nhân viên",
 								JOptionPane.ERROR_MESSAGE, null);
 					}
+				} else {
+					isTenNVKiThuat = true;
+					isSoDTNhanVienKT = true;
+					isSoNamKNKiThuat = true;
+					isDiaChiNVKiThuat = true;
+					isNgaySinhKiThuat = true;
+					thongbaoLoi();
 				}
 			}
 		}
@@ -633,7 +732,8 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 	}
 
 	private void xoaRongText() {
-		if (cboLoaiNV.getSelectedIndex() == 0) {
+
+		if (check == 0) {
 			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_HANH_CHINH));
 			txtTenNV.setText("");
 			rdbtnNam.setSelected(true);
@@ -645,7 +745,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 			cboQuyenTruyCap.setSelectedIndex(0);
 			txtMatKhau.setText("12345678");
 			txtAnh.setText("");
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
 			lblMaNV.setText(RandomMa.getMaNgauNhien(TenEntity.NHAN_VIEN_KI_THUAT));
@@ -657,19 +757,67 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, MouseList
 			txtAnh.setText("");
 			txtNamKinhNghiem.setText("");
 			cboBacTho.setSelectedIndex(0);
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 
 		}
+
 	}
 
 	private boolean validateNhanVienHanhChinh(NhanVienHanhChinh nhanVienHanhChinh) {
-
-		return true;
+		if (RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && RegexNhanVienHanhChinh.ktraChucVu(txtChucVu)
+				&& RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai)
+				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan))
+			return true;
+		return false;
 	}
 
 	private boolean validateNhanVienKiThuat(NhanVienKiThuat nhanVienKiThuat) {
+		if (RegexNVKiThuat.ktraTenNV(txtTenNV) && RegexNVKiThuat.ktraSDT(txtSoDienThoai)
+				&& RegexNVKiThuat.KtraDiaChi(txtDiaChi) && RegexNVKiThuat.KtraSoNamKN(txtNamKinhNghiem)
+				&& RegexNVKiThuat.ktraNgaySinh(txtNgaySinh))
+			return true;
+		return false;
+	}
 
-		return true;
+	@Override
+	public void focusGained(FocusEvent e) {
+		Object o = e.getSource();
+
+		if (check == 0) {
+			if (o.equals(txtTenNV))
+				isTenNVHanhChinh = true;
+			if (o.equals(txtChucVu))
+				isChucVuNVHanhChinh = true;
+			if (o.equals(txtDiaChi))
+				isDiaChiNVHanhChinh = true;
+			if (o.equals(txtTrinhDoHocVan))
+				isTrinhDoNVHanhChinh = true;
+			if (o.equals(txtSoDienThoai))
+				isSoDTNhanVienHC = true;
+			if (o.equals(txtMatKhau))
+				isMatKhau = true;
+			if (o.equals(txtNgaySinh))
+				isNgaySinhNVHanhChinh = true;
+		} else {
+			if (o.equals(txtTenNV))
+				isTenNVKiThuat = true;
+			if (o.equals(txtSoDienThoai))
+				isSoDTNhanVienKT = true;
+			if (o.equals(txtDiaChi))
+				isDiaChiNVKiThuat = true;
+			if (o.equals(txtNamKinhNghiem))
+				isSoNamKNKiThuat = true;
+			if (o.equals(txtNgaySinh))
+				isNgaySinhKiThuat = true;
+
+		}
+
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		thongbaoLoi();
+
 	}
 }

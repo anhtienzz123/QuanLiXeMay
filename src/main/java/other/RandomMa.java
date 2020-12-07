@@ -15,8 +15,6 @@ import dao.NhanVienKiThuatDao;
 import dao.PhieuBaoHanhDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
-import entity.KhachHang;
-import entity.NhanVienHanhChinh;
 
 public class RandomMa {
 

@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -41,11 +43,12 @@ import entity.DongXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
+import other.BatRegex;
 import other.CopyTask;
 import other.XuLyChung;
 import ui.App;
 
-public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListener {
+public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListener, FocusListener {
 	/**
 	 * 
 	 */
@@ -61,8 +64,6 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	private JTextField txtPath;
 
 	private JTextArea txtMoTa;
-
-	private JLabel lblThongBao;
 	private JLabel lblAnh;
 	private JLabel lblMaXe;
 
@@ -82,6 +83,15 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	private XeMayDao xeMayDao;
 
 	private String filePath;
+
+	private JTextArea txtThongBao;
+	private boolean isTenXe = false;
+	private boolean isSoLuong = false;
+	private boolean isGiaNhap = false;
+	private boolean isSoKhung = false;
+	private boolean isSoSuon = false;
+	private boolean isHeSoBan = false;
+	private boolean isBaoHanh = false;
 
 	/**
 	 * Create the panel.
@@ -132,11 +142,11 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(29, 772, 1743, 11);
+		separator.setBounds(29, 770, 1743, 11);
 		add(separator);
 
 		btnLuu = new JButton("Lưu");
-		btnLuu.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnLuu.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnLuu.setForeground(Color.WHITE);
 		btnLuu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLuu.setBackground(new Color(58, 181, 74));
@@ -150,14 +160,14 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnHuy = new JButton("Hủy");
-		btnHuy.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnHuy.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnHuy.setForeground(Color.WHITE);
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnHuy.setBackground(Color.RED);
@@ -359,7 +369,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		// Kiểm tra xem ảnh có null không
 		Optional<String> optional = Optional.ofNullable(xeMay.getTenAnh());
 		if (!optional.isPresent()) {
-			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 			lblAnh.setText("img");
 		} else {
 			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgXe/" + anh).getImage().getScaledInstance(pnlAnh.getWidth(),
@@ -381,7 +391,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		txtPath.setText(anh);
 
 		btnChonFile = new JButton("chọn ảnh");
-		btnChonFile.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_CapNhatXeMay.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnChonFile.setBackground(Color.GRAY);
@@ -398,12 +408,6 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		lblThongTin.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		lblThongTin.setBounds(29, 57, 211, 30);
 		add(lblThongTin);
-
-		lblThongBao = new JLabel("");
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
-		lblThongBao.setBounds(29, 796, 915, 49);
-		add(lblThongBao);
 
 		JLabel lblXutX = new JLabel("Xuất xứ:");
 		lblXutX.setForeground(Color.BLACK);
@@ -427,6 +431,12 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		cboMauXe.setSelectedItem(xeMay.getMauXe());
 		cboXuatXu.setSelectedItem(xeMay.getXuatXu().getTenXuatXu());
 
+		txtThongBao = new JTextArea();
+		txtThongBao.setForeground(Color.RED);
+		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		txtThongBao.setBounds(29, 773, 630, 101);
+		add(txtThongBao);
+
 	}
 
 	private void dangKiSuKien() {
@@ -444,6 +454,14 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		txtPath.addKeyListener(this);
 
 		cboMauXe.addActionListener(this);
+
+		txtTenXe.addFocusListener(this);
+		txtSoLuong.addFocusListener(this);
+		txtGiaNhap.addFocusListener(this);
+		txtSoKhung.addFocusListener(this);
+		txtSoSuon.addFocusListener(this);
+		txtHeSoBan.addFocusListener(this);
+		txtBaoHanh.addFocusListener(this);
 	}
 
 	@Override
@@ -487,49 +505,41 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtGiaNhap.requestFocus();
 			}
 		}
 		if (o.equals(txtGiaNhap)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtSoLuong.requestFocus();
 			}
 		}
 		if (o.equals(txtSoLuong)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtSoKhung.requestFocus();
 			}
 		}
 		if (o.equals(txtSoKhung)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtSoSuon.requestFocus();
 			}
 		}
 		if (o.equals(txtSoSuon)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtHeSoBan.requestFocus();
 			}
 		}
 		if (o.equals(txtHeSoBan)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtBaoHanh.requestFocus();
 			}
 		}
 		if (o.equals(txtBaoHanh)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtPath.requestFocus();
 			}
 		}
 		if (o.equals(txtPath)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				validData();
 				txtMoTa.requestFocus();
 			}
 		}
@@ -613,11 +623,21 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		xeMay.setTenAnh(tenAnh);
 
-		System.out.println(xeMay);
-		if (validData()) {
-			if (xeMayDao.capNhatXeMay(xeMay)) {
+		if (validateXeMay(xeMay)) {
+			if (xeMayDao.capNhatXeMay(xeMay))
 				JOptionPane.showMessageDialog(this, "Lưu thành công");
-			}
+			else
+				JOptionPane.showMessageDialog(this, "Lưu không thành công");
+
+		} else {
+			isTenXe = true;
+			isGiaNhap = true;
+			isSoLuong = true;
+			isSoKhung = true;
+			isSoSuon = true;
+			isHeSoBan = true;
+			isBaoHanh = true;
+			capNhatThongBaoLoi();
 		}
 
 	}
@@ -656,35 +676,64 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 	}
 
-	private boolean validData() {
-		if (!txtGiaNhap.getText().trim().matches("^\\d+(.{1}\\d+)?$")) {
-			txtGiaNhap.requestFocus();
-			txtGiaNhap.selectAll();
-			lblThongBao.setText("Thông báo: Giá nhập không hợp lệ (Giá nhập phải > 0 và không chứa kí tự đặc biệt)");
-			return false;
-		}
-		if (!txtSoLuong.getText().trim().matches("^\\d+$")) {
-			txtSoLuong.requestFocus();
-			txtSoLuong.selectAll();
-			lblThongBao.setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)");
-			return false;
-		}
-		/*
-		 * if (!txtSoKhung.getText().trim().matches("^\\d+$")) {
-		 * txtSoKhung.requestFocus(); txtSoKhung.selectAll(); lblThongBao.
-		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
-		 * ); return false; } if (!txtSoSuon.getText().trim().matches("^\\d+$")) {
-		 * txtSoSuon.requestFocus(); txtSoSuon.selectAll(); lblThongBao.
-		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
-		 * ); return false; } if (!txtHeSoBan.getText().trim().matches("^\\d+$")) {
-		 * txtHeSoBan.requestFocus(); txtHeSoBan.selectAll(); lblThongBao.
-		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
-		 * ); return false; } if (!txtBaoHanh.getText().trim().matches("^\\d+$")) {
-		 * txtBaoHanh.requestFocus(); txtBaoHanh.selectAll(); lblThongBao.
-		 * setText("Thông báo: Số lượng không hợp lệ (Số lượng phải > 0 và không chứa kí tự đặc biệt)"
-		 * ); return false; }
-		 */
-		lblThongBao.setText("");
-		return true;
+	private boolean validateXeMay(XeMay xeMay) {
+
+		if (BatRegex.kiemTraTenXe(txtTenXe) && BatRegex.kiemTraSoLuong(txtSoLuong)
+				&& BatRegex.kiemTraGiaNhap(txtGiaNhap) && BatRegex.kiemTraSoKhung(txtSoKhung)
+				&& BatRegex.kiemTraSoSuon(txtSoSuon) && BatRegex.kiemTraHeSoBan(txtHeSoBan)
+				&& BatRegex.kiemTraHeSoBan(txtBaoHanh))
+			return true;
+
+		return false;
+
 	}
+
+	private void capNhatThongBaoLoi() {
+
+		txtThongBao.setText("");
+
+		if (!BatRegex.kiemTraTenXe(txtTenXe) && isTenXe)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.TEN_XE + "\n");
+		if (!BatRegex.kiemTraSoLuong(txtSoLuong) && isSoLuong)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_LUONG + "\n");
+		if (!BatRegex.kiemTraGiaNhap(txtGiaNhap) && isGiaNhap)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.GIA_NHAP + "\n");
+		if (!BatRegex.kiemTraSoKhung(txtSoKhung) && isSoKhung)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_KHUNG + "\n");
+		if (!BatRegex.kiemTraSoSuon(txtSoSuon) && isSoSuon)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_SUON + "\n");
+		if (!BatRegex.kiemTraHeSoBan(txtHeSoBan) && isHeSoBan)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.HE_SO_BAN + "\n");
+		if (!BatRegex.kiemTraBaoHanh(txtBaoHanh) && isBaoHanh)
+			txtThongBao.setText(txtThongBao.getText() + BatRegex.BAO_HANH + "\n");
+
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		Object source = e.getSource();
+
+		if (source.equals(txtTenXe))
+			isTenXe = true;
+
+		if (source.equals(txtSoLuong))
+			isSoLuong = true;
+
+		if (source.equals(txtGiaNhap))
+			isGiaNhap = true;
+		if (source.equals(txtSoKhung))
+			isSoKhung = true;
+		if (source.equals(txtSoSuon))
+			isSoSuon = true;
+		if (source.equals(txtHeSoBan))
+			isHeSoBan = true;
+		if (source.equals(txtBaoHanh))
+			isBaoHanh = true;
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		capNhatThongBaoLoi();
+	}
+
 }

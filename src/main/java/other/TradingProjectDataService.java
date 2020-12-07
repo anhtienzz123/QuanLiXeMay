@@ -1,4 +1,4 @@
-package testJtree;
+package other;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;

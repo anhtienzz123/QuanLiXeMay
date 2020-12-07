@@ -125,7 +125,7 @@ public class NhanVienKiThuatDao {
 			n = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
 
 		return n > 0;

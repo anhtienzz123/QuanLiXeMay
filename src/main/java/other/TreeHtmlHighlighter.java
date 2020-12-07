@@ -1,7 +1,7 @@
-package testJtree;
+package other;
 
 import java.util.regex.Pattern;
-public class HtmlHighlighter {
+public class TreeHtmlHighlighter {
 	private static final String HighLightTemplate = "<span style='background:rgb(230,230,0);'>$1</span>";
 
 	public static String highlightText(String text, String textToHighlight) {

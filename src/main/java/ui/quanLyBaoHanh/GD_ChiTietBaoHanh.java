@@ -12,7 +12,6 @@ import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.EventObject;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,16 +51,18 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 	public GD_ChiTietBaoHanh(String maHopDong, String maPhieuBaoHanh, String dot) {
 		HopDong hopDong = HopDongDao.getInstance().getHopDongTheoMa(maHopDong);
 		PhieuBaoHanh phieuBaoHanh = PhieuBaoHanhDao.getInstance().getPhieuBaoHanhTheoMa(maPhieuBaoHanh);
-		NhanVienKiThuat nhanVienKiThuat = NhanVienKiThuatDao.getInstance().getNVKiThuatTheoMa(phieuBaoHanh.getNhanVienKiThuat().getMaNVKiThuat());
-		List<ChiTietBaoHanh> chiTietBaoHanhs = ChiTietBaoHanhDao.getInstance().getChiTietBaoHanhTheoMaPhieuBaoHanh(maPhieuBaoHanh);
-		
+		NhanVienKiThuat nhanVienKiThuat = NhanVienKiThuatDao.getInstance()
+				.getNVKiThuatTheoMa(phieuBaoHanh.getNhanVienKiThuat().getMaNVKiThuat());
+		List<ChiTietBaoHanh> chiTietBaoHanhs = ChiTietBaoHanhDao.getInstance()
+				.getChiTietBaoHanhTheoMaPhieuBaoHanh(maPhieuBaoHanh);
+
 		setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1450, 950));
+		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
 
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(58, 181, 74));
-		panel.setBounds(0, 0, 1450, 50);
+		panel.setBounds(0, 0, 1800, 50);
 		add(panel);
 		panel.setLayout(null);
 
@@ -69,11 +70,11 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		lblDot.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDot.setForeground(Color.WHITE);
 		lblDot.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblDot.setBounds(0, 0, 1450, 50);
+		lblDot.setBounds(0, 0, 1800, 50);
 		panel.add(lblDot);
 
 		JScrollPane scrollpaneBaoHanh = new JScrollPane();
-		scrollpaneBaoHanh.setBounds(29, 292, 1385, 431);
+		scrollpaneBaoHanh.setBounds(29, 315, 1723, 450);
 		add(scrollpaneBaoHanh);
 
 		JLabel lblDanhSach = new JLabel("Danh mục bảo hành");
@@ -84,7 +85,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(29, 278, 1385, 11);
+		separator.setBounds(29, 278, 1723, 11);
 		add(separator);
 
 		String[] colHeaderBaoHanh = { "STT", "Danh mục bảo hành", "Vệ sinh", "Thay thế" };
@@ -101,7 +102,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 				return columnTypes[columnIndex];
 			}
 		};
-		tblBaoHanh = new JTable(modelBaoHanh){
+		tblBaoHanh = new JTable(modelBaoHanh) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
@@ -120,7 +121,7 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		tblBaoHanh.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		tblBaoHanh.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-		
+
 		/**
 		 * Đổi màu header cho table
 		 */
@@ -128,32 +129,33 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		
-		int count = chiTietBaoHanhs.size();
+
+//		int count = chiTietBaoHanhs.size();
 		for (ChiTietBaoHanh chiTietBaoHanh : chiTietBaoHanhs) {
 			int index = chiTietBaoHanhs.indexOf(chiTietBaoHanh);
-			modelBaoHanh.addRow(new Object[] { index+1, chiTietBaoHanh.getDanhMucBaoHanh().getTenDanhMucBaoHanh(), chiTietBaoHanh.isTrangThai(), !chiTietBaoHanh.isTrangThai() });
+			modelBaoHanh.addRow(new Object[] { index + 1, chiTietBaoHanh.getDanhMucBaoHanh().getTenDanhMucBaoHanh(),
+					chiTietBaoHanh.isTrangThai(), !chiTietBaoHanh.isTrangThai() });
 		}
 
 		JPanel pnlLogo = new JPanel();
-		pnlLogo.setBounds(0, 817, 1450, 133);
+		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
 		pnlLogo.setLayout(null);
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
-		lblLogo.setBounds(0, 0, 1450, 133);
+		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnQuayLai = new JButton("Quay lại");
-		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuayLai.setBackground(Color.RED);
-		btnQuayLai.setBounds(1250, 746, 164, 40);
+		btnQuayLai.setBounds(1588, 801, 164, 40);
 		add(btnQuayLai);
 
 		JLabel lblMPBH = new JLabel("Mã phiếu bảo hành:");
@@ -171,25 +173,25 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		JLabel lblMHD = new JLabel("Mã hợp đồng:");
 		lblMHD.setForeground(Color.BLACK);
 		lblMHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMHD.setBounds(543, 77, 188, 30);
+		lblMHD.setBounds(583, 77, 188, 30);
 		add(lblMHD);
 
 		lblMaHopDong = new JLabel(maHopDong);
 		lblMaHopDong.setForeground(Color.BLACK);
 		lblMaHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaHopDong.setBounds(772, 77, 111, 30);
+		lblMaHopDong.setBounds(812, 77, 111, 30);
 		add(lblMaHopDong);
 
 		JLabel lblNLHD = new JLabel("Ngày lập phiếu:");
 		lblNLHD.setForeground(Color.BLACK);
 		lblNLHD.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNLHD.setBounds(1085, 77, 158, 30);
+		lblNLHD.setBounds(1349, 77, 158, 30);
 		add(lblNLHD);
 
 		JLabel lblNgay = new JLabel(new SimpleDateFormat("dd-MM-yyyy").format(phieuBaoHanh.getNgayBaoHanh()));
 		lblNgay.setForeground(Color.BLACK);
 		lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNgay.setBounds(1258, 77, 111, 30);
+		lblNgay.setBounds(1522, 77, 111, 30);
 		add(lblNgay);
 
 		JLabel lblTnKhchHng = new JLabel("Mã khách hàng:");
@@ -207,26 +209,25 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		JLabel lblTnKhchHng_1 = new JLabel("Tên khách hàng:");
 		lblTnKhchHng_1.setForeground(Color.BLACK);
 		lblTnKhchHng_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTnKhchHng_1.setBounds(543, 163, 164, 30);
+		lblTnKhchHng_1.setBounds(583, 163, 164, 30);
 		add(lblTnKhchHng_1);
 
-		
 		JLabel lblTenKhachHang = new JLabel(hopDong.getHoaDon().getKhachHang().getHoTenKH());
 		lblTenKhachHang.setForeground(Color.BLACK);
 		lblTenKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTenKhachHang.setBounds(772, 163, 358, 30);
+		lblTenKhachHang.setBounds(812, 163, 358, 30);
 		add(lblTenKhachHang);
 
 		JLabel lblSinThoi = new JLabel("Số điện thoại:");
 		lblSinThoi.setForeground(Color.BLACK);
 		lblSinThoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSinThoi.setBounds(1085, 163, 127, 30);
+		lblSinThoi.setBounds(1349, 163, 127, 30);
 		add(lblSinThoi);
 
 		JLabel lblSoDienThoai = new JLabel(hopDong.getHoaDon().getKhachHang().getSoDienThoai());
 		lblSoDienThoai.setForeground(Color.BLACK);
 		lblSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoDienThoai.setBounds(1258, 163, 127, 30);
+		lblSoDienThoai.setBounds(1522, 163, 127, 30);
 		add(lblSoDienThoai);
 
 		JLabel lblMXe = new JLabel("Mã xe:");
@@ -244,25 +245,26 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		JLabel lblTnKhchHng_1_1 = new JLabel("Tên xe:");
 		lblTnKhchHng_1_1.setForeground(Color.BLACK);
 		lblTnKhchHng_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTnKhchHng_1_1.setBounds(543, 206, 86, 30);
+		lblTnKhchHng_1_1.setBounds(583, 206, 86, 30);
 		add(lblTnKhchHng_1_1);
 
-		JLabel lblMaPhieuBaoHanh_1_1_1 = new JLabel(hopDong.getXeMay().getTenXeMay());
-		lblMaPhieuBaoHanh_1_1_1.setForeground(Color.BLACK);
-		lblMaPhieuBaoHanh_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaPhieuBaoHanh_1_1_1.setBounds(641, 206, 446, 30);
-		add(lblMaPhieuBaoHanh_1_1_1);
+		JLabel lblTenXe = new JLabel("<html>" + hopDong.getXeMay().getTenXeMay() + "</html>");
+		lblTenXe.setVerticalAlignment(SwingConstants.TOP);
+		lblTenXe.setForeground(Color.BLACK);
+		lblTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTenXe.setBounds(681, 206, 489, 65);
+		add(lblTenXe);
 
 		JLabel lblHng_1 = new JLabel("Hãng:");
 		lblHng_1.setForeground(Color.BLACK);
 		lblHng_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHng_1.setBounds(1085, 206, 100, 30);
+		lblHng_1.setBounds(1349, 206, 100, 30);
 		add(lblHng_1);
 
 		JLabel lblHonda = new JLabel(hopDong.getXeMay().getDongXe().getHangXe().getTenHangXe());
 		lblHonda.setForeground(Color.BLACK);
 		lblHonda.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHonda.setBounds(1204, 206, 127, 30);
+		lblHonda.setBounds(1468, 206, 127, 30);
 		add(lblHonda);
 
 		JLabel lblMNhnVin = new JLabel("Mã nhân viên kỹ thuật:");
@@ -280,13 +282,13 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		JLabel lblTnNhnVin = new JLabel("Tên nhân viên kỹ thuật:");
 		lblTnNhnVin.setForeground(Color.BLACK);
 		lblTnNhnVin.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTnNhnVin.setBounds(543, 120, 217, 30);
+		lblTnNhnVin.setBounds(583, 120, 217, 30);
 		add(lblTnNhnVin);
-		
+
 		JLabel lblTenNV = new JLabel(nhanVienKiThuat.getHoTen());
 		lblTenNV.setForeground(Color.BLACK);
 		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTenNV.setBounds(772, 120, 325, 30);
+		lblTenNV.setBounds(812, 120, 325, 30);
 		add(lblTenNV);
 
 		dangKiSuKien();
@@ -298,12 +300,13 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 		tblBaoHanh.addMouseListener(this);
 
 	}
+
 	/**
 	 * Đọc dữ liệu vào mo
 	 */
-	
+
 	/*
-	 * private void docDuLieuDatabaseVaoTable() { 
+	 * private void docDuLieuDatabaseVaoTable() {
 	 * modelBaoHanh.getDataVector().removeAllElements(); }
 	 */
 

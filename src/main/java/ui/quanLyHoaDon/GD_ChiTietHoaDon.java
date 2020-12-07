@@ -55,7 +55,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		hoaDonDao = HoaDonDao.getInstance();
 		
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_ChiTietHoaDon.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
+				.getImage(GD_ChiTietHoaDon.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Hóa đơn");
 		setSize(1200, 900);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -238,7 +238,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 
 		btnThoat = new JButton("Thoát");
 		btnThoat.setBackground(Color.RED);
-		btnThoat.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThoat.setBounds(1015, 810, 136, 30);

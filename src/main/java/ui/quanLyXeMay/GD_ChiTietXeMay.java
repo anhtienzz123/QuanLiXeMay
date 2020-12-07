@@ -90,7 +90,7 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		// Kiểm tra xem ảnh có null không
 		Optional<String> optional = Optional.ofNullable(xeMay.getTenAnh());
 		if (!optional.isPresent()) {
-			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 			lblAnh.setText("img");
 		} else {
 			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgXe/" + anh).getImage().getScaledInstance(pnlAnh.getWidth(),

@@ -15,18 +15,19 @@ import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
+import ui.quanLyNhanVien.GD_DoiMatKhau;
 import ui.quanLyXeMay.GD_ThemXeMay;
-import javax.swing.JSpinner;
-
 
 public class GD_TrangChu extends JPanel implements ActionListener, MouseListener {
-	
+
 	private static final long serialVersionUID = 1L;
 //	private JLabel lblNgay;
 //	private JLabel lblGio;
@@ -54,18 +55,19 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private List<DanhMuc> listDanhMuc;
 	private JPanel pnlAnh;
 	private JButton btnDoiMatKhau;
-	
+
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
 	private String maNhanVienHanhChinh;
 	private JLabel lblAnh;
+	private NhanVienHanhChinh nhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_TrangChu(String maNhanVienHanhChinh) {
+	public GD_TrangChu(String maNhanVienHanhChinh, JPanel pnlMenu) {
 		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 //		maNhanVienHanhChinh = "NV180556";
-		
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
@@ -105,7 +107,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBackground(new Color(58, 181, 74));
-		separator_1.setBounds(67, 92, 790, 30);
+		separator_1.setBounds(67, 92, 945, 30);
 		add(separator_1);
 
 		JLabel lblMNV = new JLabel("Mã nhân viên:");
@@ -157,7 +159,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		pnlLapHoaDon = new JPanel();
 		pnlLapHoaDon.setBackground(new Color(58, 181, 74));
-		pnlLapHoaDon.setBounds(87, 131, 278, 165);
+		pnlLapHoaDon.setBounds(177, 131, 278, 165);
 		add(pnlLapHoaDon);
 		pnlLapHoaDon.setLayout(null);
 
@@ -172,7 +174,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblIconLapHoaDon.setBounds(0, 0, 278, 123);
 		pnlLapHoaDon.add(lblIconLapHoaDon);
 		lblIconLapHoaDon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconLapHoaDon.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_property_100px.png")));
+		lblIconLapHoaDon.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_property_100px.png")));
 
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setLayout(null);
@@ -181,7 +183,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 
@@ -194,7 +196,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlAnh.setLayout(null);
 		pnlAnh.setBounds(1163, 92, 317, 300);
 		add(pnlAnh);
-		
+
 		lblAnh = new JLabel();
 		lblAnh.setBackground(Color.WHITE);
 		lblAnh.setBounds(0, 0, 317, 300);
@@ -213,7 +215,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemKhachHang = new JPanel();
 		pnlThemKhachHang.setLayout(null);
 		pnlThemKhachHang.setBackground(new Color(58, 181, 74));
-		pnlThemKhachHang.setBounds(549, 131, 278, 165);
+		pnlThemKhachHang.setBounds(639, 131, 278, 165);
 		add(pnlThemKhachHang);
 
 		lblThemKhachHang = new JLabel("Thêm khách hàng");
@@ -224,7 +226,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemKhachHang.add(lblThemKhachHang);
 
 		lblIconThemKhachHang = new JLabel("");
-		lblIconThemKhachHang.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_user_male_100px.png")));
+		lblIconThemKhachHang.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_user_male_100px.png")));
 		lblIconThemKhachHang.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemKhachHang.setBounds(0, 0, 278, 123);
 		pnlThemKhachHang.add(lblIconThemKhachHang);
@@ -232,7 +234,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlTroGiup = new JPanel();
 		pnlTroGiup.setLayout(null);
 		pnlTroGiup.setBackground(new Color(58, 181, 74));
-		pnlTroGiup.setBounds(87, 537, 278, 165);
+		pnlTroGiup.setBounds(177, 537, 278, 165);
 		add(pnlTroGiup);
 
 		lblTroGiup = new JLabel("Trợ giúp");
@@ -243,7 +245,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlTroGiup.add(lblTroGiup);
 
 		lblIconTroGiup = new JLabel("");
-		lblIconTroGiup.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/supplier_100px.png")));
+		lblIconTroGiup.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/supplier_100px.png")));
 		lblIconTroGiup.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconTroGiup.setBounds(0, 0, 278, 123);
 		pnlTroGiup.add(lblIconTroGiup);
@@ -251,7 +253,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlBaoHanh = new JPanel();
 		pnlBaoHanh.setLayout(null);
 		pnlBaoHanh.setBackground(new Color(58, 181, 74));
-		pnlBaoHanh.setBounds(87, 330, 278, 165);
+		pnlBaoHanh.setBounds(177, 330, 278, 165);
 		add(pnlBaoHanh);
 
 		lblBaoHanh = new JLabel("Bảo hành");
@@ -262,7 +264,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlBaoHanh.add(lblBaoHanh);
 
 		lblIconBaoHanh = new JLabel("");
-		lblIconBaoHanh.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/calendar_100px.png")));
+		lblIconBaoHanh.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/calendar_100px.png")));
 		lblIconBaoHanh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconBaoHanh.setBounds(0, 0, 278, 123);
 		pnlBaoHanh.add(lblIconBaoHanh);
@@ -270,11 +272,11 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemXeMay = new JPanel();
 		pnlThemXeMay.setLayout(null);
 		pnlThemXeMay.setBackground(new Color(58, 181, 74));
-		pnlThemXeMay.setBounds(549, 330, 278, 165);
+		pnlThemXeMay.setBounds(639, 330, 278, 165);
 		add(pnlThemXeMay);
 
 		lblIconThemXeMay = new JLabel("");
-		lblIconThemXeMay.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/scooter_100px.png")));
+		lblIconThemXeMay.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/scooter_100px.png")));
 		lblIconThemXeMay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemXeMay.setBounds(0, 0, 278, 123);
 		pnlThemXeMay.add(lblIconThemXeMay);
@@ -289,7 +291,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemNhanVien = new JPanel();
 		pnlThemNhanVien.setLayout(null);
 		pnlThemNhanVien.setBackground(new Color(58, 181, 74));
-		pnlThemNhanVien.setBounds(549, 537, 278, 165);
+		pnlThemNhanVien.setBounds(639, 537, 278, 165);
 		add(pnlThemNhanVien);
 
 		lblThemNhanVien = new JLabel("Thêm nhân viên");
@@ -300,7 +302,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemNhanVien.add(lblThemNhanVien);
 
 		lblIconThemNhanVien = new JLabel("");
-		lblIconThemNhanVien.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_administrator_100px.png")));
+		lblIconThemNhanVien.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_administrator_100px.png")));
 		lblIconThemNhanVien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemNhanVien.setBounds(0, 0, 278, 123);
 		pnlThemNhanVien.add(lblIconThemNhanVien);
@@ -325,7 +327,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("BaoHanh", pnlBaoHanh, lblIconBaoHanh));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblThemNhanVien));
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblIconThemNhanVien));
-		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh);
+		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh, pnlMenu);
 
 		JLabel lblaCh = new JLabel("Địa chỉ: 151 điện biên phủ, phường 15, quận bình thạnh, Thành phố Hồ Chí Minh");
 		lblaCh.setForeground(Color.BLACK);
@@ -335,17 +337,16 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		add(lblaCh);
 
 		btnDoiMatKhau = new JButton("Đổi mật khẩu");
-		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/password_reset_30px.png")));
+		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/password_reset_30px.png")));
 		btnDoiMatKhau.setBackground(Color.GRAY);
 		btnDoiMatKhau.setForeground(Color.WHITE);
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnDoiMatKhau.setBounds(1396, 647, 201, 35);
-		
-		this.
-		add(btnDoiMatKhau);
+
+		this.add(btnDoiMatKhau);
 		chuyen.setSuKien(listDanhMuc);
 		dangKiSuKien();
-		
+
 		this.maNhanVienHanhChinh = maNhanVienHanhChinh;
 		khoiTao();
 //		DongHo();
@@ -354,31 +355,33 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	private void dangKiSuKien() {
 		btnDoiMatKhau.addActionListener(this);
 	}
-	
+
 	private void khoiTao() {
 		nhanVienHanhChinhDao = NhanVienHanhChinhDao.getInstance();
-		NhanVienHanhChinh nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
-		
+		nhanVienHanhChinh = nhanVienHanhChinhDao.getNVHanhChinhTheoMa(this.maNhanVienHanhChinh);
+
 		lblMaNhanVien.setText(nhanVienHanhChinh.getMaNVHanhChinh());
 		lblTenNhanVien.setText(nhanVienHanhChinh.getHoTenNV());
 		lblChucVu.setText(nhanVienHanhChinh.getChucVu());
-		
+
 		// Kiểm tra xem ảnh có null không
+		// trả về true nếu như mà nó khác null
 		Optional<String> optional = Optional.ofNullable(nhanVienHanhChinh.getTenAnh());
+
 		if (optional.isPresent()) {
 			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienHanhChinh.getTenAnh().trim()).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-		}else {
-			if(nhanVienHanhChinh.isGioiTinh()) {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
-						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-			}else {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
-						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			if (nhanVienHanhChinh.isGioiTinh()) {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
+						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			} else {
+				lblAnh.setIcon(new ImageIcon(
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()
+								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			}
 		}
 	}
-	
 
 	/*
 	 * public void DongHo() { long millis = System.currentTimeMillis(); Date date =
@@ -390,23 +393,27 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 	 * ca.get(Calendar.MINUTE); int giay = ca.get(Calendar.SECOND); String dongHo =
 	 * gio + " : " + phut + " : " + giay; lblGio.setText(dongHo); } } }.start(); }
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if(o.equals(btnDoiMatKhau)) {
-			
-		}
-//		if (o.equals(btnThanhToan)) {
-//			new GD_ChiTietHoaDon().setVisible(true);
-//		} else if (o.equals(btnXemChiTiet)) {
-//			new GD_ChiTietXeMay().setVisible(true);
-//		} else if (o.equals(btnThemKH)) {
-//			new GD_ThemKhachHang().setVisible(true);
+		if (o.equals(btnDoiMatKhau)) {
+			JPasswordField pwd = new JPasswordField(10);
+			int action = JOptionPane.showConfirmDialog(null, pwd, "Nhập mật khẩu hiện tại:",
+					JOptionPane.OK_CANCEL_OPTION);
+			if (action >= 0) {
+				if (nhanVienHanhChinh.getMatKhau().trim().equals(pwd.getText())) {
+					new GD_DoiMatKhau(nhanVienHanhChinh).setVisible(true);
+					;
+				} else {
+					JOptionPane.showMessageDialog(this, "Mật khẩu không đúng");
+				}
+			}
 
-//		}
-		
-		if(o == btnDoiMatKhau) {
-			
+		}
+
+		if (o == btnDoiMatKhau) {
+
 		}
 	}
 

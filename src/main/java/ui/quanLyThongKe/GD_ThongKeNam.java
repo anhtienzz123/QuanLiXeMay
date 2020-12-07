@@ -6,16 +6,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -34,9 +34,8 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.toedter.calendar.JDateChooser;
-
 import dao.ThongKeQuanLiDao;
+
 
 public class GD_ThongKeNam extends JPanel implements MouseListener {
 
@@ -53,11 +52,11 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private JPanel pnlDoanhThuQuy;
 	private JTabbedPane tabbedPaneDoanhThu;
 	private JTabbedPane tabbedPaneXe;
-	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
 
 	private ThongKeQuanLiDao thongKeDao;
 	private int nam;
+	private JComboBox<String> cboNam;
 
 	/**
 	 * Create the panel.
@@ -66,14 +65,6 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
-
-		txtNgay = new JDateChooser();
-		txtNgay.setForeground(new Color(58, 181, 74));
-		txtNgay.setDateFormatString("dd-MM-yyyy");
-		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgay.setBounds(218, 20, 146, 30);
-		txtNgay.setDate(Calendar.getInstance().getTime());
-		add(txtNgay);
 //		DateFormat df = new SimpleDateFormat("yyyy");
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn năm:");
@@ -122,21 +113,15 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
-
-		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("date")) {
-					thongKeDoanhThuNam(pnlDoanhThuThang);
-					thongKeDoanhThuQuy(pnlDoanhThuQuy);
-					thongKeTopXe(pnlTopXe);
-					thongKeTopDongXe(pnlTopDong);
-					thongKeTopHangXe(pnlTopHang);
-				}
-
-			}
-		});
+		
+		cboNam = new JComboBox<String>();
+		cboNam.setBackground(Color.WHITE);
+		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] {"2018", "2019", "2020"}));
+		cboNam.setBounds(228, 20, 90, 30);
+		add(cboNam);
+		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		cboNam.setSelectedItem(nam+"");
 	}
 
 	public void dangKiSuKien() {

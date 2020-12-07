@@ -8,8 +8,12 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.sql.Date;
 import java.util.Optional;
@@ -25,6 +29,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -35,11 +40,13 @@ import com.toedter.calendar.JDateChooser;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
+import other.BatRegex;
 import other.CopyTask;
+import other.RegexNhanVienHanhChinh;
 import ui.App;
 import ui.quanLyXeMay.GD_ThemXeMay;
 
-public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, MouseListener {
+public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, MouseListener, FocusListener {
 	/**
 	 * 
 	 */
@@ -61,13 +68,22 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	private JPanel pnlAnh;
 	private JButton btnResetMK;
 	private NhanVienHanhChinhDao nhanVienHanhChinhDao;
-//	private NhanVienHanhChinh nhanVienHanhChinh;
 	private JLabel lblMaNV;
 	private JRadioButton rdbtnNam;
 	private JRadioButton rdbtnNu;
 	private JDateChooser txtNgaySinh;
 	private JComboBox<String> cboQuyenTruyCap;
 	private String filePath;
+
+	private boolean isTenNVHanhChinh = false;
+	private boolean isSoDTNhanVienHC = false;
+	private boolean isDiaChiNVHanhChinh = false;
+	private boolean isChucVuNVHanhChinh = false;
+	private boolean isTrinhDoNVHanhChinh = false;
+	private boolean isNgaySinhNVHanhChinh = false;
+	private boolean isMatKhau = false;
+
+	private JTextArea taThongBao;
 
 	/**
 	 * Create the panel.
@@ -107,7 +123,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 		btnThem = new JButton("Lưu");
 		btnThem.setToolTipText("Thêm nhân viên");
-		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/restore_page_30px.png")));
+		btnThem.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/restore_page_30px.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -121,14 +137,15 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnThoat = new JButton("Thoát");
-		btnThoat.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(
+				new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -168,7 +185,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel();
-		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/pictures_folder_30px.png")));
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
@@ -181,11 +198,11 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
 			if (nhanVienHanhChinh.isGioiTinh()) {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
 						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			} else {
 				lblAnh.setIcon(new ImageIcon(
-						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()
 								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			}
 		}
@@ -256,7 +273,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		add(txtAnh);
 
 		btnChonFile = new JButton("Chọn file");
-		btnChonFile.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setToolTipText("Quay lại màn hình quản lý nhân viên");
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -349,7 +366,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 		lblHienMK = new JLabel("");
 		lblHienMK.setIcon(
-				new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/baseline_visibility_black_36dp.png")));
+				new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/baseline_visibility_black_36dp.png")));
 		lblHienMK.setForeground(Color.BLACK);
 		lblHienMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHienMK.setBounds(1188, 84, 40, 30);
@@ -357,14 +374,14 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 		lblAnMK = new JLabel("");
 		lblAnMK.setIcon(new ImageIcon(
-				GD_SuaNhanVienHanhChinh.class.getResource("/img/baseline_visibility_off_black_36dp.png")));
+				GD_SuaNhanVienHanhChinh.class.getResource("/icon/baseline_visibility_off_black_36dp.png")));
 		lblAnMK.setForeground(Color.BLACK);
 		lblAnMK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnMK.setBounds(1188, 84, 40, 30);
 		pnlNVHanhChinh.add(lblAnMK);
 
 		btnResetMK = new JButton("Reset mật khẩu");
-		btnResetMK.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/img/reset_30px.png")));
+		btnResetMK.setIcon(new ImageIcon(GD_SuaNhanVienHanhChinh.class.getResource("/icon/reset_30px.png")));
 		btnResetMK.setToolTipText("Reset mật khẩu về lại mặc định");
 		btnResetMK.setForeground(Color.WHITE);
 		btnResetMK.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -373,18 +390,17 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		pnlNVHanhChinh.add(btnResetMK);
 		lblAnMK.setVisible(false);
 
-		JLabel lblThongBao = new JLabel("Thông báo: Ngày sinh không hợp lệ");
-		lblThongBao.setVerticalAlignment(SwingConstants.TOP);
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThongBao.setBounds(41, 693, 1043, 81);
-		add(lblThongBao);
-
 		JLabel lblLoaiNV = new JLabel("Nhân viên hành chính");
 		lblLoaiNV.setForeground(Color.BLACK);
 		lblLoaiNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLoaiNV.setBounds(942, 76, 228, 30);
 		add(lblLoaiNV);
+
+		taThongBao = new JTextArea();
+		taThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
+		taThongBao.setForeground(Color.red);
+		taThongBao.setBounds(41, 680, 899, 103);
+		add(taThongBao);
 
 		dangKiSuKien();
 
@@ -399,6 +415,24 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		btnResetMK.addActionListener(this);
 		rdbtnNam.addMouseListener(this);
 		rdbtnNu.addMouseListener(this);
+
+		txtTenNV.addFocusListener(this);
+		txtSoDienThoai.addFocusListener(this);
+		txtDiaChi.addFocusListener(this);
+		txtTrinhDoHocVan.addFocusListener(this);
+		txtChucVu.addFocusListener(this);
+		txtMatKhau.addFocusListener(this);
+		;
+		txtNgaySinh.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+					if (!BatRegex.kiemTraNgaySinh(txtNgaySinh))
+						isNgaySinhNVHanhChinh = true;
+				}
+			}
+		});
 
 	}
 
@@ -418,14 +452,15 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		}
 
 		if (o.equals(rdbtnNam)) {
-			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
+			lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png")).getImage()
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
 		if (o.equals(rdbtnNu)) {
 			lblAnh.setIcon(
-					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png"))
+					new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png"))
 							.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		}
+
 	}
 
 	@Override
@@ -499,11 +534,13 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		}
 
 		if (o.equals(btnThem)) {
-			int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật không ?", "Cảnh báo",
-					JOptionPane.YES_NO_OPTION);
-			if (confirm == JOptionPane.YES_OPTION) {
-				NhanVienHanhChinh nhanVienHanhChinh = getNhanVienHanhChinh();
-				if (validateNhanVienHanhChinh(nhanVienHanhChinh)) {
+			NhanVienHanhChinh nhanVienHanhChinh = getNhanVienHanhChinh();
+
+			if (validateNhanVienHanhChinh(nhanVienHanhChinh)) {
+
+				int confirm = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn cập nhật không ?", "Cảnh báo",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
 					nhanVienHanhChinhDao.capNhatNhanVienHanhChinh(nhanVienHanhChinh);
 					if (txtAnh.getText().trim().contains("\\")) {
 						String fileNameExtentions = filePath.split("\\.")[1];
@@ -514,7 +551,15 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 
 					JOptionPane.showMessageDialog(null, "Cập nhật thành công");
 				}
+			} else {
+				isTenNVHanhChinh = true;
+				isChucVuNVHanhChinh = true;
+				isSoDTNhanVienHC = true;
+				isTrinhDoNVHanhChinh = true;
+				isDiaChiNVHanhChinh = true;
+				thongbaoLoi();
 			}
+
 		}
 
 	}
@@ -549,7 +594,53 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	}
 
 	private boolean validateNhanVienHanhChinh(NhanVienHanhChinh nhanVienHanhChinh) {
-
-		return true;
+		if (RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && RegexNhanVienHanhChinh.ktraChucVu(txtChucVu)
+				&& RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai)
+				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan))
+			return true;
+		return false;
 	}
+
+	private void thongbaoLoi() {
+		taThongBao.setText("");
+		if (!RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && isTenNVHanhChinh)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.TEN_NV);
+		if (!RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai) && isSoDTNhanVienHC)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.SO_DT);
+		if (!RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && isDiaChiNVHanhChinh)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.DIA_CHI);
+		if (!RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan) && isTrinhDoNVHanhChinh)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.TRINH_DO_HV);
+		if (!RegexNhanVienHanhChinh.ktraChucVu(txtChucVu) && isChucVuNVHanhChinh)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.CHUC_VU);
+		if (!RegexNhanVienHanhChinh.ktraNgaySinh(txtNgaySinh) && isNgaySinhNVHanhChinh)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.NGAY_SINH);
+		if (!RegexNhanVienHanhChinh.ktraMatKhau(txtMatKhau) && isMatKhau)
+			taThongBao.setText(taThongBao.getText() + "\n" + RegexNhanVienHanhChinh.MAT_KHAU);
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		Object o = e.getSource();
+		if (o.equals(txtTenNV))
+			isTenNVHanhChinh = true;
+		if (o.equals(txtChucVu))
+			isChucVuNVHanhChinh = true;
+		if (o.equals(txtDiaChi))
+			isDiaChiNVHanhChinh = true;
+		if (o.equals(txtTrinhDoHocVan))
+			isTrinhDoNVHanhChinh = true;
+		if (o.equals(txtSoDienThoai))
+			isSoDTNhanVienHC = true;
+		if (o.equals(txtMatKhau))
+			isMatKhau = true;
+		if (o.equals(txtNgaySinh))
+			isNgaySinhNVHanhChinh = true;
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		thongbaoLoi();
+	}
+
 }

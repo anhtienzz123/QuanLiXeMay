@@ -22,7 +22,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienHanhChinhDao;
-import dao.NhanVienKiThuatDao;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
 
@@ -118,7 +117,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		contentPane.add(txtMatKhau);
 
 		btnDangNhap = new JButton("Đăng nhập");
-		btnDangNhap.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_login_white_24dp.png")));
+		btnDangNhap.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_login_white_24dp.png")));
 		btnDangNhap.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnDangNhap.setBackground(new Color(0, 128, 0));
 		btnDangNhap.setForeground(new Color(255, 255, 255));
@@ -126,7 +125,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		contentPane.add(btnDangNhap);
 
 		btnHuy = new JButton("Thoát");
-		btnHuy.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnHuy.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnHuy.addActionListener(this);
 		btnHuy.setForeground(new Color(255, 255, 255));
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -157,13 +156,13 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 		lblHienMK = new JLabel("");
 		lblHienMK.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHienMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_visibility_white_36dp.png")));
+		lblHienMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_visibility_white_36dp.png")));
 		lblHienMK.setBounds(0, 0, 40, 39);
 		pnlHienMK.add(lblHienMK);
 
 		lblAnMK = new JLabel("");
 		lblAnMK.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_visibility_off_white_36dp.png")));
+		lblAnMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
 		lblAnMK.setBounds(0, 0, 40, 39);
 		pnlAnMK.add(lblAnMK);
 
@@ -179,17 +178,17 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		txtMatKhau.setText("55555");
 
 	}
-	
+
 	public void name() {
 		this.setVisible(false);
 		SplashScreen splashScreen = new SplashScreen();
-		for(int i = 0; i<=100; i++) {
+		for (int i = 0; i <= 100; i++) {
 			try {
 				Thread.sleep(15);
 				splashScreen.setVisible(true);
-				splashScreen.lblLoading.setText("Loading "+i+"%");
+				splashScreen.lblLoading.setText("Loading " + i + "%");
 				splashScreen.progressBar.setValue(i);
-				if(i==100)
+				if (i == 100)
 					new App(txtTaiKhoan.getText().trim()).setVisible(true);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -241,25 +240,21 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if (o.equals(txtTaiKhoan)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -289,13 +284,13 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 	private boolean KiemTraTaiKhoan(String taiKhoan, String matKhau) {
 		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(taiKhoan);
-		
-		if(nhanVienHanhChinh != null) {
-			if(nhanVienHanhChinh.getMatKhau().equals(matKhau)) {
+
+		if (nhanVienHanhChinh != null) {
+			if (nhanVienHanhChinh.getMatKhau().equals(matKhau)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -314,7 +309,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		} else if (txtMatKhau.getText().equals("")) {
 			thongBao(txtMatKhau, "Bạn chưa nhập mật khẩu");
 			return false;
-		} 
+		}
 //		else if (!taiKhoan.matches("^180[0-9]{5}")) {
 //			thongBao(txtTaiKhoan, "Tài khoản không hợp lệ!");
 //			return false;

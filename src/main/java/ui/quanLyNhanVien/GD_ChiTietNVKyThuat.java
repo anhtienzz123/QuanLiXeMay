@@ -25,8 +25,14 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private NhanVienKiThuatDao nhanVienKiThuatDao;
+	@SuppressWarnings("unused")
+	private String maNVKiThuat;
+	
+
+	
 
 	public GD_ChiTietNVKyThuat(String maNVKiThuat) {
+		this.maNVKiThuat = maNVKiThuat;
 		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
 		NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVKiThuat);
 
@@ -67,19 +73,20 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 		lblAnh.setFont(new Font("Tahoma", Font.BOLD, 20));
 		
 		// Kiểm tra xem ảnh có null không
-				Optional<String> optional = Optional.ofNullable(nhanVienKiThuat.getTenAnh());
-				if (optional.isPresent()) {
-					lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienKiThuat.getTenAnh().trim()).getImage()
-							.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-				}else {
-					if(nhanVienKiThuat.isGioiTinh()) {
-						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png")).getImage()
-								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-					}else {
-						lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
-								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
-					}
-				}
+		Optional<String> optional = Optional.ofNullable(nhanVienKiThuat.getTenAnh());
+
+		if (optional.isPresent()) {
+			lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgNhanVien/" + nhanVienKiThuat.getTenAnh().trim()).getImage()
+					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			if (nhanVienKiThuat.isGioiTinh()) {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
+						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+			} else {
+				lblAnh.setIcon(new ImageIcon(
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()));
+			}
+		}
 
 		JLabel lblNewLabel_2 = new JLabel("Mã nhân viên:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 20));

@@ -94,7 +94,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet
-				.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -110,7 +110,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Mã khách hàng", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Tên khách hàng", "Số điện thoại"}));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -132,7 +132,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		add(separator);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -140,7 +140,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -148,7 +148,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -156,7 +156,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -171,8 +171,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		txtTrang.setBounds(178, 806, 60, 40);
 		add(txtTrang);
 
-		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng",
-				"Tên khách hàng", "ngày lập hóa đơn" };
+		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
+				"Số điện thoại KH", "ngày lập hóa đơn" };
 		modelHopDong = new DefaultTableModel(colHeaderHopDong, 0);
 		tblHopDong = new JTable(modelHopDong) {
 			private static final long serialVersionUID = 1L;
@@ -224,14 +224,14 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 		
 		btnBoLoc = new JButton("Xóa tìm kiếm");
-		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnBoLoc.setForeground(Color.WHITE);
 		btnBoLoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnBoLoc.setBackground(Color.GRAY);
@@ -311,8 +311,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		object[2] = hopDong.getHoaDon().getMaHoaDon();
 		object[3] = hopDong.getHoaDon().getNhanVienHanhChinh().getMaNVHanhChinh();
 		object[4] = hopDong.getHoaDon().getNhanVienHanhChinh().getHoTenNV();
-		object[5] = hopDong.getHoaDon().getKhachHang().getMaKhachHang();
-		object[6] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[5] = hopDong.getHoaDon().getKhachHang().getHoTenKH();
+		object[6] = hopDong.getHoaDon().getKhachHang().getSoDienThoai();
 		object[7] = simpleDateFormat.format(hopDong.getHoaDon().getNgayLap());
 
 		modelHopDong.addRow(object);

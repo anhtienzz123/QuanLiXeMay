@@ -83,7 +83,8 @@ public class SplashScreen extends JFrame {
 				this.lblLoading.setText("Loading "+i+"%");
 				this.progressBar.setValue(i);
 				if(i==100)
-					new App("111").setVisible(true);
+					new App("").setVisible(true);// có lỗi
+
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
