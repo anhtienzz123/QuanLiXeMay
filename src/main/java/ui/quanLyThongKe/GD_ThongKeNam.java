@@ -35,7 +35,8 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
+
 
 public class GD_ThongKeNam extends JPanel implements MouseListener {
 
@@ -54,7 +55,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private JTabbedPane tabbedPaneXe;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private int nam;
 	private JComboBox<String> cboNam;
 	private JLabel lblNgay;
@@ -223,7 +224,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		LocalDate date = LocalDate.now();
 		nam = date.getYear();
 	}

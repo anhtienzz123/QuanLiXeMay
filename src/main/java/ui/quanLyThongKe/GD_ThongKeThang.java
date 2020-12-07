@@ -28,7 +28,8 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
+
 
 public class GD_ThongKeThang extends JPanel {
 
@@ -43,7 +44,7 @@ public class GD_ThongKeThang extends JPanel {
 	private JTabbedPane tabbedPaneXe;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private LocalDate date;
 	private JComboBox<String> cboThang;
 	private JComboBox<String> cboNam;
@@ -222,7 +223,7 @@ public class GD_ThongKeThang extends JPanel {
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		date = LocalDate.now();
 
 	}
