@@ -11,6 +11,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +53,7 @@ import other.RandomThongTin;
 import other.XuLyChung;
 import ui.App;
 
-public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener {
+public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener, MouseListener {
 	/**
 	 * 
 	 */
@@ -235,9 +237,12 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		add(lblSoLuong);
 
 		txtSoLuong = new JTextField();
+		txtSoLuong.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSoLuong.setText("1");
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
 		txtSoLuong.setBounds(136, 353, 73, 30);
+		txtSoLuong.setEditable(false);
 		add(txtSoLuong);
 
 		JLabel lblChiec = new JLabel("chiếc xe.");
@@ -464,6 +469,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoSuon.addFocusListener(this);
 		txtHeSoBan.addFocusListener(this);
 		txtBaoHanh.addFocusListener(this);
+		
+		txtSoLuong.addMouseListener(this);
 	}
 
 	@Override
@@ -506,9 +513,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				txtSoLuong.requestFocus();
+				txtGiaNhap.requestFocus();
 			}
 		}
+		if(o.equals(txtSoLuong)) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//				int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+//				if( soLuong > 1) {
+//					for(int i = 1; i <= soLuong; i++) {
+//						
+//					}
+//				}
+				txtGiaNhap.requestFocus();
+				txtSoLuong.setEditable(false);
+			}
+		}
+		
 		if (o.equals(txtGiaNhap)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 				txtSoKhung.requestFocus();
@@ -797,5 +817,37 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	@Override
 	public void focusLost(FocusEvent e) {
 		capNhatThongBaoLoi();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getClickCount() == 2) {
+			if(!txtSoLuong.isEditable())
+				txtSoLuong.setEditable(true);
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
