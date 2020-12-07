@@ -10,22 +10,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import constant.ThongKeConstant;
+import constant.ThongKeQuanLiConstant;
 import db.DatabaseConnect;
 import other.OutputNhanVien_HoaDonLap;
 
-public class ThongKeDao {
+public class ThongKeQuanLiDao {
 
-	private static ThongKeDao instance;
+	private static ThongKeQuanLiDao instance;
 	private Connection connection;
 
-	private ThongKeDao() {
+	private ThongKeQuanLiDao() {
 		connection = DatabaseConnect.getInstance();
 	}
 
-	public static ThongKeDao getInstance() {
+	public static ThongKeQuanLiDao getInstance() {
 		if (instance == null)
-			instance = new ThongKeDao();
+			instance = new ThongKeQuanLiDao();
 		return instance;
 	}
 
@@ -35,7 +35,7 @@ public class ThongKeDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeConstant.GET_DOANH_THU_THEO_NGAY);
+			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NGAY);
 			preparedStatement.setInt(1, ngay);
 			preparedStatement.setInt(2, thang);
 			preparedStatement.setInt(3, nam);
@@ -59,7 +59,7 @@ public class ThongKeDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeConstant.GET_DOANH_THU_THEO_THANG);
+			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_THANG);
 			preparedStatement.setInt(1, thang);
 			preparedStatement.setInt(2, nam);
 
@@ -81,7 +81,7 @@ public class ThongKeDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeConstant.GET_DOANH_THU_THEO_NAM);
+			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NAM);
 			preparedStatement.setInt(1, nam);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -104,7 +104,7 @@ public class ThongKeDao {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.DOANH_THU_NGAYS_THEO_THANG);
+					.prepareStatement(ThongKeQuanLiConstant.DOANH_THU_NGAYS_THEO_THANG);
 
 			preparedStatement.setInt(1, thang);
 			preparedStatement.setInt(2, nam);
@@ -130,7 +130,7 @@ public class ThongKeDao {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.DOANH_THU_THANGS_THEO_NAM);
+					.prepareStatement(ThongKeQuanLiConstant.DOANH_THU_THANGS_THEO_NAM);
 
 			preparedStatement.setInt(1, nam);
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -151,7 +151,7 @@ public class ThongKeDao {
 		Map<String, Long> soLuongXeBans = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.THONG_KE_HANG_XE_TRONG_THANG);
+					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_HANG_XE_TRONG_THANG);
 
 			preparedStatement.setInt(1, thang);
 			preparedStatement.setInt(2, nam);
@@ -174,7 +174,7 @@ public class ThongKeDao {
 		Map<String, Long> soLuongXeBans = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.THONG_KE_HANG_XE_TRONG_NAM);
+					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_HANG_XE_TRONG_NAM);
 
 			preparedStatement.setInt(1, nam);
 
@@ -196,7 +196,7 @@ public class ThongKeDao {
 		Map<String, Long> ketQua = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.THONG_KE_DONG_XE_TRONG_THANG);
+					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_DONG_XE_TRONG_THANG);
 
 			preparedStatement.setInt(1, thang);
 			preparedStatement.setInt(2, nam);
@@ -219,7 +219,7 @@ public class ThongKeDao {
 		Map<String, Long> ketQua = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.THONG_KE_DONG_XE_TRONG_NAM);
+					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_DONG_XE_TRONG_NAM);
 			preparedStatement.setInt(1, nam);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -241,7 +241,7 @@ public class ThongKeDao {
 		Map<String, Long> topXeBans = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.GET_TOP_XE_BAN_CHAY_TRONG_THANG);
+					.prepareStatement(ThongKeQuanLiConstant.GET_TOP_XE_BAN_CHAY_TRONG_THANG);
 
 			preparedStatement.setInt(1, top);
 			preparedStatement.setInt(2, thang);
@@ -264,7 +264,7 @@ public class ThongKeDao {
 		Map<String, Long> topXeBans = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.GET_TOP_XE_BAN_CHAY_TRONG_NAM);
+					.prepareStatement(ThongKeQuanLiConstant.GET_TOP_XE_BAN_CHAY_TRONG_NAM);
 
 			preparedStatement.setInt(1, top);
 			preparedStatement.setInt(2, nam);
@@ -286,7 +286,7 @@ public class ThongKeDao {
 		List<OutputNhanVien_HoaDonLap> result = new ArrayList<OutputNhanVien_HoaDonLap>();
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.THONG_KE_NHAN_VIEN_LAP_HOA_DON_TRONG_NGAY);
+					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_NHAN_VIEN_LAP_HOA_DON_TRONG_NGAY);
 			preparedStatement.setInt(1, localDate.getDayOfMonth());
 			preparedStatement.setInt(2, localDate.getMonthValue());
 			preparedStatement.setInt(3, localDate.getYear());
@@ -319,7 +319,7 @@ public class ThongKeDao {
 
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement(ThongKeConstant.GET_DOANH_THU_QUY_THEO_NAM);
+					.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_QUY_THEO_NAM);
 			int thang1 = (quy - 1) * 3 + 1;
 			int thang2 = quy * 3;
 			preparedStatement.setInt(1, thang1);
@@ -339,4 +339,5 @@ public class ThongKeDao {
 		return doanhThu;
 	}
 
+	
 }

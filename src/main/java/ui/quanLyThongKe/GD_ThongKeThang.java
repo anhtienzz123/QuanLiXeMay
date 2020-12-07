@@ -30,7 +30,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import com.toedter.calendar.JDateChooser;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 
 public class GD_ThongKeThang extends JPanel {
 
@@ -48,7 +48,7 @@ public class GD_ThongKeThang extends JPanel {
 	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private LocalDate date;
 
 	/**
@@ -127,7 +127,7 @@ public class GD_ThongKeThang extends JPanel {
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		date = LocalDate.now();
 
 	}

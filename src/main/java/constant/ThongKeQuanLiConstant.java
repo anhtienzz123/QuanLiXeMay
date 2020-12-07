@@ -1,13 +1,13 @@
 package constant;
 
-public class ThongKeConstant {
+public class ThongKeQuanLiConstant {
 
-	private ThongKeConstant() {
+	private ThongKeQuanLiConstant() {
 
 	}
 
 	// Doanh thu số
-	public static final String GET_DOANH_THU_THEO_NGAY = " select SUM( giaBan*soLuong ) as doanhThu from \r\n"
+	public static final String GET_DOANH_THU_THEO_NGAY = "select SUM( giaBan*soLuong ) as doanhThu from \r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " where DAY(HoaDon.ngayLap) = ? and MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap) = ?\r\n"
 			+ " group by DAY(HoaDon.ngayLap)";

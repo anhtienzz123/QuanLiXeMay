@@ -35,7 +35,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 import other.OutputNhanVien_HoaDonLap;
 
@@ -52,7 +52,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	private JButton btnXemChiTiet;
 
 	private LocalDate localDate;
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 
 	/**
 	 * Create the panel.
@@ -153,7 +153,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	 */
 
 	private void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		localDate = LocalDate.now();
 
 		hienThiHoaDonLapTrongNgay();

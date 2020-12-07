@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 
 public class GD_ThongKe extends JPanel implements MouseListener {
@@ -36,7 +36,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 	private JPanel pnlTK;
 
 	private LocalDate localDate;
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private JLabel lblThongKeNgay;
 	private JLabel lblThongKeNam;
 	private JLabel lblThongKeThang;
@@ -234,7 +234,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 	private void khoiTao() {
 		localDate = LocalDate.now();
 
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
 				localDate.getYear());
 		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());

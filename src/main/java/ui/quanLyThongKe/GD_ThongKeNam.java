@@ -36,7 +36,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import com.toedter.calendar.JDateChooser;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 
 public class GD_ThongKeNam extends JPanel implements MouseListener {
 
@@ -56,7 +56,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private int nam;
 
 	/**
@@ -143,7 +143,7 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		LocalDate date = LocalDate.now();
 		nam = date.getYear();
 	}
