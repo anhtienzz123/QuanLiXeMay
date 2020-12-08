@@ -30,6 +30,8 @@ public class XeMay {
 		this.maXeMay = maXeMay;
 		this.tenXeMay = tenXeMay;
 	}
+	
+	
 
 	public double tinhGiaBan() {
 		return giaNhap * (1 + (heSoBan / 100));
@@ -37,6 +39,17 @@ public class XeMay {
 
 	public double getThue() {
 		return (tinhGiaBan() / 100) * dongXe.getThue();
+	}
+
+
+
+	public XeMay(String tenXeMay, double giaNhap, int thoiGianBaoHanh, LoaiXe loaiXe, DongXe dongXe) {
+		super();
+		this.tenXeMay = tenXeMay;
+		this.giaNhap = giaNhap;
+		this.thoiGianBaoHanh = thoiGianBaoHanh;
+		this.loaiXe = loaiXe;
+		this.dongXe = dongXe;
 	}
 
 }
