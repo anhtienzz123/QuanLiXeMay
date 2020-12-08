@@ -17,22 +17,18 @@ import javax.swing.SwingConstants;
 import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 
-public class GD_ThongKe extends JPanel implements MouseListener {
+public class GD_ThongKeQL extends JPanel implements MouseListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-//	private JPanel pnlTKThang;
-//	private Vector colHeaderDoanhThu;
-//	private DefaultTableModel modelDoanhThu;
 	private JLabel lblChiTietDTNgay;
 	private JLabel lblChiTietDTThang;
 	private JLabel lblChiTietDTNam;
 	private JPanel pnlXemChiTietDTNgay;
 	private JPanel pnlXemChiTietDTNam;
 	private JPanel pnlXemChiTietDTThang;
-//	private DefaultTableModel modelHDNgay;
 	private JPanel pnlTK;
 
 	private LocalDate localDate;
@@ -47,7 +43,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKe() {
+	public GD_ThongKeQL() {
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
@@ -92,7 +88,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		lblChiTietDTThang = new JLabel("Xem chi tiết ");
 		lblChiTietDTThang.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTThang.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/next_page_26px.png")));
+		lblChiTietDTThang.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTThang.setBounds(0, 0, 500, 35);
 		pnlXemChiTietDTThang.add(lblChiTietDTThang);
 		lblChiTietDTThang.setHorizontalAlignment(SwingConstants.CENTER);
@@ -100,7 +96,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblChiTietDTThang.setFont(new Font("Tahoma", Font.ITALIC, 20));
 
 		JLabel lblThongKeNgay_1_1 = new JLabel("");
-		lblThongKeNgay_1_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/coins_100px.png")));
+		lblThongKeNgay_1_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/coins_100px.png")));
 		lblThongKeNgay_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblThongKeNgay_1_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -145,7 +141,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		lblChiTietDTNgay = new JLabel("Xem chi tiết ");
 		lblChiTietDTNgay.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTNgay.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/next_page_26px.png")));
+		lblChiTietDTNgay.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTNgay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChiTietDTNgay.setForeground(Color.WHITE);
 		lblChiTietDTNgay.setFont(new Font("Tahoma", Font.ITALIC, 20));
@@ -154,7 +150,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		JLabel lblThongKeNgay_1 = new JLabel("");
 		lblThongKeNgay_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThongKeNgay_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/expensive_price_100px.png")));
+		lblThongKeNgay_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/expensive_price_100px.png")));
 		lblThongKeNgay_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblThongKeNgay_1.setBounds(325, 11, 150, 105);
@@ -198,7 +194,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		lblChiTietDTNam = new JLabel("Xem chi tiết ");
 		lblChiTietDTNam.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTNam.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/next_page_26px.png")));
+		lblChiTietDTNam.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTNam.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChiTietDTNam.setForeground(Color.WHITE);
 		lblChiTietDTNam.setFont(new Font("Tahoma", Font.ITALIC, 20));
@@ -206,7 +202,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		pnlXemChiTietDTNam.add(lblChiTietDTNam);
 
 		JLabel lblThongKeNgay_1_1_1 = new JLabel("");
-		lblThongKeNgay_1_1_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/icon/sales_performance_100px.png")));
+		lblThongKeNgay_1_1_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/sales_performance_100px.png")));
 		lblThongKeNgay_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblThongKeNgay_1_1_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
@@ -229,7 +225,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		pnlTK.setBounds(33, 244, 1724, 766);
 		add(pnlTK);
 		pnlTK.setLayout(new BoxLayout(pnlTK, BoxLayout.X_AXIS));
-		pnlTK.add(new GD_ThongKeNgay());
+		pnlTK.add(new GD_ThongKeNgayQL());
 
 		khoiTao();
 		dangKiSuKien();
@@ -248,21 +244,21 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		if (o.equals(lblChiTietDTNgay)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeNgay());
+			pnlTK.add(new GD_ThongKeNgayQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}
 		if (o.equals(lblChiTietDTThang)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeThang());
+			pnlTK.add(new GD_ThongKeThangQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}
 		if (o.equals(lblChiTietDTNam)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeNam());
+			pnlTK.add(new GD_ThongKeNamQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}

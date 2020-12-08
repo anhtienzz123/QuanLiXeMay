@@ -1,11 +1,12 @@
 package ui.quanLyThongKe;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Map;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
@@ -37,8 +39,7 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import dao.ThongKeQuanLiDao;
 
-
-public class GD_ThongKeNam extends JPanel implements MouseListener {
+public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	/**
 	 * 
@@ -58,18 +59,18 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private ThongKeQuanLiDao thongKeDao;
 	private int nam;
 	private JComboBox<String> cboNam;
-	private JLabel lblNgay;
-	private JLabel lblMaNV;
-	private JLabel lblTenNV;
-	private JLabel lblDoanhThu;
-	private JLabel lblSoHoaDon;
-	private JLabel lblSoXe;
-	private JLabel lblPhieuBH;
+	private JComboBox<String> cboThongKe;
+	private JLabel lblTngThuTrong_2_1_5;
+	private JPanel pnlContain;
+	private JPanel pnlSoLieu;
+	private JPanel pnlBieuDo;
+	private JScrollPane scrollPane;
+	private JTextArea txtSoLieu;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeNam() {
+	public GD_ThongKeNamQL() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
@@ -81,12 +82,64 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		lblTngThuTrong_2_1_1.setBounds(48, 20, 182, 30);
 		add(lblTngThuTrong_2_1_1);
 
+		khoiTao();
+
+		cboNam = new JComboBox<String>();
+		cboNam.setBackground(Color.WHITE);
+		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" }));
+		cboNam.setBounds(228, 20, 90, 30);
+		add(cboNam);
+		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		cboNam.setSelectedItem(nam + "");
+
+		cboThongKe = new JComboBox<String>();
+		cboThongKe.setBackground(Color.WHITE);
+		cboThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboThongKe.setModel(new DefaultComboBoxModel<String>(new String[] { "Biểu đồ", "Số liệu" }));
+		cboThongKe.setBounds(1616, 23, 108, 30);
+		add(cboThongKe);
+		cboThongKe.addActionListener(this);
+
+		lblTngThuTrong_2_1_5 = new JLabel("Dạng thống kê:");
+		lblTngThuTrong_2_1_5.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_2_1_5.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_2_1_5.setBounds(1422, 20, 182, 30);
+		add(lblTngThuTrong_2_1_5);
+
+		pnlContain = new JPanel();
+		pnlContain.setBounds(0, 63, 1724, 703);
+		add(pnlContain);
+		pnlContain.setLayout(new CardLayout(0, 0));
+
+		pnlBieuDo = new JPanel();
+		pnlBieuDo.setBackground(Color.WHITE);
+		pnlContain.add(pnlBieuDo, "name_29177879398400");
+		pnlBieuDo.setLayout(null);
+
+		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneDoanhThu.setBounds(0, 0, 893, 665);
+		pnlBieuDo.add(tabbedPaneDoanhThu);
+		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
+		tabbedPaneDoanhThu.setForeground(Color.WHITE);
+
+		pnlDoanhThuThang = new JPanel();
+		tabbedPaneDoanhThu.addTab("Doanh thu từng tháng", null, pnlDoanhThuThang, null);
+
+		pnlDoanhThuQuy = new JPanel();
+		tabbedPaneDoanhThu.addTab("Doanh thu từng quý", null, pnlDoanhThuQuy, null);
+
+		pnlTopXe = new JPanel();
+		pnlTopXe.setBackground(Color.WHITE);
+		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
+
 		tabbedPaneXe = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneXe.setBounds(1007, 20, 717, 708);
+		tabbedPaneXe.setBounds(1007, 0, 717, 665);
+		pnlBieuDo.add(tabbedPaneXe);
 		tabbedPaneXe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPaneXe.setBackground(new Color(58, 181, 74));
 		tabbedPaneXe.setForeground(Color.WHITE);
-		add(tabbedPaneXe);
 
 		pnlTopDong = new JPanel();
 		pnlTopDong.setBackground(Color.WHITE);
@@ -96,131 +149,25 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		pnlTopHang.setBackground(Color.WHITE);
 		tabbedPaneXe.addTab("Hãng xe", null, pnlTopHang, null);
 
-		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneDoanhThu.setBounds(48, 63, 893, 665);
-		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
-		tabbedPaneDoanhThu.setForeground(Color.WHITE);
-		add(tabbedPaneDoanhThu);
+		pnlSoLieu = new JPanel();
+		pnlSoLieu.setBackground(Color.WHITE);
+		pnlContain.add(pnlSoLieu, "name_29164502988200");
+		pnlSoLieu.setLayout(null);
 
-		pnlDoanhThuThang = new JPanel();
-		tabbedPaneDoanhThu.addTab("Doanh thu từng tháng", null, pnlDoanhThuThang, null);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 1700, 677);
+		pnlSoLieu.add(scrollPane);
 
-		pnlDoanhThuQuy = new JPanel();
-		tabbedPaneDoanhThu.addTab("Doanh thu từng quý", null, pnlDoanhThuQuy, null);
+		txtSoLieu = new JTextArea();
+		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane.setViewportView(txtSoLieu);
 
-		dangKiSuKien();
-
-		khoiTao();
-
-		pnlTopXe = new JPanel();
-		pnlTopXe.setBackground(Color.WHITE);
-		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
 		thongKeDoanhThuNam(pnlDoanhThuThang);
 		thongKeDoanhThuQuy(pnlDoanhThuQuy);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
-		
-		JScrollPane scrollPane = new JScrollPane();
-		tabbedPaneXe.addTab("Thống kê", null, scrollPane, null);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		scrollPane.setViewportView(panel);
-		panel.setLayout(null);
 
-		JLabel lblTngThuTrong_2_1 = new JLabel("Doanh thu:");
-		lblTngThuTrong_2_1.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1.setBounds(24, 138, 129, 30);
-		panel.add(lblTngThuTrong_2_1);
-
-		JLabel lblTngThuTrong = new JLabel("Số hóa đơn đã lập:");
-		lblTngThuTrong.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong.setBounds(24, 181, 198, 30);
-		panel.add(lblTngThuTrong);
-
-		JLabel lblTngThuTrong_2_1_2 = new JLabel("Số xe bán ra:");
-		lblTngThuTrong_2_1_2.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1_2.setBounds(24, 223, 198, 30);
-		panel.add(lblTngThuTrong_2_1_2);
-
-		JLabel lblTngThuTrong_2_1_3 = new JLabel("Số phiếu bảo hành đã lập:");
-		lblTngThuTrong_2_1_3.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1_3.setBounds(24, 266, 270, 30);
-		panel.add(lblTngThuTrong_2_1_3);
-
-		JLabel lblTngThuTrong_2_1_4 = new JLabel("Mã nhân viên:");
-		lblTngThuTrong_2_1_4.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1_4.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1_4.setBounds(24, 52, 158, 30);
-		panel.add(lblTngThuTrong_2_1_4);
-
-		JLabel lblTngThuTrong_2_1_4_1 = new JLabel("Tên nhân viên:");
-		lblTngThuTrong_2_1_4_1.setForeground(new Color(58, 181, 74));
-		lblTngThuTrong_2_1_4_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1_4_1.setBounds(24, 95, 158, 30);
-		panel.add(lblTngThuTrong_2_1_4_1);
-
-		lblNgay = new JLabel("Ngày 7-12-2020");
-		lblNgay.setForeground(new Color(58, 181, 74));
-		lblNgay.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNgay.setBounds(173, 13, 191, 30);
-		panel.add(lblNgay);
-
-		lblMaNV = new JLabel("NV180556");
-		lblMaNV.setForeground(Color.BLACK);
-		lblMaNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaNV.setBounds(194, 52, 251, 30);
-		panel.add(lblMaNV);
-
-		lblTenNV = new JLabel("Nguyễn Trần Nhật Hào");
-		lblTenNV.setForeground(Color.BLACK);
-		lblTenNV.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTenNV.setBounds(194, 95, 296, 30);
-		panel.add(lblTenNV);
-
-		lblDoanhThu = new JLabel("1.200.000.000 VNĐ");
-		lblDoanhThu.setForeground(Color.BLACK);
-		lblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDoanhThu.setBounds(194, 138, 251, 30);
-		panel.add(lblDoanhThu);
-
-		lblSoHoaDon = new JLabel("20 hóa đơn");
-		lblSoHoaDon.setForeground(Color.BLACK);
-		lblSoHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoHoaDon.setBounds(234, 181, 251, 30);
-		panel.add(lblSoHoaDon);
-
-		lblSoXe = new JLabel("50 chiếc xe");
-		lblSoXe.setForeground(Color.BLACK);
-		lblSoXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoXe.setBounds(234, 223, 251, 30);
-		panel.add(lblSoXe);
-
-		lblPhieuBH = new JLabel("10 phiếu");
-		lblPhieuBH.setForeground(Color.BLACK);
-		lblPhieuBH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPhieuBH.setBounds(309, 266, 176, 30);
-		panel.add(lblPhieuBH);
-		
-		cboNam = new JComboBox<String>();
-		cboNam.setBackground(Color.WHITE);
-		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] {"2018", "2019", "2020"}));
-		cboNam.setBounds(228, 20, 90, 30);
-		add(cboNam);
-		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-		cboNam.setSelectedItem(nam+"");
-		
-		
-	}
-
-	public void dangKiSuKien() {
 	}
 
 	public void khoiTao() {
@@ -396,32 +343,15 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-//		Object o = e.getSource();
+	public void actionPerformed(ActionEvent e) {
+		if (cboThongKe.getSelectedIndex() == 0) {
+			pnlBieuDo.setVisible(true);
+			pnlSoLieu.setVisible(false);
+		} else {
 
+			pnlBieuDo.setVisible(false);
+			pnlSoLieu.setVisible(true);
+		}
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-//		Object o = e.getSource();
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-//		Object o = e.getSource();
-
-	}
 }
