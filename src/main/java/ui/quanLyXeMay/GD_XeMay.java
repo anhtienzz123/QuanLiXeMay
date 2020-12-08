@@ -74,13 +74,14 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 17;
+	private static final int SIZE = 16;
 
 	private XeMayDao xeMayDao;
 	private List<XeMay> xeMays;
 	private JComboBox<String> cboMauXe;
 	private JComboBox<String> cboGiaXe;
 	private JButton btnXemChiTiet;
+	private JComboBox<String> cboXe;
 
 	/**
 	 * Create the panel.
@@ -104,9 +105,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		panel.add(lblNewLabel);
 
 		JScrollPane scrollPaneXeMay = new JScrollPane();
-		scrollPaneXeMay.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPaneXeMay.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneXeMay.setBounds(33, 278, 1727, 626);
+		scrollPaneXeMay.setBounds(33, 295, 1727, 609);
 		add(scrollPaneXeMay);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
@@ -216,12 +215,12 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách xe máy");
 		lblTngThuTrong_1_1_2_2.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_2_2.setBounds(33, 205, 175, 30);
+		lblTngThuTrong_1_1_2_2.setBounds(33, 235, 175, 30);
 		add(lblTngThuTrong_1_1_2_2);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(33, 248, 1727, 11);
+		separator.setBounds(33, 278, 1727, 11);
 		add(separator);
 
 		btnDau = new JButton("");
@@ -312,12 +311,16 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment( JLabel.RIGHT );
 		tblXeMay.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
 		tblXeMay.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(5).setCellRenderer( rightRenderer );
+		tblXeMay.getColumnModel().getColumn(6).setCellRenderer( rightRenderer );
+		tblXeMay.getColumnModel().getColumn(7).setCellRenderer( rightRenderer );
+		
+		
+		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		
 		JLabel lblM = new JLabel("Màu xe:");
@@ -345,6 +348,19 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		cboGiaXe.setBackground(Color.WHITE);
 		cboGiaXe.setBounds(1515, 142, 245, 30);
 		add(cboGiaXe);
+		
+		JLabel lblTngThuTrong_1_1_2_3 = new JLabel("Xe:");
+		lblTngThuTrong_1_1_2_3.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1_2_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_2_3.setBounds(33, 196, 83, 30);
+		add(lblTngThuTrong_1_1_2_3);
+		
+		cboXe = new JComboBox<String>();
+		cboXe.setModel(new DefaultComboBoxModel<String>(new String[] {"Tất cả"}));
+		cboXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboXe.setBackground(Color.WHITE);
+		cboXe.setBounds(151, 196, 648, 30);
+		add(cboXe);
 		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
@@ -672,5 +688,4 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			}
 		});
 	}
-
 }
