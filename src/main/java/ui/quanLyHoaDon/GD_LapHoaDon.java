@@ -12,8 +12,10 @@ import java.awt.event.MouseListener;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
@@ -326,7 +328,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		scrollPaneHoaDon.setBackground(Color.WHITE);
 		scrollPaneHoaDon.setBounds(911, 277, 849, 316);
 		add(scrollPaneHoaDon);
-		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số lượng", "Giá Bán", "Thuế", "Tổng tiền" };
+		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số khung",  "Giá Bán", "Thuế", "Tổng tiền" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -370,7 +372,8 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		scrollPaneXeMay.setBounds(30, 479, 849, 432);
 		add(scrollPaneXeMay);
 
-		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "Màu sắc", "Số lượng", "Thuế", "Giá Bán", "Bảo hành", "Số khung", "Số sườn"};
+		String[] colHeaderXeMay = { "STT", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe", "Loại xe",
+				"Dòng xe", "Hãng xe", "Xuất xứ" };
 		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
 		tblXeMay = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
@@ -760,10 +763,13 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		btnXoa.addActionListener(this);
 		btnXemChiTiet.addActionListener(this);
 
+		cboXe.addActionListener(this);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
 		Object source = e.getSource();
 
 		if (source == txtSoDienThoai) {
@@ -865,13 +871,12 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			}
 
 			this.page = 1;
+
 			capNhatXeMaysTrongBang();
 
 		}
 
-		if (source == cboTimKiem)
-
-		{
+		if (source == cboTimKiem) {
 			this.page = 1;
 			txtTimKiem.setText("");
 			capNhatXeMaysTrongBang();
@@ -982,12 +987,37 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		if (source == btnXemChiTiet) {
 			int row = tblXeMay.getSelectedRow();
 			if (row != -1) {
-				String ma = tblXeMay.getValueAt(row, 1).toString().trim();
+				String ma = xeMays.get(row).getMaXeMay();
 				XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 				new GD_ChiTietXeMay(xeMay).setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
 			}
+		}
+
+		if (source == cboXe) {
+
+			int from = (SIZE * (page - 1) + 1);
+			int to = page * SIZE;
+
+			String timKiem = txtTimKiem.getText();
+			String field = cboTimKiem.getSelectedItem().toString();
+			String gia = cboGiaXe.getSelectedItem().toString();
+			String mauXe = cboMauXe.getSelectedItem().toString();
+			String tenXuatXu = cboXuatXu.getSelectedItem().toString();
+			String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
+			String tenDongXe = cboDongXe.getSelectedItem().toString();
+			String tenHangXe = cboHangXe.getSelectedItem().toString();
+			String cboTenXe = cboXe.getSelectedItem().toString();
+			this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
+					tenDongXe, tenHangXe, cboTenXe, SIZE);
+			xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+					tenHangXe, cboTenXe, from, to);
+
+			xoaDuLieuXeMayTrongBang();
+			themXeMaysVaoBang();
+
+			txtTrang.setText(this.page + "");
 		}
 
 	}
@@ -1007,7 +1037,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 				Object[] datas = new Object[6];
 				datas[0] = tblHoaDon.getRowCount() + 1;
 				datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
-				datas[2] = chiTietHoaDon.getSoLuong();
+				datas[2] = chiTietHoaDon.getXeMay().getSoKhung();
 				datas[3] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhGiaBan());
 				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().getThue());
 				datas[5] = DinhDangTien.format(chiTietHoaDon.tinhTongTien());
@@ -1043,14 +1073,31 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		String cboTenXe = cboXe.getSelectedItem().toString();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, SIZE);
+				tenHangXe, cboTenXe, SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, from, to);
+				tenHangXe, cboTenXe, from, to);
+		Map<String, Integer> tenXes = xeMayDao.getTenXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu,
+				tenLoaiXe, tenDongXe, tenHangXe);
 
 		xoaDuLieuXeMayTrongBang();
 		themXeMaysVaoBang();
+
+		capNhatTenXeTimDuoc(tenXes);
+
 		txtTrang.setText(this.page + "");
+
+	}
+
+	private void capNhatTenXeTimDuoc(Map<String, Integer> tenXes) {
+
+		List<String> datasList = new ArrayList<String>();
+
+		tenXes.forEach((key, value) -> datasList.add(key));
+
+		DefaultComboBoxModel<String> datas = new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(datasList));
+		cboXe.setModel(datas);
 
 	}
 
@@ -1067,14 +1114,18 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 	private void themXeMayVaoBang(XeMay xeMay) {
 
-		Object[] datas = new Object[8];
+		Object[] datas = new Object[11];
 		datas[0] = tblXeMay.getRowCount() + 1;
-		datas[1] = xeMay.getMaXeMay();
-		datas[2] = xeMay.getTenXeMay();
-		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
-		datas[4] = xeMay.getMauXe();
-		datas[5] = xeMay.getSoLuong();
-		datas[6] = DinhDangTien.format(xeMay.tinhGiaBan());
+		datas[1] = xeMay.getTenXeMay();
+		datas[2] = xeMay.getSoKhung();
+		datas[3] = xeMay.getSoSuon();
+		datas[4] = DinhDangTien.format(xeMay.tinhGiaBan());
+		datas[5] = xeMay.getThoiGianBaoHanh() + " tháng";
+		datas[6] = xeMay.getMauXe();
+		datas[7] = xeMay.getLoaiXe().getTenLoaiXe();
+		datas[8] = xeMay.getDongXe().getTenDongXe();
+		datas[9] = xeMay.getDongXe().getHangXe().getTenHangXe();
+		datas[10] = xeMay.getXuatXu().getTenXuatXu();
 
 		modelXe.addRow(datas);
 	}

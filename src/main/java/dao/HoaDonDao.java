@@ -280,7 +280,8 @@ public class HoaDonDao {
 				result += " and day(ngayLap)=" + localDate.getDayOfMonth() + " and month(ngayLap)="
 						+ localDate.getMonthValue() + " and year(ngayLap)=" + localDate.getYear();
 			}
-
+			
+			
 			PreparedStatement preparedStatement = connection.prepareStatement(result);
 			preparedStatement.setInt(1, from);
 			preparedStatement.setInt(2, to);
