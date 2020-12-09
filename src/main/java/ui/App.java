@@ -24,7 +24,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import dao.NhanVienHanhChinhDao;
 import db.DatabaseConnect;
+import entity.NhanVienHanhChinh;
+import other.ThongTinNguoiDung;
 
 public class App extends JFrame implements ActionListener, MouseListener {
 
@@ -50,7 +53,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		new App("NVHC138153").setVisible(true);
+		new App("NVHC650503").setVisible(true);
 
 	}
 
@@ -64,6 +67,10 @@ public class App extends JFrame implements ActionListener, MouseListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNhanVien);
+		ThongTinNguoiDung.nhanVienHanhChinh = nhanVienHanhChinh;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(App.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Quản Lý mua bán xe máy");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

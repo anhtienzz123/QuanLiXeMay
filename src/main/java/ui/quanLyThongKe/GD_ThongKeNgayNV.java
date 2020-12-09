@@ -9,30 +9,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.EventObject;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import dao.ThongKeQuanLiDao;
-import other.DinhDangTien;
-import ui.App;
-
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import com.toedter.calendar.JDateChooser;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JTable;
+
+import dao.ThongKeNhanVienDao;
+import entity.HoaDon;
+import other.DinhDangTien;
+import other.ThongTinNguoiDung;
+import ui.App;
+import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 
 public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionListener {
 
@@ -42,8 +46,6 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 	private static final long serialVersionUID = 1L;
 
 	private LocalDate localDate;
-	private ThongKeQuanLiDao thongKeDao;
-
 	private JLabel lblDoanhThu;
 
 	private JButton btnThoat;
@@ -55,6 +57,11 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 	private DefaultTableModel modelXe;
 
 	private JButton btnChiTiet;
+
+	private JDateChooser dateChooser;
+
+	private ThongKeNhanVienDao thongKeNhanVienDao;
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
@@ -84,7 +91,7 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 		lblNgay.setBounds(27, 77, 186, 30);
 		add(lblNgay);
 
-		JDateChooser dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
 		dateChooser.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		dateChooser.setBounds(197, 77, 174, 30);
 		add(dateChooser);
@@ -153,7 +160,7 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 		JScrollPane scrollPaneXe = new JScrollPane();
 		scrollPaneXe.setBounds(954, 194, 820, 568);
 		add(scrollPaneXe);
-		
+
 		String[] colHeaderXe = { "STT", "Tên xe máy", "Số lượng bán" };
 		modelXe = new DefaultTableModel(colHeaderXe, 0);
 		tblXe = new JTable(modelXe) {
@@ -175,7 +182,6 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 		tableHeader1.setForeground(Color.white);
 		tableHeader1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-
 		btnThoat = new JButton("Quay lại");
 		btnThoat.setIcon(new ImageIcon(GD_ThongKeNgayNV.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
@@ -184,14 +190,14 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 		btnThoat.setBounds(1625, 807, 149, 35);
 		add(btnThoat);
 
-		 btnChiTiet = new JButton("Chi tiết");
+		btnChiTiet = new JButton("Chi tiết");
 		btnChiTiet.setIcon(new ImageIcon(GD_ThongKeNgayNV.class.getResource("/icon/information_30px.png")));
 		btnChiTiet.setForeground(Color.WHITE);
 		btnChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnChiTiet.setBackground(Color.GRAY);
 		btnChiTiet.setBounds(679, 807, 149, 35);
 		add(btnChiTiet);
-		
+
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
@@ -207,13 +213,14 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 
 		khoiTao();
 		dangKiSuKien();
+		capNhatDuLieu();
 
 	}
 
 	public void dangKiSuKien() {
 		btnThoat.addActionListener(this);
 		btnChiTiet.addActionListener(this);
-		
+
 	}
 
 	@Override
@@ -222,13 +229,85 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 	}
 
 	private void khoiTao() {
+
+		this.maNhanVienHanhChinh = ThongTinNguoiDung.nhanVienHanhChinh.getMaNVHanhChinh();
+
 		localDate = LocalDate.now();
 
-		thongKeDao = ThongKeQuanLiDao.getInstance();
-		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
-				localDate.getYear());
-		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());
-		Double nam = thongKeDao.getDoanhThuTheoNam(localDate.getYear());
+		thongKeNhanVienDao = ThongKeNhanVienDao.getInstance();
+
+		dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
+
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if (evt.getPropertyName().equals("date")) {
+					localDate = dateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+					capNhatDuLieu();
+				}
+
+			}
+		});
+
+	}
+
+	private void capNhatDuLieu() {
+
+		xoaDuLieu();
+		capNhapHoaDons();
+		capNhapSoXeMayBanRa();
+
+	}
+
+	private void capNhapHoaDons() {
+		
+		
+		
+		List<HoaDon> hoaDons = thongKeNhanVienDao.getHoaDonsTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
+				localDate.getMonthValue(), localDate.getYear());
+
+		double total = 0;
+
+		for (HoaDon hoaDon : hoaDons) {
+			Object[] datas = new Object[3];
+			datas[0] = tblHoaDon.getRowCount() + 1;
+			datas[1] = hoaDon.getMaHoaDon();
+			datas[2] = DinhDangTien.format(hoaDon.tinhTongTienHoaDon());
+
+			modelHoaDon.addRow(datas);
+			total += hoaDon.tinhTongTienHoaDon();
+
+		}
+		lblDoanhThu.setText(DinhDangTien.format(total));
+
+	}
+
+	private void capNhapSoXeMayBanRa() {
+
+		Map<String, Long> xeMaysBanRa = thongKeNhanVienDao.getXesBanRaTrongNgay(maNhanVienHanhChinh,
+				localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
+
+		xeMaysBanRa.forEach((key, value) -> {
+
+			Object[] datas = new Object[3];
+
+			datas[0] = modelXe.getRowCount() + 1;
+			datas[1] = key;
+			datas[2] = value;
+
+			modelXe.addRow(datas);
+		});
+
+	}
+
+	private void xoaDuLieu() {
+		while (modelHoaDon.getRowCount() > 0) {
+			modelHoaDon.removeRow(0);
+		}
+
+		while (modelXe.getRowCount() > 0) {
+			modelXe.removeRow(0);
+		}
 	}
 
 	@Override
@@ -262,6 +341,19 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 			this.add(new GD_ThongKeNV());
 			this.validate();
 			this.repaint();
+		}
+
+		if (o.equals(btnChiTiet)) {
+			int row = tblHoaDon.getSelectedRow();
+
+			if (row != -1) {
+				String maHoaDon = tblHoaDon.getValueAt(row, 1).toString();
+
+				new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
+			}
+
 		}
 	}
 }

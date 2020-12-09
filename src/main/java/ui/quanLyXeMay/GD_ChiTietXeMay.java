@@ -271,6 +271,8 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		lblXuatXu.setBounds(147, 228, 165, 30);
 		lblXuatXu.setText(xeMay.getXuatXu().getTenXuatXu().trim());
 		contentPane.add(lblXuatXu);
+		
+		
 
 	}
 

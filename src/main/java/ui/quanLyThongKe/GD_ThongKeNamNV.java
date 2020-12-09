@@ -11,30 +11,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
 import java.util.EventObject;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import dao.ThongKeQuanLiDao;
-import other.DinhDangTien;
-import ui.App;
-
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import dao.ThongKeNhanVienDao;
+import entity.HoaDon;
+import other.DinhDangTien;
+import other.ThongTinNguoiDung;
+import ui.App;
+import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 
 public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionListener {
 
@@ -44,7 +43,6 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 	private static final long serialVersionUID = 1L;
 
 	private LocalDate localDate;
-	private ThongKeQuanLiDao thongKeDao;
 
 	private JLabel lblDoanhThu;
 
@@ -59,6 +57,9 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 	private JButton btnChiTiet;
 
 	private JComboBox<String> cboNam;
+
+	private ThongKeNhanVienDao thongKeNhanVienDao;
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
@@ -152,7 +153,7 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 		JScrollPane scrollPaneXe = new JScrollPane();
 		scrollPaneXe.setBounds(954, 194, 820, 568);
 		add(scrollPaneXe);
-		
+
 		String[] colHeaderXe = { "STT", "Tên xe máy", "Số lượng bán" };
 		modelXe = new DefaultTableModel(colHeaderXe, 0);
 		tblXe = new JTable(modelXe) {
@@ -174,7 +175,6 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 		tableHeader1.setForeground(Color.white);
 		tableHeader1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-
 		btnThoat = new JButton("Quay lại");
 		btnThoat.setIcon(new ImageIcon(GD_ThongKeNamNV.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
@@ -183,14 +183,14 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 		btnThoat.setBounds(1625, 807, 149, 35);
 		add(btnThoat);
 
-		 btnChiTiet = new JButton("Chi tiết");
+		btnChiTiet = new JButton("Chi tiết");
 		btnChiTiet.setIcon(new ImageIcon(GD_ThongKeNamNV.class.getResource("/icon/information_30px.png")));
 		btnChiTiet.setForeground(Color.WHITE);
 		btnChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnChiTiet.setBackground(Color.GRAY);
 		btnChiTiet.setBounds(679, 807, 149, 35);
 		add(btnChiTiet);
-		
+
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setBounds(0, 877, 1800, 133);
 		add(pnlLogo);
@@ -203,23 +203,27 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
-		
-		 cboNam = new JComboBox<String>();
-		 cboNam.setBackground(Color.WHITE);
-		 cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] {"2018", "2019", "2020"}));
+
+		cboNam = new JComboBox<String>();
+		cboNam.setBackground(Color.WHITE);
+		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" }));
 		cboNam.setBounds(143, 77, 110, 30);
 		add(cboNam);
 
 		khoiTao();
 		dangKiSuKien();
 
+		capNhatDuLieu();
+
 	}
 
 	public void dangKiSuKien() {
 		btnThoat.addActionListener(this);
 		btnChiTiet.addActionListener(this);
-		
+
+		cboNam.addActionListener(this);
+
 	}
 
 	@Override
@@ -228,13 +232,72 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 	}
 
 	private void khoiTao() {
-		localDate = LocalDate.now();
 
-		thongKeDao = ThongKeQuanLiDao.getInstance();
-		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
-				localDate.getYear());
-		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());
-		Double nam = thongKeDao.getDoanhThuTheoNam(localDate.getYear());
+		this.maNhanVienHanhChinh = ThongTinNguoiDung.nhanVienHanhChinh.getMaNVHanhChinh();
+
+		localDate = LocalDate.now();
+		cboNam.setSelectedItem(localDate.getYear() + "");
+
+		thongKeNhanVienDao = ThongKeNhanVienDao.getInstance();
+
+	}
+
+	private void capNhatDuLieu() {
+
+		xoaDuLieu();
+		capNhapHoaDons();
+		capNhapSoXeMayBanRa();
+
+	}
+
+	private void capNhapHoaDons() {
+
+		int nam = Integer.valueOf(cboNam.getSelectedItem().toString());
+
+		List<HoaDon> hoaDons = thongKeNhanVienDao.getHoaDonsTheoNam(maNhanVienHanhChinh, nam);
+
+		double total = 0;
+
+		for (HoaDon hoaDon : hoaDons) {
+			Object[] datas = new Object[3];
+			datas[0] = tblHoaDon.getRowCount() + 1;
+			datas[1] = hoaDon.getMaHoaDon();
+			datas[2] = DinhDangTien.format(hoaDon.tinhTongTienHoaDon());
+
+			modelHoaDon.addRow(datas);
+			total += hoaDon.tinhTongTienHoaDon();
+
+		}
+		lblDoanhThu.setText(DinhDangTien.format(total));
+
+	}
+
+	private void capNhapSoXeMayBanRa() {
+
+		int nam = Integer.valueOf(cboNam.getSelectedItem().toString());
+		Map<String, Long> xeMaysBanRa = thongKeNhanVienDao.getXesBanRaTrongNam(maNhanVienHanhChinh, nam);
+
+		xeMaysBanRa.forEach((key, value) -> {
+
+			Object[] datas = new Object[3];
+
+			datas[0] = modelXe.getRowCount() + 1;
+			datas[1] = key;
+			datas[2] = value;
+
+			modelXe.addRow(datas);
+		});
+
+	}
+
+	private void xoaDuLieu() {
+		while (modelHoaDon.getRowCount() > 0) {
+			modelHoaDon.removeRow(0);
+		}
+
+		while (modelXe.getRowCount() > 0) {
+			modelXe.removeRow(0);
+		}
 	}
 
 	@Override
@@ -268,6 +331,22 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 			this.add(new GD_ThongKeNV());
 			this.validate();
 			this.repaint();
+		}
+
+		if (o.equals(cboNam))
+			capNhatDuLieu();
+		
+		if(o.equals(btnChiTiet)) {
+			int row = tblHoaDon.getSelectedRow();
+			
+			if(row != -1) {
+				String maHoaDon = tblHoaDon.getValueAt(row, 1).toString();
+				
+				new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
+			}
+			
 		}
 	}
 }

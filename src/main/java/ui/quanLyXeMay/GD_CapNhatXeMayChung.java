@@ -13,7 +13,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,11 +39,14 @@ import dao.DongXeDao;
 import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.ThongTinChungXeMayDao;
+<<<<<<< HEAD
 import dao.XeMayDao;
 import db.DatabaseConnect;
 import entity.DongXe;
 import entity.LoaiXe;
 import entity.XeMay;
+=======
+>>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 import other.BatRegex;
 import other.CopyTask;
 import other.XuLyChung;
@@ -114,6 +116,10 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -459,6 +465,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
 		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
 
+<<<<<<< HEAD
 //		String path = txtPath.getText().trim();
 //		String tenAnh = null;
 //		if (!path.equals("")) {
@@ -519,6 +526,42 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 				isBaoHanh = true;
 				capNhatThongBaoLoi();
 			}
+=======
+		String path = txtPath.getText().trim();
+		String tenAnh = null;
+		if (!path.equals("")) {
+			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
+		}
+
+
+		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay();
+
+		thongTinChungXeMay.setTenXe(txtTenXe.getText().trim());
+		thongTinChungXeMay.setTenAnh(txtPath.getText().trim());
+		thongTinChungXeMay.setGiaBan(Double.parseDouble(txtGiaNhap.getText().trim()));
+		thongTinChungXeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
+		thongTinChungXeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
+		thongTinChungXeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
+		thongTinChungXeMay.setLoaiXe(tenLoaiXe);
+		thongTinChungXeMay.setDongXe(tenDongXe);
+		thongTinChungXeMay.setMoTa(txtMoTa.getText().trim());
+
+		thongTinChungXeMay.setTenAnh(tenAnh);
+
+		if (validateXeMay()) {
+			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
+
+				JOptionPane.showMessageDialog(this, "Lưu thành công");
+			else
+				JOptionPane.showMessageDialog(this, "Lưu không thành công");
+
+		} else {
+			isTenXe = true;
+			isGiaNhap = true;
+			isHeSoBan = true;
+			isBaoHanh = true;
+			capNhatThongBaoLoi();
+>>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 		}
 
 //	}
@@ -599,4 +642,8 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	@Override
 	public void focusLost(FocusEvent e) {
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 }

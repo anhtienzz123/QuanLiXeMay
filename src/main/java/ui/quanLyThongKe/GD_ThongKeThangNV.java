@@ -11,30 +11,29 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.time.LocalDate;
 import java.util.EventObject;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
-import dao.ThongKeQuanLiDao;
-import other.DinhDangTien;
-import ui.App;
-
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import dao.ThongKeNhanVienDao;
+import entity.HoaDon;
+import other.DinhDangTien;
+import other.ThongTinNguoiDung;
+import ui.App;
+import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 
 public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionListener {
 
@@ -44,7 +43,7 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 	private static final long serialVersionUID = 1L;
 
 	private LocalDate localDate;
-	private ThongKeQuanLiDao thongKeDao;
+
 
 	private JLabel lblDoanhThu;
 
@@ -61,6 +60,9 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 	private JComboBox<String> cboThang;
 
 	private JComboBox<String> cboNam;
+	
+	private ThongKeNhanVienDao thongKeNhanVienDao;
+	private String maNhanVienHanhChinh;
 
 	/**
 	 * Create the panel.
@@ -228,6 +230,8 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 
 		khoiTao();
 		dangKiSuKien();
+		
+		capNhatDuLieu();
 
 	}
 
@@ -235,21 +239,94 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 		btnThoat.addActionListener(this);
 		btnChiTiet.addActionListener(this);
 		
+		cboThang.addActionListener(this);
+		cboNam.addActionListener(this);
+		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
+		
 	}
 
 	private void khoiTao() {
-		localDate = LocalDate.now();
+		
+		
+		this.maNhanVienHanhChinh = ThongTinNguoiDung.nhanVienHanhChinh.getMaNVHanhChinh();
 
-		thongKeDao = ThongKeQuanLiDao.getInstance();
-		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
-				localDate.getYear());
-		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());
-		Double nam = thongKeDao.getDoanhThuTheoNam(localDate.getYear());
+		localDate = LocalDate.now();
+		cboThang.setSelectedItem(localDate.getMonthValue()+"");
+		cboNam.setSelectedItem(localDate.getYear()+"");
+
+		thongKeNhanVienDao = ThongKeNhanVienDao.getInstance();
+        
+		
+		
+	}
+	
+	private void capNhatDuLieu() {
+
+		xoaDuLieu();
+		capNhapHoaDons();
+		capNhapSoXeMayBanRa();
+
+	}
+
+	private void capNhapHoaDons() {
+		int thang = Integer.valueOf(cboThang.getSelectedItem().toString());
+		int nam = Integer.valueOf(cboNam.getSelectedItem().toString());
+	
+		
+		List<HoaDon> hoaDons = thongKeNhanVienDao.getHoaDonsTheoThang(maNhanVienHanhChinh,
+				thang, nam);
+	
+
+		double total = 0;
+
+		for (HoaDon hoaDon : hoaDons) {
+			Object[] datas = new Object[3];
+			datas[0] = tblHoaDon.getRowCount() + 1;
+			datas[1] = hoaDon.getMaHoaDon();
+			datas[2] = DinhDangTien.format(hoaDon.tinhTongTienHoaDon());
+
+			modelHoaDon.addRow(datas);
+			total += hoaDon.tinhTongTienHoaDon();
+
+		}
+		lblDoanhThu.setText(DinhDangTien.format(total));
+
+	}
+
+	private void capNhapSoXeMayBanRa() {
+
+		int thang = Integer.valueOf(cboThang.getSelectedItem().toString());
+		int nam = Integer.valueOf(cboNam.getSelectedItem().toString());
+		
+		Map<String, Long> xeMaysBanRa = thongKeNhanVienDao.getXesBanRaTrongThang(maNhanVienHanhChinh,
+				thang,nam);
+		
+		xeMaysBanRa.forEach((key,value) -> {
+			
+			Object[] datas = new Object[3];
+			
+			datas[0] = modelXe.getRowCount() + 1;
+			datas[1] = key;
+			datas[2] = value ;
+			
+			modelXe.addRow(datas);
+		});
+
+	}
+
+	private void xoaDuLieu() {
+		while (modelHoaDon.getRowCount() > 0) {
+			modelHoaDon.removeRow(0);
+		}
+		
+		while (modelXe.getRowCount() > 0) {
+			modelXe.removeRow(0);
+		}
 	}
 
 	@Override
@@ -283,6 +360,23 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 			this.add(new GD_ThongKeNV());
 			this.validate();
 			this.repaint();
+		}
+		
+		if(o.equals(cboThang) || o.equals(cboNam)) {
+			capNhatDuLieu();
+		}
+		
+		if(o.equals(btnChiTiet)) {
+			int row = tblHoaDon.getSelectedRow();
+			
+			if(row != -1) {
+				String maHoaDon = tblHoaDon.getValueAt(row, 1).toString();
+				
+				new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
+			}else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
+			}
+			
 		}
 	}
 }
