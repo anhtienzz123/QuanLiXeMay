@@ -550,9 +550,19 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		if (row != -1) {
 			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
 			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+			System.out.println("Xem chi tiet tung chiec");
 			new GD_ChiTietXeMay(xeMay).setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
+		}
+	}
+	
+	private void xemChiTietChung() {
+		int row = tblXeMay.getSelectedRow();
+		
+		if(row != -1) {
+			XeMay xm = xeMayDao.getXeMayTheoMa("MX111");
+			new GD_ChiTietXeMayChung(xm).setVisible(true);
 		}
 	}
 
@@ -634,7 +644,18 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 //			
 		}
 		if (o.equals(btnXemChiTiet)) {
-			xemChiTiet();
+			
+			System.out.println("====> " + cboXe.getSelectedItem().toString());
+			if(cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
+				System.out.println("Xem tung xe");
+				xemChiTiet();
+			}else {
+				System.out.println("Xem chung xe");
+				xemChiTietChung();
+			}
+			
+			
+			
 		}
 		if (o.equals(mntmDongXe)) {
 			new GD_DongXe().setVisible(true);

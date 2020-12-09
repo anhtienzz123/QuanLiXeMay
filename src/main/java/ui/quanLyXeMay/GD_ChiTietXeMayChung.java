@@ -103,7 +103,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		lblNewLabel_2.setBounds(32, 73, 83, 30);
 		contentPane.add(lblNewLabel_2);
 
-		JLabel lblMaXe = new JLabel("XM123456");
+		JLabel lblMaXe = new JLabel("MX111");
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaXe.setBounds(147, 73, 125, 30);
 		lblMaXe.setText(xeMay.getMaXeMay().trim());

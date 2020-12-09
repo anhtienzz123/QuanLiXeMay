@@ -579,21 +579,17 @@ public class XeMayDao {
 
 				String tenXeMay = resultSet.getString("tenXeMay");
 				XeMay xeMay = getThongXeMayChungTheoTen(tenXeMay);
-				
 				int soLuongXe = resultSet.getInt("soLuongXe");
-				
-
 				result.put(xeMay, soLuongXe);
 			}
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return result;
-
 	}
+	
+	
 	
 
 	

@@ -3,6 +3,7 @@ package ui;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import db.DatabaseConnect;
 
@@ -33,6 +34,9 @@ public class TestMain_TienHuynh {
 //			System.out.println("- so luong xe" + value);
 //		});
 
+		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
+		
+		System.out.println(thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay("Sh mode 50"));
 		
 	}
 }
