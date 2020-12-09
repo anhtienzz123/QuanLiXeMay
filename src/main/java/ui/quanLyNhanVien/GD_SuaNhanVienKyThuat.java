@@ -251,6 +251,7 @@ public class GD_SuaNhanVienKyThuat extends JPanel implements ActionListener, Foc
 		txtNgaySinh.setDate(Calendar.getInstance().getTime());
 		add(txtNgaySinh);
 
+		txtNgaySinh.setDate(nhanVienKiThuat.getNgaySinh());
 		JLabel lblSsss = new JLabel("Số điện thoại:");
 		lblSsss.setForeground(Color.BLACK);
 		lblSsss.setFont(new Font("Tahoma", Font.PLAIN, 20));
