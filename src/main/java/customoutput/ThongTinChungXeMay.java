@@ -23,5 +23,22 @@ public class ThongTinChungXeMay {
 	private String hangXe;
 	private String moTa;
 	private List<ThongTinChiTietXeMay> thongTinChiTietXeMays;
+	public ThongTinChungXeMay(String tenXe, String tenAnh, double giaBan, double heSoBan, int thoiGianBaoHanh,
+			int soPhanKhoi, String loaiXe, String dongXe, String moTa,
+			List<ThongTinChiTietXeMay> thongTinChiTietXeMays) {
+		super();
+		this.tenXe = tenXe;
+		this.tenAnh = tenAnh;
+		this.giaBan = giaBan;
+		this.heSoBan = heSoBan;
+		this.thoiGianBaoHanh = thoiGianBaoHanh;
+		this.soPhanKhoi = soPhanKhoi;
+		this.loaiXe = loaiXe;
+		this.dongXe = dongXe;
+		this.moTa = moTa;
+		this.thongTinChiTietXeMays = thongTinChiTietXeMays;
+	}
+	
+	
 	
 }

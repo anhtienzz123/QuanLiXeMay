@@ -88,4 +88,32 @@ public class ThongTinChungXeMayDao {
 		return thongTinChungXeMay;
 
 	}
+	
+	public boolean capNhapThongTinChungXeMay(String tenXeMayCu,ThongTinChungXeMay thongTinChungXeMay) {
+	   	
+		int result = 0;
+		
+		String sql = ThongTinChungXeMayConstant.CAP_NHAP_THONG_TIN_XE_MAY_CHUNG;
+		
+	
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ThongTinChungXeMayConverter.capNhapThongTinChungXeMay(preparedStatement, tenXeMayCu, thongTinChungXeMay);
+		
+			result = preparedStatement.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		return result > 0;
+	}
+	
 }

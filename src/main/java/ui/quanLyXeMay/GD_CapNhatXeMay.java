@@ -13,6 +13,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
+import db.DatabaseConnect;
 import entity.DongXe;
 import entity.LoaiXe;
 import entity.XeMay;
@@ -690,4 +692,5 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		capNhatThongBaoLoi();
 	}
 
+	
 }
