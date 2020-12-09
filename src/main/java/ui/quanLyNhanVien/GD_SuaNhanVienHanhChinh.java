@@ -557,6 +557,8 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 				isSoDTNhanVienHC = true;
 				isTrinhDoNVHanhChinh = true;
 				isDiaChiNVHanhChinh = true;
+				isMatKhau = true;
+				isNgaySinhNVHanhChinh = true;
 				thongbaoLoi();
 			}
 
@@ -569,7 +571,7 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 		String maNV = lblMaNV.getText();
 		String tenNV = txtTenNV.getText();
 		String vaiTroText = (String) cboQuyenTruyCap.getSelectedItem();
-		boolean vaiTro = vaiTroText == "Nhân viên bán hàng" ? true : false;
+		boolean vaiTro = vaiTroText == "Nhân viên bán hàng" ? false : true;
 		boolean gioiTinh = rdbtnNam.isSelected();
 		Date ngaySinh = new Date(txtNgaySinh.getDate().getTime());
 		String sdt = txtSoDienThoai.getText();
@@ -596,7 +598,8 @@ public class GD_SuaNhanVienHanhChinh extends JPanel implements ActionListener, M
 	private boolean validateNhanVienHanhChinh(NhanVienHanhChinh nhanVienHanhChinh) {
 		if (RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && RegexNhanVienHanhChinh.ktraChucVu(txtChucVu)
 				&& RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai)
-				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan))
+				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan) && RegexNhanVienHanhChinh.ktraNgaySinh(txtNgaySinh)
+				&& RegexNhanVienHanhChinh.ktraMatKhau(txtMatKhau))
 			return true;
 		return false;
 	}

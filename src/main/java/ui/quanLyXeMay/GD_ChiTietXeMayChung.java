@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.EventObject;
 import java.util.Optional;
 
 import javax.swing.ImageIcon;
@@ -15,9 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import entity.XeMay;
 import other.DinhDangTien;
@@ -29,6 +33,9 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private DefaultTableModel modelHoaDon;
+	private JTable tblXe;
+	private DefaultTableModel modelXe;
 
 	/**
 	 * Launch the application.
@@ -51,7 +58,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 	 */
 	public GD_ChiTietXeMayChung(XeMay xeMay) {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1422, 747);
+		setBounds(100, 100, 1422, 1010);
 		setLocationRelativeTo(null);
 		setTitle("Thông tin xe máy");
 		contentPane = new JPanel();
@@ -75,12 +82,12 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 
 		JPanel pnlAnh = new JPanel();
 		pnlAnh.setBackground(Color.LIGHT_GRAY);
-		pnlAnh.setBounds(739, 127, 617, 504);
+		pnlAnh.setBounds(739, 127, 617, 462);
 		contentPane.add(pnlAnh);
 		pnlAnh.setLayout(null);
 
 		JLabel lblAnh = new JLabel("");
-		lblAnh.setBounds(1, 0, 616, 504);
+		lblAnh.setBounds(1, 0, 616, 462);
 		pnlAnh.add(lblAnh);
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setForeground(new Color(58, 181, 74));
@@ -204,7 +211,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		contentPane.add(lblNewLabel_2_1_12);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 375, 662, 256);
+		scrollPane.setBounds(32, 375, 662, 214);
 		contentPane.add(scrollPane);
 
 		JTextArea txtMoTa = new JTextArea();
@@ -221,7 +228,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setBounds(1227, 652, 129, 35);
+		btnThoat.setBounds(1227, 915, 129, 35);
 		contentPane.add(btnThoat);
 		btnThoat.addActionListener(this);
 
@@ -234,6 +241,35 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHeSoBan.setBounds(504, 279, 55, 30);
 		contentPane.add(lblHeSoBan);
+
+		JScrollPane scrollPaneXe = new JScrollPane();
+		scrollPaneXe.setBounds(32, 646, 1324, 254);
+		contentPane.add(scrollPaneXe);
+
+		JLabel lblNewLabel_2_1_12_2 = new JLabel("Xe:");
+		lblNewLabel_2_1_12_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_2_1_12_2.setBounds(32, 608, 83, 30);
+		contentPane.add(lblNewLabel_2_1_12_2);
+
+		String[] colHeaderHoaDon = { "STT", "Mã xe", "Sô khung", "Số sườn", "Màu", "Xuất xứ" };
+		modelXe = new DefaultTableModel(colHeaderHoaDon, 0);
+		tblXe = new JTable(modelHoaDon) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+				return false;
+			}
+		};
+		tblXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblXe.setRowHeight(35);
+		JTableHeader tableHeader2 = tblXe.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		tblXe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		scrollPaneXe.setViewportView(tblXe);
 
 	}
 

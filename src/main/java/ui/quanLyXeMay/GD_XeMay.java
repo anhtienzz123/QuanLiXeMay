@@ -391,16 +391,15 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void capNhatXeMaysTrongBang() {
 
-		if(cboXe.getSelectedItem().toString().equals("Xem từng xe"))
+		if (cboXe.getSelectedItem().toString().equals("Xem từng xe"))
 			capNhatXeMaysTungChiec();
-		else 
+		else
 			capNhatXeMaysGomNhom();
-		
 
 	}
-	
+
 	private void capNhatXeMaysTungChiec() {
-		
+
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
 
@@ -412,7 +411,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
-		
+
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, "Tất cả", SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
@@ -423,9 +422,9 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		txtTrang.setText(this.page + "");
 		System.out.println("Thêm xe máy từng chiếc vào bảng");
 	}
-	
+
 	private void capNhatXeMaysGomNhom() {
-		
+
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
 
@@ -437,44 +436,41 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
-		
-		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, SIZE);
-		xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe,  from, to);
+
+		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
+				tenDongXe, tenHangXe, SIZE);
+		xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
+				tenDongXe, tenHangXe, from, to);
 
 		xoaDuLieuXeMayTrongBang();
 		themXeMaysGomNhomVaoBang();
 		txtTrang.setText(this.page + "");
 	}
 
-	
 	private void themXeMaysGomNhomVaoBang() {
-		
-		xeMaysGomNhom.forEach( (key,value) -> {
-			
-			
+
+		xeMaysGomNhom.forEach((key, value) -> {
+
 			Object[] datas = new Object[8];
 			datas[0] = tblXeMay.getRowCount() + 1;
-			datas[1] =key.getTenXeMay();
+			datas[1] = key.getTenXeMay();
 			datas[2] = value;
 			datas[3] = DinhDangTien.format(key.tinhGiaBan());
 			datas[4] = key.getThoiGianBaoHanh() + " tháng";
 			datas[5] = key.getLoaiXe().getTenLoaiXe();
 			datas[6] = key.getDongXe().getTenDongXe();
 			datas[7] = key.getDongXe().getHangXe().getTenHangXe();
-		
 
 			modelXe.addRow(datas);
-			
+
 		});
-		
+
 	}
-	
+
 	/**
 	 * Thêm danh sách xe máy vào bảng
 	 */
-	
+
 	private void themXeMayVaoBang() {
 
 		if (xeMays != null) {
@@ -507,7 +503,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		datas[11] = xeMay.getXuatXu().getTenXuatXu();
 		modelXe.addRow(datas);
 	}
-	
 
 	/**
 	 * Xóa dữ liệu trong bảng
@@ -596,8 +591,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * Đăng kí sự kiện
 	 */
-	
-	
+
 	private void dangKiSuKien() {
 		// Phân Trang
 		btnCuoi.addActionListener(this);
@@ -744,7 +738,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			String temp = cboXe.getSelectedItem().toString();
 
 			if (temp.equals("Xem từng xe")) {
-				
+
 				capNhapGiaoDienXemTungChiec();
 
 				scrollPaneXeMay.setViewportView(tblXeMay);
@@ -753,17 +747,11 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 				scrollPaneXeMay.setViewportView(tblXeMay);
 			}
-			
+
 			capNhatXeMaysTrongBang();
 		}
 
 	}
-	
-	
-
-	
-	
-	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -781,14 +769,13 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		capNhatXeMaysTrongBang();
 	}
 
-	
-	
 	/**
 	 * Menu popup
 	 * 
 	 * @param component
 	 * @param popup
-	 */private static void addPopup(Component component, final JPopupMenu popup) {
+	 */
+	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
@@ -807,60 +794,101 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			}
 		});
 	}
-	 
-	 // Giao diện xem từng chiếc
-	 private void capNhapGiaoDienXemTungChiec() {
-		 String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
-					"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };
-			modelXe = new DefaultTableModel(colHeaderXeMay, 0);
-			tblXeMay = new JTable(modelXe) {
-				private static final long serialVersionUID = 1L;
 
-				public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-																				// 1385
-					return false;
-				}
-			};
-			tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			tblXeMay.setRowHeight(35);
-			scrollPaneXeMay.setViewportView(tblXeMay);
-			tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
-			tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
-			tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
-			tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
-			tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
-			tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
-			tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
-			tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+	// Giao diện xem từng chiếc
+	private void capNhapGiaoDienXemTungChiec() {
+		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
+				"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };
+		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
+		tblXeMay = new JTable(modelXe) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+																			// 1385
+				return false;
+			}
+		};
+		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblXeMay.setRowHeight(35);
+		scrollPaneXeMay.setViewportView(tblXeMay);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
 
 //			center value in column
-			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-			DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-			rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
-			tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-			tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-			tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
-			tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-			tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+		tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
 
-			tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	 }
-	 
-	 // Giao diện xem gom nhóm
-	 private void capNhapGiaoDienGomNhomXe() {
-		 System.out.println("Chay thang gom nhom xe");
-			String[] colHeaderXeMay = { "STT", "Tên xe", "Số lượng tồn", "Giá bán", "Bảo hành", "Loại xe",
-					"Dòng xe", "Hãng xe" };
-			modelXe = new DefaultTableModel(colHeaderXeMay, 0);
-			tblXeMay = new JTable(modelXe) {
-				private static final long serialVersionUID = 1L;
+		/**
+		 * Đổi màu header cho table
+		 */
+		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-				public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong
-																				// table
-																				// 1385
-					return false;
-				}
-			};
-	 }
+		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
+
+	// Giao diện xem gom nhóm
+	private void capNhapGiaoDienGomNhomXe() {
+		System.out.println("Chay thang gom nhom xe");
+		String[] colHeaderXeMay = { "STT", "Tên xe", "Số lượng tồn", "Giá bán", "Bảo hành", "Loại xe", "Dòng xe",
+				"Hãng xe" };
+		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
+		tblXeMay = new JTable(modelXe) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong
+																			// table
+																			// 1385
+				return false;
+			}
+		};
+
+		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		tblXeMay.setRowHeight(35);
+		scrollPaneXeMay.setViewportView(tblXeMay);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+
+//			center value in column
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+		tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
+		/**
+		 * Đổi màu header cho table
+		 */
+		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
+		tableHeader2.setBackground(new Color(58, 181, 74));
+		tableHeader2.setForeground(Color.white);
+		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
+		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	}
 }

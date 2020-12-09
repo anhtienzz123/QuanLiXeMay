@@ -685,6 +685,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 							JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
 									JOptionPane.INFORMATION_MESSAGE, null);
 							xoaRongText();
+							taThongBao.setText("");
 
 						}
 					} catch (Exception e2) {
@@ -699,6 +700,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 					isSoDTNhanVienHC = true;
 					isTrinhDoNVHanhChinh = true;
 					isDiaChiNVHanhChinh = true;
+					isNgaySinhNVHanhChinh = true;
 					thongbaoLoi();
 				}
 			} else {
@@ -709,6 +711,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thành công", "Thông báo thêm nhân viên",
 								JOptionPane.INFORMATION_MESSAGE, null);
 						xoaRongText();
+						taThongBao.setText("");
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thông báo thêm nhân viên",
@@ -767,7 +770,7 @@ public class GD_ThemNhanVien extends JPanel implements ActionListener, FocusList
 	private boolean validateNhanVienHanhChinh(NhanVienHanhChinh nhanVienHanhChinh) {
 		if (RegexNhanVienHanhChinh.ktraTenNV(txtTenNV) && RegexNhanVienHanhChinh.ktraChucVu(txtChucVu)
 				&& RegexNhanVienHanhChinh.KtraDiaChi(txtDiaChi) && RegexNhanVienHanhChinh.ktraSDT(txtSoDienThoai)
-				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan))
+				&& RegexNhanVienHanhChinh.ktraTrinhDo(txtTrinhDoHocVan) && RegexNhanVienHanhChinh.ktraNgaySinh(txtNgaySinh))
 			return true;
 		return false;
 	}
