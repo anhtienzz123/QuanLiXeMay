@@ -18,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 
 import dao.KhachHangDao;
 import entity.KhachHang;
-import other.DocSo;
 import other.XuLyThoiGian;
 
 public class GD_ChiTietKhachHang extends JFrame implements ActionListener {

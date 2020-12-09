@@ -8,15 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ChiTietBaoHanhConstant;
-import constant.ChiTietHoaDonConstant;
-import constant.TenEntity;
 import converter.ChiTietBaoHanhConverter;
-import converter.ChiTietHoaDonConverter;
 import db.DatabaseConnect;
 import entity.ChiTietBaoHanh;
-import entity.ChiTietHoaDon;
-import entity.HopDong;
-import other.RandomMa;
 
 public class ChiTietBaoHanhDao {
 	private static ChiTietBaoHanhDao instance;

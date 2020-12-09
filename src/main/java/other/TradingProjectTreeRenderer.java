@@ -1,4 +1,4 @@
-package testJtree;
+package other;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -34,6 +34,6 @@ public class TradingProjectTreeRenderer extends DefaultTreeCellRenderer {
 			return text;
 		}
 		String textToFilter = filterTextSupplier.get();
-		return HtmlHighlighter.highlightText(text, textToFilter);
+		return TreeHtmlHighlighter.highlightText(text, textToFilter);
 	}
 }

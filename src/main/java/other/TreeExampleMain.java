@@ -1,4 +1,4 @@
-package testJtree;
+package other;
 
 
 import java.awt.BorderLayout;
@@ -19,7 +19,7 @@ public class TreeExampleMain {
                 TradingProjectDataService.instance.getProjectHierarchy();
         JTree tree = new JTree(projectHierarchyTreeNode);
         
-        JTreeUtil.setTreeExpandedState(tree, true);
+        TreeUtil.setTreeExpandedState(tree, true);
         
         TreeFilterDecorator filterDecorator = TreeFilterDecorator.decorate(tree, createUserObjectMatcher(), field);
         tree.setCellRenderer(new TradingProjectTreeRenderer(() -> filterDecorator.getFilterField().getText()));

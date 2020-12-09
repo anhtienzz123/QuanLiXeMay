@@ -8,12 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.DanhMucBaoHanhConstant;
-import constant.HangXeConstant;
 import converter.DanhMucBaoHanhConvert;
-import converter.HangXeConvert;
 import db.DatabaseConnect;
 import entity.DanhMucBaoHanh;
-import entity.HangXe;
 
 public class DanhMucBaoHanhDao {
 	private static DanhMucBaoHanhDao instance;

@@ -144,14 +144,14 @@ public class GD_ChiTietBaoHanh extends JPanel implements ActionListener, MouseLi
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnQuayLai = new JButton("Quay lại");
-		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuayLai.setBackground(Color.RED);

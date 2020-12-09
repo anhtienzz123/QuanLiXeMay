@@ -12,7 +12,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
@@ -28,7 +30,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +49,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = 1L;
 	private JTextField txtTimKiem;
 	private JTextField txtTrang;
@@ -74,13 +76,17 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	private int page = 1;
 	private int maxPage = 0;
-	private static final int SIZE = 17;
+	private static final int SIZE = 16;
 
 	private XeMayDao xeMayDao;
 	private List<XeMay> xeMays;
 	private JComboBox<String> cboMauXe;
 	private JComboBox<String> cboGiaXe;
 	private JButton btnXemChiTiet;
+	private JComboBox<String> cboXe;
+
+	private JScrollPane scrollPaneXeMay;
+	private Map<XeMay, Integer> xeMaysGomNhom;
 
 	/**
 	 * Create the panel.
@@ -103,14 +109,12 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
-		JScrollPane scrollPaneXeMay = new JScrollPane();
-		scrollPaneXeMay.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scrollPaneXeMay.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneXeMay.setBounds(33, 278, 1727, 626);
+		scrollPaneXeMay = new JScrollPane();
+		scrollPaneXeMay.setBounds(33, 295, 1727, 609);
 		add(scrollPaneXeMay);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -216,16 +220,16 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		JLabel lblTngThuTrong_1_1_2_2 = new JLabel("Danh sách xe máy");
 		lblTngThuTrong_1_1_2_2.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_1_1_2_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTngThuTrong_1_1_2_2.setBounds(33, 205, 175, 30);
+		lblTngThuTrong_1_1_2_2.setBounds(33, 235, 175, 30);
 		add(lblTngThuTrong_1_1_2_2);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
-		separator.setBounds(33, 248, 1727, 11);
+		separator.setBounds(33, 278, 1727, 11);
 		add(separator);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -233,7 +237,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -241,7 +245,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -249,7 +253,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -265,7 +269,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(txtTrang);
 
 		btnThem = new JButton("Thêm");
-		btnThem.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnThem.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -273,7 +277,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(btnThem);
 
 		btnSua = new JButton("Sửa");
-		btnSua.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_construction_white_18dp.png")));
+		btnSua.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_construction_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 102, 255));
@@ -281,14 +285,15 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		add(btnSua);
 
 		btnXoa = new JButton("Xóa");
-		btnXoa.setIcon(new ImageIcon(GD_XeMay.class.getResource("/img/baseline_delete_sweep_white_18dp.png")));
+		btnXoa.setIcon(new ImageIcon(GD_XeMay.class.getResource("/icon/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
 		btnXoa.setBounds(1222, 937, 160, 40);
 		add(btnXoa);
 
-		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "hãng", "Màu sắc", "Số lượng", "Giá Bán", "Bảo hành" };
+		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
+				"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };
 		modelXe = new DefaultTableModel(colHeaderXeMay, 0);
 		tblXeMay = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
@@ -309,17 +314,20 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
 		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
 		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tblXeMay.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
-		tblXeMay.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+		tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
 
-		
+		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
 		JLabel lblM = new JLabel("Màu xe:");
 		lblM.setForeground(Color.BLACK);
 		lblM.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -345,6 +353,19 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		cboGiaXe.setBackground(Color.WHITE);
 		cboGiaXe.setBounds(1515, 142, 245, 30);
 		add(cboGiaXe);
+
+		JLabel lblTngThuTrong_1_1_2_3 = new JLabel("Xe:");
+		lblTngThuTrong_1_1_2_3.setForeground(Color.BLACK);
+		lblTngThuTrong_1_1_2_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTngThuTrong_1_1_2_3.setBounds(33, 196, 83, 30);
+		add(lblTngThuTrong_1_1_2_3);
+
+		cboXe = new JComboBox<String>();
+		cboXe.setModel(new DefaultComboBoxModel<String>(new String[] { "Xem từng xe", "Gom nhóm xe" }));
+		cboXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboXe.setBackground(Color.WHITE);
+		cboXe.setBounds(151, 196, 648, 30);
+		add(cboXe);
 		JTableHeader tableHeader2 = tblXeMay.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
@@ -362,6 +383,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	public void khoiTao() {
 		xeMayDao = XeMayDao.getInstance();
+		xeMaysGomNhom = new HashMap<XeMay, Integer>();
 	}
 
 	/**
@@ -369,6 +391,16 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void capNhatXeMaysTrongBang() {
 
+		if(cboXe.getSelectedItem().toString().equals("Xem từng xe"))
+			capNhatXeMaysTungChiec();
+		else 
+			capNhatXeMaysGomNhom();
+		
+
+	}
+	
+	private void capNhatXeMaysTungChiec() {
+		
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
 
@@ -380,20 +412,69 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, SIZE);
+				tenHangXe, "Tất cả", SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
-				tenHangXe, from, to);
+				tenHangXe, "Tất cả", from, to);
 
 		xoaDuLieuXeMayTrongBang();
 		themXeMayVaoBang();
 		txtTrang.setText(this.page + "");
+		System.out.println("Thêm xe máy từng chiếc vào bảng");
+	}
+	
+	private void capNhatXeMaysGomNhom() {
+		
+		int from = (SIZE * (page - 1) + 1);
+		int to = page * SIZE;
 
+		String timKiem = txtTimKiem.getText();
+		String field = cboTimKiem.getSelectedItem().toString();
+		String gia = cboGiaXe.getSelectedItem().toString();
+		String mauXe = cboMauXe.getSelectedItem().toString();
+		String tenXuatXu = cboXuatXu.getSelectedItem().toString();
+		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
+		String tenDongXe = cboDongXe.getSelectedItem().toString();
+		String tenHangXe = cboHangXe.getSelectedItem().toString();
+		
+		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe, SIZE);
+		xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
+				tenHangXe,  from, to);
+
+		xoaDuLieuXeMayTrongBang();
+		themXeMaysGomNhomVaoBang();
+		txtTrang.setText(this.page + "");
 	}
 
+	
+	private void themXeMaysGomNhomVaoBang() {
+		
+		xeMaysGomNhom.forEach( (key,value) -> {
+			
+			
+			Object[] datas = new Object[8];
+			datas[0] = tblXeMay.getRowCount() + 1;
+			datas[1] =key.getTenXeMay();
+			datas[2] = value;
+			datas[3] = DinhDangTien.format(key.tinhGiaBan());
+			datas[4] = key.getThoiGianBaoHanh() + " tháng";
+			datas[5] = key.getLoaiXe().getTenLoaiXe();
+			datas[6] = key.getDongXe().getTenDongXe();
+			datas[7] = key.getDongXe().getHangXe().getTenHangXe();
+		
+
+			modelXe.addRow(datas);
+			
+		});
+		
+	}
+	
 	/**
 	 * Thêm danh sách xe máy vào bảng
 	 */
+	
 	private void themXeMayVaoBang() {
 
 		if (xeMays != null) {
@@ -411,17 +492,22 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void themXeMayVaoBang(XeMay xeMay) {
 
-		Object[] datas = new Object[8];
+		Object[] datas = new Object[12];
 		datas[0] = tblXeMay.getRowCount() + 1;
 		datas[1] = xeMay.getMaXeMay();
 		datas[2] = xeMay.getTenXeMay();
-		datas[3] = xeMay.getDongXe().getHangXe().getTenHangXe();
-		datas[4] = xeMay.getMauXe();
-		datas[5] = xeMay.getSoLuong();
-		datas[6] = DinhDangTien.format(xeMay.getGiaNhap());
-		datas[7] = xeMay.getThoiGianBaoHanh();
+		datas[3] = xeMay.getSoKhung();
+		datas[4] = xeMay.getSoSuon();
+		datas[5] = DinhDangTien.format(xeMay.tinhGiaBan());
+		datas[6] = xeMay.getThoiGianBaoHanh() + " tháng";
+		datas[7] = xeMay.getMauXe();
+		datas[8] = xeMay.getLoaiXe().getTenLoaiXe();
+		datas[9] = xeMay.getDongXe().getTenDongXe();
+		datas[10] = xeMay.getDongXe().getHangXe().getTenHangXe();
+		datas[11] = xeMay.getXuatXu().getTenXuatXu();
 		modelXe.addRow(datas);
 	}
+	
 
 	/**
 	 * Xóa dữ liệu trong bảng
@@ -500,6 +586,8 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	/**
 	 * Đăng kí sự kiện
 	 */
+	
+	
 	private void dangKiSuKien() {
 		// Phân Trang
 		btnCuoi.addActionListener(this);
@@ -527,6 +615,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		cboXuatXu.addActionListener(this);
 		cboMauXe.addActionListener(this);
 		cboGiaXe.addActionListener(this);
+		cboXe.addActionListener(this);
 
 		// Tìm kiếm
 		txtTimKiem.addKeyListener(this);
@@ -562,7 +651,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		if (o.equals(cboDongXe) || o.equals(cboGiaXe) || o.equals(cboHangXe) || o.equals(cboLoaiXe)
 				|| o.equals(cboMauXe) || o.equals(cboTimKiem) || o.equals(cboXuatXu)) {
 
-			if (o.equals(cboHangXe)  ) {
+			if (o.equals(cboHangXe)) {
 
 				DongXeDao dongXeDao = DongXeDao.getInstance();
 				if (cboHangXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
@@ -587,7 +676,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 			}
 
-			if (o.equals(cboDongXe) ) {
+			if (o.equals(cboDongXe)) {
 				DongXeDao dongXeDao = DongXeDao.getInstance();
 
 				if (cboDongXe.getSelectedItem().toString().equalsIgnoreCase("Tất cả")) {
@@ -629,7 +718,31 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			capNhatXeMaysTrongBang();
 		}
 
+		if (o.equals(cboXe)) {
+
+			String temp = cboXe.getSelectedItem().toString();
+
+			if (temp.equals("Xem từng xe")) {
+				
+				capNhapGiaoDienXemTungChiec();
+
+				scrollPaneXeMay.setViewportView(tblXeMay);
+			} else {
+				capNhapGiaoDienGomNhomXe();
+
+				scrollPaneXeMay.setViewportView(tblXeMay);
+			}
+			
+			capNhatXeMaysTrongBang();
+		}
+
 	}
+	
+	
+
+	
+	
+	
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -647,13 +760,14 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		capNhatXeMaysTrongBang();
 	}
 
+	
+	
 	/**
 	 * Menu popup
 	 * 
 	 * @param component
 	 * @param popup
-	 */
-	private static void addPopup(Component component, final JPopupMenu popup) {
+	 */private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				if (e.isPopupTrigger()) {
@@ -672,5 +786,60 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			}
 		});
 	}
+	 
+	 // Giao diện xem từng chiếc
+	 private void capNhapGiaoDienXemTungChiec() {
+		 String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
+					"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };
+			modelXe = new DefaultTableModel(colHeaderXeMay, 0);
+			tblXeMay = new JTable(modelXe) {
+				private static final long serialVersionUID = 1L;
 
+				public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+																				// 1385
+					return false;
+				}
+			};
+			tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			tblXeMay.setRowHeight(35);
+			scrollPaneXeMay.setViewportView(tblXeMay);
+			tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
+			tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
+			tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
+			tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
+			tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
+			tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
+			tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
+			tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+
+//			center value in column
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+			rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+			tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+			tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+			tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
+			tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
+			tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
+			tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 }
+	 
+	 // Giao diện xem gom nhóm
+	 private void capNhapGiaoDienGomNhomXe() {
+		 System.out.println("Chay thang gom nhom xe");
+			String[] colHeaderXeMay = { "STT", "Tên xe", "Số lượng tồn", "Giá bán", "Bảo hành", "Loại xe",
+					"Dòng xe", "Hãng xe" };
+			modelXe = new DefaultTableModel(colHeaderXeMay, 0);
+			tblXeMay = new JTable(modelXe) {
+				private static final long serialVersionUID = 1L;
+
+				public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong
+																				// table
+																				// 1385
+					return false;
+				}
+			};
+	 }
 }

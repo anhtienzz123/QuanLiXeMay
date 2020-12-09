@@ -174,7 +174,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		lblIconLapHoaDon.setBounds(0, 0, 278, 123);
 		pnlLapHoaDon.add(lblIconLapHoaDon);
 		lblIconLapHoaDon.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIconLapHoaDon.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_property_100px.png")));
+		lblIconLapHoaDon.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_property_100px.png")));
 
 		JPanel pnlLogo = new JPanel();
 		pnlLogo.setLayout(null);
@@ -183,7 +183,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 
@@ -226,7 +226,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemKhachHang.add(lblThemKhachHang);
 
 		lblIconThemKhachHang = new JLabel("");
-		lblIconThemKhachHang.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_user_male_100px.png")));
+		lblIconThemKhachHang.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_user_male_100px.png")));
 		lblIconThemKhachHang.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemKhachHang.setBounds(0, 0, 278, 123);
 		pnlThemKhachHang.add(lblIconThemKhachHang);
@@ -245,7 +245,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlTroGiup.add(lblTroGiup);
 
 		lblIconTroGiup = new JLabel("");
-		lblIconTroGiup.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/supplier_100px.png")));
+		lblIconTroGiup.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/supplier_100px.png")));
 		lblIconTroGiup.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconTroGiup.setBounds(0, 0, 278, 123);
 		pnlTroGiup.add(lblIconTroGiup);
@@ -264,7 +264,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlBaoHanh.add(lblBaoHanh);
 
 		lblIconBaoHanh = new JLabel("");
-		lblIconBaoHanh.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/calendar_100px.png")));
+		lblIconBaoHanh.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/calendar_100px.png")));
 		lblIconBaoHanh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconBaoHanh.setBounds(0, 0, 278, 123);
 		pnlBaoHanh.add(lblIconBaoHanh);
@@ -276,7 +276,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		add(pnlThemXeMay);
 
 		lblIconThemXeMay = new JLabel("");
-		lblIconThemXeMay.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/scooter_100px.png")));
+		lblIconThemXeMay.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/scooter_100px.png")));
 		lblIconThemXeMay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemXeMay.setBounds(0, 0, 278, 123);
 		pnlThemXeMay.add(lblIconThemXeMay);
@@ -302,7 +302,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		pnlThemNhanVien.add(lblThemNhanVien);
 
 		lblIconThemNhanVien = new JLabel("");
-		lblIconThemNhanVien.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/add_administrator_100px.png")));
+		lblIconThemNhanVien.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/add_administrator_100px.png")));
 		lblIconThemNhanVien.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIconThemNhanVien.setBounds(0, 0, 278, 123);
 		pnlThemNhanVien.add(lblIconThemNhanVien);
@@ -337,7 +337,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		add(lblaCh);
 
 		btnDoiMatKhau = new JButton("Đổi mật khẩu");
-		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/img/password_reset_30px.png")));
+		btnDoiMatKhau.setIcon(new ImageIcon(GD_TrangChu.class.getResource("/icon/password_reset_30px.png")));
 		btnDoiMatKhau.setBackground(Color.GRAY);
 		btnDoiMatKhau.setForeground(Color.WHITE);
 		btnDoiMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -373,11 +373,11 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 					.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
 			if (nhanVienHanhChinh.isGioiTinh()) {
-				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/male-user.png"))
+				lblAnh.setIcon(new ImageIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/male-user.png"))
 						.getImage().getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			} else {
 				lblAnh.setIcon(new ImageIcon(
-						new ImageIcon(GD_ThemXeMay.class.getResource("/img/female-student-silhouette.png")).getImage()
+						new ImageIcon(GD_ThemXeMay.class.getResource("/icon/female-student-silhouette.png")).getImage()
 								.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
 			}
 		}

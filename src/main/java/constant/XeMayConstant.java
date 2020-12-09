@@ -10,4 +10,6 @@ public class XeMayConstant {
 	
 	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maXeMay from XeMay\r\n" + 
     		"where maXeMay = ? ";
+	
+	public static final String GET_XE_MAY_THONG_TIN_CHUNG_THEO_TEN_XE_MAY = "select top 1 * from XeMay where tenXeMay = ?";
 }

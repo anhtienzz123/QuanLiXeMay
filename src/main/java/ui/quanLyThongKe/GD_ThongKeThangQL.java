@@ -1,19 +1,24 @@
 package ui.quanLyThongKe;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -28,57 +33,120 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.toedter.calendar.JDateChooser;
+import dao.ThongKeQuanLiDao;
 
-import dao.ThongKeDao;
-
-public class GD_ThongKeThang extends JPanel {
+public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel pnlDoanhThuThang;
-//	private Vector colHeaderDoanhThu;
-//	private DefaultTableModel modelDoanhThu;
 	private JPanel pnlTopDong;
 	private JPanel pnlTopHang;
 	private JTabbedPane tabbedPaneDoanhThu;
 	private JTabbedPane tabbedPaneXe;
-	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private LocalDate date;
+	private JComboBox<String> cboThang;
+	private JComboBox<String> cboNam;
+	private JComboBox<String> cboThongKe;
+	private JLabel lblTngThuTrong_2_1_1_2;
+	private JPanel pnlContain;
+	private JPanel pnlSoLieu;
+	private JPanel pnlBieuDo;
+	private JScrollPane scrollPane;
+	private JTextArea txtSoLieu;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeThang() {
+	public GD_ThongKeThangQL() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
-
-		txtNgay = new JDateChooser();
-		txtNgay.setForeground(new Color(58, 181, 74));
-		txtNgay.setDateFormatString("dd-MM-yyyy");
-		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgay.setBounds(218, 20, 146, 30);
-		txtNgay.setDate(Calendar.getInstance().getTime());
-		add(txtNgay);
+		khoiTao();
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn tháng:");
 		lblTngThuTrong_2_1_1.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2_1_1.setBounds(48, 20, 182, 30);
+		lblTngThuTrong_2_1_1.setBounds(48, 20, 143, 30);
 		add(lblTngThuTrong_2_1_1);
 
+		cboThang = new JComboBox<String>();
+		cboThang.setBackground(Color.WHITE);
+		cboThang.setForeground(Color.BLACK);
+		cboThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboThang.setModel(new DefaultComboBoxModel<String>(
+				new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
+		cboThang.setBounds(203, 23, 64, 30);
+		add(cboThang);
+		((JLabel) cboThang.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		cboThang.setSelectedItem(date.getMonthValue() + "");
+
+		cboNam = new JComboBox<String>();
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" }));
+		cboNam.setForeground(Color.BLACK);
+		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboNam.setBackground(Color.WHITE);
+		cboNam.setBounds(410, 23, 90, 30);
+		add(cboNam);
+		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		cboNam.setSelectedItem(date.getYear() + "");
+
+		JLabel lblTngThuTrong_2_1_1_1 = new JLabel("năm:");
+		lblTngThuTrong_2_1_1_1.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_2_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_2_1_1_1.setBounds(349, 20, 64, 30);
+		add(lblTngThuTrong_2_1_1_1);
+
+		cboThongKe = new JComboBox<String>();
+		cboThongKe.setModel(new DefaultComboBoxModel<String>(new String[] { "Biểu đồ", "Số liệu" }));
+		cboThongKe.setForeground(Color.BLACK);
+		cboThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboThongKe.setBackground(Color.WHITE);
+		cboThongKe.setBounds(1616, 20, 108, 30);
+		add(cboThongKe);
+
+		lblTngThuTrong_2_1_1_2 = new JLabel("Dạng thống kê:");
+		lblTngThuTrong_2_1_1_2.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_2_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_2_1_1_2.setBounds(1433, 20, 171, 30);
+		add(lblTngThuTrong_2_1_1_2);
+
+		pnlContain = new JPanel();
+		pnlContain.setBackground(Color.WHITE);
+		pnlContain.setBounds(0, 65, 1724, 701);
+		add(pnlContain);
+		pnlContain.setLayout(new CardLayout(0, 0));
+
+		pnlBieuDo = new JPanel();
+		pnlBieuDo.setBackground(Color.WHITE);
+		pnlContain.add(pnlBieuDo, "name_27850809237800");
+		pnlBieuDo.setLayout(null);
+
+		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneDoanhThu.setBounds(0, 0, 852, 671);
+		pnlBieuDo.add(tabbedPaneDoanhThu);
+		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
+		tabbedPaneDoanhThu.setForeground(Color.WHITE);
+
+		pnlDoanhThuThang = new JPanel();
+		tabbedPaneDoanhThu.addTab("Doanh thu trong tháng", null, pnlDoanhThuThang, null);
+
+		pnlTopXe = new JPanel();
+		pnlTopXe.setBackground(Color.WHITE);
+		tabbedPaneDoanhThu.addTab("Xe bán chạy trong tháng", null, pnlTopXe, null);
+
 		tabbedPaneXe = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneXe.setBounds(912, 20, 812, 714);
+		tabbedPaneXe.setBounds(912, 0, 812, 671);
+		pnlBieuDo.add(tabbedPaneXe);
 		tabbedPaneXe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPaneXe.setBackground(new Color(58, 181, 74));
 		tabbedPaneXe.setForeground(Color.WHITE);
-		add(tabbedPaneXe);
 
 		pnlTopDong = new JPanel();
 		pnlTopDong.setBackground(Color.WHITE);
@@ -88,46 +156,29 @@ public class GD_ThongKeThang extends JPanel {
 		pnlTopHang.setBackground(Color.WHITE);
 		tabbedPaneXe.addTab("Hãng xe", null, pnlTopHang, null);
 
-		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneDoanhThu.setBounds(0, 63, 852, 671);
-		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
-		tabbedPaneDoanhThu.setForeground(Color.WHITE);
-		add(tabbedPaneDoanhThu);
+		pnlSoLieu = new JPanel();
+		pnlSoLieu.setBackground(Color.WHITE);
+		pnlContain.add(pnlSoLieu, "name_27823531921600");
+		pnlSoLieu.setLayout(null);
 
-		pnlDoanhThuThang = new JPanel();
-		tabbedPaneDoanhThu.addTab("Doanh thu trong tháng", null, pnlDoanhThuThang, null);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 1700, 675);
+		pnlSoLieu.add(scrollPane);
 
-		khoiTao();
-
-		pnlTopXe = new JPanel();
-		pnlTopXe.setBackground(Color.WHITE);
-		tabbedPaneDoanhThu.addTab("Xe bán chạy trong tháng", null, pnlTopXe, null);
+		txtSoLieu = new JTextArea();
+		txtSoLieu.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane.setViewportView(txtSoLieu);
 
 		thongKeDoanhThuThang(pnlDoanhThuThang);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
-
-		txtNgay.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent e) {
-
-				if (e.getPropertyName().equals("date")) {
-					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-					thongKeDoanhThuThang(pnlDoanhThuThang);
-					thongKeTopXe(pnlTopXe);
-					thongKeTopDongXe(pnlTopDong);
-					thongKeTopHangXe(pnlTopHang);
-
-				}
-			}
-		});
+		cboThongKe.addActionListener(this);
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		date = LocalDate.now();
 
 	}
@@ -187,7 +238,6 @@ public class GD_ThongKeThang extends JPanel {
 		ItemLabelPosition position = new ItemLabelPosition(ItemLabelAnchor.OUTSIDE12, TextAnchor.TOP_CENTER);
 		renderer.setDefaultNegativeItemLabelPosition(position);
 
-		
 		ChartPanel chartPanel1 = new ChartPanel(barChart);
 		chartPanel1.setPreferredSize(new Dimension(jpnItem.getWidth(), 321));
 
@@ -250,4 +300,15 @@ public class GD_ThongKeThang extends JPanel {
 		jpnItem.repaint();
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (cboThongKe.getSelectedIndex() == 0) {
+			pnlBieuDo.setVisible(true);
+			pnlSoLieu.setVisible(false);
+		} else {
+
+			pnlBieuDo.setVisible(false);
+			pnlSoLieu.setVisible(true);
+		}
+	}
 }

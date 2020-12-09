@@ -98,7 +98,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setIcon(
-				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -137,7 +137,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(separator);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -146,7 +146,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 		btnTruoc = new JButton("");
 		btnTruoc.setIcon(
-				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -154,7 +154,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -162,7 +162,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -230,7 +230,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
@@ -244,7 +244,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(btnDanhMucBaoHanh);
 
 		btnBoLoc = new JButton("Xóa tìm kiếm");
-		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnBoLoc.setForeground(Color.WHITE);
 		btnBoLoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnBoLoc.setBackground(Color.GRAY);

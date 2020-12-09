@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import constant.LoaiXeConstant;
@@ -74,6 +77,28 @@ public class XeMayDao {
 		}
 
 		return xeMay;
+	}
+	
+	public XeMay getThongXeMayChungTheoTen(String tenXeMay) {
+		
+		XeMay xeMay = null;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THONG_TIN_CHUNG_THEO_TEN_XE_MAY);
+			preparedStatement.setString(1, tenXeMay);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				xeMay = XeMayConvert.getXeMay(resultSet);
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		return xeMay;
+		
+		
 	}
 
 	public LoaiXe getLoaiXeTheoMa(String maLoaiXe) {
@@ -146,7 +171,7 @@ public class XeMayDao {
 	}
 
 	public int getMaxPageTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe, String tenXuatXu,
-			String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
+			String tenLoaiXe, String tenDongXe, String tenHangXe, String cboTenXe, int size) {
 
 		String sql = "SELECT count(maXeMay) as total\r\n" + "from XeMay\r\n"
 				+ "inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n"
@@ -196,6 +221,12 @@ public class XeMayDao {
 
 		}
 
+		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
+
+			sql += " and tenXeMay = N'" + cboTenXe+"'";
+
+		}
+
 		int count = 0;
 
 		try {
@@ -218,7 +249,7 @@ public class XeMayDao {
 	}
 
 	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe,
-			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, int from, int to) {
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, String cboTenXe, int from, int to) {
 
 		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n" + "as row FROM XeMay) as a\r\n"
 				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
@@ -269,7 +300,14 @@ public class XeMayDao {
 
 		}
 
-		// System.out.println(sql);
+		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
+
+			sql += " and tenXeMay = N'" + cboTenXe+ "'";
+
+		}
+
+		System.out.println("===== Cau Sql =====");
+		System.out.println(sql);
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 
@@ -314,4 +352,250 @@ public class XeMayDao {
 
 		return mauXes;
 	}
+
+	
+	public Map<String, Integer> getTenXeMaysTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe,
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe) {
+
+		String sql = "SELECT a.tenXeMay, count(a.tenXeMay) as soLuongXe FROM XeMay as a\r\n"
+				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE soLuong > 0";
+
+		if (!timKiem.trim().equals(RONG)) {
+			if (field.equalsIgnoreCase(TEN_XE)) {
+				sql += " and tenXeMay like N'%" + timKiem + "%'";
+			}
+
+			if (field.equalsIgnoreCase(MA_XE)) {
+				sql += " and maXeMay like N'%" + timKiem + "%'";
+			}
+		}
+
+		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and mauXe = N'" + mauXe + "'";
+		}
+
+		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenXuatXu = N'" + tenXuatXu + "'";
+		}
+
+		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenLoaiXe = N'" + tenLoaiXe + "'";
+		}
+
+		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenDongXe = N'" + tenDongXe + "'";
+		}
+
+		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenHangXe = N'" + tenHangXe + "'";
+		}
+
+		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
+
+			if (gia.equalsIgnoreCase("Dưới 25tr")) {
+				sql += " and giaNhap < 25000000";
+			} else if (gia.equalsIgnoreCase("Trên 60tr")) {
+				sql += " and giaNhap > 60000000";
+			} else {
+				sql += " and giaNhap between 25000000 and 60000000 ";
+			}
+
+		}
+
+		sql += "\ngroup by a.tenXeMay";
+		System.out.println(sql);
+
+		Map<String, Integer> result = new TreeMap<String, Integer>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				result.put(resultSet.getNString("tenXeMay"), resultSet.getInt("soLuongXe"));
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
+	
+	public int getMaxPageTheoNhieuTieuChiGomNhom(String timKiem, String field, String gia, String mauXe, String tenXuatXu,
+			String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
+
+		String sql = "SELECT a.tenXeMay as tenXeMay \r\n" + 
+				"from XeMay as a\r\n" + 
+				"inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n" + 
+				"inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n" + 
+				"inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n" + 
+				"inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + 
+				"WHERE soLuong > 0";
+
+		if (!timKiem.trim().equals(RONG)) {
+			if (field.equalsIgnoreCase(TEN_XE)) {
+				sql += " and tenXeMay like N'%" + timKiem + "%'";
+			}
+
+			if (field.equalsIgnoreCase(MA_XE)) {
+				sql += " and maXeMay like N'%" + timKiem + "%'";
+			}
+		}
+
+		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and mauXe = N'" + mauXe + "'";
+		}
+
+		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenXuatXu = N'" + tenXuatXu + "'";
+		}
+
+		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenLoaiXe = N'" + tenLoaiXe + "'";
+		}
+
+		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenDongXe = N'" + tenDongXe + "'";
+		}
+
+		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenHangXe = N'" + tenHangXe + "'";
+		}
+
+		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
+
+			if (gia.equalsIgnoreCase("Dưới 25tr")) {
+				sql += " and giaNhap < 25000000";
+			} else if (gia.equalsIgnoreCase("Trên 60tr")) {
+				sql += " and giaNhap > 60000000";
+			} else {
+				sql += " and giaNhap between 25000000 and 60000000 ";
+			}
+
+		}
+
+		sql += " group by a.tenXeMay";
+
+		int count = 0;
+		
+		List<String> tenXeMays = new ArrayList<String>();
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				tenXeMays.add(resultSet.getString("tenXeMay"));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		count = tenXeMays.size();
+
+		return (int) Math.ceil(count * 1.00 / size);
+
+	}
+
+	public Map<XeMay, Integer> getXeMaysTheoNhieuTieuChiGomNhom(String timKiem, String field, String gia, String mauXe,
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe,  int from, int to) {
+
+
+		Map<XeMay, Integer> result = new HashMap<XeMay, Integer>();
+		
+		String sql = "SELECT a.tenXeMay, COUNT(a.tenXeMay) as soLuongXe FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n" + "as row FROM XeMay) as a\r\n"
+				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE row between " + from + " and "
+				+ to + " \r\n" + "and soLuong > 0";
+
+		if (!timKiem.trim().equals(RONG)) {
+			if (field.equalsIgnoreCase(TEN_XE)) {
+				sql += " and tenXeMay like N'%" + timKiem + "%'";
+			}
+
+			if (field.equalsIgnoreCase(MA_XE)) {
+				sql += " and maXeMay like N'%" + timKiem + "%'";
+			}
+		}
+
+		if (!mauXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and mauXe = N'" + mauXe + "'";
+		}
+
+		if (!tenXuatXu.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenXuatXu = N'" + tenXuatXu + "'";
+		}
+
+		if (!tenLoaiXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenLoaiXe = N'" + tenLoaiXe + "'";
+		}
+
+		if (!tenDongXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenDongXe = N'" + tenDongXe + "'";
+		}
+
+		if (!tenHangXe.trim().equalsIgnoreCase(TAT_CA)) {
+			sql += " and tenHangXe = N'" + tenHangXe + "'";
+		}
+
+		if (!gia.trim().equalsIgnoreCase(TAT_CA)) {
+
+			if (gia.equalsIgnoreCase("Dưới 25tr")) {
+				sql += " and giaNhap < 25000000";
+			} else if (gia.equalsIgnoreCase("Trên 60tr")) {
+				sql += " and giaNhap > 60000000";
+			} else {
+				sql += " and giaNhap between 25000000 and 60000000 ";
+			}
+		}
+		sql += " group by a.tenXeMay";
+		
+		System.out.println("===== SQL Gom Nhom =====");
+		System.out.println(sql);
+	
+		
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				String tenXeMay = resultSet.getString("tenXeMay");
+				XeMay xeMay = getThongXeMayChungTheoTen(tenXeMay);
+				
+				int soLuongXe = resultSet.getInt("soLuongXe");
+				
+
+				result.put(xeMay, soLuongXe);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+
+	}
+	
+
+	
+
 }

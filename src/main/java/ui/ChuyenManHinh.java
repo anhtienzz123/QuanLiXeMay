@@ -7,8 +7,11 @@ import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import dao.NhanVienHanhChinhDao;
+import entity.NhanVienHanhChinh;
 import ui.HuongDanSuDung.GD_HuongDanSuDung;
 import ui.quanLyBaoHanh.GD_QuanLyBaoHanh;
 import ui.quanLyHoaDon.GD_HoaDon;
@@ -18,7 +21,8 @@ import ui.quanLyKhachHang.GD_KhachHang;
 import ui.quanLyKhachHang.GD_ThemKhachHang;
 import ui.quanLyNhanVien.GD_NhanVien;
 import ui.quanLyNhanVien.GD_ThemNhanVien;
-import ui.quanLyThongKe.GD_ThongKe;
+import ui.quanLyThongKe.GD_ThongKeNV;
+import ui.quanLyThongKe.GD_ThongKeQL;
 import ui.quanLyXeMay.GD_ThemXeMay;
 import ui.quanLyXeMay.GD_XeMay;
 
@@ -28,6 +32,7 @@ public class ChuyenManHinh {
 	private List<DanhMuc> dSTrang = null;
 	private JPanel pnlMenu;
 	private String maNV;
+	private NhanVienHanhChinh nhanVienHanhChinh;
 
 	public ChuyenManHinh(JPanel pnlMHChinh, String maNV, JPanel pnlMenu) {
 		this.pnlMHChinh = pnlMHChinh;
@@ -98,13 +103,25 @@ public class ChuyenManHinh {
 
 				break;
 			case "ThongKe":
-				node = new GD_ThongKe();
-				setPanel();
+				nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNV);
+				if (nhanVienHanhChinh.isVaiTro()) {
+					node = new GD_ThongKeQL();
+					setPanel();
+				} else {
+					node = new GD_ThongKeNV();
+					setPanel();
+				}
 
 				break;
 			case "NhanVien":
-				node = new GD_NhanVien();
-				setPanel();
+				nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNV);
+				if (nhanVienHanhChinh.isVaiTro()) {
+					node = new GD_NhanVien();
+					setPanel();
+				} else {
+					JOptionPane.showMessageDialog(null, "Chức năng này chỉ dành cho người quản lý");
+				}
+				
 				break;
 
 			case "LapHoaDon":
@@ -122,8 +139,14 @@ public class ChuyenManHinh {
 				setPanel();
 				break;
 			case "ThemNhanVien":
-				node = new GD_ThemNhanVien();
-				setPanel();
+				nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNV);
+				if (nhanVienHanhChinh.isVaiTro()) {
+					node = new GD_ThemNhanVien();
+					setPanel();
+				} else {
+					JOptionPane.showMessageDialog(null, "Chức năng này chỉ dành cho người quản lý");
+				}
+				
 				break;
 			case "BaoHanh":
 				node = new GD_QuanLyBaoHanh();

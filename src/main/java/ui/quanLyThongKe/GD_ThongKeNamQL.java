@@ -1,21 +1,24 @@
 package ui.quanLyThongKe;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -34,11 +37,9 @@ import org.jfree.chart.ui.TextAnchor;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import com.toedter.calendar.JDateChooser;
+import dao.ThongKeQuanLiDao;
 
-import dao.ThongKeDao;
-
-public class GD_ThongKeNam extends JPanel implements MouseListener {
+public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	/**
 	 * 
@@ -53,27 +54,26 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	private JPanel pnlDoanhThuQuy;
 	private JTabbedPane tabbedPaneDoanhThu;
 	private JTabbedPane tabbedPaneXe;
-	private JDateChooser txtNgay;
 	private JPanel pnlTopXe;
 
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private int nam;
+	private JComboBox<String> cboNam;
+	private JComboBox<String> cboThongKe;
+	private JLabel lblTngThuTrong_2_1_5;
+	private JPanel pnlContain;
+	private JPanel pnlSoLieu;
+	private JPanel pnlBieuDo;
+	private JScrollPane scrollPane;
+	private JTextArea txtSoLieu;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeNam() {
+	public GD_ThongKeNamQL() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
-
-		txtNgay = new JDateChooser();
-		txtNgay.setForeground(new Color(58, 181, 74));
-		txtNgay.setDateFormatString("dd-MM-yyyy");
-		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgay.setBounds(218, 20, 146, 30);
-		txtNgay.setDate(Calendar.getInstance().getTime());
-		add(txtNgay);
 //		DateFormat df = new SimpleDateFormat("yyyy");
 
 		JLabel lblTngThuTrong_2_1_1 = new JLabel("Chọn năm:");
@@ -82,12 +82,64 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		lblTngThuTrong_2_1_1.setBounds(48, 20, 182, 30);
 		add(lblTngThuTrong_2_1_1);
 
+		khoiTao();
+
+		cboNam = new JComboBox<String>();
+		cboNam.setBackground(Color.WHITE);
+		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" }));
+		cboNam.setBounds(228, 20, 90, 30);
+		add(cboNam);
+		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		cboNam.setSelectedItem(nam + "");
+
+		cboThongKe = new JComboBox<String>();
+		cboThongKe.setBackground(Color.WHITE);
+		cboThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboThongKe.setModel(new DefaultComboBoxModel<String>(new String[] { "Biểu đồ", "Số liệu" }));
+		cboThongKe.setBounds(1616, 23, 108, 30);
+		add(cboThongKe);
+		cboThongKe.addActionListener(this);
+
+		lblTngThuTrong_2_1_5 = new JLabel("Dạng thống kê:");
+		lblTngThuTrong_2_1_5.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_2_1_5.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_2_1_5.setBounds(1422, 20, 182, 30);
+		add(lblTngThuTrong_2_1_5);
+
+		pnlContain = new JPanel();
+		pnlContain.setBounds(0, 63, 1724, 703);
+		add(pnlContain);
+		pnlContain.setLayout(new CardLayout(0, 0));
+
+		pnlBieuDo = new JPanel();
+		pnlBieuDo.setBackground(Color.WHITE);
+		pnlContain.add(pnlBieuDo, "name_29177879398400");
+		pnlBieuDo.setLayout(null);
+
+		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPaneDoanhThu.setBounds(0, 0, 893, 665);
+		pnlBieuDo.add(tabbedPaneDoanhThu);
+		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
+		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
+		tabbedPaneDoanhThu.setForeground(Color.WHITE);
+
+		pnlDoanhThuThang = new JPanel();
+		tabbedPaneDoanhThu.addTab("Doanh thu từng tháng", null, pnlDoanhThuThang, null);
+
+		pnlDoanhThuQuy = new JPanel();
+		tabbedPaneDoanhThu.addTab("Doanh thu từng quý", null, pnlDoanhThuQuy, null);
+
+		pnlTopXe = new JPanel();
+		pnlTopXe.setBackground(Color.WHITE);
+		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
+
 		tabbedPaneXe = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneXe.setBounds(1007, 20, 717, 708);
+		tabbedPaneXe.setBounds(1007, 0, 717, 665);
+		pnlBieuDo.add(tabbedPaneXe);
 		tabbedPaneXe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		tabbedPaneXe.setBackground(new Color(58, 181, 74));
 		tabbedPaneXe.setForeground(Color.WHITE);
-		add(tabbedPaneXe);
 
 		pnlTopDong = new JPanel();
 		pnlTopDong.setBackground(Color.WHITE);
@@ -97,53 +149,29 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 		pnlTopHang.setBackground(Color.WHITE);
 		tabbedPaneXe.addTab("Hãng xe", null, pnlTopHang, null);
 
-		tabbedPaneDoanhThu = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPaneDoanhThu.setBounds(48, 63, 893, 665);
-		tabbedPaneDoanhThu.setFont(new Font("Tahoma", Font.BOLD, 20));
-		tabbedPaneDoanhThu.setBackground(new Color(58, 181, 74));
-		tabbedPaneDoanhThu.setForeground(Color.WHITE);
-		add(tabbedPaneDoanhThu);
+		pnlSoLieu = new JPanel();
+		pnlSoLieu.setBackground(Color.WHITE);
+		pnlContain.add(pnlSoLieu, "name_29164502988200");
+		pnlSoLieu.setLayout(null);
 
-		pnlDoanhThuThang = new JPanel();
-		tabbedPaneDoanhThu.addTab("Doanh thu từng tháng", null, pnlDoanhThuThang, null);
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 1700, 677);
+		pnlSoLieu.add(scrollPane);
 
-		pnlDoanhThuQuy = new JPanel();
-		tabbedPaneDoanhThu.addTab("Doanh thu từng quý", null, pnlDoanhThuQuy, null);
+		txtSoLieu = new JTextArea();
+		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane.setViewportView(txtSoLieu);
 
-		dangKiSuKien();
-
-		khoiTao();
-
-		pnlTopXe = new JPanel();
-		pnlTopXe.setBackground(Color.WHITE);
-		tabbedPaneDoanhThu.addTab("Xe bán chạy trong năm", null, pnlTopXe, null);
 		thongKeDoanhThuNam(pnlDoanhThuThang);
 		thongKeDoanhThuQuy(pnlDoanhThuQuy);
 		thongKeTopXe(pnlTopXe);
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
 
-		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (evt.getPropertyName().equals("date")) {
-					thongKeDoanhThuNam(pnlDoanhThuThang);
-					thongKeDoanhThuQuy(pnlDoanhThuQuy);
-					thongKeTopXe(pnlTopXe);
-					thongKeTopDongXe(pnlTopDong);
-					thongKeTopHangXe(pnlTopHang);
-				}
-
-			}
-		});
-	}
-
-	public void dangKiSuKien() {
 	}
 
 	public void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		LocalDate date = LocalDate.now();
 		nam = date.getYear();
 	}
@@ -315,32 +343,15 @@ public class GD_ThongKeNam extends JPanel implements MouseListener {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-//		Object o = e.getSource();
+	public void actionPerformed(ActionEvent e) {
+		if (cboThongKe.getSelectedIndex() == 0) {
+			pnlBieuDo.setVisible(true);
+			pnlSoLieu.setVisible(false);
+		} else {
 
+			pnlBieuDo.setVisible(false);
+			pnlSoLieu.setVisible(true);
+		}
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-//		Object o = e.getSource();
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-//		Object o = e.getSource();
-
-	}
 }

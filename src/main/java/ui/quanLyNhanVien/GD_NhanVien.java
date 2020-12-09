@@ -100,7 +100,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		btnXemChiTiet = new JButton("Xem chi tiết");
 		btnXemChiTiet.setToolTipText("Xem chi tiết nhân viên");
 		btnXemChiTiet
-				.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -141,7 +141,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		btnDau = new JButton("");
 		btnDau.setToolTipText("Đến trang đầu");
-		btnDau.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -150,7 +150,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		btnTruoc = new JButton("");
 		btnTruoc.setToolTipText("Đến trang trước");
-		btnTruoc.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -159,7 +159,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		btnSau = new JButton("");
 		btnSau.setToolTipText("Đến trang sau");
-		btnSau.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -168,7 +168,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		btnCuoi = new JButton("");
 		btnCuoi.setToolTipText("Đến trang cuối");
-		btnCuoi.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -185,7 +185,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		btnThem = new JButton("Thêm");
 		btnThem.setToolTipText("Thêm nhân viên");
-		btnThem.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+		btnThem.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -199,7 +199,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);

@@ -71,7 +71,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 	 */
 	public GD_DanhMucBaoHanh() {
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_DanhMucBaoHanh.class.getResource("/img/baseline_receipt_long_white_36dp.png")));
+				.getImage(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Danh mục bảo hành");
 		setSize(1196, 661);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -129,7 +129,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 
 		btnThoat = new JButton("Thoát");
 		btnThoat.setBackground(Color.RED);
-		btnThoat.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnThoat.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThoat.setBounds(23, 566, 136, 30);

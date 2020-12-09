@@ -26,10 +26,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import constant.HuongDanSuDungConstant;
-import testJtree.JTreeUtil;
-import testJtree.TradingProjectDataService;
-import testJtree.TradingProjectTreeRenderer;
-import testJtree.TreeFilterDecorator;
+import other.TreeUtil;
+import other.TradingProjectDataService;
+import other.TradingProjectTreeRenderer;
+import other.TreeFilterDecorator;
 
 public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseListener {
 
@@ -95,12 +95,12 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 		txtTimKiem.setColumns(10);
 
 		btnDong = new JButton("");
-		btnDong.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/minus_30px.png")));
+		btnDong.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/icon/minus_30px.png")));
 		btnDong.setBounds(1626, 13, 40, 30);
 		pnlTimKiem.add(btnDong);
 
 		btnHome = new JButton("");
-		btnHome.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/home_page_30px.png")));
+		btnHome.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/icon/home_page_30px.png")));
 		btnHome.setBounds(1730, 13, 40, 30);
 		pnlTimKiem.add(btnHome);
 
@@ -115,11 +115,11 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		TreeNode projectHierarchyTreeNode = TradingProjectDataService.instance.getProjectHierarchy();
 		tree = new JTree(projectHierarchyTreeNode);
-		JTreeUtil.setTreeExpandedState(tree, true);
+		TreeUtil.setTreeExpandedState(tree, true);
 		TreeFilterDecorator filterDecorator = TreeFilterDecorator.decorate(tree, createUserObjectMatcher(), txtTimKiem);
 
 		btnMo = new JButton("");
-		btnMo.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/img/plus_30px.png")));
+		btnMo.setIcon(new ImageIcon(GD_HuongDanSuDung.class.getResource("/icon/plus_30px.png")));
 		btnMo.setBounds(1678, 13, 40, 30);
 		pnlTimKiem.add(btnMo);
 		tree.setCellRenderer(new TradingProjectTreeRenderer(() -> filterDecorator.getFilterField().getText()));
@@ -146,7 +146,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 		scrollPane.setViewportView(txtText);
 
 		dangKySuKien();
-		JTreeUtil.setTreeExpandedState(tree, false);
+		TreeUtil.setTreeExpandedState(tree, false);
 		
 		
 		UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -168,6 +168,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 	 */
 	private void dangKySuKien() {
 		btnHome.addActionListener(this);
+		
 		btnDong.addActionListener(this);
 		btnMo.addActionListener(this);
 		tree.addMouseListener(this);
@@ -182,10 +183,10 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			txtTimKiem.setText("");
 		}
 		if (o.equals(btnDong)) {
-			JTreeUtil.setTreeExpandedState(tree, false);
+			TreeUtil.setTreeExpandedState(tree, false);
 		}
 		if (o.equals(btnMo)) {
-			JTreeUtil.setTreeExpandedState(tree, true);
+			TreeUtil.setTreeExpandedState(tree, true);
 		}
 	}
 

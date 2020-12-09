@@ -99,7 +99,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(scrollPaneHoaDon);
 
 		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_error_outline_white_18dp.png")));
+		btnXemChiTiet.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_error_outline_white_18dp.png")));
 		btnXemChiTiet.setBackground(Color.GRAY);
 		btnXemChiTiet.setForeground(Color.WHITE);
 		btnXemChiTiet.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -140,7 +140,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(separator);
 
 		btnDau = new JButton("");
-		btnDau.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_fast_rewind_white_24dp.png")));
+		btnDau.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_fast_rewind_white_24dp.png")));
 		btnDau.setForeground(Color.WHITE);
 		btnDau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDau.setBackground(Color.GRAY);
@@ -148,7 +148,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(btnDau);
 
 		btnTruoc = new JButton("");
-		btnTruoc.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_skip_previous_white_24dp.png")));
+		btnTruoc.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_skip_previous_white_24dp.png")));
 		btnTruoc.setForeground(Color.WHITE);
 		btnTruoc.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnTruoc.setBackground(Color.GRAY);
@@ -156,7 +156,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(btnTruoc);
 
 		btnSau = new JButton("");
-		btnSau.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_skip_next_white_24dp.png")));
+		btnSau.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_skip_next_white_24dp.png")));
 		btnSau.setForeground(Color.WHITE);
 		btnSau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSau.setBackground(Color.GRAY);
@@ -164,7 +164,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -181,7 +181,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 		btnLapHoaDon = new JButton("Lập hóa đơn");
 		btnLapHoaDon
-				.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnLapHoaDon.setForeground(Color.WHITE);
 		btnLapHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLapHoaDon.setBackground(new Color(58, 181, 74));
@@ -241,14 +241,14 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 		
 		 btnBoloc = new JButton("Xóa tìm kiếm");
-		 btnBoloc.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		 btnBoloc.setIcon(new ImageIcon(GD_HoaDon.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnBoloc.setToolTipText("Xóa tìm kiếm\r\n");
 		btnBoloc.setForeground(Color.WHITE);
 		btnBoloc.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -378,6 +378,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 	private void themHoaDonsVaoBang() {
 		if (hoaDons != null) {
+			System.out.println("==== Hoa Don ====");
+			System.out.println("Hoa don: " + hoaDons.size());
 			for (HoaDon hoaDon : hoaDons) {
 				themHoaDonVaoBang(hoaDon);
 			}

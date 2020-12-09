@@ -14,37 +14,36 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 
-public class GD_ThongKe extends JPanel implements MouseListener {
+public class GD_ThongKeQL extends JPanel implements MouseListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-//	private JPanel pnlTKThang;
-//	private Vector colHeaderDoanhThu;
-//	private DefaultTableModel modelDoanhThu;
 	private JLabel lblChiTietDTNgay;
 	private JLabel lblChiTietDTThang;
 	private JLabel lblChiTietDTNam;
 	private JPanel pnlXemChiTietDTNgay;
 	private JPanel pnlXemChiTietDTNam;
 	private JPanel pnlXemChiTietDTThang;
-//	private DefaultTableModel modelHDNgay;
 	private JPanel pnlTK;
 
 	private LocalDate localDate;
-	private ThongKeDao thongKeDao;
+	private ThongKeQuanLiDao thongKeDao;
 	private JLabel lblThongKeNgay;
 	private JLabel lblThongKeNam;
 	private JLabel lblThongKeThang;
+	private JLabel lblXeBanNam;
+	private JLabel lblXeBanNgay;
+	private JLabel lblXeBanThang;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKe() {
+	public GD_ThongKeQL() {
 
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
@@ -65,31 +64,31 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		JPanel pnlThongKeThang = new JPanel();
 		pnlThongKeThang.setBackground(new Color(0, 150, 199));
-		pnlThongKeThang.setBounds(649, 100, 500, 140);
+		pnlThongKeThang.setBounds(649, 74, 500, 166);
 		add(pnlThongKeThang);
 		pnlThongKeThang.setLayout(null);
 
 		JLabel lblTngThuTrong = new JLabel("Tổng thu trong tháng");
 		lblTngThuTrong.setForeground(Color.WHITE);
 		lblTngThuTrong.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong.setBounds(12, 49, 317, 50);
+		lblTngThuTrong.setBounds(12, 11, 317, 30);
 		pnlThongKeThang.add(lblTngThuTrong);
 
 		lblThongKeThang = new JLabel();
 		lblThongKeThang.setForeground(Color.WHITE);
 		lblThongKeThang.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeThang.setBounds(12, 0, 340, 69);
+		lblThongKeThang.setBounds(12, 30, 340, 69);
 		pnlThongKeThang.add(lblThongKeThang);
 
 		pnlXemChiTietDTThang = new JPanel();
 		pnlXemChiTietDTThang.setBackground(new Color(0, 119, 182));
-		pnlXemChiTietDTThang.setBounds(0, 105, 500, 35);
+		pnlXemChiTietDTThang.setBounds(0, 131, 500, 35);
 		pnlThongKeThang.add(pnlXemChiTietDTThang);
 		pnlXemChiTietDTThang.setLayout(null);
 
 		lblChiTietDTThang = new JLabel("Xem chi tiết ");
 		lblChiTietDTThang.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTThang.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
+		lblChiTietDTThang.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTThang.setBounds(0, 0, 500, 35);
 		pnlXemChiTietDTThang.add(lblChiTietDTThang);
 		lblChiTietDTThang.setHorizontalAlignment(SwingConstants.CENTER);
@@ -97,40 +96,52 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		lblChiTietDTThang.setFont(new Font("Tahoma", Font.ITALIC, 20));
 
 		JLabel lblThongKeNgay_1_1 = new JLabel("");
-		lblThongKeNgay_1_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/coins_100px.png")));
+		lblThongKeNgay_1_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/coins_100px.png")));
 		lblThongKeNgay_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblThongKeNgay_1_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeNgay_1_1.setBounds(283, 0, 150, 107);
+		lblThongKeNgay_1_1.setBounds(325, 11, 150, 107);
 		pnlThongKeThang.add(lblThongKeNgay_1_1);
+
+		JLabel lblTngThuTrong_3_1_1 = new JLabel("Số xe máy bán:");
+		lblTngThuTrong_3_1_1.setForeground(Color.WHITE);
+		lblTngThuTrong_3_1_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_3_1_1.setBounds(12, 88, 160, 30);
+		pnlThongKeThang.add(lblTngThuTrong_3_1_1);
+
+		lblXeBanThang = new JLabel("50 xe");
+		lblXeBanThang.setForeground(Color.WHITE);
+		lblXeBanThang.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblXeBanThang.setBounds(184, 88, 160, 30);
+		pnlThongKeThang.add(lblXeBanThang);
 
 		JPanel pnlThongKeNgay = new JPanel();
 		pnlThongKeNgay.setLayout(null);
 		pnlThongKeNgay.setBackground(new Color(58, 181, 74));
-		pnlThongKeNgay.setBounds(33, 100, 500, 140);
+		pnlThongKeNgay.setBounds(33, 74, 500, 166);
 		add(pnlThongKeNgay);
 
 		JLabel lblTngThuTrong_3 = new JLabel("Tổng thu trong ngày");
 		lblTngThuTrong_3.setForeground(Color.WHITE);
 		lblTngThuTrong_3.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_3.setBounds(12, 49, 317, 50);
+		lblTngThuTrong_3.setBounds(12, 11, 317, 30);
 		pnlThongKeNgay.add(lblTngThuTrong_3);
 
 		lblThongKeNgay = new JLabel();
 		lblThongKeNgay.setForeground(Color.WHITE);
 		lblThongKeNgay.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeNgay.setBounds(12, 0, 317, 69);
+		lblThongKeNgay.setBounds(12, 30, 317, 69);
 		pnlThongKeNgay.add(lblThongKeNgay);
 
 		pnlXemChiTietDTNgay = new JPanel();
 		pnlXemChiTietDTNgay.setLayout(null);
 		pnlXemChiTietDTNgay.setBackground(new Color(9, 161, 41));
-		pnlXemChiTietDTNgay.setBounds(0, 105, 500, 35);
+		pnlXemChiTietDTNgay.setBounds(0, 131, 500, 35);
 		pnlThongKeNgay.add(pnlXemChiTietDTNgay);
 
 		lblChiTietDTNgay = new JLabel("Xem chi tiết ");
 		lblChiTietDTNgay.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTNgay.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
+		lblChiTietDTNgay.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTNgay.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChiTietDTNgay.setForeground(Color.WHITE);
 		lblChiTietDTNgay.setFont(new Font("Tahoma", Font.ITALIC, 20));
@@ -139,39 +150,51 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 
 		JLabel lblThongKeNgay_1 = new JLabel("");
 		lblThongKeNgay_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblThongKeNgay_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/expensive_price_100px.png")));
+		lblThongKeNgay_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/expensive_price_100px.png")));
 		lblThongKeNgay_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeNgay_1.setBounds(297, 0, 150, 105);
+		lblThongKeNgay_1.setBounds(325, 11, 150, 105);
 		pnlThongKeNgay.add(lblThongKeNgay_1);
+
+		JLabel lblTngThuTrong_3_1 = new JLabel("Số xe máy bán:");
+		lblTngThuTrong_3_1.setForeground(Color.WHITE);
+		lblTngThuTrong_3_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_3_1.setBounds(12, 88, 160, 30);
+		pnlThongKeNgay.add(lblTngThuTrong_3_1);
+
+		lblXeBanNgay = new JLabel("50 xe");
+		lblXeBanNgay.setForeground(Color.WHITE);
+		lblXeBanNgay.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblXeBanNgay.setBounds(184, 88, 160, 30);
+		pnlThongKeNgay.add(lblXeBanNgay);
 
 		JPanel pnlThongKeNam = new JPanel();
 		pnlThongKeNam.setLayout(null);
 		pnlThongKeNam.setBackground(new Color(237, 197, 49));
-		pnlThongKeNam.setBounds(1257, 100, 500, 140);
+		pnlThongKeNam.setBounds(1257, 74, 500, 166);
 		add(pnlThongKeNam);
 
 		JLabel lblTngThuTrong_1 = new JLabel("Tổng thu trong năm");
 		lblTngThuTrong_1.setForeground(Color.WHITE);
 		lblTngThuTrong_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_1.setBounds(12, 49, 317, 50);
+		lblTngThuTrong_1.setBounds(12, 11, 317, 30);
 		pnlThongKeNam.add(lblTngThuTrong_1);
 
 		lblThongKeNam = new JLabel();
 		lblThongKeNam.setForeground(Color.WHITE);
 		lblThongKeNam.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeNam.setBounds(12, 0, 348, 69);
+		lblThongKeNam.setBounds(12, 30, 348, 69);
 		pnlThongKeNam.add(lblThongKeNam);
 
 		pnlXemChiTietDTNam = new JPanel();
 		pnlXemChiTietDTNam.setLayout(null);
 		pnlXemChiTietDTNam.setBackground(new Color(201, 162, 39));
-		pnlXemChiTietDTNam.setBounds(0, 105, 500, 35);
+		pnlXemChiTietDTNam.setBounds(0, 131, 500, 35);
 		pnlThongKeNam.add(pnlXemChiTietDTNam);
 
 		lblChiTietDTNam = new JLabel("Xem chi tiết ");
 		lblChiTietDTNam.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblChiTietDTNam.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/next_page_26px.png")));
+		lblChiTietDTNam.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/next_page_26px.png")));
 		lblChiTietDTNam.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChiTietDTNam.setForeground(Color.WHITE);
 		lblChiTietDTNam.setFont(new Font("Tahoma", Font.ITALIC, 20));
@@ -179,20 +202,31 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		pnlXemChiTietDTNam.add(lblChiTietDTNam);
 
 		JLabel lblThongKeNgay_1_1_1 = new JLabel("");
-		lblThongKeNgay_1_1_1.setIcon(new ImageIcon(GD_ThongKe.class.getResource("/img/sales_performance_100px.png")));
+		lblThongKeNgay_1_1_1.setIcon(new ImageIcon(GD_ThongKeQL.class.getResource("/icon/sales_performance_100px.png")));
 		lblThongKeNgay_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblThongKeNgay_1_1_1.setForeground(Color.WHITE);
 		lblThongKeNgay_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblThongKeNgay_1_1_1.setBounds(283, 0, 150, 107);
+		lblThongKeNgay_1_1_1.setBounds(325, 11, 150, 107);
 		pnlThongKeNam.add(lblThongKeNgay_1_1_1);
-//		DateFormat df = new SimpleDateFormat("MM-yyyy");
+
+		JLabel lblTngThuTrong_3_1_2 = new JLabel("Số xe máy bán:");
+		lblTngThuTrong_3_1_2.setForeground(Color.WHITE);
+		lblTngThuTrong_3_1_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_3_1_2.setBounds(12, 88, 160, 30);
+		pnlThongKeNam.add(lblTngThuTrong_3_1_2);
+
+		lblXeBanNam = new JLabel(" 50 xe");
+		lblXeBanNam.setForeground(Color.WHITE);
+		lblXeBanNam.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblXeBanNam.setBounds(184, 88, 160, 30);
+		pnlThongKeNam.add(lblXeBanNam);
 
 		pnlTK = new JPanel();
 		pnlTK.setBounds(33, 244, 1724, 766);
 		add(pnlTK);
 		pnlTK.setLayout(new BoxLayout(pnlTK, BoxLayout.X_AXIS));
-		pnlTK.add(new GD_ThongKeNgay());
-		
+		pnlTK.add(new GD_ThongKeNgayQL());
+
 		khoiTao();
 		dangKiSuKien();
 
@@ -210,21 +244,21 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 		if (o.equals(lblChiTietDTNgay)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeNgay());
+			pnlTK.add(new GD_ThongKeNgayQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}
 		if (o.equals(lblChiTietDTThang)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeThang());
+			pnlTK.add(new GD_ThongKeThangQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}
 		if (o.equals(lblChiTietDTNam)) {
 			pnlTK.removeAll();
 			pnlTK.setLayout(new BorderLayout());
-			pnlTK.add(new GD_ThongKeNam());
+			pnlTK.add(new GD_ThongKeNamQL());
 			pnlTK.validate();
 			pnlTK.repaint();
 		}
@@ -234,7 +268,7 @@ public class GD_ThongKe extends JPanel implements MouseListener {
 	private void khoiTao() {
 		localDate = LocalDate.now();
 
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
 				localDate.getYear());
 		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());

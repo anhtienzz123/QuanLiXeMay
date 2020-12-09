@@ -1,25 +1,26 @@
 package ui.quanLyThongKe;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.EventObject;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JButton;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -35,88 +36,76 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import com.toedter.calendar.JDateChooser;
 
-import dao.ThongKeDao;
+import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 import other.OutputNhanVien_HoaDonLap;
 
-public class GD_ThongKeNgay extends JPanel implements ActionListener {
+public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel pnlThongKe;
 //	private Vector colHeaderDoanhThu;
 	private DefaultTableModel modelDoanhThu;
 	private JTable tblDoanhThu;
-	private JButton btnXemChiTiet;
 
 	private LocalDate localDate;
-	private ThongKeDao thongKeDao;
+
+	private ThongKeQuanLiDao thongKeDao;
+	private JComboBox<String> cboThongKe;
+	private JPanel pnlBieuDo;
+	private JPanel pnlSoLieu;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeNgay() {
+	public GD_ThongKeNgayQL() {
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
 
-		JScrollPane scrollPaneDoanhThu = new JScrollPane();
-		scrollPaneDoanhThu.setBounds(854, 104, 870, 571);
-		add(scrollPaneDoanhThu);
-
-		String[] colHeaderDoanhThu = { "STT", "Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
-		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
-		tblDoanhThu = new JTable(modelDoanhThu) {
-			private static final long serialVersionUID = 1L;
-
-//			public void tableChanged(TableModelEvent e) {
-//				super.tableChanged(e);
-//				repaint();
+//		String[] colHeaderDoanhThu = { "STT", "Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
+//		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
+//		tblDoanhThu = new JTable(modelDoanhThu) {
+//			private static final long serialVersionUID = 1L;
+//			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
+//				return false;
 //			}
-			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-				return false;
-			}
-		};
-		tblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblDoanhThu.setRowHeight(35);
-		scrollPaneDoanhThu.setViewportView(tblDoanhThu);
-
-		/**
-		 * Đổi màu header cho table
-		 */
-		JTableHeader tableHeader2 = tblDoanhThu.getTableHeader();
-		tableHeader2.setBackground(new Color(58, 181, 74));
-		tableHeader2.setForeground(Color.white);
-		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
+//		};
+//		tblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		tblDoanhThu.setRowHeight(35);
+//		scrollPaneDoanhThu.setViewportView(tblDoanhThu);
+//
+//		/**
+//		 * Đổi màu header cho table
+//		 */
+//		JTableHeader tableHeader2 = tblDoanhThu.getTableHeader();
+//		tableHeader2.setBackground(new Color(58, 181, 74));
+//		tableHeader2.setForeground(Color.white);
+//		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//
 //		Auto setSize
 //		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(50);
-		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(140);
-		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(300);
-		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(180);
-		tblDoanhThu.getColumnModel().getColumn(4).setPreferredWidth(200);
-
-		tblDoanhThu.setShowGrid(false);
-
-		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(50);
+//		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(140);
+//		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(300);
+//		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(180);
+//		tblDoanhThu.getColumnModel().getColumn(4).setPreferredWidth(200);
+//
+//		tblDoanhThu.setShowGrid(false);
+//
+//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 //		Center value
-		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		tblDoanhThu.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-		tblDoanhThu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-		/**
-		 * Đổi màu các dòng chẵn
-		 */
-//		TableColorCellRender render = new TableColorCellRender();
-//		tblDoanhThu.setDefaultRenderer(Object.class, render);
+//		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+//		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+//		tblDoanhThu.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+//		tblDoanhThu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
-		JLabel lblTngThuTrong_2 = new JLabel("Danh sách hóa đơn đã lập trong ngày");
+		JLabel lblTngThuTrong_2 = new JLabel("Chọn ngày:");
 		lblTngThuTrong_2.setForeground(new Color(58, 181, 74));
 		lblTngThuTrong_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTngThuTrong_2.setBounds(854, 41, 392, 50);
+		lblTngThuTrong_2.setBounds(0, 30, 121, 30);
 		add(lblTngThuTrong_2);
 
 		JDateChooser txtNgay = new JDateChooser();
@@ -124,25 +113,50 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 		txtNgay.setForeground(new Color(58, 181, 74));
 		txtNgay.setDateFormatString("dd-MM-yyyy");
 		txtNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgay.setBounds(1243, 51, 172, 30);
+		txtNgay.setBounds(127, 30, 161, 30);
 		txtNgay.setDate(Calendar.getInstance().getTime());
 		add(txtNgay);
 		// DateFormat df = new SimpleDateFormat("MM-yyyy");
 
-		khoiTao();
-		pnlThongKe = new JPanel();
-		pnlThongKe.setBounds(0, 51, 808, 684);
-		add(pnlThongKe);
-		setDataToChart1(pnlThongKe);
+		JPanel pnlContain = new JPanel();
+		pnlContain.setBounds(0, 73, 1724, 680);
+		add(pnlContain);
+		pnlContain.setLayout(new CardLayout(0, 0));
 
-		btnXemChiTiet = new JButton("Xem chi tiết");
-		btnXemChiTiet.setToolTipText("Xem chi tiết hóa đơn");
-		btnXemChiTiet.setBackground(Color.GRAY);
-		btnXemChiTiet.setForeground(Color.WHITE);
-		btnXemChiTiet.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnXemChiTiet.setBounds(1558, 705, 166, 30);
-		add(btnXemChiTiet);
-		btnXemChiTiet.addActionListener(this);
+		 pnlBieuDo = new JPanel();
+		pnlContain.add(pnlBieuDo, "name_23747476560100");
+
+		 pnlSoLieu = new JPanel();
+		pnlSoLieu.setLayout(null);
+		pnlSoLieu.setBackground(Color.WHITE);
+		pnlContain.add(pnlSoLieu, "name_24057104890500");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 13, 1690, 646);
+		pnlSoLieu.add(scrollPane);
+		
+		JTextArea txtSoLieu = new JTextArea();
+		txtSoLieu.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane.setViewportView(txtSoLieu);
+
+		khoiTao();
+		setDataToChart1(pnlBieuDo);
+
+		cboThongKe = new JComboBox<String>();
+		cboThongKe.setBackground(Color.WHITE);
+		cboThongKe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		cboThongKe.setModel(new DefaultComboBoxModel<String>(new String[] { "Biểu đồ", "Số liệu" }));
+		cboThongKe.setBounds(1616, 30, 108, 30);
+		add(cboThongKe);
+
+		JLabel lblTngThuTrong_2_2 = new JLabel("Dạng thống kê:");
+		lblTngThuTrong_2_2.setForeground(new Color(58, 181, 74));
+		lblTngThuTrong_2_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTngThuTrong_2_2.setBounds(1428, 30, 161, 30);
+		add(lblTngThuTrong_2_2);
+
+		cboThongKe.addActionListener(this);
 
 	}
 
@@ -153,7 +167,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 	 */
 
 	private void khoiTao() {
-		thongKeDao = ThongKeDao.getInstance();
+		thongKeDao = ThongKeQuanLiDao.getInstance();
 		localDate = LocalDate.now();
 
 		hienThiHoaDonLapTrongNgay();
@@ -186,7 +200,7 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 			dataset.addValue(value, "", key);
 		});
 
-		JFreeChart barChart = ChartFactory.createBarChart("Thống kê doanh thu của tháng hiện tại".toUpperCase(), "Ngày",
+		JFreeChart barChart = ChartFactory.createBarChart("Thống kê các xe bán trong ngày".toUpperCase(), "Ngày",
 				"Doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
 
 //		Điền giá trị lên trên cột
@@ -208,6 +222,13 @@ public class GD_ThongKeNgay extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (cboThongKe.getSelectedIndex() == 0) {
+			pnlBieuDo.setVisible(true);
+			pnlSoLieu.setVisible(false);
+		} else {
 
+			pnlBieuDo.setVisible(false);
+			pnlSoLieu.setVisible(true);
+		}
 	}
 }

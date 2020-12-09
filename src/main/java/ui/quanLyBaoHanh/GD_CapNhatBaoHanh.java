@@ -133,7 +133,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 
 		btnLuu = new JButton("Lưu");
 		btnLuu.setIcon(
-				new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnLuu.setForeground(Color.WHITE);
 		btnLuu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLuu.setBackground(new Color(58, 181, 74));
@@ -185,14 +185,14 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnQuayLai = new JButton("Quay lại");
-		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnQuayLai.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnQuayLai.setForeground(Color.WHITE);
 		btnQuayLai.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnQuayLai.setBackground(Color.RED);
@@ -335,7 +335,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		add(lblThngTinBo);
 
 		btnThemMucBH = new JButton("Thêm");
-		btnThemMucBH.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/add_property_30px.png")));
+		btnThemMucBH.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/add_property_30px.png")));
 		btnThemMucBH.setForeground(Color.WHITE);
 		btnThemMucBH.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThemMucBH.setBackground(new Color(58, 181, 74));
@@ -343,7 +343,7 @@ public class GD_CapNhatBaoHanh extends JPanel implements ActionListener, MouseLi
 		add(btnThemMucBH);
 
 		btnXoaMucBH = new JButton("Xóa");
-		btnXoaMucBH.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/img/delete_file_30px.png")));
+		btnXoaMucBH.setIcon(new ImageIcon(GD_CapNhatBaoHanh.class.getResource("/icon/delete_file_30px.png")));
 		btnXoaMucBH.setForeground(Color.WHITE);
 		btnXoaMucBH.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaMucBH.setBackground(Color.RED);

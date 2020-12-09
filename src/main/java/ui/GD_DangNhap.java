@@ -117,7 +117,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		contentPane.add(txtMatKhau);
 
 		btnDangNhap = new JButton("Đăng nhập");
-		btnDangNhap.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_login_white_24dp.png")));
+		btnDangNhap.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_login_white_24dp.png")));
 		btnDangNhap.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnDangNhap.setBackground(new Color(0, 128, 0));
 		btnDangNhap.setForeground(new Color(255, 255, 255));
@@ -125,7 +125,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		contentPane.add(btnDangNhap);
 
 		btnHuy = new JButton("Thoát");
-		btnHuy.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnHuy.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnHuy.addActionListener(this);
 		btnHuy.setForeground(new Color(255, 255, 255));
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -156,13 +156,13 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 
 		lblHienMK = new JLabel("");
 		lblHienMK.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHienMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_visibility_white_36dp.png")));
+		lblHienMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_visibility_white_36dp.png")));
 		lblHienMK.setBounds(0, 0, 40, 39);
 		pnlHienMK.add(lblHienMK);
 
 		lblAnMK = new JLabel("");
 		lblAnMK.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/img/baseline_visibility_off_white_36dp.png")));
+		lblAnMK.setIcon(new ImageIcon(GD_DangNhap.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
 		lblAnMK.setBounds(0, 0, 40, 39);
 		pnlAnMK.add(lblAnMK);
 

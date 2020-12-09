@@ -11,6 +11,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -51,7 +53,7 @@ import other.RandomThongTin;
 import other.XuLyChung;
 import ui.App;
 
-public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener {
+public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener, MouseListener {
 	/**
 	 * 
 	 */
@@ -150,7 +152,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 		btnThem = new JButton("Thêm");
 		btnThem.setIcon(
-				new ImageIcon(GD_ThemXeMay.class.getResource("/img/baseline_create_new_folder_white_18dp.png")));
+				new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -164,14 +166,14 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 		JLabel lblLogo = new JLabel("New label");
 		lblLogo.setIcon(
-				new ImageIcon(new ImageIcon(App.class.getResource("/img/motorcycle-logo-on-a-green-background2.jpg"))
+				new ImageIcon(new ImageIcon(App.class.getResource("/icon/motorcycle-logo-on-a-green-background2.jpg"))
 						.getImage().getScaledInstance(pnlLogo.getPreferredSize().width,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
 
 		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/baseline_clear_all_white_18dp.png")));
+		btnXoaRong.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaRong.setBackground(Color.RED);
@@ -228,23 +230,14 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		cboSoPhanKhoi.setBounds(209, 293, 132, 30);
 		add(cboSoPhanKhoi);
 
-		JLabel lblSoLuong = new JLabel("Số lượng:");
-		lblSoLuong.setForeground(Color.BLACK);
-		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoLuong.setBounds(29, 353, 111, 30);
-		add(lblSoLuong);
-
 		txtSoLuong = new JTextField();
+		txtSoLuong.setHorizontalAlignment(SwingConstants.CENTER);
+		txtSoLuong.setText("1");
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(136, 353, 73, 30);
+		txtSoLuong.setBounds(535, 353, 73, 30);
+		txtSoLuong.setEditable(false);
 		add(txtSoLuong);
-
-		JLabel lblChiec = new JLabel("chiếc xe.");
-		lblChiec.setForeground(Color.BLACK);
-		lblChiec.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblChiec.setBounds(218, 353, 87, 30);
-		add(lblChiec);
 
 		JLabel lblMau = new JLabel("Màu xe:");
 		lblMau.setForeground(Color.BLACK);
@@ -268,19 +261,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");
 		lblGiaNhap.setForeground(Color.BLACK);
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblGiaNhap.setBounds(428, 353, 111, 30);
+		lblGiaNhap.setBounds(29, 353, 111, 30);
 		add(lblGiaNhap);
 
 		txtGiaNhap = new JTextField();
 		txtGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaNhap.setColumns(10);
-		txtGiaNhap.setBounds(541, 353, 199, 30);
+		txtGiaNhap.setBounds(142, 353, 199, 30);
 		add(txtGiaNhap);
 
 		JLabel lblVND = new JLabel("VNĐ.");
 		lblVND.setForeground(Color.BLACK);
 		lblVND.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVND.setBounds(752, 353, 87, 30);
+		lblVND.setBounds(353, 353, 87, 30);
 		add(lblVND);
 
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
@@ -366,7 +359,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel("img");
-		lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -380,7 +373,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		add(txtPath);
 
 		btnChonFile = new JButton("chọn ảnh");
-		btnChonFile.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/opened_folder_26px.png")));
+		btnChonFile.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/opened_folder_26px.png")));
 		btnChonFile.setForeground(Color.WHITE);
 		btnChonFile.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnChonFile.setBackground(Color.GRAY);
@@ -399,7 +392,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		add(lblThongTin);
 
 		btnImport = new JButton("Import file");
-		btnImport.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/microsoft_excel_32px.png")));
+		btnImport.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/microsoft_excel_32px.png")));
 		btnImport.setForeground(Color.WHITE);
 		btnImport.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnImport.setBackground(Color.GRAY);
@@ -437,6 +430,12 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		txtThongBao.setBounds(29, 769, 680, 107);
 		add(txtThongBao);
+		
+		JLabel lblSl = new JLabel("SL");
+		lblSl.setForeground(Color.BLACK);
+		lblSl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblSl.setBounds(452, 353, 55, 30);
+		add(lblSl);
 
 	}
 
@@ -464,6 +463,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoSuon.addFocusListener(this);
 		txtHeSoBan.addFocusListener(this);
 		txtBaoHanh.addFocusListener(this);
+		
+		txtSoLuong.addMouseListener(this);
 	}
 
 	@Override
@@ -506,9 +507,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				txtSoLuong.requestFocus();
+				txtGiaNhap.requestFocus();
 			}
 		}
+		if(o.equals(txtSoLuong)) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//				int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+//				if( soLuong > 1) {
+//					for(int i = 1; i <= soLuong; i++) {
+//						
+//					}
+//				}
+				txtGiaNhap.requestFocus();
+				txtSoLuong.setEditable(false);
+			}
+		}
+		
 		if (o.equals(txtGiaNhap)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 				txtSoKhung.requestFocus();
@@ -665,7 +679,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtBaoHanh.setText("36");
 		txtPath.setText("");
 		txtMoTa.setText("");
-		lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/img/pictures_folder_30px.png")));
+		lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 		lblAnh.setText("img");
 
 	}
@@ -797,5 +811,37 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	@Override
 	public void focusLost(FocusEvent e) {
 		capNhatThongBaoLoi();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		if(e.getClickCount() == 2) {
+			if(!txtSoLuong.isEditable())
+				txtSoLuong.setEditable(true);
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

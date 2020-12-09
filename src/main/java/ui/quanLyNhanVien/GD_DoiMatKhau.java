@@ -98,7 +98,7 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		contentPane.add(txtNhapLai);
 
 		btnDangNhap = new JButton("Lưu");
-		btnDangNhap.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_login_white_24dp.png")));
+		btnDangNhap.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_login_white_24dp.png")));
 		btnDangNhap.setFont(new Font("Tahoma", Font.BOLD, 18));
 		btnDangNhap.setBackground(new Color(0, 128, 0));
 		btnDangNhap.setForeground(new Color(255, 255, 255));
@@ -106,7 +106,7 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		contentPane.add(btnDangNhap);
 
 		btnHuy = new JButton("Hủy");
-		btnHuy.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_close_white_24dp.png")));
+		btnHuy.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnHuy.addActionListener(this);
 		btnHuy.setForeground(new Color(255, 255, 255));
 		btnHuy.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -137,13 +137,13 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 
 		lblHienMK2 = new JLabel("");
 		lblHienMK2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHienMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_visibility_white_36dp.png")));
+		lblHienMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_white_36dp.png")));
 		lblHienMK2.setBounds(0, 0, 40, 39);
 		pnlHienMK2.add(lblHienMK2);
 
 		lblAnMK2 = new JLabel("");
 		lblAnMK2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_visibility_off_white_36dp.png")));
+		lblAnMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
 		lblAnMK2.setBounds(0, 0, 40, 39);
 		pnlAnMK2.add(lblAnMK2);
 
@@ -170,7 +170,7 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		contentPane.add(pnlHienMK1);
 
 		lblHienMK1 = new JLabel("");
-		lblHienMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_visibility_white_36dp.png")));
+		lblHienMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_white_36dp.png")));
 		lblHienMK1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHienMK1.setBounds(0, 0, 40, 39);
 		pnlHienMK1.add(lblHienMK1);
@@ -182,7 +182,7 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		contentPane.add(pnlAnMK1);
 
 		lblAnMK1 = new JLabel("");
-		lblAnMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/img/baseline_visibility_off_white_36dp.png")));
+		lblAnMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
 		lblAnMK1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnMK1.setBounds(0, 0, 40, 39);
 		pnlAnMK1.add(lblAnMK1);

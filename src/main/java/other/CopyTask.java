@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.SwingWorker;
 
@@ -29,7 +28,6 @@ public class CopyTask extends SwingWorker<Void, Integer> {
 
 			int bytes = in.available();
 			int n = bytes / 100;
-			int i = 0;
 			byte[] b = new byte[n];
 
 			int len = in.read(b);
