@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -40,6 +41,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import dao.ThongKeQuanLiDao;
 import other.DinhDangTien;
 
+
 public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	/**
@@ -65,8 +67,10 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	private JPanel pnlContain;
 	private JPanel pnlSoLieu;
 	private JPanel pnlBieuDo;
-	private JScrollPane scrollPane;
-	private JTextArea txtSoLieu;
+	private JScrollPane scrollPane1;
+	private JTextArea txtSoLieu1;
+	private JTextArea txtSoLieu2;
+	private JTextArea txtSoLieu3;
 
 	/**
 	 * Create the panel.
@@ -155,13 +159,32 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		pnlContain.add(pnlSoLieu, "name_29164502988200");
 		pnlSoLieu.setLayout(null);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 1700, 677);
-		pnlSoLieu.add(scrollPane);
+		scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(0, 13, 500, 655);
+		pnlSoLieu.add(scrollPane1);
 
-		txtSoLieu = new JTextArea();
-		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		scrollPane.setViewportView(txtSoLieu);
+		txtSoLieu1 = new JTextArea();
+		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane1.setViewportView(txtSoLieu1);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(619, 13, 500, 655);
+		pnlSoLieu.add(scrollPane2);
+		
+		txtSoLieu2 = new JTextArea();
+		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane2.setViewportView(txtSoLieu2);
+		
+		JScrollPane scrollPane3 = new JScrollPane();
+		scrollPane3.setBounds(1224, 13, 500, 655);
+		pnlSoLieu.add(scrollPane3);
+		
+		txtSoLieu3 = new JTextArea();
+		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane3.setViewportView(txtSoLieu3);
 
 		thongKeDoanhThuNam(pnlDoanhThuThang);
 		thongKeDoanhThuQuy(pnlDoanhThuQuy);
@@ -358,6 +381,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		
 		
 	}
+
 	
 	private void capNhapLaiDuLieu() {
 		capNhapSoLieu();
@@ -365,25 +389,29 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	
 	private void capNhapSoLieu() {
 		
-		txtSoLieu.append("===== Doanh thu từng tháng trong năm ====");
+	    // Cap nhat so lieu 1
+		txtSoLieu1.append("===== Doanh thu từng tháng trong năm ====");
 		Map<String, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
 		result.forEach( (key,value) -> {
-			 txtSoLieu.append("\n- Tháng " + key +" : " + DinhDangTien.format(value) );
+			 txtSoLieu1.append("\n- Tháng " + key +" : " + DinhDangTien.format(value) );
 		});
-		txtSoLieu.append("\n===== Doanh thu từng quý trong năm =====");
-		txtSoLieu.append("\nQúy 1: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(1, this.nam)));
-		txtSoLieu.append("\nQúy 2: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(2, this.nam)));
-		txtSoLieu.append("\nQúy 3: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(3, this.nam)));
-		txtSoLieu.append("\nQúy 4: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(4, this.nam)));
+		txtSoLieu1.append("\n===== Doanh thu từng quý trong năm =====");
+		txtSoLieu1.append("\nQúy 1: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(1, this.nam)));
+		txtSoLieu1.append("\nQúy 2: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(2, this.nam)));
+		txtSoLieu1.append("\nQúy 3: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(3, this.nam)));
+		txtSoLieu1.append("\nQúy 4: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(4, this.nam)));
 		
-		txtSoLieu.append("\n===== Xe bán chạy trong năm =====");
+		txtSoLieu1.append("\n===== Xe bán chạy trong năm =====");
 		Map<String, Long> topXesBanChay = thongKeDao.getTopXeBansTrongNam(TOP, nam);
 		
 		topXesBanChay.forEach( (key,value) -> {
-			 txtSoLieu.append("\n" + key + " : " +  value);
+			 txtSoLieu1.append("\n" + key + " : " +  value);
 		});
+		// Cap so lieu 2
+		
 		
 	}
 	
+
 
 }

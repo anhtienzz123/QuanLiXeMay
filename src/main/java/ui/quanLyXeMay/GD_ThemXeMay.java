@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,9 +38,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import constant.TenEntity;
+import customoutput.ThongTinChungXeMay;
 import dao.DongXeDao;
 import dao.HangXeDao;
 import dao.LoaiXeDao;
+import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
 import entity.DongXe;
@@ -53,6 +56,10 @@ import other.RandomMa;
 import other.RandomThongTin;
 import other.XuLyChung;
 import ui.App;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import javax.swing.JList;
 
 public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener, MouseListener {
 	/**
@@ -101,6 +108,20 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	private boolean isHeSoBan = false;
 	private boolean isBaoHanh = false;
 
+	private JPanel pnlTenXe;
+
+	private JPopupMenu popupTenXe;
+
+	private JScrollPane scrollPaneTenXe;
+
+	private JList<String> listTenXe;
+
+	private DefaultListModel<String> defaultListModelTenXe;
+	
+	private List<ThongTinChungXeMay> thongTinChungXeMays;
+
+	private ThongTinChungXeMayDao thongTinChungXeMayDao;
+
 	/**
 	 * Create the panel.
 	 */
@@ -139,6 +160,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtTenXe.setBounds(535, 113, 345, 30);
 		add(txtTenXe);
 		txtTenXe.setColumns(10);
+		
+		 
 
 		JLabel lblMa = new JLabel("Mã xe:");
 		lblMa.setForeground(Color.BLACK);
@@ -220,7 +243,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblSoPhanKhoi = new JLabel("Số phân khối:");
 		lblSoPhanKhoi.setForeground(Color.BLACK);
 		lblSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoPhanKhoi.setBounds(29, 293, 139, 30);
+		lblSoPhanKhoi.setBounds(428, 233, 139, 30);
 		add(lblSoPhanKhoi);
 
 		cboSoPhanKhoi = new JComboBox<String>();
@@ -228,7 +251,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 				new DefaultComboBoxModel<String>(new String[] { "50 cc", "110 cc", "125 cc", "150 cc", "175 cc" }));
 		cboSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboSoPhanKhoi.setBackground(Color.WHITE);
-		cboSoPhanKhoi.setBounds(209, 293, 132, 30);
+		cboSoPhanKhoi.setBounds(608, 233, 132, 30);
 		add(cboSoPhanKhoi);
 
 		txtSoLuong = new JTextField();
@@ -236,20 +259,20 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoLuong.setText("1");
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(542, 410, 73, 30);
+		txtSoLuong.setBounds(535, 350, 73, 30);
 		txtSoLuong.setEditable(false);
 		add(txtSoLuong);
 
 		JLabel lblMau = new JLabel("Màu xe:");
 		lblMau.setForeground(Color.BLACK);
 		lblMau.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMau.setBounds(428, 293, 111, 30);
+		lblMau.setBounds(29, 410, 111, 30);
 		add(lblMau);
 
 		cboMauXe = new JComboBox<String>();
 		cboMauXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboMauXe.setBackground(Color.WHITE);
-		cboMauXe.setBounds(535, 293, 205, 30);
+		cboMauXe.setBounds(136, 410, 205, 30);
 		cboMauXe.addItem("Đỏ");
 		cboMauXe.addItem("Đen");
 		cboMauXe.addItem("Xanh dương");
@@ -262,49 +285,49 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");
 		lblGiaNhap.setForeground(Color.BLACK);
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblGiaNhap.setBounds(29, 353, 111, 30);
+		lblGiaNhap.setBounds(29, 293, 111, 30);
 		add(lblGiaNhap);
 
 		txtGiaNhap = new JTextField();
 		txtGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaNhap.setColumns(10);
-		txtGiaNhap.setBounds(142, 353, 199, 30);
+		txtGiaNhap.setBounds(142, 293, 199, 30);
 		add(txtGiaNhap);
 
 		JLabel lblVND = new JLabel("VNĐ.");
 		lblVND.setForeground(Color.BLACK);
 		lblVND.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVND.setBounds(353, 353, 87, 30);
+		lblVND.setBounds(353, 293, 87, 30);
 		add(lblVND);
 
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
 		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan.setBounds(428, 353, 111, 30);
+		lblHeSoBan.setBounds(428, 293, 111, 30);
 		add(lblHeSoBan);
 
 		txtHeSoBan = new JTextField("2");
 		txtHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHeSoBan.setColumns(10);
-		txtHeSoBan.setBounds(536, 353, 47, 30);
+		txtHeSoBan.setBounds(535, 293, 47, 30);
 		add(txtHeSoBan);
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(29, 410, 111, 30);
+		lblBaoHanh.setBounds(29, 350, 111, 30);
 		add(lblBaoHanh);
 
 		txtBaoHanh = new JTextField("36");
 		txtBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtBaoHanh.setColumns(10);
-		txtBaoHanh.setBounds(142, 410, 55, 30);
+		txtBaoHanh.setBounds(142, 350, 55, 30);
 		add(txtBaoHanh);
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThang.setBounds(209, 410, 67, 30);
+		lblThang.setBounds(209, 350, 67, 30);
 		add(lblThang);
 
 		JLabel lblSoKhung = new JLabel("Số khung:");
@@ -366,7 +389,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnh.setBounds(0, 0, 812, 565);
 		pnlAnh.add(lblAnh);
-
+		
 		txtPath = new JTextField();
 		txtPath.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtPath.setColumns(10);
@@ -403,13 +426,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblXutX = new JLabel("Xuất xứ:");
 		lblXutX.setForeground(Color.BLACK);
 		lblXutX.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblXutX.setBounds(428, 233, 111, 30);
+		lblXutX.setBounds(428, 410, 111, 30);
 		add(lblXutX);
 
 		cboXuatXu = new JComboBox<String>();
 		cboXuatXu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboXuatXu.setBackground(Color.WHITE);
-		cboXuatXu.setBounds(535, 233, 205, 30);
+		cboXuatXu.setBounds(535, 410, 205, 30);
 		add(cboXuatXu);
 
 		dangKiSuKien();
@@ -435,15 +458,40 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblSl = new JLabel("Số lượng:");
 		lblSl.setForeground(Color.BLACK);
 		lblSl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSl.setBounds(435, 410, 111, 30);
+		lblSl.setBounds(428, 350, 111, 30);
 		add(lblSl);
 
 		JLabel lblHeSoBan_1 = new JLabel("%");
 		lblHeSoBan_1.setForeground(Color.BLACK);
 		lblHeSoBan_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan_1.setBounds(595, 353, 111, 30);
+		lblHeSoBan_1.setBounds(585, 293, 111, 30);
 		add(lblHeSoBan_1);
+		
+		
+//		Tìm kiếm xe theo tên
+		pnlTenXe = new JPanel();
+		pnlTenXe.setBounds(535, 143, 758, 320);
+		pnlTenXe.setLayout(null);
+		
+		popupTenXe = new JPopupMenu();
+		popupTenXe.setFocusable(false);
+		popupTenXe.add(pnlTenXe);
+		addPopup(txtTenXe, popupTenXe);
+		
+		scrollPaneTenXe = new JScrollPane();
+		scrollPaneTenXe.setBounds(0, 0, pnlTenXe.getWidth(), pnlTenXe.getHeight());
+		pnlTenXe.add(scrollPaneTenXe);
+		
+		listTenXe = new JList<String>();
+		listTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		defaultListModelTenXe = new DefaultListModel<String>();
+		
+		listTenXe.setModel(defaultListModelTenXe);
+		scrollPaneTenXe.setViewportView(listTenXe);
+		
 
+		thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
+		
 	}
 
 	private void dangKiSuKien() {
@@ -474,108 +522,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoLuong.addMouseListener(this);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-		if (o.equals(btnThem)) {
-			themXe();
-		}
-		if (o.equals(btnXoaRong)) {
-			xoaRong();
-		}
-		if (o.equals(btnChonFile)) {
-			chonAnh();
-		}
-		if (o.equals(btnImport)) {
-			importFileExcel();
-		}
-		if (o.equals(cboMauXe)) {
-			if (cboMauXe.getSelectedItem() == "Khác") {
-				try {
-					String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
-					Optional<String> optional = Optional.ofNullable(mau);
-					if (!optional.isPresent()) {
-
-						cboMauXe.removeItem("Khác");
-						cboMauXe.addItem(mau);
-						cboMauXe.addItem("Khác");
-						cboMauXe.setSelectedItem(mau);
-					} else {
-						cboMauXe.setSelectedIndex(0);
-					}
-				} catch (Exception e2) {
-					cboMauXe.setSelectedIndex(0);
-				}
-
-			}
-		}
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		Object o = e.getSource();
-		if (o.equals(txtTenXe)) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				txtGiaNhap.requestFocus();
-			}
-		}
-		if (o.equals(txtSoLuong)) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//				int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
-//				if( soLuong > 1) {
-//					for(int i = 1; i <= soLuong; i++) {
-//						
-//					}
-//				}
-				txtGiaNhap.requestFocus();
-				txtSoLuong.setEditable(false);
-			}
-		}
-
-		if (o.equals(txtGiaNhap)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtHeSoBan.requestFocus();
-			}
-		}
-		if (o.equals(txtSoLuong)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoKhung.requestFocus();
-			}
-		}
-		if (o.equals(txtSoKhung)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoSuon.requestFocus();
-			}
-		}
-		if (o.equals(txtSoSuon)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtMoTa.requestFocus();
-			}
-		}
-		if (o.equals(txtHeSoBan)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtBaoHanh.requestFocus();
-			}
-		}
-		if (o.equals(txtBaoHanh)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoKhung.requestFocus();
-			}
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	/**
 	 * Load dữ liệu từ database vào combobox
@@ -794,6 +741,121 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 			txtThongBao.setText(txtThongBao.getText() + BatRegex.BAO_HANH + "\n");
 
 	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnThem)) {
+			themXe();
+		}
+		if (o.equals(btnXoaRong)) {
+			xoaRong();
+		}
+		if (o.equals(btnChonFile)) {
+			chonAnh();
+		}
+		if (o.equals(btnImport)) {
+			importFileExcel();
+		}
+		if (o.equals(cboMauXe)) {
+			if (cboMauXe.getSelectedItem() == "Khác") {
+				try {
+					String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
+					Optional<String> optional = Optional.ofNullable(mau);
+					if (!optional.isPresent()) {
+
+						cboMauXe.removeItem("Khác");
+						cboMauXe.addItem(mau);
+						cboMauXe.addItem("Khác");
+						cboMauXe.setSelectedItem(mau);
+					} else {
+						cboMauXe.setSelectedIndex(0);
+					}
+				} catch (Exception e2) {
+					cboMauXe.setSelectedIndex(0);
+				}
+
+			}
+		}
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Object o = e.getSource();
+		if (o.equals(txtTenXe)) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				txtGiaNhap.requestFocus();
+			}
+		}
+		if (o.equals(txtSoLuong)) {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//				int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
+//				if( soLuong > 1) {
+//					for(int i = 1; i <= soLuong; i++) {
+//						
+//					}
+//				}
+				txtGiaNhap.requestFocus();
+				txtSoLuong.setEditable(false);
+			}
+		}
+
+		if (o.equals(txtGiaNhap)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtHeSoBan.requestFocus();
+			}
+		}
+		if (o.equals(txtSoLuong)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtSoKhung.requestFocus();
+			}
+		}
+		if (o.equals(txtSoKhung)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtSoSuon.requestFocus();
+			}
+		}
+		if (o.equals(txtSoSuon)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtMoTa.requestFocus();
+			}
+		}
+		if (o.equals(txtHeSoBan)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtBaoHanh.requestFocus();
+			}
+		}
+		if (o.equals(txtBaoHanh)) {
+			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
+				txtSoKhung.requestFocus();
+			}
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		Object o = e.getSource();
+		if (o.equals(txtTenXe)) {
+			
+			
+			thongTinChungXeMays = thongTinChungXeMayDao.getThongTinChungXeMayTheoTens(txtTenXe.getText().trim());
+			
+			popupTenXe.show(txtTenXe, 0, txtTenXe.getHeight());
+			scrollPaneTenXe.setViewportView(listTenXe);
+//			nhanVienKiThuats = nhanVienKiThuatDao.getNVKiThuatTheoTens(txtTen.getText().trim());
+//			docDulieuNVKiThuat();
+//			popupTenNV.show(txtTen, 0, txtTen.getHeight());
+//			scrollPaneTen.setViewportView(listTen);
+		}
+
+	}
 
 	@Override
 	public void focusGained(FocusEvent e) {
@@ -853,5 +915,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }

@@ -56,6 +56,9 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 	private JComboBox<String> cboThongKe;
 	private JPanel pnlBieuDo;
 	private JPanel pnlSoLieu;
+	private JTextArea txtSoLieu2;
+	private JTextArea txtSoLieu1;
+	private JTextArea txtSoLieu3;
 
 	/**
 	 * Create the panel.
@@ -131,14 +134,32 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		pnlSoLieu.setBackground(Color.WHITE);
 		pnlContain.add(pnlSoLieu, "name_24057104890500");
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 1690, 646);
-		pnlSoLieu.add(scrollPane);
+		JScrollPane scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(12, 13, 500, 655);
+		pnlSoLieu.add(scrollPane1);
 		
-		JTextArea txtSoLieu = new JTextArea();
-		txtSoLieu.setMargin(new Insets(10, 10, 10, 10));
-		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		scrollPane.setViewportView(txtSoLieu);
+		 txtSoLieu1 = new JTextArea();
+		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane1.setViewportView(txtSoLieu1);
+		
+		JScrollPane scrollPane3 = new JScrollPane();
+		scrollPane3.setBounds(1224, 13, 500, 655);
+		pnlSoLieu.add(scrollPane3);
+		
+		txtSoLieu3 = new JTextArea();
+		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane3.setViewportView(txtSoLieu3);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(622, 13, 500, 655);
+		pnlSoLieu.add(scrollPane2);
+		
+		 txtSoLieu2 = new JTextArea();
+		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane2.setViewportView(txtSoLieu2);
 
 		khoiTao();
 		setDataToChart1(pnlBieuDo);

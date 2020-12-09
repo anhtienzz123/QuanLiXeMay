@@ -122,7 +122,7 @@ public class BatRegex {
 
 	public static boolean kiemTraHeSoBan(JTextField text) {
 
-		String regex = "^(-)?\\d+?$";
+		String regex = "^(-)?\\d+(.\\d+)?$";
 
 		if (text.getText().matches(regex)) {
 			return true;
