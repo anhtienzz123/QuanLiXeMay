@@ -16,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.DefaultComboBoxModel;
@@ -235,7 +236,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoLuong.setText("1");
 		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(535, 353, 73, 30);
+		txtSoLuong.setBounds(542, 410, 73, 30);
 		txtSoLuong.setEditable(false);
 		add(txtSoLuong);
 
@@ -279,55 +280,55 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
 		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan.setBounds(29, 464, 111, 30);
+		lblHeSoBan.setBounds(428, 353, 111, 30);
 		add(lblHeSoBan);
 
 		txtHeSoBan = new JTextField("2");
 		txtHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHeSoBan.setColumns(10);
-		txtHeSoBan.setBounds(137, 464, 47, 30);
+		txtHeSoBan.setBounds(536, 353, 47, 30);
 		add(txtHeSoBan);
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(428, 464, 111, 30);
+		lblBaoHanh.setBounds(29, 410, 111, 30);
 		add(lblBaoHanh);
 
 		txtBaoHanh = new JTextField("36");
 		txtBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtBaoHanh.setColumns(10);
-		txtBaoHanh.setBounds(541, 464, 55, 30);
+		txtBaoHanh.setBounds(142, 410, 55, 30);
 		add(txtBaoHanh);
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThang.setBounds(608, 464, 67, 30);
+		lblThang.setBounds(209, 410, 67, 30);
 		add(lblThang);
 
 		JLabel lblSoKhung = new JLabel("Số khung:");
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoKhung.setBounds(29, 409, 111, 30);
+		lblSoKhung.setBounds(29, 464, 111, 30);
 		add(lblSoKhung);
 
 		txtSoKhung = new JTextField();
 		txtSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoKhung.setColumns(10);
-		txtSoKhung.setBounds(136, 409, 205, 30);
+		txtSoKhung.setBounds(136, 464, 205, 30);
 		add(txtSoKhung);
 
 		JLabel lblSoSuon = new JLabel("Số sườn:");
 		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoSuon.setBounds(428, 409, 111, 30);
+		lblSoSuon.setBounds(428, 464, 111, 30);
 		add(lblSoSuon);
 
 		txtSoSuon = new JTextField();
 		txtSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoSuon.setColumns(10);
-		txtSoSuon.setBounds(541, 409, 199, 30);
+		txtSoSuon.setBounds(541, 464, 199, 30);
 		add(txtSoSuon);
 
 		JLabel lblMoTa = new JLabel("Mô tả:");
@@ -430,12 +431,18 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		txtThongBao.setBounds(29, 769, 680, 107);
 		add(txtThongBao);
-		
-		JLabel lblSl = new JLabel("SL");
+
+		JLabel lblSl = new JLabel("Số lượng:");
 		lblSl.setForeground(Color.BLACK);
 		lblSl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSl.setBounds(452, 353, 55, 30);
+		lblSl.setBounds(435, 410, 111, 30);
 		add(lblSl);
+
+		JLabel lblHeSoBan_1 = new JLabel("%");
+		lblHeSoBan_1.setForeground(Color.BLACK);
+		lblHeSoBan_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHeSoBan_1.setBounds(595, 353, 111, 30);
+		add(lblHeSoBan_1);
 
 	}
 
@@ -463,7 +470,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoSuon.addFocusListener(this);
 		txtHeSoBan.addFocusListener(this);
 		txtBaoHanh.addFocusListener(this);
-		
+
 		txtSoLuong.addMouseListener(this);
 	}
 
@@ -484,13 +491,22 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		}
 		if (o.equals(cboMauXe)) {
 			if (cboMauXe.getSelectedItem() == "Khác") {
-				String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
-				if (!mau.equals("")) {
-					cboMauXe.removeItem("Khác");
-					cboMauXe.addItem(mau);
-					cboMauXe.addItem("Khác");
-					cboMauXe.setSelectedItem(mau);
+				try {
+					String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
+					Optional<String> optional = Optional.ofNullable(mau);
+					if (!optional.isPresent()) {
+
+						cboMauXe.removeItem("Khác");
+						cboMauXe.addItem(mau);
+						cboMauXe.addItem("Khác");
+						cboMauXe.setSelectedItem(mau);
+					} else {
+						cboMauXe.setSelectedIndex(0);
+					}
+				} catch (Exception e2) {
+					cboMauXe.setSelectedIndex(0);
 				}
+
 			}
 		}
 
@@ -510,7 +526,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 				txtGiaNhap.requestFocus();
 			}
 		}
-		if(o.equals(txtSoLuong)) {
+		if (o.equals(txtSoLuong)) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 //				int soLuong = Integer.parseInt(txtSoLuong.getText().trim());
 //				if( soLuong > 1) {
@@ -522,15 +538,15 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 				txtSoLuong.setEditable(false);
 			}
 		}
-		
+
 		if (o.equals(txtGiaNhap)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoKhung.requestFocus();
+				txtHeSoBan.requestFocus();
 			}
 		}
 		if (o.equals(txtSoLuong)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtGiaNhap.requestFocus();
+				txtSoKhung.requestFocus();
 			}
 		}
 		if (o.equals(txtSoKhung)) {
@@ -540,7 +556,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		}
 		if (o.equals(txtSoSuon)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtHeSoBan.requestFocus();
+				txtMoTa.requestFocus();
 			}
 		}
 		if (o.equals(txtHeSoBan)) {
@@ -550,12 +566,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		}
 		if (o.equals(txtBaoHanh)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtMoTa.requestFocus();
-			}
-		}
-		if (o.equals(txtMoTa)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtPath.requestFocus();
+				txtSoKhung.requestFocus();
 			}
 		}
 	}
@@ -599,7 +610,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 		if (txtPath.getText().trim().contains("\\")) {
 			String fileNameExtentions = filePath.split("\\.")[1];
-			CopyTask task = new CopyTask(filePath, "ImgXe/" + lblMaXe.getText().trim() + "." + fileNameExtentions);
+			CopyTask task = new CopyTask(filePath, "ImgXe/" + txtTenXe.getText().trim() + "." + fileNameExtentions);
 			task.execute();
 		}
 
@@ -612,7 +623,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		String path = txtPath.getText().trim();
 		String tenAnh = null;
 		if (!path.equals("")) {
-			tenAnh = lblMaXe.getText().trim() + "." + path.split("\\.")[1];
+			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
 		}
 
 		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
@@ -622,7 +633,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 		xeMay.setMaXeMay(lblMaXe.getText().trim());
 		xeMay.setTenXeMay(txtTenXe.getText().trim());
-		xeMay.setTenAnh(txtPath.getText().trim());
 		xeMay.setSoLuong(Integer.parseInt(txtSoLuong.getText().trim()));
 		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
 		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
@@ -815,8 +825,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2) {
-			if(!txtSoLuong.isEditable())
+		if (e.getClickCount() == 2) {
+			if (!txtSoLuong.isEditable())
 				txtSoLuong.setEditable(true);
 		}
 	}
@@ -824,24 +834,24 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

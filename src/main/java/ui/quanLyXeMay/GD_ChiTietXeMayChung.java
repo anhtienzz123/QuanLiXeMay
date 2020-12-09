@@ -64,7 +64,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		thongTinChungXeMay = thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay(tenXeMay);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1422, 1010);
+		setBounds(100, 100, 1422, 958);
 		setLocationRelativeTo(null);
 		setTitle("Thông tin xe máy");
 		contentPane = new JPanel();
@@ -87,13 +87,13 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		panel.add(lblNewLabel);
 
 		JPanel pnlAnh = new JPanel();
-		pnlAnh.setBackground(Color.LIGHT_GRAY);
-		pnlAnh.setBounds(739, 127, 617, 462);
+		pnlAnh.setBounds(739, 63, 617, 479);
 		contentPane.add(pnlAnh);
 		pnlAnh.setLayout(null);
 
-		JLabel lblAnh = new JLabel("");
-		lblAnh.setBounds(1, 0, 616, 462);
+		JLabel lblAnh = new JLabel("img");
+		lblAnh.setBackground(new Color(240, 240, 240));
+		lblAnh.setBounds(1, 0, 616, 479);
 		pnlAnh.add(lblAnh);
 		lblAnh.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnh.setForeground(new Color(58, 181, 74));
@@ -111,26 +111,15 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 			lblAnh.setText("");
 		}
 
-		JLabel lblNewLabel_2 = new JLabel("Mã xe:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2.setBounds(32, 73, 83, 30);
-		contentPane.add(lblNewLabel_2);
-
-		JLabel lblMaXe = new JLabel("MX111");
-		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaXe.setBounds(147, 73, 125, 30);
-		lblMaXe.setText("");
-		contentPane.add(lblMaXe);
-
 		JLabel lblNewLabel_2_1 = new JLabel("Tên xe:");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1.setBounds(352, 73, 83, 30);
+		lblNewLabel_2_1.setBounds(32, 63, 90, 30);
 		contentPane.add(lblNewLabel_2_1);
 
 		JLabel lblTenXe = new JLabel("Honda AirBlade");
 		lblTenXe.setVerticalAlignment(SwingConstants.TOP);
 		lblTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTenXe.setBounds(504, 73, 852, 60);
+		lblTenXe.setBounds(147, 63, 580, 60);
 		lblTenXe.setText("<html>" + thongTinChungXeMay.getTenXe().trim() + "</html>");
 		contentPane.add(lblTenXe);
 
@@ -217,7 +206,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		contentPane.add(lblNewLabel_2_1_12);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(32, 375, 662, 214);
+		scrollPane.setBounds(32, 375, 662, 167);
 		contentPane.add(scrollPane);
 
 		JTextArea txtMoTa = new JTextArea();
@@ -234,7 +223,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setBounds(1227, 915, 129, 35);
+		btnThoat.setBounds(1227, 867, 129, 35);
 		contentPane.add(btnThoat);
 		btnThoat.addActionListener(this);
 
@@ -249,12 +238,12 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		contentPane.add(lblHeSoBan);
 
 		JScrollPane scrollPaneXe = new JScrollPane();
-		scrollPaneXe.setBounds(32, 646, 1324, 254);
+		scrollPaneXe.setBounds(32, 598, 1324, 254);
 		contentPane.add(scrollPaneXe);
 
 		JLabel lblNewLabel_2_1_12_2 = new JLabel("Xe:");
 		lblNewLabel_2_1_12_2.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel_2_1_12_2.setBounds(32, 608, 83, 30);
+		lblNewLabel_2_1_12_2.setBounds(32, 560, 83, 30);
 		contentPane.add(lblNewLabel_2_1_12_2);
 
 		String[] colHeaderHoaDon = { "STT", "Mã xe", "Sô khung", "Số sườn", "Màu", "Xuất xứ" };
@@ -273,7 +262,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		tblXe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//		tblXe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		themListChiTietXeVaoBang();
 		

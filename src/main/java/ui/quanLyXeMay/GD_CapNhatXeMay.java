@@ -55,7 +55,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	private static final long serialVersionUID = 1L;
 
 	private JTextField txtTenXe;
-	private JTextField txtSoLuong;
+//	private JTextField txtSoLuong;
 	private JTextField txtGiaNhap;
 	private JTextField txtHeSoBan;
 	private JTextField txtBaoHanh;
@@ -83,20 +83,19 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	private XeMayDao xeMayDao;
 
 	private String filePath;
+	private XeMay xe;
 
 	private JTextArea txtThongBao;
-	private boolean isTenXe = false;
 	private boolean isSoLuong = false;
 	private boolean isGiaNhap = false;
 	private boolean isSoKhung = false;
 	private boolean isSoSuon = false;
-	private boolean isHeSoBan = false;
-	private boolean isBaoHanh = false;
 
 	/**
 	 * Create the panel.
 	 */
 	public GD_CapNhatXeMay(XeMay xeMay) {
+		this.xe = xeMay;
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
@@ -122,12 +121,14 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		lblMaXe.setText(xeMay.getMaXeMay().trim());
 
 		cboHangXe = new JComboBox<String>();
+		cboHangXe.setEnabled(false);
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboHangXe.setBounds(139, 174, 202, 30);
 		add(cboHangXe);
 
 		txtTenXe = new JTextField();
+		txtTenXe.setEditable(false);
 		txtTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtTenXe.setBounds(535, 113, 345, 30);
 		add(txtTenXe);
@@ -146,7 +147,8 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(separator);
 
 		btnLuu = new JButton("Lưu");
-		btnLuu.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
+		btnLuu.setIcon(
+				new ImageIcon(GD_ThemXeMay.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnLuu.setForeground(Color.WHITE);
 		btnLuu.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLuu.setBackground(new Color(58, 181, 74));
@@ -193,6 +195,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(lblLoai);
 
 		cboLoaiXe = new JComboBox<String>();
+		cboLoaiXe.setEnabled(false);
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
 		cboLoaiXe.setBounds(535, 174, 205, 30);
@@ -205,6 +208,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(lblDong);
 
 		cboDongXe = new JComboBox<String>();
+		cboDongXe.setEnabled(false);
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
 		cboDongXe.setBounds(136, 233, 205, 30);
@@ -217,6 +221,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(lblSoPhanKhoi);
 
 		cboSoPhanKhoi = new JComboBox<String>();
+		cboSoPhanKhoi.setEnabled(false);
 		cboSoPhanKhoi.setModel(
 				new DefaultComboBoxModel<String>(new String[] { "50 cc", "110 cc", "125 cc", "150 cc", "175 cc" }));
 		cboSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -225,24 +230,12 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(cboSoPhanKhoi);
 		cboSoPhanKhoi.setSelectedItem(xeMay.getSoPhanKhoi() + " cc");
 
-		JLabel lblSoLuong = new JLabel("Số lượng:");
-		lblSoLuong.setForeground(Color.BLACK);
-		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoLuong.setBounds(29, 353, 111, 30);
-		add(lblSoLuong);
-
-		txtSoLuong = new JTextField();
-		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtSoLuong.setColumns(10);
-		txtSoLuong.setBounds(136, 353, 73, 30);
-		add(txtSoLuong);
-		txtSoLuong.setText(xeMay.getSoLuong() + "");
-
-		JLabel lblChiec = new JLabel("chiếc xe.");
-		lblChiec.setForeground(Color.BLACK);
-		lblChiec.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblChiec.setBounds(218, 353, 87, 30);
-		add(lblChiec);
+//		txtSoLuong = new JTextField();
+//		txtSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
+//		txtSoLuong.setColumns(10);
+//		txtSoLuong.setBounds(428, 464, 73, 30);
+//		add(txtSoLuong);
+//		txtSoLuong.setText(xeMay.getSoLuong() + "");
 
 		JLabel lblMau = new JLabel("Màu xe:");
 		lblMau.setForeground(Color.BLACK);
@@ -259,13 +252,14 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");
 		lblGiaNhap.setForeground(Color.BLACK);
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblGiaNhap.setBounds(428, 353, 111, 30);
+		lblGiaNhap.setBounds(29, 353, 111, 30);
 		add(lblGiaNhap);
 
 		txtGiaNhap = new JTextField();
+		txtGiaNhap.setEditable(false);
 		txtGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaNhap.setColumns(10);
-		txtGiaNhap.setBounds(541, 353, 199, 30);
+		txtGiaNhap.setBounds(142, 353, 199, 30);
 		add(txtGiaNhap);
 		DecimalFormat df = new DecimalFormat("###.##");
 		txtGiaNhap.setText(df.format(xeMay.getGiaNhap()));
@@ -273,64 +267,68 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		JLabel lblVND = new JLabel("VNĐ.");
 		lblVND.setForeground(Color.BLACK);
 		lblVND.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVND.setBounds(752, 353, 87, 30);
+		lblVND.setBounds(353, 353, 87, 30);
 		add(lblVND);
 
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
 		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan.setBounds(29, 464, 111, 30);
+		lblHeSoBan.setBounds(428, 411, 111, 30);
 		add(lblHeSoBan);
 
 		txtHeSoBan = new JTextField();
+		txtHeSoBan.setBorder(null);
+		txtHeSoBan.setEditable(false);
 		txtHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHeSoBan.setColumns(10);
-		txtHeSoBan.setBounds(137, 464, 47, 30);
+		txtHeSoBan.setBounds(536, 411, 47, 30);
 		add(txtHeSoBan);
 		txtHeSoBan.setText(xeMay.getHeSoBan() + "");
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(428, 464, 111, 30);
+		lblBaoHanh.setBounds(29, 464, 111, 30);
 		add(lblBaoHanh);
 
 		txtBaoHanh = new JTextField();
+		txtBaoHanh.setBorder(null);
+		txtBaoHanh.setEditable(false);
 		txtBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtBaoHanh.setColumns(10);
-		txtBaoHanh.setBounds(541, 464, 55, 30);
+		txtBaoHanh.setBounds(142, 464, 55, 30);
 		add(txtBaoHanh);
 		txtBaoHanh.setText(xeMay.getThoiGianBaoHanh() + "");
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThang.setBounds(608, 464, 67, 30);
+		lblThang.setBounds(209, 464, 67, 30);
 		add(lblThang);
 
 		JLabel lblSoKhung = new JLabel("Số khung:");
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoKhung.setBounds(29, 409, 111, 30);
+		lblSoKhung.setBounds(428, 353, 111, 30);
 		add(lblSoKhung);
 
 		txtSoKhung = new JTextField();
 		txtSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoKhung.setColumns(10);
-		txtSoKhung.setBounds(136, 409, 205, 30);
+		txtSoKhung.setBounds(535, 353, 205, 30);
 		add(txtSoKhung);
 		txtSoKhung.setText(xeMay.getSoKhung().trim());
 
 		JLabel lblSoSuon = new JLabel("Số sườn:");
 		lblSoSuon.setForeground(Color.BLACK);
 		lblSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoSuon.setBounds(428, 409, 111, 30);
+		lblSoSuon.setBounds(29, 411, 111, 30);
 		add(lblSoSuon);
 
 		txtSoSuon = new JTextField();
 		txtSoSuon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoSuon.setColumns(10);
-		txtSoSuon.setBounds(541, 409, 199, 30);
+		txtSoSuon.setBounds(142, 411, 199, 30);
 		add(txtSoSuon);
 		txtSoSuon.setText(xeMay.getSoSuon().trim());
 
@@ -345,6 +343,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		add(scrollPane);
 
 		txtMoTa = new JTextArea();
+		txtMoTa.setEditable(false);
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtMoTa);
@@ -446,7 +445,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		txtTenXe.addKeyListener(this);
 		txtGiaNhap.addKeyListener(this);
-		txtSoLuong.addKeyListener(this);
+//		txtSoLuong.addKeyListener(this);
 		txtSoKhung.addKeyListener(this);
 		txtSoSuon.addKeyListener(this);
 		txtHeSoBan.addKeyListener(this);
@@ -456,7 +455,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		cboMauXe.addActionListener(this);
 
 		txtTenXe.addFocusListener(this);
-		txtSoLuong.addFocusListener(this);
+//		txtSoLuong.addFocusListener(this);
 		txtGiaNhap.addFocusListener(this);
 		txtSoKhung.addFocusListener(this);
 		txtSoSuon.addFocusListener(this);
@@ -482,13 +481,22 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		}
 		if (o.equals(cboMauXe)) {
 			if (cboMauXe.getSelectedItem() == "Khác") {
-				String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
-				if (!mau.equals("")) {
-					cboMauXe.removeItem("Khác");
-					cboMauXe.addItem(mau);
-					cboMauXe.addItem("Khác");
-					cboMauXe.setSelectedItem(mau);
+				try {
+					String mau = JOptionPane.showInputDialog("Nhập màu xe: ").trim();
+					Optional<String> optional = Optional.ofNullable(mau);
+					if (!optional.isPresent()) {
+
+						cboMauXe.removeItem("Khác");
+						cboMauXe.addItem(mau);
+						cboMauXe.addItem("Khác");
+						cboMauXe.setSelectedItem(mau);
+					} else {
+						cboMauXe.setSelectedItem(xe.getMauXe());
+					}
+				} catch (Exception e2) {
+					cboMauXe.setSelectedItem(xe.getMauXe());
 				}
+				
 			}
 		}
 
@@ -503,21 +511,6 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Object o = e.getSource();
-		if (o.equals(txtTenXe)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtGiaNhap.requestFocus();
-			}
-		}
-		if (o.equals(txtGiaNhap)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoLuong.requestFocus();
-			}
-		}
-		if (o.equals(txtSoLuong)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtSoKhung.requestFocus();
-			}
-		}
 		if (o.equals(txtSoKhung)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 				txtSoSuon.requestFocus();
@@ -526,21 +519,6 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		if (o.equals(txtSoSuon)) {
 			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
 				txtHeSoBan.requestFocus();
-			}
-		}
-		if (o.equals(txtHeSoBan)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtBaoHanh.requestFocus();
-			}
-		}
-		if (o.equals(txtBaoHanh)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtPath.requestFocus();
-			}
-		}
-		if (o.equals(txtPath)) {
-			if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-				txtMoTa.requestFocus();
 			}
 		}
 	}
@@ -584,7 +562,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		if (txtPath.getText().trim().contains("\\")) {
 			String fileNameExtentions = filePath.split("\\.")[1];
-			CopyTask task = new CopyTask(filePath, "ImgXe/" + lblMaXe.getText().trim() + "." + fileNameExtentions);
+			CopyTask task = new CopyTask(filePath, "ImgXe/" + txtTenXe.getText().trim() + "." + fileNameExtentions);
 			task.execute();
 		}
 
@@ -597,7 +575,7 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		String path = txtPath.getText().trim();
 		String tenAnh = null;
 		if (!path.equals("")) {
-			tenAnh = lblMaXe.getText().trim() + "." + path.split("\\.")[1];
+			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
 		}
 
 		XuatXu xuatXu = XuatXuDao.getInstance().getXuatXuTheoTen(tenXuatXu);
@@ -608,7 +586,6 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 		xeMay.setMaXeMay(lblMaXe.getText().trim());
 		xeMay.setTenXeMay(txtTenXe.getText().trim());
 		xeMay.setTenAnh(txtPath.getText().trim());
-		xeMay.setSoLuong(Integer.parseInt(txtSoLuong.getText().trim()));
 		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
 		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
 		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
@@ -630,13 +607,10 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 				JOptionPane.showMessageDialog(this, "Lưu không thành công");
 
 		} else {
-			isTenXe = true;
 			isGiaNhap = true;
 			isSoLuong = true;
 			isSoKhung = true;
 			isSoSuon = true;
-			isHeSoBan = true;
-			isBaoHanh = true;
 			capNhatThongBaoLoi();
 		}
 
@@ -678,10 +652,8 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 	private boolean validateXeMay(XeMay xeMay) {
 
-		if (BatRegex.kiemTraTenXe(txtTenXe) && BatRegex.kiemTraSoLuong(txtSoLuong)
-				&& BatRegex.kiemTraGiaNhap(txtGiaNhap) && BatRegex.kiemTraSoKhung(txtSoKhung)
-				&& BatRegex.kiemTraSoSuon(txtSoSuon) && BatRegex.kiemTraHeSoBan(txtHeSoBan)
-				&& BatRegex.kiemTraHeSoBan(txtBaoHanh))
+		if (BatRegex.kiemTraGiaNhap(txtGiaNhap) && BatRegex.kiemTraSoKhung(txtSoKhung)
+				&& BatRegex.kiemTraSoSuon(txtSoSuon))
 			return true;
 
 		return false;
@@ -692,20 +664,12 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 
 		txtThongBao.setText("");
 
-		if (!BatRegex.kiemTraTenXe(txtTenXe) && isTenXe)
-			txtThongBao.setText(txtThongBao.getText() + BatRegex.TEN_XE + "\n");
-		if (!BatRegex.kiemTraSoLuong(txtSoLuong) && isSoLuong)
-			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_LUONG + "\n");
 		if (!BatRegex.kiemTraGiaNhap(txtGiaNhap) && isGiaNhap)
 			txtThongBao.setText(txtThongBao.getText() + BatRegex.GIA_NHAP + "\n");
 		if (!BatRegex.kiemTraSoKhung(txtSoKhung) && isSoKhung)
 			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_KHUNG + "\n");
 		if (!BatRegex.kiemTraSoSuon(txtSoSuon) && isSoSuon)
 			txtThongBao.setText(txtThongBao.getText() + BatRegex.SO_SUON + "\n");
-		if (!BatRegex.kiemTraHeSoBan(txtHeSoBan) && isHeSoBan)
-			txtThongBao.setText(txtThongBao.getText() + BatRegex.HE_SO_BAN + "\n");
-		if (!BatRegex.kiemTraBaoHanh(txtBaoHanh) && isBaoHanh)
-			txtThongBao.setText(txtThongBao.getText() + BatRegex.BAO_HANH + "\n");
 
 	}
 
@@ -713,22 +677,12 @@ public class GD_CapNhatXeMay extends JPanel implements ActionListener, KeyListen
 	public void focusGained(FocusEvent e) {
 		Object source = e.getSource();
 
-		if (source.equals(txtTenXe))
-			isTenXe = true;
-
-		if (source.equals(txtSoLuong))
-			isSoLuong = true;
-
 		if (source.equals(txtGiaNhap))
 			isGiaNhap = true;
 		if (source.equals(txtSoKhung))
 			isSoKhung = true;
 		if (source.equals(txtSoSuon))
 			isSoSuon = true;
-		if (source.equals(txtHeSoBan))
-			isHeSoBan = true;
-		if (source.equals(txtBaoHanh))
-			isBaoHanh = true;
 	}
 
 	@Override

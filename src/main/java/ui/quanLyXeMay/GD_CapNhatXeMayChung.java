@@ -60,7 +60,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 	private JTextArea txtMoTa;
 	private JLabel lblAnh;
-	private JLabel lblMaXe;
 
 	private JPanel pnlAnh;
 	private JComboBox<String> cboHangXe;
@@ -103,31 +102,18 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
-		lblMaXe = new JLabel("XM123456");
-		lblMaXe.setBounds(139, 113, 112, 30);
-		add(lblMaXe);
-		lblMaXe.setForeground(Color.BLACK);
-		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaXe.setText(xeMay.getMaXeMay().trim());
-
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboHangXe.setBounds(139, 174, 202, 30);
+		cboHangXe.setBounds(139, 174, 272, 30);
 		add(cboHangXe);
 
 		txtTenXe = new JTextField();
 		txtTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTenXe.setBounds(535, 113, 345, 30);
+		txtTenXe.setBounds(136, 113, 744, 30);
 		add(txtTenXe);
 		txtTenXe.setColumns(10);
 		txtTenXe.setText(xeMay.getTenXeMay().trim());
-
-		JLabel lblMa = new JLabel("Mã xe:");
-		lblMa.setForeground(Color.BLACK);
-		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMa.setBounds(29, 113, 111, 30);
-		add(lblMa);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
@@ -167,7 +153,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		JLabel lblTen = new JLabel("Tên xe:");
 		lblTen.setForeground(Color.BLACK);
 		lblTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTen.setBounds(428, 113, 111, 30);
+		lblTen.setBounds(29, 113, 111, 30);
 		add(lblTen);
 
 		JLabel lblHang = new JLabel("Hãng xe:");
@@ -179,13 +165,13 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		JLabel lblLoai = new JLabel("Loại xe:");
 		lblLoai.setForeground(Color.BLACK);
 		lblLoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblLoai.setBounds(428, 174, 111, 30);
+		lblLoai.setBounds(544, 174, 111, 30);
 		add(lblLoai);
 
 		cboLoaiXe = new JComboBox<String>();
 		cboLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboLoaiXe.setBackground(Color.WHITE);
-		cboLoaiXe.setBounds(535, 174, 205, 30);
+		cboLoaiXe.setBounds(641, 174, 239, 30);
 		add(cboLoaiXe);
 
 		JLabel lblDong = new JLabel("Dòng xe:");
@@ -197,13 +183,13 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		cboDongXe = new JComboBox<String>();
 		cboDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboDongXe.setBackground(Color.WHITE);
-		cboDongXe.setBounds(139, 233, 202, 30);
+		cboDongXe.setBounds(139, 233, 272, 30);
 		add(cboDongXe);
 
 		JLabel lblSoPhanKhoi = new JLabel("Số phân khối:");
 		lblSoPhanKhoi.setForeground(Color.BLACK);
 		lblSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoPhanKhoi.setBounds(428, 233, 139, 30);
+		lblSoPhanKhoi.setBounds(544, 233, 139, 30);
 		add(lblSoPhanKhoi);
 
 		cboSoPhanKhoi = new JComboBox<String>();
@@ -211,7 +197,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 				new DefaultComboBoxModel<String>(new String[] { "50 cc", "110 cc", "125 cc", "150 cc", "175 cc" }));
 		cboSoPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboSoPhanKhoi.setBackground(Color.WHITE);
-		cboSoPhanKhoi.setBounds(608, 233, 132, 30);
+		cboSoPhanKhoi.setBounds(684, 233, 111, 30);
 		add(cboSoPhanKhoi);
 		cboSoPhanKhoi.setSelectedItem(xeMay.getSoPhanKhoi() + " cc");
 
@@ -224,7 +210,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtGiaNhap = new JTextField();
 		txtGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtGiaNhap.setColumns(10);
-		txtGiaNhap.setBounds(139, 287, 202, 30);
+		txtGiaNhap.setBounds(139, 287, 272, 30);
 		add(txtGiaNhap);
 		DecimalFormat df = new DecimalFormat("###.##");
 		txtGiaNhap.setText(df.format(xeMay.getGiaNhap()));
@@ -232,39 +218,39 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		JLabel lblVND = new JLabel("VNĐ.");
 		lblVND.setForeground(Color.BLACK);
 		lblVND.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVND.setBounds(353, 287, 87, 30);
+		lblVND.setBounds(415, 287, 87, 30);
 		add(lblVND);
 
 		JLabel lblHeSoBan = new JLabel("Hệ số bán:");
 		lblHeSoBan.setForeground(Color.BLACK);
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblHeSoBan.setBounds(29, 342, 111, 30);
+		lblHeSoBan.setBounds(544, 287, 111, 30);
 		add(lblHeSoBan);
 
 		txtHeSoBan = new JTextField();
 		txtHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHeSoBan.setColumns(10);
-		txtHeSoBan.setBounds(137, 342, 47, 30);
+		txtHeSoBan.setBounds(684, 287, 67, 30);
 		add(txtHeSoBan);
 		txtHeSoBan.setText(xeMay.getHeSoBan() + "");
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblBaoHanh.setBounds(428, 342, 111, 30);
+		lblBaoHanh.setBounds(29, 341, 111, 30);
 		add(lblBaoHanh);
 
 		txtBaoHanh = new JTextField();
 		txtBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtBaoHanh.setColumns(10);
-		txtBaoHanh.setBounds(541, 342, 55, 30);
+		txtBaoHanh.setBounds(136, 341, 55, 30);
 		add(txtBaoHanh);
 		txtBaoHanh.setText(xeMay.getThoiGianBaoHanh() + "");
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
 		lblThang.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblThang.setBounds(608, 342, 67, 30);
+		lblThang.setBounds(203, 341, 67, 30);
 		add(lblThang);
 
 		JLabel lblMoTa = new JLabel("Mô tả:");
@@ -355,6 +341,12 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		txtThongBao.setBounds(29, 773, 630, 101);
 		add(txtThongBao);
+		
+		JLabel lblHeSoBan_1 = new JLabel("%");
+		lblHeSoBan_1.setForeground(Color.BLACK);
+		lblHeSoBan_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblHeSoBan_1.setBounds(763, 287, 47, 30);
+		add(lblHeSoBan_1);
 
 	}
 
@@ -456,7 +448,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 		if (txtPath.getText().trim().contains("\\")) {
 			String fileNameExtentions = filePath.split("\\.")[1];
-			CopyTask task = new CopyTask(filePath, "ImgXe/" + lblMaXe.getText().trim() + "." + fileNameExtentions);
+			CopyTask task = new CopyTask(filePath, "ImgXe/" + txtTenXe.getText().trim() + "." + fileNameExtentions);
 			task.execute();
 		}
 
@@ -467,16 +459,14 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		String path = txtPath.getText().trim();
 		String tenAnh = null;
 		if (!path.equals("")) {
-			tenAnh = lblMaXe.getText().trim() + "." + path.split("\\.")[1];
+			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
 		}
 
 		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
 		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
 		XeMay xeMay = new XeMay();
 
-		xeMay.setMaXeMay(lblMaXe.getText().trim());
 		xeMay.setTenXeMay(txtTenXe.getText().trim());
-		xeMay.setTenAnh(txtPath.getText().trim());
 		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
 		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
 		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
@@ -579,6 +569,4 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	@Override
 	public void focusLost(FocusEvent e) {
 	}
-	
-
 }
