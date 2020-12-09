@@ -988,8 +988,8 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			int row = tblXeMay.getSelectedRow();
 			if (row != -1) {
 				String ma = xeMays.get(row).getMaXeMay();
-				XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
-				new GD_ChiTietXeMay(xeMay).setVisible(true);
+				//XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+				new GD_ChiTietXeMay(ma).setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
 			}

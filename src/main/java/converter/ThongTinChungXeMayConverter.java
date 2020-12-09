@@ -13,7 +13,7 @@ public class ThongTinChungXeMayConverter {
 		thongTinChungXeMay.setTenAnh(xeMay.getTenAnh());
 		thongTinChungXeMay.setGiaBan(xeMay.getGiaNhap());
 		thongTinChungXeMay.setHeSoBan(xeMay.getHeSoBan());
-		thongTinChungXeMay.setBaoHanh(xeMay.getThoiGianBaoHanh());
+		thongTinChungXeMay.setThoiGianBaoHanh(xeMay.getThoiGianBaoHanh());
 		thongTinChungXeMay.setSoPhanKhoi(xeMay.getSoPhanKhoi());
 		thongTinChungXeMay.setLoaiXe(xeMay.getLoaiXe().getTenLoaiXe());
 		thongTinChungXeMay.setDongXe(xeMay.getDongXe().getTenDongXe());

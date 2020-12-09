@@ -543,10 +543,8 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	private void xemChiTiet() {
 		int row = tblXeMay.getSelectedRow();
 		if (row != -1) {
-			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
-			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
-			System.out.println("Xem chi tiet tung chiec");
-			new GD_ChiTietXeMay(xeMay).setVisible(true);
+			String maXeMay = tblXeMay.getValueAt(row, 1).toString().trim();
+			new GD_ChiTietXeMay(maXeMay).setVisible(true);
 		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
@@ -556,8 +554,11 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		int row = tblXeMay.getSelectedRow();
 		
 		if(row != -1) {
-			XeMay xm = xeMayDao.getXeMayTheoMa("MX111");
-			new GD_ChiTietXeMayChung(xm).setVisible(true);
+		
+			String tenXeMay = tblXeMay.getValueAt(row, 1).toString().trim();
+			new GD_ChiTietXeMayChung(tenXeMay).setVisible(true);
+		}else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
 	}
 

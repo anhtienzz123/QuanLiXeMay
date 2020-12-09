@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import dao.XeMayDao;
 import entity.XeMay;
 import other.DinhDangTien;
 
@@ -33,23 +34,26 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GD_ChiTietXeMay frame = new GD_ChiTietXeMay(new XeMay());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GD_ChiTietXeMay frame = new GD_ChiTietXeMay(new XeMay());
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GD_ChiTietXeMay(XeMay xeMay) {
+	public GD_ChiTietXeMay(String maXeMay) {
+		XeMayDao xeMayDao = XeMayDao.getInstance();
+		XeMay xeMay = xeMayDao.getXeMayTheoMa(maXeMay);
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1422, 747);
 		setLocationRelativeTo(null);

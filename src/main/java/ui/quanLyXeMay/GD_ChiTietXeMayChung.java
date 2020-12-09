@@ -1,7 +1,6 @@
 package ui.quanLyXeMay;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
@@ -23,7 +22,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import entity.XeMay;
+import customoutput.ThongTinChiTietXeMay;
+import customoutput.ThongTinChungXeMay;
+import dao.ThongTinChungXeMayDao;
 import other.DinhDangTien;
 
 public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
@@ -33,30 +34,35 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private DefaultTableModel modelHoaDon;
 	private JTable tblXe;
 	private DefaultTableModel modelXe;
+	private ThongTinChungXeMay thongTinChungXeMay;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GD_ChiTietXeMayChung frame = new GD_ChiTietXeMayChung(new XeMay());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					GD_ChiTietXeMayChung frame = new GD_ChiTietXeMayChung(new XeMay());
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GD_ChiTietXeMayChung(XeMay xeMay) {
+	public GD_ChiTietXeMayChung(String tenXeMay) {
+
+		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
+		
+		thongTinChungXeMay = thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay(tenXeMay);
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1422, 1010);
 		setLocationRelativeTo(null);
@@ -93,9 +99,9 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		lblAnh.setForeground(new Color(58, 181, 74));
 		lblAnh.setFont(new Font("Tahoma", Font.BOLD, 20));
 
-		String anh = xeMay.getTenAnh();
+		String anh = thongTinChungXeMay.getTenAnh();
 		// Kiểm tra xem ảnh có null không
-		Optional<String> optional = Optional.ofNullable(xeMay.getTenAnh());
+		Optional<String> optional = Optional.ofNullable(thongTinChungXeMay.getTenAnh());
 		if (!optional.isPresent()) {
 			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 			lblAnh.setText("img");
@@ -113,7 +119,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblMaXe = new JLabel("MX111");
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMaXe.setBounds(147, 73, 125, 30);
-		lblMaXe.setText(xeMay.getMaXeMay().trim());
+		lblMaXe.setText("");
 		contentPane.add(lblMaXe);
 
 		JLabel lblNewLabel_2_1 = new JLabel("Tên xe:");
@@ -125,7 +131,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		lblTenXe.setVerticalAlignment(SwingConstants.TOP);
 		lblTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTenXe.setBounds(504, 73, 852, 60);
-		lblTenXe.setText("<html>" + xeMay.getTenXeMay().trim() + "</html>");
+		lblTenXe.setText("<html>" + thongTinChungXeMay.getTenXe().trim() + "</html>");
 		contentPane.add(lblTenXe);
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("Hãng xe:");
@@ -136,7 +142,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblHangXe = new JLabel("XM123456");
 		lblHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHangXe.setBounds(147, 123, 165, 30);
-		lblHangXe.setText(xeMay.getDongXe().getHangXe().getTenHangXe().trim());
+		lblHangXe.setText(thongTinChungXeMay.getHangXe().trim());
 		contentPane.add(lblHangXe);
 
 		JLabel lblNewLabel_2_1_2 = new JLabel("Dòng xe:");
@@ -147,7 +153,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblDongXe = new JLabel("Air Blade");
 		lblDongXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblDongXe.setBounds(504, 123, 190, 30);
-		lblDongXe.setText(xeMay.getDongXe().getTenDongXe().trim());
+		lblDongXe.setText(thongTinChungXeMay.getDongXe().trim());
 		contentPane.add(lblDongXe);
 
 		JLabel lblNewLabel_2_1_3 = new JLabel("Loại xe:");
@@ -158,7 +164,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblLoaiXe = new JLabel("Xe tay ga");
 		lblLoaiXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblLoaiXe.setBounds(147, 174, 165, 30);
-		lblLoaiXe.setText(xeMay.getLoaiXe().getTenLoaiXe().trim());
+		lblLoaiXe.setText(thongTinChungXeMay.getLoaiXe().trim());
 		contentPane.add(lblLoaiXe);
 
 		JLabel lblNewLabel_2_1_4 = new JLabel("Số phân khối:");
@@ -169,7 +175,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblPhanKhoi = new JLabel("150 cc");
 		lblPhanKhoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPhanKhoi.setBounds(504, 174, 68, 30);
-		lblPhanKhoi.setText(xeMay.getSoPhanKhoi() + " cc");
+		lblPhanKhoi.setText(thongTinChungXeMay.getSoPhanKhoi() + " cc");
 		contentPane.add(lblPhanKhoi);
 
 		JLabel lblNewLabel_2_1_5 = new JLabel("Số lượng:");
@@ -180,7 +186,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblSoLuong = new JLabel("20 chiếc");
 		lblSoLuong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblSoLuong.setBounds(147, 228, 125, 30);
-		lblSoLuong.setText(xeMay.getSoLuong() + " chiếc");
+		lblSoLuong.setText(thongTinChungXeMay.getSoLuongXe() + " chiếc");
 		contentPane.add(lblSoLuong);
 
 		JLabel lblNewLabel_2_1_9 = new JLabel("Giá nhập:");
@@ -191,7 +197,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblGiaNhap = new JLabel("XM123456");
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGiaNhap.setBounds(504, 228, 223, 30);
-		lblGiaNhap.setText(DinhDangTien.format(xeMay.getGiaNhap()));
+		lblGiaNhap.setText(DinhDangTien.format(thongTinChungXeMay.getGiaBan() )  );
 		contentPane.add(lblGiaNhap);
 
 		JLabel lblNewLabel_2_1_10 = new JLabel("Bảo hành:");
@@ -202,7 +208,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblBaoHanh = new JLabel("36 tháng");
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBaoHanh.setBounds(147, 279, 116, 30);
-		lblBaoHanh.setText(xeMay.getThoiGianBaoHanh() + " tháng");
+		lblBaoHanh.setText(thongTinChungXeMay.getThoiGianBaoHanh()+ " tháng");
 		contentPane.add(lblBaoHanh);
 
 		JLabel lblNewLabel_2_1_12 = new JLabel("Mô tả:");
@@ -218,7 +224,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		txtMoTa.setEditable(false);
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMoTa.setText(xeMay.getMoTa());
+		txtMoTa.setText(thongTinChungXeMay.getMoTa());
 
 		txtMoTa.setLineWrap(true);
 		txtMoTa.setWrapStyleWord(true);
@@ -253,7 +259,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 
 		String[] colHeaderHoaDon = { "STT", "Mã xe", "Sô khung", "Số sườn", "Màu", "Xuất xứ" };
 		modelXe = new DefaultTableModel(colHeaderHoaDon, 0);
-		tblXe = new JTable(modelHoaDon) {
+		tblXe = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
@@ -269,8 +275,25 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 
 		tblXe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
+		themListChiTietXeVaoBang();
+		
 		scrollPaneXe.setViewportView(tblXe);
 
+	}
+	
+	private void themListChiTietXeVaoBang() {
+		for (ThongTinChiTietXeMay thongTinChiTietXeMay : thongTinChungXeMay.getThongTinChiTietXeMays()) {
+			Object[] datas = new Object[6];
+			datas[0] = tblXe.getRowCount() + 1;
+			datas[1] = thongTinChiTietXeMay.getMaXe();
+			datas[2] = thongTinChiTietXeMay.getSoKhung();
+			datas[3] = thongTinChiTietXeMay.getSoSuon();
+			datas[4] = thongTinChiTietXeMay.getMauXe();
+			datas[5] = thongTinChiTietXeMay.getXuatXu();
+			
+			modelXe.addRow(datas);
+			
+		}
 	}
 
 	@Override

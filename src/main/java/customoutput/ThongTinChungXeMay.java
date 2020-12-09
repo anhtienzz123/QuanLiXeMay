@@ -16,7 +16,7 @@ public class ThongTinChungXeMay {
 	private int soLuongXe;
 	private double giaBan;
 	private double heSoBan;
-	private int baoHanh;
+	private int thoiGianBaoHanh;
 	private int soPhanKhoi;
 	private String loaiXe;
 	private String dongXe;
