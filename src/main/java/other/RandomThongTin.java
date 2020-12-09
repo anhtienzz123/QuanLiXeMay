@@ -203,6 +203,39 @@ public class RandomThongTin {
 		String result = "VN-" + RandomStringUtils.randomNumeric(6);
 		return result;
 	}
+	
+	public static String randomMauXe() {
+		List<String> diaChis = new ArrayList<String>();
+
+		String url = "data/diachi.txt";
+		// Đọc dữ liệu từ File với Scanner
+		FileInputStream fileInputStream;
+		try {
+			fileInputStream = new FileInputStream(url);
+
+			Scanner scanner = new Scanner(fileInputStream);
+
+			try {
+				while (scanner.hasNextLine()) {
+					diaChis.add(scanner.nextLine());
+				}
+			} finally {
+				try {
+					scanner.close();
+					fileInputStream.close();
+				} catch (IOException ex) {
+
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String result = diaChis.get(new Random().nextInt(diaChis.size()));
+
+		return result;
+	}
 
 	public static void main(String[] args) {
 

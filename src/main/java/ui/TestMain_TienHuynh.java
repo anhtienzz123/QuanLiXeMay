@@ -7,6 +7,7 @@ import customoutput.ThongTinChungXeMay;
 import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import db.DatabaseConnect;
+import other.SinhRaThongTin;
 
 public class TestMain_TienHuynh {
 
@@ -47,5 +48,8 @@ public class TestMain_TienHuynh {
 //		
 //		System.out.println(thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay("Sh mode 50"));
 
+		// Hàm sinh thông tin xe máy
+		// 
+		SinhRaThongTin.sinhRaThongTinXeMay("data/xemay.txt", 2); // 2 là số lượng mỗi chiếc muốn random
 	}
 }

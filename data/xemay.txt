@@ -1,0 +1,2 @@
+tenXeMay;tenAnh;giaNhap;heSoBan;thoiGianBaoHanh;soPhanKhoi;mauXe;tenLoaiXe;tenDongXe;tenXuatXu
+SH Mode 101;1.png;100000;1;12;150;Đỏ,Đen,Xanh;Xe tay ga;SH;Ân độ,Việt Nam

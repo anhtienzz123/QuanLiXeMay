@@ -274,7 +274,7 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 		int thang = date.getMonthValue();
 		int nam = date.getYear();
-		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(thang, nam);
+		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(5,thang, nam);
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
 		result.forEach((key, value) -> {

@@ -48,13 +48,13 @@ public class ThongKeQuanLiConstant {
 			+ " group by HangXe.tenHangXe";
 
 	// Thống kê dòng xe
-	public static final String THONG_KE_DONG_XE_TRONG_THANG = "select top 5 tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
+	public static final String THONG_KE_DONG_XE_TRONG_THANG = "select top (?) tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " inner join XeMay on ChiTietHoaDon.maXeMay = XeMay.maXeMay\r\n"
 			+ " inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n"
 			+ " where MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap) = ?\r\n" + " group by DongXe.tenDongXe";
 
-	public static final String THONG_KE_DONG_XE_TRONG_NAM = " select top 5 tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
+	public static final String THONG_KE_DONG_XE_TRONG_NAM = " select top (?) tenDongXe, SUM( ChiTietHoaDon.soLuong) as soLuong from\r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
 			+ " inner join XeMay on ChiTietHoaDon.maXeMay = XeMay.maXeMay\r\n"
 			+ " inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n" + " where YEAR(HoaDon.ngayLap) = ?\r\n"
@@ -78,4 +78,26 @@ public class ThongKeQuanLiConstant {
 			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
 			"where DAY(ngayLap) = ? and MONTH(ngayLap) = ? and YEAR(ngayLap) = ?\r\n" + 
 			"group by NhanVienHanhChinh.maNVHanhChinh, hoTenNV";
+	
+	//Thong ke doanh thu ma nhan vien kiem duoc
+	public static final String THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_NGAY = "select NhanVienHanhChinh.maNVHanhChinh, SUM(ChiTietHoaDon.giaBan) as total\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where Day(HoaDon.ngayLap) = ? and Month(HoaDon.ngayLap) = ? and  Year(HoaDon.ngayLap) = ?\r\n" + 
+			"group by NhanVienHanhChinh.maNVHanhChinh";
+	
+	public static final String THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_THANG = "select NhanVienHanhChinh.maNVHanhChinh, SUM(ChiTietHoaDon.giaBan) as total\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where  Month(HoaDon.ngayLap) = ? and  Year(HoaDon.ngayLap) = ?\r\n" + 
+			"group by NhanVienHanhChinh.maNVHanhChinh";
+	
+	public static final String THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_NAM = "select NhanVienHanhChinh.maNVHanhChinh, SUM(ChiTietHoaDon.giaBan) as total\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where Year(HoaDon.ngayLap) = ?\r\n" + 
+			"group by NhanVienHanhChinh.maNVHanhChinh";
 }

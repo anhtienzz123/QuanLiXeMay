@@ -39,6 +39,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import dao.ThongKeQuanLiDao;
+import entity.NhanVienHanhChinh;
 import other.DinhDangTien;
 
 
@@ -311,7 +312,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
-		Map<String, Long> result = thongKeDao.thongKeDongXeTrongNam(nam);
+		Map<String, Long> result = thongKeDao.thongKeDongXeTrongNam(5,nam);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
@@ -408,6 +409,28 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 			 txtSoLieu1.append("\n" + key + " : " +  value);
 		});
 		// Cap so lieu 2
+		
+		txtSoLieu2.append("===== Số lượng xe bán ra theo hãng ====");
+		Map<String, Long> hangXes = thongKeDao.thongKeHangXeTrongNam(nam);
+		hangXes.forEach( (key,value) -> {
+			 txtSoLieu2.append("\n- " + key +" : " + value);
+		});
+		
+		txtSoLieu2.append("\n===== Số lượng xe bán ra theo dòng xe ====");
+		Map<String, Long> dongXes = thongKeDao.thongKeDongXeTrongNam(10,nam);
+		dongXes.forEach( (key,value) -> {
+			 txtSoLieu2.append("\n- " + key +" : " + value);
+		});
+		// Cap nhap so lieu 3
+		txtSoLieu3.append("===== Doanh thu của mỗi nhân viên ===== ");
+		Map<NhanVienHanhChinh, Double> doanhThuNhanViens = thongKeDao.thongKeDoanhThuNhanVienTrongNam(nam);
+		doanhThuNhanViens.forEach((key,value) ->{
+			txtSoLieu3.append("\n"+key.getMaNVHanhChinh()+" - " + key.getHoTenNV() + " : " + DinhDangTien.format(value)  );
+			
+		});
+		
+		
+		
 		
 		
 	}

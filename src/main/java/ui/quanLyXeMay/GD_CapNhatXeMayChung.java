@@ -107,7 +107,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
-
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -453,7 +452,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
 		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
 
-
 //		String path = txtPath.getText().trim();
 //		String tenAnh = null;
 //		if (!path.equals("")) {
@@ -475,13 +473,57 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 //		xeMay.setTenAnh(tenAnh);
 
+//		String path = txtPath.getText().trim();
+//		String tenAnh = null;
+//		if (!path.equals("")) {
+//			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
+//
+////		if (validateXeMay()) {
+//			
+//			if (txtPath.getText().trim().contains("\\")) {
+//				String fileNameExtentions = filePath.split("\\.")[1];
+//				CopyTask task = new CopyTask(filePath, "ImgXe/" + txtTenXe.getText().trim() + "." + fileNameExtentions);
+//				task.execute();
+//			}
+//			
+//			String path = txtPath.getText().trim();
+//			String tenAnh = null;
+//			if (!path.equals("")) {
+//				tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
+//			}
+//			
+//			thongTinChungXeMay = new ThongTinChungXeMay();
+//
+//			thongTinChungXeMay.setTenXe(txtTenXe.getText().trim());
+//			thongTinChungXeMay.setGiaBan(Double.parseDouble(txtGiaNhap.getText().trim()));
+//			thongTinChungXeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
+//			thongTinChungXeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
+//			thongTinChungXeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
+//			thongTinChungXeMay.setLoaiXe(tenLoaiXe);
+//			thongTinChungXeMay.setDongXe(tenDongXe);
+//			thongTinChungXeMay.setMoTa(txtMoTa.getText().trim());
+//
+//			thongTinChungXeMay.setTenAnh(tenAnh);
+//
+//			if (validateXeMay()) {
+//				if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
+//					JOptionPane.showMessageDialog(this, "Lưu thành công");
+//				else
+//					JOptionPane.showMessageDialog(this, "Lưu không thành công");
+//
+//			} else {
+//				isTenXe = true;
+//				isGiaNhap = true;
+//				isHeSoBan = true;
+//				isBaoHanh = true;
+//				capNhatThongBaoLoi();
+//			}
+		String path1 = txtPath.getText().trim();
+		String tenAnh1 = null;
+		if (!path1.equals("")) {
+			tenAnh1 = txtTenXe.getText().trim() + "." + path1.split("\\.")[1];
 
-		String path = txtPath.getText().trim();
-		String tenAnh = null;
-		if (!path.equals("")) {
-			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
 		}
-
 
 		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay();
 
@@ -495,7 +537,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		thongTinChungXeMay.setDongXe(tenDongXe);
 		thongTinChungXeMay.setMoTa(txtMoTa.getText().trim());
 
-		thongTinChungXeMay.setTenAnh(tenAnh);
+		thongTinChungXeMay.setTenAnh(tenAnh1);
 
 		if (validateXeMay()) {
 			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
@@ -510,10 +552,11 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 			isHeSoBan = true;
 			isBaoHanh = true;
 			capNhatThongBaoLoi();
+
 		}
 	}
 
-//	}
+
 
 	/**
 	 * Chọn ảnh

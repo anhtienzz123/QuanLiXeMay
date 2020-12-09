@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,6 +47,7 @@ import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
 import entity.DongXe;
+import entity.HangXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
@@ -117,7 +119,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	private JList<String> listTenXe;
 
 	private DefaultListModel<String> defaultListModelTenXe;
-	
+
 	private List<ThongTinChungXeMay> thongTinChungXeMays;
 
 	private ThongTinChungXeMayDao thongTinChungXeMayDao;
@@ -160,8 +162,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtTenXe.setBounds(535, 113, 345, 30);
 		add(txtTenXe);
 		txtTenXe.setColumns(10);
-		
-		 
 
 		JLabel lblMa = new JLabel("Mã xe:");
 		lblMa.setForeground(Color.BLACK);
@@ -389,7 +389,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		lblAnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblAnh.setBounds(0, 0, 812, 565);
 		pnlAnh.add(lblAnh);
-		
+
 		txtPath = new JTextField();
 		txtPath.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtPath.setColumns(10);
@@ -435,7 +435,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		cboXuatXu.setBounds(535, 410, 205, 30);
 		add(cboXuatXu);
 
-		dangKiSuKien();
 		lblMaXe.setText(RandomMa.getMaNgauNhien(TenEntity.XE_MAY));
 		xeMayDao = XeMayDao.getInstance();
 		loadDuLieuVaoCombobox();
@@ -466,32 +465,31 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		lblHeSoBan_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHeSoBan_1.setBounds(585, 293, 111, 30);
 		add(lblHeSoBan_1);
-		
-		
+
 //		Tìm kiếm xe theo tên
 		pnlTenXe = new JPanel();
 		pnlTenXe.setBounds(535, 143, 758, 320);
 		pnlTenXe.setLayout(null);
-		
+
 		popupTenXe = new JPopupMenu();
 		popupTenXe.setFocusable(false);
 		popupTenXe.add(pnlTenXe);
 		addPopup(txtTenXe, popupTenXe);
-		
+
 		scrollPaneTenXe = new JScrollPane();
 		scrollPaneTenXe.setBounds(0, 0, pnlTenXe.getWidth(), pnlTenXe.getHeight());
 		pnlTenXe.add(scrollPaneTenXe);
-		
+
 		listTenXe = new JList<String>();
 		listTenXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		defaultListModelTenXe = new DefaultListModel<String>();
-		
+
 		listTenXe.setModel(defaultListModelTenXe);
 		scrollPaneTenXe.setViewportView(listTenXe);
-		
 
 		thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-		
+
+		dangKiSuKien();
 	}
 
 	private void dangKiSuKien() {
@@ -520,9 +518,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtBaoHanh.addFocusListener(this);
 
 		txtSoLuong.addMouseListener(this);
-	}
+		txtTenXe.addMouseListener(this);
 
-	
+		listTenXe.addMouseListener(this);
+	}
 
 	/**
 	 * Load dữ liệu từ database vào combobox
@@ -627,7 +626,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		cboXuatXu.setSelectedItem("Việt Nam");
 		cboMauXe.setSelectedIndex(0);
 		txtGiaNhap.setText("");
-		txtSoLuong.setText("");
+//		txtSoLuong.setText("");
 //		txtSoKhung.setText("");
 		txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
 //		txtSoSuon.setText("");
@@ -741,7 +740,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 			txtThongBao.setText(txtThongBao.getText() + BatRegex.BAO_HANH + "\n");
 
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -782,7 +781,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -843,16 +841,33 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	public void keyReleased(KeyEvent e) {
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
-			
-			
 			thongTinChungXeMays = thongTinChungXeMayDao.getThongTinChungXeMayTheoTens(txtTenXe.getText().trim());
-			
+			defaultListModelTenXe.removeAllElements();
+			thongTinChungXeMays.forEach(v -> {
+				defaultListModelTenXe.addElement(v.getTenXe());
+			});
+			popupTenXe.show(true);
 			popupTenXe.show(txtTenXe, 0, txtTenXe.getHeight());
 			scrollPaneTenXe.setViewportView(listTenXe);
-//			nhanVienKiThuats = nhanVienKiThuatDao.getNVKiThuatTheoTens(txtTen.getText().trim());
-//			docDulieuNVKiThuat();
-//			popupTenNV.show(txtTen, 0, txtTen.getHeight());
-//			scrollPaneTen.setViewportView(listTen);
+			if (txtTenXe.getText().trim().equals("")) {
+				cboHangXe.setSelectedItem("Honda");
+				cboDongXe.setSelectedItem("Wave");
+				cboLoaiXe.setSelectedItem("Xe số");
+				cboSoPhanKhoi.setSelectedItem("110 cc");
+				cboXuatXu.setSelectedItem("Việt Nam");
+				cboMauXe.setSelectedIndex(0);
+				txtGiaNhap.setText("");
+//				txtSoKhung.setText("");
+				txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
+//				txtSoSuon.setText("");
+				txtSoSuon.setText(RandomThongTin.randomSoSuon());
+				txtHeSoBan.setText("2");
+				txtBaoHanh.setText("36");
+				txtPath.setText("");
+				txtMoTa.setText("");
+				lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
+				lblAnh.setText("img");
+			}
 		}
 
 	}
@@ -861,8 +876,21 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	public void focusGained(FocusEvent e) {
 		Object source = e.getSource();
 
-		if (source.equals(txtTenXe))
+		if (source.equals(txtTenXe)) {
 			isTenXe = true;
+			txtTenXe.setEditable(true);
+			cboHangXe.setEnabled(true);
+			cboLoaiXe.setEnabled(true);
+			cboDongXe.setEnabled(true);
+			cboSoPhanKhoi.setEnabled(true);
+			txtGiaNhap.setEditable(true);
+			txtHeSoBan.setEditable(true);
+			txtBaoHanh.setEditable(true);
+			txtMoTa.setEditable(true);
+			txtPath.setEditable(true);
+			btnChonFile.setEnabled(true);
+
+		}
 
 		if (source.equals(txtSoLuong))
 			isSoLuong = true;
@@ -887,10 +915,73 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getClickCount() == 2) {
-			if (!txtSoLuong.isEditable())
-				txtSoLuong.setEditable(true);
+		Object o = e.getSource();
+
+		if (o.equals(txtSoLuong)) {
+			if (e.getClickCount() == 2) {
+				if (!txtSoLuong.isEditable())
+					txtSoLuong.setEditable(true);
+			}
 		}
+		if (o.equals(txtTenXe)) {
+			if (e.getClickCount() == 2) {
+				if (!txtTenXe.isEditable())
+					txtTenXe.setEditable(true);
+				cboHangXe.setEnabled(true);
+				cboLoaiXe.setEnabled(true);
+				cboDongXe.setEnabled(true);
+				cboSoPhanKhoi.setEnabled(true);
+				txtGiaNhap.setEditable(true);
+				txtHeSoBan.setEditable(true);
+				txtBaoHanh.setEditable(true);
+				txtMoTa.setEditable(true);
+				txtPath.setEditable(true);
+				btnChonFile.setEnabled(true);
+			}
+		}
+
+		if (o.equals(listTenXe)) {
+			ThongTinChungXeMay thongTinChungXeMay = thongTinChungXeMayDao
+					.getThongTinChungXeMayTheoTenXeMay(listTenXe.getSelectedValue());
+
+			txtTenXe.setText(thongTinChungXeMay.getTenXe().trim());
+			cboHangXe.setSelectedItem(thongTinChungXeMay.getHangXe().trim());
+			cboLoaiXe.setSelectedItem(thongTinChungXeMay.getLoaiXe().trim());
+			cboDongXe.setSelectedItem(thongTinChungXeMay.getDongXe().trim());
+			cboSoPhanKhoi.setSelectedItem(thongTinChungXeMay.getSoPhanKhoi() + " cc");
+			DecimalFormat df = new DecimalFormat("###.##");
+			txtGiaNhap.setText(df.format(thongTinChungXeMay.getGiaBan()));
+			txtHeSoBan.setText(thongTinChungXeMay.getHeSoBan() + "");
+			txtBaoHanh.setText(thongTinChungXeMay.getThoiGianBaoHanh() + "");
+			txtMoTa.setText(thongTinChungXeMay.getMoTa());
+			txtPath.setText(thongTinChungXeMay.getTenAnh());
+
+			String anh = thongTinChungXeMay.getTenAnh();
+			// Kiểm tra xem ảnh có null không
+			Optional<String> optional = Optional.ofNullable(anh);
+			if (!optional.isPresent()) {
+				lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
+				lblAnh.setText("img");
+			} else {
+				lblAnh.setIcon(new ImageIcon(new ImageIcon("ImgXe/" + anh).getImage()
+						.getScaledInstance(pnlAnh.getWidth(), pnlAnh.getHeight(), Image.SCALE_DEFAULT)));
+				lblAnh.setText("");
+			}
+			popupTenXe.show(false);
+
+			txtTenXe.setEditable(false);
+			cboHangXe.setEnabled(false);
+			cboLoaiXe.setEnabled(false);
+			cboDongXe.setEnabled(false);
+			cboSoPhanKhoi.setEnabled(false);
+			txtGiaNhap.setEditable(false);
+			txtHeSoBan.setEditable(false);
+			txtBaoHanh.setEditable(false);
+			txtMoTa.setEditable(false);
+			txtPath.setEditable(false);
+			btnChonFile.setEnabled(false);
+		}
+
 	}
 
 	@Override
@@ -916,6 +1007,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		// TODO Auto-generated method stub
 
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -923,11 +1015,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}

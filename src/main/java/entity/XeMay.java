@@ -52,4 +52,28 @@ public class XeMay {
 		this.dongXe = dongXe;
 	}
 
+
+
+	public XeMay(String maXeMay, String tenXeMay, String tenAnh, int soLuong, double giaNhap, double heSoBan,
+			int thoiGianBaoHanh, String soKhung, int soPhanKhoi, String soSuon, String mauXe, LoaiXe loaiXe,
+			DongXe dongXe, XuatXu xuatXu) {
+		super();
+		this.maXeMay = maXeMay;
+		this.tenXeMay = tenXeMay;
+		this.tenAnh = tenAnh;
+		this.soLuong = soLuong;
+		this.giaNhap = giaNhap;
+		this.heSoBan = heSoBan;
+		this.thoiGianBaoHanh = thoiGianBaoHanh;
+		this.soKhung = soKhung;
+		this.soPhanKhoi = soPhanKhoi;
+		this.soSuon = soSuon;
+		this.mauXe = mauXe;
+		this.loaiXe = loaiXe;
+		this.dongXe = dongXe;
+		this.xuatXu = xuatXu;
+	}
+	
+	
+
 }

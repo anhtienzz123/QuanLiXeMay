@@ -68,42 +68,6 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
 
-//		String[] colHeaderDoanhThu = { "STT", "Mã nhân viên", "Tên nhân viên", "Số lượng hóa đơn", "Tổng tiền" };
-//		modelDoanhThu = new DefaultTableModel(colHeaderDoanhThu, 0);
-//		tblDoanhThu = new JTable(modelDoanhThu) {
-//			private static final long serialVersionUID = 1L;
-//			public boolean editCellAt(int row, int column, EventObject e) { // Không cho chỉnh sửa giá trị trong table
-//				return false;
-//			}
-//		};
-//		tblDoanhThu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//		tblDoanhThu.setRowHeight(35);
-//		scrollPaneDoanhThu.setViewportView(tblDoanhThu);
-//
-//		/**
-//		 * Đổi màu header cho table
-//		 */
-//		JTableHeader tableHeader2 = tblDoanhThu.getTableHeader();
-//		tableHeader2.setBackground(new Color(58, 181, 74));
-//		tableHeader2.setForeground(Color.white);
-//		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-//
-//		Auto setSize
-//		tblDoanhThu.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		tblDoanhThu.getColumnModel().getColumn(0).setPreferredWidth(50);
-//		tblDoanhThu.getColumnModel().getColumn(1).setPreferredWidth(140);
-//		tblDoanhThu.getColumnModel().getColumn(2).setPreferredWidth(300);
-//		tblDoanhThu.getColumnModel().getColumn(3).setPreferredWidth(180);
-//		tblDoanhThu.getColumnModel().getColumn(4).setPreferredWidth(200);
-//
-//		tblDoanhThu.setShowGrid(false);
-//
-//		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//		Center value
-//		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-//		tblDoanhThu.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-//		tblDoanhThu.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-//		tblDoanhThu.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
 		JLabel lblTngThuTrong_2 = new JLabel("Chọn ngày:");
 		lblTngThuTrong_2.setForeground(new Color(58, 181, 74));
@@ -194,22 +158,6 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		
 	}
 
-//	private void hienThiHoaDonLapTrongNgay() {
-//
-//		List<OutputNhanVien_HoaDonLap> result = thongKeDao.thongKeHoaDonLapCuaNhanViensTrongNgay(localDate);
-//
-//		for (OutputNhanVien_HoaDonLap outputNhanVien_HoaDonLap : result) {
-//			Object[] datas = new Object[5];
-//			datas[0] = tblDoanhThu.getRowCount() + 1;
-//			datas[1] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
-//			datas[2] = outputNhanVien_HoaDonLap.getHoTenNV();
-//			datas[3] = outputNhanVien_HoaDonLap.getSoLuong();
-//			datas[4] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
-//
-//			modelDoanhThu.addRow(datas);
-//		}
-//
-//	}
 
 	public void setDataToChart1(JPanel jpnItem) {
 		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(localDate.getMonthValue(),

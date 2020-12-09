@@ -1,17 +1,29 @@
 package other;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import constant.TenEntity;
+import dao.DongXeDao;
 import dao.KhachHangDao;
+import dao.LoaiXeDao;
 import dao.NhanVienHanhChinhDao;
 import dao.NhanVienKiThuatDao;
+import dao.XeMayDao;
+import dao.XuatXuDao;
+import entity.DongXe;
 import entity.KhachHang;
+import entity.LoaiXe;
 import entity.NhanVienHanhChinh;
 import entity.NhanVienKiThuat;
+import entity.XeMay;
+import entity.XuatXu;
 
 public class SinhRaThongTin {
 
@@ -35,16 +47,13 @@ public class SinhRaThongTin {
 		nhanVienKiThuats.forEach(s -> nhanVienKiThuatDao.themNhanVienKiThuat(s));
 	}
 
-	//  Sinh ra danh sách thông tin khách hàng
+	// Sinh ra danh sách thông tin khách hàng
 	public static void sinhVaLuuDanhSachThongTinKhachHang(int soLuong) {
 
 		KhachHangDao khachHangDao = KhachHangDao.getInstance();
 		List<KhachHang> khachHangs = sinhRaDanhSachThongTinKhachHang(soLuong);
 		khachHangs.forEach(s -> khachHangDao.themKhachHang(s));
 	}
-	
-	
-	
 
 	public static List<NhanVienHanhChinh> sinhRaDanhSachThongTinNhanVienHanhChinh(int size) {
 
@@ -175,6 +184,131 @@ public class SinhRaThongTin {
 
 	}
 
+	public static boolean sinhRaThongTinXeMay(String file, int soLuongSinhRaChoMoiChiec) {
 
+		boolean result = false;
+		XeMayDao xeMayDao = XeMayDao.getInstance();
+
+		// Đọc dữ liệu từ File với Scanner
+		FileInputStream fileInputStream;
+		try {
+			fileInputStream = new FileInputStream(file);
+
+			Scanner scanner = new Scanner(fileInputStream);
+			scanner.nextLine();
+
+			try {
+				while (scanner.hasNextLine()) {
+
+					List<XeMay> xeMays = bienDoiTextDataThanhXeMays(scanner.nextLine(), soLuongSinhRaChoMoiChiec);
+
+					xeMays.forEach(s -> xeMayDao.themXeMay(s));
+
+				}
+
+				result = true;
+			} finally {
+				try {
+					scanner.close();
+					fileInputStream.close();
+				} catch (IOException ex) {
+
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+
+	}
+
+	private static List<XeMay> bienDoiTextDataThanhXeMays(String datas, int soLuong) {
+
+		LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+
+		List<XeMay> xeMays = new ArrayList<XeMay>();
+
+		String[] temp = datas.split(";");
+
+		String tenXeMay = temp[0];
+		String tenAnh = temp[1];
+		double giaNhap = Double.valueOf(temp[2]);
+		double heSoBan = Double.valueOf(temp[3]);
+		int thoiGianBaoHanh = Integer.valueOf(temp[4]);
+		int soPhanKhoi = Integer.valueOf(temp[5]);
+
+	   
+		LoaiXe loaiXe = loaiXeDao.getLoaiXeTheoTen(temp[7]);
+		if (loaiXe == null) {
+			loaiXeDao.themLoaiXe(new LoaiXe(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE), temp[7]));
+
+			loaiXe = loaiXeDao.getLoaiXeTheoTen(temp[7]);
+		}
+
+		DongXe dongXe = dongXeDao.getDongXeTheoTen(temp[8]);
+
+		for (int i = 0; i < soLuong; i++) {
+
+			String maXeMay = RandomMa.getMaNgauNhien(TenEntity.XE_MAY);
+			String soKhung = RandomThongTin.randomSoKhungXeMay();
+			String soSuon = RandomThongTin.randomSoSuon();
+
+			String mauXe = randomMauXe(temp[6]);
+			String tenXuatXu = randomXuatXu(temp[9]);
+
+			XuatXu xuatXu = xuatXuDao.getXuatXuTheoTen(tenXuatXu);
+			if (xuatXu == null) {
+				xuatXuDao.themXuatXu(new XuatXu(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU), tenXuatXu));
+				xuatXu = xuatXuDao.getXuatXuTheoTen(tenXuatXu);
+
+			}
+
+			XeMay xeMay = new XeMay(maXeMay, tenXeMay, tenAnh, 1, giaNhap, heSoBan, thoiGianBaoHanh, soKhung,
+					soPhanKhoi, soSuon, mauXe, loaiXe, dongXe, xuatXu);
+
+			xeMays.add(xeMay);
+		}
+
+		return xeMays;
+
+	}
+
+	private static String randomMauXe(String mauXe) {
+
+		String result = "";
+
+		String[] temp = mauXe.split(",");
+
+		Random random = new Random();
+
+		int rd = random.nextInt(temp.length);
+
+		result = temp[rd];
+
+		return result;
+	}
+
+	private static String randomXuatXu(String xuatXu) {
+
+		String result = "";
+
+		String[] temp = xuatXu.split(",");
+
+		Random random = new Random();
+
+		int rd = random.nextInt(temp.length);
+
+		result = temp[rd];
+
+		return result;
+	}
+
+	public static void main(String[] args) {
+		sinhRaThongTinXeMay("data/xemay.txt", 2);
+	}
 
 }

@@ -6,12 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import constant.ThongKeQuanLiConstant;
 import db.DatabaseConnect;
+import entity.NhanVienHanhChinh;
 import other.OutputNhanVien_HoaDonLap;
 
 public class ThongKeQuanLiDao {
@@ -35,7 +37,8 @@ public class ThongKeQuanLiDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NGAY);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NGAY);
 			preparedStatement.setInt(1, ngay);
 			preparedStatement.setInt(2, thang);
 			preparedStatement.setInt(3, nam);
@@ -59,7 +62,8 @@ public class ThongKeQuanLiDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_THANG);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_THANG);
 			preparedStatement.setInt(1, thang);
 			preparedStatement.setInt(2, nam);
 
@@ -81,7 +85,8 @@ public class ThongKeQuanLiDao {
 		double doanhThu = 0;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NAM);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_DOANH_THU_THEO_NAM);
 			preparedStatement.setInt(1, nam);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -191,15 +196,16 @@ public class ThongKeQuanLiDao {
 	}
 
 	// Thống kê dòng xe
-	public Map<String, Long> thongKeDongXeTrongThang(int thang, int nam) {
+	public Map<String, Long> thongKeDongXeTrongThang(int top, int thang, int nam) {
 
 		Map<String, Long> ketQua = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_DONG_XE_TRONG_THANG);
 
-			preparedStatement.setInt(1, thang);
-			preparedStatement.setInt(2, nam);
+			preparedStatement.setInt(1, top);
+			preparedStatement.setInt(2, thang);
+			preparedStatement.setInt(3, nam);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -214,13 +220,15 @@ public class ThongKeQuanLiDao {
 	}
 
 	// Thống kê dòng xe
-	public Map<String, Long> thongKeDongXeTrongNam(int nam) {
+	public Map<String, Long> thongKeDongXeTrongNam(int top, int nam) {
 
 		Map<String, Long> ketQua = new TreeMap<>();
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement(ThongKeQuanLiConstant.THONG_KE_DONG_XE_TRONG_NAM);
-			preparedStatement.setInt(1, nam);
+			preparedStatement.setInt(1, top);
+			System.out.println("top" + top);
+			preparedStatement.setInt(2, nam);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -339,5 +347,84 @@ public class ThongKeQuanLiDao {
 		return doanhThu;
 	}
 
+	// Thong ke doanh thu ma nhan vien kiem duoc
+
+	public Map<NhanVienHanhChinh, Double> thongKeDoanhThuNhanVienTrongNgay(int ngay, int thang, int nam) {
+		Map<NhanVienHanhChinh, Double> result = new HashMap<NhanVienHanhChinh, Double>();
+		try {
+			String sql = ThongKeQuanLiConstant.THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_NGAY;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, ngay);
+			preparedStatement.setInt(2, thang);
+			preparedStatement.setInt(3, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				String maNhanVienHanhChinh = resultSet.getString("maNVHanhChinh");
+				NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance()
+						.getNVHanhChinhTheoMa(maNhanVienHanhChinh);
+				double total = resultSet.getDouble("total");
+
+				result.put(nhanVienHanhChinh, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
+	public Map<NhanVienHanhChinh, Double> thongKeDoanhThuNhanVienTrongThang(int thang, int nam) {
+		Map<NhanVienHanhChinh, Double> result = new HashMap<NhanVienHanhChinh, Double>();
+		try {
+			String sql = ThongKeQuanLiConstant.THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_THANG;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, thang);
+			preparedStatement.setInt(2, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				String maNhanVienHanhChinh = resultSet.getString("maNVHanhChinh");
+				NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance()
+						.getNVHanhChinhTheoMa(maNhanVienHanhChinh);
+				double total = resultSet.getDouble("total");
+
+				result.put(nhanVienHanhChinh, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
+	}
 	
+	public Map<NhanVienHanhChinh, Double> thongKeDoanhThuNhanVienTrongNam( int nam) {
+		Map<NhanVienHanhChinh, Double> result = new HashMap<NhanVienHanhChinh, Double>();
+		try {
+			String sql = ThongKeQuanLiConstant.THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_NAM;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				String maNhanVienHanhChinh = resultSet.getString("maNVHanhChinh");
+				NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance()
+						.getNVHanhChinhTheoMa(maNhanVienHanhChinh);
+				double total = resultSet.getDouble("total");
+
+				result.put(nhanVienHanhChinh, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
 }
