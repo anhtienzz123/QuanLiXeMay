@@ -30,6 +30,12 @@ public class XeMayDao {
 	private static final String TEN_XE = "Tên xe";
 
 	private XeMayDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -55,6 +61,26 @@ public class XeMayDao {
 
 		} catch (SQLException e) {
 
+			e.printStackTrace();
+		}
+		return xeMays;
+	}
+	public List<XeMay> getXeMayTheoTen() {
+		
+		List<XeMay> xeMays = new ArrayList<>();
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				
+				XeMay xeMay = XeMayConvert.getXeMay(resultSet);
+				xeMays.add(xeMay);
+			}
+			
+		} catch (SQLException e) {
+			
 			e.printStackTrace();
 		}
 		return xeMays;

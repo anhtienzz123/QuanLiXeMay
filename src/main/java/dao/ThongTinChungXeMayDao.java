@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ThongTinChungXeMayConstant;
+import constant.XeMayConstant;
 import converter.ThongTinChungXeMayConverter;
 import customoutput.ThongTinChiTietXeMay;
 import customoutput.ThongTinChungXeMay;
@@ -20,6 +21,12 @@ public class ThongTinChungXeMayDao {
 	private Connection connection;
 
 	private ThongTinChungXeMayDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 
@@ -54,7 +61,7 @@ public class ThongTinChungXeMayDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return thongTinChiTietXeMays;
 
 	}
@@ -82,38 +89,73 @@ public class ThongTinChungXeMayDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		thongTinChungXeMay.setThongTinChiTietXeMays(getThongTinChiTietXeMays(tenXeMay));
 
 		return thongTinChungXeMay;
 
 	}
-	
-	public boolean capNhapThongTinChungXeMay(String tenXeMayCu,ThongTinChungXeMay thongTinChungXeMay) {
-	   	
-		int result = 0;
-		
-		String sql = ThongTinChungXeMayConstant.CAP_NHAP_THONG_TIN_XE_MAY_CHUNG;
-		
-	
+
+	public List<ThongTinChungXeMay> getThongTinChungXeMayTheoTens(String tenXeMay) {
+
+		List<ThongTinChungXeMay> listThongTin = new ArrayList<ThongTinChungXeMay>();
+		List<String> listTenXe = new ArrayList<String>();
+		XeMayDao xeMayDao = XeMayDao.getInstance();
+
+		String sql = "select tenXeMay\r\n" + "from XeMay\r\n"
+				+ "inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe \r\n"
+				+ "inner join DongXe on XeMay.maDongXe = DongXe.maDongXe \r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "where tenXeMay like N'%" + tenXeMay
+				+ "%'\r\n" + "group by tenXeMay";
+
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			
-			ThongTinChungXeMayConverter.capNhapThongTinChungXeMay(preparedStatement, tenXeMayCu, thongTinChungXeMay);
-		
-			result = preparedStatement.executeUpdate();
-			
-			
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				listTenXe.add(resultSet.getString("tenXeMay"));
+			}
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
+
+		for (String tenXe : listTenXe) {
+			XeMay xeMay = xeMayDao.getThongXeMayChungTheoTen(tenXe);
+
+			ThongTinChungXeMay thongTinChungXeMay = ThongTinChungXeMayConverter.toThongTinChiTietXeMay(xeMay);
+			thongTinChungXeMay.setThongTinChiTietXeMays(getThongTinChiTietXeMays(tenXeMay));
+
+			listThongTin.add(thongTinChungXeMay);
+		}
+		return listThongTin;
+	}
+
+	public boolean capNhapThongTinChungXeMay(String tenXeMayCu, ThongTinChungXeMay thongTinChungXeMay) {
+
+		int result = 0;
+
+		String sql = ThongTinChungXeMayConstant.CAP_NHAP_THONG_TIN_XE_MAY_CHUNG;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ThongTinChungXeMayConverter.capNhapThongTinChungXeMay(preparedStatement, tenXeMayCu, thongTinChungXeMay);
+
+			result = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return result > 0;
 	}
-	
+
+	public static void main(String[] args) {
+		ThongTinChungXeMayDao dao = ThongTinChungXeMayDao.getInstance();
+		dao.getThongTinChungXeMayTheoTens("A").forEach(s -> System.out.println(s));
+	}
+
 }

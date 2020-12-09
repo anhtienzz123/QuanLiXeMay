@@ -38,6 +38,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import dao.ThongKeQuanLiDao;
+import java.awt.Insets;
 
 public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
@@ -64,8 +65,10 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	private JPanel pnlContain;
 	private JPanel pnlSoLieu;
 	private JPanel pnlBieuDo;
-	private JScrollPane scrollPane;
-	private JTextArea txtSoLieu;
+	private JScrollPane scrollPane1;
+	private JTextArea txtSoLieu1;
+	private JTextArea txtSoLieu2;
+	private JTextArea txtSoLieu3;
 
 	/**
 	 * Create the panel.
@@ -154,13 +157,32 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		pnlContain.add(pnlSoLieu, "name_29164502988200");
 		pnlSoLieu.setLayout(null);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 13, 1700, 677);
-		pnlSoLieu.add(scrollPane);
+		scrollPane1 = new JScrollPane();
+		scrollPane1.setBounds(0, 13, 500, 655);
+		pnlSoLieu.add(scrollPane1);
 
-		txtSoLieu = new JTextArea();
-		txtSoLieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		scrollPane.setViewportView(txtSoLieu);
+		txtSoLieu1 = new JTextArea();
+		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane1.setViewportView(txtSoLieu1);
+		
+		JScrollPane scrollPane2 = new JScrollPane();
+		scrollPane2.setBounds(619, 13, 500, 655);
+		pnlSoLieu.add(scrollPane2);
+		
+		txtSoLieu2 = new JTextArea();
+		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane2.setViewportView(txtSoLieu2);
+		
+		JScrollPane scrollPane3 = new JScrollPane();
+		scrollPane3.setBounds(1224, 13, 500, 655);
+		pnlSoLieu.add(scrollPane3);
+		
+		txtSoLieu3 = new JTextArea();
+		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
+		txtSoLieu3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		scrollPane3.setViewportView(txtSoLieu3);
 
 		thongKeDoanhThuNam(pnlDoanhThuThang);
 		thongKeDoanhThuQuy(pnlDoanhThuQuy);
@@ -353,5 +375,4 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 			pnlSoLieu.setVisible(true);
 		}
 	}
-
 }
