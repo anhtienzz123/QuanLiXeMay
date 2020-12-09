@@ -39,14 +39,6 @@ import dao.DongXeDao;
 import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.ThongTinChungXeMayDao;
-<<<<<<< HEAD
-import dao.XeMayDao;
-import db.DatabaseConnect;
-import entity.DongXe;
-import entity.LoaiXe;
-import entity.XeMay;
-=======
->>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 import other.BatRegex;
 import other.CopyTask;
 import other.XuLyChung;
@@ -116,10 +108,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -465,7 +453,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		String tenDongXe = cboDongXe.getSelectedItem().toString().trim();
 		String soPhanKhoi = cboSoPhanKhoi.getSelectedItem().toString().trim().split(" ")[0];
 
-<<<<<<< HEAD
 //		String path = txtPath.getText().trim();
 //		String tenAnh = null;
 //		if (!path.equals("")) {
@@ -526,11 +513,10 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 				isBaoHanh = true;
 				capNhatThongBaoLoi();
 			}
-=======
-		String path = txtPath.getText().trim();
-		String tenAnh = null;
-		if (!path.equals("")) {
-			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
+		String path1 = txtPath.getText().trim();
+		String tenAnh1 = null;
+		if (!path1.equals("")) {
+			tenAnh1 = txtTenXe.getText().trim() + "." + path1.split("\\.")[1];
 		}
 
 
@@ -546,7 +532,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		thongTinChungXeMay.setDongXe(tenDongXe);
 		thongTinChungXeMay.setMoTa(txtMoTa.getText().trim());
 
-		thongTinChungXeMay.setTenAnh(tenAnh);
+		thongTinChungXeMay.setTenAnh(tenAnh1);
 
 		if (validateXeMay()) {
 			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
@@ -561,10 +547,8 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 			isHeSoBan = true;
 			isBaoHanh = true;
 			capNhatThongBaoLoi();
->>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
-		}
 
-//	}
+	}}
 
 	/**
 	 * Chọn ảnh
@@ -642,8 +626,4 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	@Override
 	public void focusLost(FocusEvent e) {
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> 7aa152e1591c7140d33aaac7f3afc63607b5416f
 }
