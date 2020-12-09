@@ -13,7 +13,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,7 +39,6 @@ import dao.DongXeDao;
 import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.ThongTinChungXeMayDao;
-import db.DatabaseConnect;
 import other.BatRegex;
 import other.CopyTask;
 import other.XuLyChung;
@@ -110,16 +108,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		lblNewLabel.setBounds(0, 0, 1800, 50);
 		panel.add(lblNewLabel);
 
-<<<<<<< HEAD
-=======
-		lblMaXe = new JLabel("XM123456");
-		lblMaXe.setBounds(139, 113, 112, 30);
-		add(lblMaXe);
-		lblMaXe.setForeground(Color.BLACK);
-		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaXe.setText("");
 
->>>>>>> 67991c1d91d3dfb2474dfd773b60e513d6eb0220
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
 		cboHangXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -479,25 +468,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 			tenAnh = txtTenXe.getText().trim() + "." + path.split("\\.")[1];
 		}
 
-<<<<<<< HEAD
-		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
-		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
-		XeMay xeMay = new XeMay();
 
-		xeMay.setTenXeMay(txtTenXe.getText().trim());
-		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
-		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
-		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
-		xeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
-		xeMay.setLoaiXe(loaiXe);
-		xeMay.setDongXe(dongXe);
-		xeMay.setMoTa(txtMoTa.getText().trim());
-
-		xeMay.setTenAnh(tenAnh);
-
-		if (validateXeMay(xeMay)) {
-			if (xeMayDao.capNhatXeMay(xeMay))
-=======
 		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay();
 
 		thongTinChungXeMay.setTenXe(txtTenXe.getText().trim());
@@ -514,7 +485,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 		if (validateXeMay()) {
 			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
->>>>>>> 67991c1d91d3dfb2474dfd773b60e513d6eb0220
+
 				JOptionPane.showMessageDialog(this, "Lưu thành công");
 			else
 				JOptionPane.showMessageDialog(this, "Lưu không thành công");
@@ -605,20 +576,5 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	@Override
 	public void focusLost(FocusEvent e) {
 	}
-<<<<<<< HEAD
-=======
-	
-	public static void main(String[] args) {
-		
-		try {
-			DatabaseConnect.connect();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		new GD_CapNhatXeMayChung("MX111").setVisible(true);
-	}
-	
 
->>>>>>> 67991c1d91d3dfb2474dfd773b60e513d6eb0220
 }
