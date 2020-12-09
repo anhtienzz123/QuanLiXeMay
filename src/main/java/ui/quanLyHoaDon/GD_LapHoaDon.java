@@ -1008,7 +1008,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 			String tenDongXe = cboDongXe.getSelectedItem().toString();
 			String tenHangXe = cboHangXe.getSelectedItem().toString();
-			String cboTenXe = cboXe.getSelectedItem().toString();
+			String cboTenXe = cboXe.getSelectedItem().toString().split("-")[0].trim();
 			this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
 					tenDongXe, tenHangXe, cboTenXe, SIZE);
 			xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
@@ -1073,7 +1073,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
-		String cboTenXe = cboXe.getSelectedItem().toString();
+		String cboTenXe = cboXe.getSelectedItem().toString().split("-")[0].trim();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, cboTenXe, SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
@@ -1094,7 +1094,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		List<String> datasList = new ArrayList<String>();
 
-		tenXes.forEach((key, value) -> datasList.add(key));
+		tenXes.forEach((key, value) -> datasList.add(key + " - số lượng " + value));
 
 		DefaultComboBoxModel<String> datas = new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(datasList));
 		cboXe.setModel(datas);
