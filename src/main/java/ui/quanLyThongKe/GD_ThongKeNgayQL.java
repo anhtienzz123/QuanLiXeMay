@@ -170,25 +170,25 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		thongKeDao = ThongKeQuanLiDao.getInstance();
 		localDate = LocalDate.now();
 
-		hienThiHoaDonLapTrongNgay();
+		
 	}
 
-	private void hienThiHoaDonLapTrongNgay() {
-
-		List<OutputNhanVien_HoaDonLap> result = thongKeDao.thongKeHoaDonLapCuaNhanViensTrongNgay(localDate);
-
-		for (OutputNhanVien_HoaDonLap outputNhanVien_HoaDonLap : result) {
-			Object[] datas = new Object[5];
-			datas[0] = tblDoanhThu.getRowCount() + 1;
-			datas[1] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
-			datas[2] = outputNhanVien_HoaDonLap.getHoTenNV();
-			datas[3] = outputNhanVien_HoaDonLap.getSoLuong();
-			datas[4] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
-
-			modelDoanhThu.addRow(datas);
-		}
-
-	}
+//	private void hienThiHoaDonLapTrongNgay() {
+//
+//		List<OutputNhanVien_HoaDonLap> result = thongKeDao.thongKeHoaDonLapCuaNhanViensTrongNgay(localDate);
+//
+//		for (OutputNhanVien_HoaDonLap outputNhanVien_HoaDonLap : result) {
+//			Object[] datas = new Object[5];
+//			datas[0] = tblDoanhThu.getRowCount() + 1;
+//			datas[1] = outputNhanVien_HoaDonLap.getMaNVHanhChinh();
+//			datas[2] = outputNhanVien_HoaDonLap.getHoTenNV();
+//			datas[3] = outputNhanVien_HoaDonLap.getSoLuong();
+//			datas[4] = DinhDangTien.format(outputNhanVien_HoaDonLap.getTongTien());
+//
+//			modelDoanhThu.addRow(datas);
+//		}
+//
+//	}
 
 	public void setDataToChart1(JPanel jpnItem) {
 		Map<String, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(localDate.getMonthValue(),

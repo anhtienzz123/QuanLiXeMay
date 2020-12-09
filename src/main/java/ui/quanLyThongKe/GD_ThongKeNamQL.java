@@ -38,6 +38,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import dao.ThongKeQuanLiDao;
+import other.DinhDangTien;
 
 public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
@@ -45,7 +46,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final int TOP = 5;
+	private static final int TOP = 10;
 	private JPanel pnlDoanhThuThang;
 //	private Vector colHeaderDoanhThu;
 //	private DefaultTableModel modelDoanhThu;
@@ -352,6 +353,37 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 			pnlBieuDo.setVisible(false);
 			pnlSoLieu.setVisible(true);
 		}
+		
+		capNhapLaiDuLieu();
+		
+		
 	}
+	
+	private void capNhapLaiDuLieu() {
+		capNhapSoLieu();
+	}
+	
+	private void capNhapSoLieu() {
+		
+		txtSoLieu.append("===== Doanh thu từng tháng trong năm ====");
+		Map<String, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
+		result.forEach( (key,value) -> {
+			 txtSoLieu.append("\n- Tháng " + key +" : " + DinhDangTien.format(value) );
+		});
+		txtSoLieu.append("\n===== Doanh thu từng quý trong năm =====");
+		txtSoLieu.append("\nQúy 1: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(1, this.nam)));
+		txtSoLieu.append("\nQúy 2: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(2, this.nam)));
+		txtSoLieu.append("\nQúy 3: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(3, this.nam)));
+		txtSoLieu.append("\nQúy 4: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(4, this.nam)));
+		
+		txtSoLieu.append("\n===== Xe bán chạy trong năm =====");
+		Map<String, Long> topXesBanChay = thongKeDao.getTopXeBansTrongNam(TOP, nam);
+		
+		topXesBanChay.forEach( (key,value) -> {
+			 txtSoLieu.append("\n" + key + " : " +  value);
+		});
+		
+	}
+	
 
 }
