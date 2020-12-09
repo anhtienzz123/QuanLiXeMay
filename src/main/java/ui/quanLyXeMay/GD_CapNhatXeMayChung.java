@@ -13,6 +13,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,13 +35,12 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import customoutput.ThongTinChungXeMay;
 import dao.DongXeDao;
 import dao.HangXeDao;
 import dao.LoaiXeDao;
-import dao.XeMayDao;
-import entity.DongXe;
-import entity.LoaiXe;
-import entity.XeMay;
+import dao.ThongTinChungXeMayDao;
+import db.DatabaseConnect;
 import other.BatRegex;
 import other.CopyTask;
 import other.XuLyChung;
@@ -72,8 +72,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	private JButton btnHuy;
 	private JButton btnChonFile;
 
-	private XeMayDao xeMayDao;
-
 	private String filePath;
 
 	private JTextArea txtThongBao;
@@ -81,11 +79,21 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 	private boolean isGiaNhap = false;
 	private boolean isHeSoBan = false;
 	private boolean isBaoHanh = false;
+	
+	private String tenXeMayCu;
+	ThongTinChungXeMayDao thongTinChungXeMayDao;
+	private ThongTinChungXeMay thongTinChungXeMay;
 
 	/**
 	 * Create the panel.
 	 */
-	public GD_CapNhatXeMayChung(XeMay xeMay) {
+	public GD_CapNhatXeMayChung(String tenXeMay) {
+		this.tenXeMayCu = tenXeMay;
+		
+		 thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
+		
+		thongTinChungXeMay = thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay(tenXeMay);
+		
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);
@@ -108,7 +116,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		add(lblMaXe);
 		lblMaXe.setForeground(Color.BLACK);
 		lblMaXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblMaXe.setText(xeMay.getMaXeMay().trim());
+		lblMaXe.setText("");
 
 		cboHangXe = new JComboBox<String>();
 		cboHangXe.setBackground(Color.WHITE);
@@ -121,7 +129,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtTenXe.setBounds(535, 113, 345, 30);
 		add(txtTenXe);
 		txtTenXe.setColumns(10);
-		txtTenXe.setText(xeMay.getTenXeMay().trim());
+		txtTenXe.setText(thongTinChungXeMay.getTenXe().trim());
 
 		JLabel lblMa = new JLabel("Mã xe:");
 		lblMa.setForeground(Color.BLACK);
@@ -213,7 +221,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		cboSoPhanKhoi.setBackground(Color.WHITE);
 		cboSoPhanKhoi.setBounds(608, 233, 132, 30);
 		add(cboSoPhanKhoi);
-		cboSoPhanKhoi.setSelectedItem(xeMay.getSoPhanKhoi() + " cc");
+		cboSoPhanKhoi.setSelectedItem(thongTinChungXeMay.getSoPhanKhoi() + " cc");
 
 		JLabel lblGiaNhap = new JLabel("Giá nhập:");
 		lblGiaNhap.setForeground(Color.BLACK);
@@ -227,7 +235,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtGiaNhap.setBounds(139, 287, 202, 30);
 		add(txtGiaNhap);
 		DecimalFormat df = new DecimalFormat("###.##");
-		txtGiaNhap.setText(df.format(xeMay.getGiaNhap()));
+		txtGiaNhap.setText(df.format(thongTinChungXeMay.getGiaBan()));
 
 		JLabel lblVND = new JLabel("VNĐ.");
 		lblVND.setForeground(Color.BLACK);
@@ -246,7 +254,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtHeSoBan.setColumns(10);
 		txtHeSoBan.setBounds(137, 342, 47, 30);
 		add(txtHeSoBan);
-		txtHeSoBan.setText(xeMay.getHeSoBan() + "");
+		txtHeSoBan.setText(thongTinChungXeMay.getHeSoBan() + "");
 
 		JLabel lblBaoHanh = new JLabel("Bảo hành:");
 		lblBaoHanh.setForeground(Color.BLACK);
@@ -259,7 +267,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtBaoHanh.setColumns(10);
 		txtBaoHanh.setBounds(541, 342, 55, 30);
 		add(txtBaoHanh);
-		txtBaoHanh.setText(xeMay.getThoiGianBaoHanh() + "");
+		txtBaoHanh.setText(thongTinChungXeMay.getThoiGianBaoHanh() + "");
 
 		JLabel lblThang = new JLabel("tháng.");
 		lblThang.setForeground(Color.BLACK);
@@ -281,7 +289,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		txtMoTa.setMargin(new Insets(10, 10, 10, 10));
 		txtMoTa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtMoTa);
-		txtMoTa.setText(xeMay.getMoTa());
+		txtMoTa.setText(thongTinChungXeMay.getMoTa());
 		txtMoTa.setLineWrap(true);
 		txtMoTa.setWrapStyleWord(true);
 
@@ -297,10 +305,10 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		pnlAnh.setLayout(null);
 
 		lblAnh = new JLabel("img");
-		String anh = xeMay.getTenAnh();
+		String anh = thongTinChungXeMay.getTenAnh();
 
 		// Kiểm tra xem ảnh có null không
-		Optional<String> optional = Optional.ofNullable(xeMay.getTenAnh());
+		Optional<String> optional = Optional.ofNullable(thongTinChungXeMay.getTenAnh());
 		if (!optional.isPresent()) {
 			lblAnh.setIcon(new ImageIcon(GD_ThemXeMay.class.getResource("/icon/pictures_folder_30px.png")));
 			lblAnh.setText("img");
@@ -343,12 +351,11 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		add(lblThongTin);
 
 		dangKiSuKien();
-		xeMayDao = XeMayDao.getInstance();
 		loadDuLieuVaoCombobox();
 
-		cboHangXe.setSelectedItem(xeMay.getDongXe().getHangXe().getTenHangXe());
-		cboLoaiXe.setSelectedItem(xeMay.getLoaiXe().getTenLoaiXe());
-		cboDongXe.setSelectedItem(xeMay.getDongXe().getTenDongXe());
+		cboHangXe.setSelectedItem(thongTinChungXeMay.getHangXe());
+		cboLoaiXe.setSelectedItem(thongTinChungXeMay.getLoaiXe());
+		cboDongXe.setSelectedItem(thongTinChungXeMay.getDongXe());
 
 		txtThongBao = new JTextArea();
 		txtThongBao.setForeground(Color.RED);
@@ -470,25 +477,22 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 			tenAnh = lblMaXe.getText().trim() + "." + path.split("\\.")[1];
 		}
 
-		LoaiXe loaiXe = LoaiXeDao.getInstance().getLoaiXeTheoTen(tenLoaiXe);
-		DongXe dongXe = DongXeDao.getInstance().getDongXeTheoTen(tenDongXe);
-		XeMay xeMay = new XeMay();
+		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay();
 
-		xeMay.setMaXeMay(lblMaXe.getText().trim());
-		xeMay.setTenXeMay(txtTenXe.getText().trim());
-		xeMay.setTenAnh(txtPath.getText().trim());
-		xeMay.setGiaNhap(Double.parseDouble(txtGiaNhap.getText().trim()));
-		xeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
-		xeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
-		xeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
-		xeMay.setLoaiXe(loaiXe);
-		xeMay.setDongXe(dongXe);
-		xeMay.setMoTa(txtMoTa.getText().trim());
+		thongTinChungXeMay.setTenXe(txtTenXe.getText().trim());
+		thongTinChungXeMay.setTenAnh(txtPath.getText().trim());
+		thongTinChungXeMay.setGiaBan(Double.parseDouble(txtGiaNhap.getText().trim()));
+		thongTinChungXeMay.setHeSoBan(Double.parseDouble(txtHeSoBan.getText().trim()));
+		thongTinChungXeMay.setThoiGianBaoHanh(Integer.parseInt(txtBaoHanh.getText().trim()));
+		thongTinChungXeMay.setSoPhanKhoi(Integer.parseInt(soPhanKhoi));
+		thongTinChungXeMay.setLoaiXe(tenLoaiXe);
+		thongTinChungXeMay.setDongXe(tenDongXe);
+		thongTinChungXeMay.setMoTa(txtMoTa.getText().trim());
 
-		xeMay.setTenAnh(tenAnh);
+		thongTinChungXeMay.setTenAnh(tenAnh);
 
-		if (validateXeMay(xeMay)) {
-			if (xeMayDao.capNhatXeMay(xeMay))
+		if (validateXeMay()) {
+			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
 				JOptionPane.showMessageDialog(this, "Lưu thành công");
 			else
 				JOptionPane.showMessageDialog(this, "Lưu không thành công");
@@ -537,7 +541,7 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 	}
 
-	private boolean validateXeMay(XeMay xeMay) {
+	private boolean validateXeMay() {
 
 		if (BatRegex.kiemTraTenXe(txtTenXe) && BatRegex.kiemTraGiaNhap(txtGiaNhap)
 				&& BatRegex.kiemTraHeSoBan(txtHeSoBan) && BatRegex.kiemTraHeSoBan(txtBaoHanh))
@@ -578,6 +582,17 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 	@Override
 	public void focusLost(FocusEvent e) {
+	}
+	
+	public static void main(String[] args) {
+		
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		new GD_CapNhatXeMayChung("MX111").setVisible(true);
 	}
 	
 

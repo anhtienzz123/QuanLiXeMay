@@ -549,15 +549,14 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
 	}
-	
+
 	private void xemChiTietChung() {
 		int row = tblXeMay.getSelectedRow();
-		
-		if(row != -1) {
-		
+
+		if (row != -1) {
 			String tenXeMay = tblXeMay.getValueAt(row, 1).toString().trim();
 			new GD_ChiTietXeMayChung(tenXeMay).setVisible(true);
-		}else {
+		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để xem chi tiết");
 		}
 	}
@@ -584,6 +583,17 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			String ma = tblXeMay.getValueAt(row, 1).toString().trim();
 			XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 			setManHinh(new GD_CapNhatXeMay(xeMay));
+		} else {
+			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
+		}
+	}
+
+	private void capNhapThongTinXeChung() {
+
+		int row = tblXeMay.getSelectedRow();
+		if (row != -1) {
+			String tenXeMay = tblXeMay.getValueAt(row, 1).toString().trim();
+			setManHinh(new GD_CapNhatXeMayChung(tenXeMay));
 		} else {
 			JOptionPane.showMessageDialog(this, "Bạn chưa chọn dòng để sửa");
 		}
@@ -633,24 +643,31 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			setManHinh(new GD_ThemXeMay());
 		}
 		if (o.equals(btnSua)) {
-			capNhatThongTinXe();
+
+			if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
+
+				capNhatThongTinXe();
+			} else {
+				System.out.println("Cap nhat thong tin xe chung");
+				capNhapThongTinXeChung();
+
+			}
+
 		}
 		if (o.equals(btnXoa)) {
-//			
+
 		}
+
 		if (o.equals(btnXemChiTiet)) {
-			
-			System.out.println("====> " + cboXe.getSelectedItem().toString());
-			if(cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
+
+			if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
 				System.out.println("Xem tung xe");
 				xemChiTiet();
-			}else {
+			} else {
 				System.out.println("Xem chung xe");
 				xemChiTietChung();
 			}
-			
-			
-			
+
 		}
 		if (o.equals(mntmDongXe)) {
 			new GD_DongXe().setVisible(true);
@@ -845,7 +862,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 	// Giao diện xem gom nhóm
 	private void capNhapGiaoDienGomNhomXe() {
-		System.out.println("Chay thang gom nhom xe");
 		String[] colHeaderXeMay = { "STT", "Tên xe", "Số lượng tồn", "Giá bán", "Bảo hành", "Loại xe", "Dòng xe",
 				"Hãng xe" };
 		modelXe = new DefaultTableModel(colHeaderXeMay, 0);

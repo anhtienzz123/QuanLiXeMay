@@ -72,9 +72,9 @@ public class BatRegex {
 
 	public static boolean kiemTraTenXe(JTextField text) {
 
-		String regex = "^\\D+";
+		
 
-		if (text.getText().matches(regex))
+		if (!text.getText().trim().equals(""))
 			return true;
 
 		return false;

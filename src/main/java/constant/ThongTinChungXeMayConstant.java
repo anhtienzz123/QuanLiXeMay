@@ -14,6 +14,10 @@ public class ThongTinChungXeMayConstant {
 			"from XeMay inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n" + 
 			"where tenXeMay = ?";
 	
+	public static final String CAP_NHAP_THONG_TIN_XE_MAY_CHUNG = "update XeMay\r\n" + 
+			"set tenXeMay = ?, tenAnh = ?, giaNhap = ?, heSoBan = ?, thoiGianBaoHanh = ?, soPhanKhoi = ?, maLoaiXe = ?, maDongXe = ?, moTa = ? where tenXeMay = ?";
+	
+	
 	
 	
 	private ThongTinChungXeMayConstant() {
