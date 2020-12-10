@@ -19,6 +19,7 @@ import converter.XeMayConvert;
 import db.DatabaseConnect;
 import entity.LoaiXe;
 import entity.XeMay;
+import other.XuLyChung;
 
 public class XeMayDao {
 	private static XeMayDao instance;
@@ -65,22 +66,23 @@ public class XeMayDao {
 		}
 		return xeMays;
 	}
+
 	public List<XeMay> getXeMayTheoTen() {
-		
+
 		List<XeMay> xeMays = new ArrayList<>();
-		
+
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
+
 			while (resultSet.next()) {
-				
+
 				XeMay xeMay = XeMayConvert.getXeMay(resultSet);
 				xeMays.add(xeMay);
 			}
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
 		return xeMays;
@@ -104,13 +106,14 @@ public class XeMayDao {
 
 		return xeMay;
 	}
-	
+
 	public XeMay getThongXeMayChungTheoTen(String tenXeMay) {
-		
+
 		XeMay xeMay = null;
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.GET_XE_MAY_THONG_TIN_CHUNG_THEO_TEN_XE_MAY);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(XeMayConstant.GET_XE_MAY_THONG_TIN_CHUNG_THEO_TEN_XE_MAY);
 			preparedStatement.setString(1, tenXeMay);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -123,8 +126,7 @@ public class XeMayDao {
 		}
 
 		return xeMay;
-		
-		
+
 	}
 
 	public LoaiXe getLoaiXeTheoMa(String maLoaiXe) {
@@ -253,7 +255,7 @@ public class XeMayDao {
 
 		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
 
-			sql += " and tenXeMay = N'" + cboTenXe+"'";
+			sql += " and tenXeMay = N'" + cboTenXe + "'";
 
 		}
 
@@ -281,12 +283,11 @@ public class XeMayDao {
 	public List<XeMay> getXeMaysTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe,
 			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, String cboTenXe, int from, int to) {
 
-		String sql = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n" + "as row FROM XeMay) as a\r\n"
-				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
-				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
-				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
-				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE row between " + from + " and "
-				+ to + " \r\n" + "and soLuong > 0";
+		String sql = "SELECT XeMay.*, tenXuatXu, tenLoaiXe, tenDongXe, tenHangXe  , ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n"
+				+ "as row FROM XeMay\r\n" + "inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "and soLuong > 0";
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
@@ -332,17 +333,16 @@ public class XeMayDao {
 
 		if (!cboTenXe.trim().equalsIgnoreCase(TAT_CA)) {
 
-			sql += " and tenXeMay = N'" + cboTenXe+ "'";
+			sql += " and tenXeMay = N'" + cboTenXe + "'";
 
 		}
 
-		System.out.println("===== Cau Sql =====");
-		System.out.println(sql);
+		String result = XuLyChung.xuLyCauSqlPhanTrang(sql, from, to);
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			PreparedStatement preparedStatement = connection.prepareStatement(result);
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -383,7 +383,6 @@ public class XeMayDao {
 		return mauXes;
 	}
 
-	
 	public Map<String, Integer> getTenXeMaysTheoNhieuTieuChi(String timKiem, String field, String gia, String mauXe,
 			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe) {
 
@@ -457,19 +456,15 @@ public class XeMayDao {
 		}
 		return result;
 	}
-	
-	
-	
-	public int getMaxPageTheoNhieuTieuChiGomNhom(String timKiem, String field, String gia, String mauXe, String tenXuatXu,
-			String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
 
-		String sql = "SELECT a.tenXeMay as tenXeMay \r\n" + 
-				"from XeMay as a\r\n" + 
-				"inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n" + 
-				"inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n" + 
-				"inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n" + 
-				"inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + 
-				"WHERE soLuong > 0";
+	public int getMaxPageTheoNhieuTieuChiGomNhom(String timKiem, String field, String gia, String mauXe,
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, int size) {
+
+		String sql = "SELECT a.tenXeMay as tenXeMay \r\n" + "from XeMay as a\r\n"
+				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE soLuong > 0";
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
@@ -516,7 +511,7 @@ public class XeMayDao {
 		sql += " group by a.tenXeMay";
 
 		int count = 0;
-		
+
 		List<String> tenXeMays = new ArrayList<String>();
 
 		try {
@@ -533,7 +528,7 @@ public class XeMayDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		count = tenXeMays.size();
 
 		return (int) Math.ceil(count * 1.00 / size);
@@ -541,13 +536,12 @@ public class XeMayDao {
 	}
 
 	public Map<XeMay, Integer> getXeMaysTheoNhieuTieuChiGomNhom(String timKiem, String field, String gia, String mauXe,
-			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe,  int from, int to) {
-
+			String tenXuatXu, String tenLoaiXe, String tenDongXe, String tenHangXe, int from, int to) {
 
 		Map<XeMay, Integer> result = new HashMap<XeMay, Integer>();
-		
-		String sql = "SELECT a.tenXeMay, COUNT(a.tenXeMay) as soLuongXe FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n" + "as row FROM XeMay) as a\r\n"
-				+ "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
+
+		String sql = "SELECT a.tenXeMay, COUNT(a.tenXeMay) as soLuongXe FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n"
+				+ "as row FROM XeMay) as a\r\n" + "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
 				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
 				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
 				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE row between " + from + " and "
@@ -594,11 +588,9 @@ public class XeMayDao {
 			}
 		}
 		sql += " group by a.tenXeMay";
-		
+
 		System.out.println("===== SQL Gom Nhom =====");
 		System.out.println(sql);
-	
-		
 
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -618,10 +610,5 @@ public class XeMayDao {
 		}
 		return result;
 	}
-	
-	
-	
-
-	
 
 }

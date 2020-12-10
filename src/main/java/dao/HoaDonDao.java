@@ -12,6 +12,7 @@ import constant.HoaDonConstant;
 import converter.HoaDonConverter;
 import db.DatabaseConnect;
 import entity.HoaDon;
+import other.XuLyChung;
 
 public class HoaDonDao {
 
@@ -281,11 +282,10 @@ public class HoaDonDao {
 						+ localDate.getMonthValue() + " and year(ngayLap)=" + localDate.getYear();
 			}
 			
+			String sql = XuLyChung.xuLyCauSqlPhanTrang(result, from, to);
 			
-			PreparedStatement preparedStatement = connection.prepareStatement(result);
-			preparedStatement.setInt(1, from);
-			preparedStatement.setInt(2, to);
-			preparedStatement.setNString(3, "%" + timKiem + "%");
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setNString(1, "%" + timKiem + "%");
 	
 			ResultSet resultSet = preparedStatement.executeQuery();
 			

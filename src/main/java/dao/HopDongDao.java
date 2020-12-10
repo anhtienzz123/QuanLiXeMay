@@ -12,6 +12,7 @@ import constant.HopDongConstant;
 import converter.HopDongConverter;
 import db.DatabaseConnect;
 import entity.HopDong;
+import other.XuLyChung;
 
 public class HopDongDao {
 
@@ -244,10 +245,10 @@ public class HopDongDao {
 						+ localDate.getMonthValue() + " and year(ngayLap)=" + localDate.getYear();
 			}
 			
-			PreparedStatement preparedStatement = connection.prepareStatement(result);
-			preparedStatement.setInt(1, from);
-			preparedStatement.setInt(2, to);
-			preparedStatement.setNString(3, "%" + timKiem + "%");
+			String sql = XuLyChung.xuLyCauSqlPhanTrang(result, from, to);
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setNString(1, "%" + timKiem + "%");
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {

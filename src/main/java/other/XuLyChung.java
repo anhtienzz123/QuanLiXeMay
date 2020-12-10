@@ -29,6 +29,12 @@ public class XuLyChung {
 		return arrays;
 	}
 
+	public static String xuLyCauSqlPhanTrang(String sql, int from, int to) {
+		String result = "SELECT * FROM (" + sql + ")as a where a.row between " + from + " and " + to;
+
+		return result;
+	}
+
 //	Copy file
 //	public static void copyFile(String from, String to) {
 //		Path src = Paths.get(from);
@@ -40,7 +46,5 @@ public class XuLyChung {
 //			e.printStackTrace();
 //		}
 //	}
-	
-	
 
 }

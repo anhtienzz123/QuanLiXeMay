@@ -17,52 +17,61 @@ public class HopDongConstant {
 	public static final String GET_HOP_DONGS_PHAN_TRANG = "SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) as row FROM HopDong) a WHERE a.row >= ?  and a.row <= ?";
 	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maHoaDon from HoaDon\r\n" + "where maHoaDon = ? ";
 
-	public static final String TIM_KIEM_THEO_MA_HOP_DONG = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "where a.row between ? and ? and maHopDong like ? ";
+	public static final String TIM_KIEM_THEO_MA_HOP_DONG = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where maHopDong like ?";
 
-	public static final String TIM_KIEM_THEO_MA_HOA_DON = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "where a.row between ? and ? and HoaDon.maHoaDon like ?";
+	public static final String TIM_KIEM_THEO_MA_HOA_DON = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where HopDong.maHoaDon like ?";
 
-	public static final String TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINH = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n"
-			+ "where a.row between ? and ? and NhanVienHanhChinh.maNVHanhChinh like ?";
+	public static final String TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINH = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where HoaDon.maNVHanhChinh like ?";
 
-	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINH = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n"
-			+ "where a.row between ? and ? and hoTenNV like ?";
+	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINH = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where NhanVienHanhChinh.hoTenNV like ?";
 
-	public static final String TIM_KIEM_THEO_MA_KHACH_HANG = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n"
-			+ "where a.row between ? and ? and KhachHang.maKhachHang like ?";
+	public static final String TIM_KIEM_THEO_MA_KHACH_HANG = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where HoaDon.maKhachHang like ?";
 
-	public static final String TIM_KIEM_THEO_TEN_KHACH_HANG = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n"
-			+ "where a.row between ? and ? and KhachHang.hoTenKH like ?";
+	public static final String TIM_KIEM_THEO_TEN_KHACH_HANG = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, KhachHang.soDienThoai, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where KhachHang.hoTenKH like ?";
 
-	public static final String TIM_KIEM_THEO_SO_DIEN_THOAI = "SELECT a.maHoaDon, a.maXeMay, a.maHopDong FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maHopDong) \r\n"
-			+ "as row FROM HopDong ) as a \r\n"
-			+ "inner join ChiTietHoaDon on a.maHoaDon = ChiTietHoaDon.maHoaDon and a.maXeMay = ChiTietHoaDon.maXeMay\r\n"
-			+ "inner join HoaDon on a.maHoaDon = HoaDon.maHoaDon\r\n"
-			+ "inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n"
-			+ "where a.row between ? and ? and KhachHang.soDienThoai like ?";
+	public static final String TIM_KIEM_THEO_SO_DIEN_THOAI = "SELECT HopDong.*, HoaDon.maNVHanhChinh,HoaDon.ngayLap, NhanVienHanhChinh.hoTenNV, HoaDon.maKhachHang, KhachHang.hoTenKH, KhachHang.soDienThoai, ROW_NUMBER() OVER (ORDER BY maHopDong)\r\n" + 
+			"as row FROM HopDong \r\n" + 
+			"inner join ChiTietHoaDon on HopDong.maHoaDon = ChiTietHoaDon.maHoaDon and HopDong.maXeMay = ChiTietHoaDon.maXeMay\r\n" + 
+			"inner join HoaDon on HopDong.maHoaDon = HoaDon.maHoaDon\r\n" + 
+			"inner join NhanVienHanhChinh on HoaDon.maNVHanhChinh = NhanVienHanhChinh.maNVHanhChinh\r\n" + 
+			"inner join KhachHang on HoaDon.maKhachHang = KhachHang.maKhachHang\r\n" + 
+			"where KhachHang.soDienThoai like ?";
 
 	// Max page
 	public static final String GET_HOP_DONG_PHAN_TRANG_MAX_PAGE = "select COUNT(maHopDong) as total from \r\n"
