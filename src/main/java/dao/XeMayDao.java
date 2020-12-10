@@ -540,12 +540,12 @@ public class XeMayDao {
 
 		Map<XeMay, Integer> result = new HashMap<XeMay, Integer>();
 
-		String sql = "SELECT a.tenXeMay, COUNT(a.tenXeMay) as soLuongXe FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY maXeMay)\r\n"
-				+ "as row FROM XeMay) as a\r\n" + "inner join XuatXu on a.maXuatXu = XuatXu.maXuatXu\r\n"
-				+ "inner join LoaiXe on a.maLoaiXe = LoaiXe.maLoaiXe\r\n"
-				+ "inner join DongXe on a.maDongXe = DongXe.maDongXe\r\n"
-				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "WHERE row between " + from + " and "
-				+ to + " \r\n" + "and soLuong > 0";
+		String sql = "SELECT tenXeMay, COUNT(maXeMay) as soLuongXe FROM XeMay\r\n" + 
+				"inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n" + 
+				"inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe\r\n" + 
+				"inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n" + 
+				"inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + 
+				"where soLuong > 0";
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
@@ -587,7 +587,7 @@ public class XeMayDao {
 				sql += " and giaNhap between 25000000 and 60000000 ";
 			}
 		}
-		sql += " group by a.tenXeMay";
+		sql += " group by tenXeMay";
 
 		System.out.println("===== SQL Gom Nhom =====");
 		System.out.println(sql);
@@ -609,6 +609,28 @@ public class XeMayDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	public long getSoLuongTonTheoTenXe(String tenXeMay) {
+
+		long total = 0;
+
+		String sql = "select count(maXeMay) as total from XeMay where tenXeMay = ?";
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next())
+				total = resultSet.getLong("total");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return total;
+
 	}
 
 }
