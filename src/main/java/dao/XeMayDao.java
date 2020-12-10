@@ -153,7 +153,11 @@ public class XeMayDao {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(XeMayConstant.THEM_XE_MAY);
 			XeMayConvert.themXeMay(preparedStatement, xeMay);
-			n = preparedStatement.executeUpdate();
+			try {
+				n = preparedStatement.executeUpdate();
+			} catch (Exception e) {
+				return false;
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();

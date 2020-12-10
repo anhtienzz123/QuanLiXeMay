@@ -308,7 +308,7 @@ public class SinhRaThongTin {
 	}
 
 	public static void main(String[] args) {
-		sinhRaThongTinXeMay("data/xemay.txt", 2);
+		sinhRaThongTinXeMay("data/xemay.txt", 40);
 	}
 
 }

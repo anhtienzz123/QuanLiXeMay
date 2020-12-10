@@ -1,6 +1,7 @@
 package ui.quanLyXeMay;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -11,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -27,8 +29,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
@@ -47,7 +51,6 @@ import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import dao.XuatXuDao;
 import entity.DongXe;
-import entity.HangXe;
 import entity.LoaiXe;
 import entity.XeMay;
 import entity.XuatXu;
@@ -58,10 +61,6 @@ import other.RandomMa;
 import other.RandomThongTin;
 import other.XuLyChung;
 import ui.App;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import javax.swing.JList;
 
 public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener, FocusListener, MouseListener {
 	/**
@@ -688,11 +687,19 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 				txtPath.setText(f.getPath());
 				new ImportExcelFile();
 				try {
+					int dem = 0;
 					List<XeMay> listXeMay = ImportExcelFile.readExcel(f.getPath());
 					for (XeMay xeMay : listXeMay) {
-						xeMayDao.themXeMay(xeMay);
+						if (xeMayDao.themXeMay(xeMay)) {
+							dem++;
+						}
 					}
-					JOptionPane.showMessageDialog(this, "Xong!!!!!!!!!!");
+					if (dem == 0) {
+						JOptionPane.showMessageDialog(this, "Thêm thất bại (Trùng mã xe)");
+
+					} else {
+						JOptionPane.showMessageDialog(this, "Thêm "+dem+" xe thành công!!!");
+					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -837,6 +844,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Object o = e.getSource();
@@ -913,6 +921,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		capNhatThongBaoLoi();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Object o = e.getSource();
@@ -925,8 +934,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		}
 		if (o.equals(txtTenXe)) {
 			if (e.getClickCount() == 2) {
-				if (!txtTenXe.isEditable())
+				if (!txtTenXe.isEditable()) {
 					txtTenXe.setEditable(true);
+				}
+
 				cboHangXe.setEnabled(true);
 				cboLoaiXe.setEnabled(true);
 				cboDongXe.setEnabled(true);
