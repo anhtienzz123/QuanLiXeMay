@@ -444,8 +444,8 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		cboSoPhanKhoi.setSelectedItem("110 cc");
 		cboXuatXu.setSelectedItem("Việt Nam");
 
-		txtSoSuon.setText(RandomThongTin.randomSoSuon());
-		txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
+//		txtSoSuon.setText(RandomThongTin.randomSoSuon());
+//		txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
 
 		txtThongBao = new JTextArea();
 		txtThongBao.setEditable(false);
@@ -621,10 +621,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		cboMauXe.setSelectedIndex(0);
 		txtGiaNhap.setText("");
 //		txtSoLuong.setText("");
-//		txtSoKhung.setText("");
-		txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
-//		txtSoSuon.setText("");
-		txtSoSuon.setText(RandomThongTin.randomSoSuon());
+		txtSoKhung.setText("");
+//		txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
+		txtSoSuon.setText("");
+//		txtSoSuon.setText(RandomThongTin.randomSoSuon());
 		txtHeSoBan.setText("2");
 		txtBaoHanh.setText("36");
 		txtPath.setText("");
@@ -867,10 +867,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 				cboXuatXu.setSelectedItem("Việt Nam");
 				cboMauXe.setSelectedIndex(0);
 				txtGiaNhap.setText("");
-//				txtSoKhung.setText("");
-				txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
-//				txtSoSuon.setText("");
-				txtSoSuon.setText(RandomThongTin.randomSoSuon());
+				txtSoKhung.setText("");
+//				txtSoKhung.setText(RandomThongTin.randomSoKhungXeMay());
+				txtSoSuon.setText("");
+//				txtSoSuon.setText(RandomThongTin.randomSoSuon());
 				txtHeSoBan.setText("2");
 				txtBaoHanh.setText("36");
 				txtPath.setText("");
