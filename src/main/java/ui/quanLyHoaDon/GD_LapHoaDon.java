@@ -328,7 +328,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		scrollPaneHoaDon.setBackground(Color.WHITE);
 		scrollPaneHoaDon.setBounds(911, 277, 849, 316);
 		add(scrollPaneHoaDon);
-		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số khung",  "Giá Bán", "Thuế", "Tổng tiền" };
+		String[] colHeaderHoaDon = { "STT", "Tên xe", "Số khung", "Giá Bán", "Thuế", "Tổng tiền" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -339,11 +339,12 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		};
 		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHoaDon.setRowHeight(35);
-		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(49);
-		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(300);
-		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(100);
-		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(200);
-		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);
+		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(49);//STT
+		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(300);//Tên xe
+		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(250);//Số khung
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(200);//Giá bán
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);//Thuế
+		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(200);//Tổng Tiền
 
 		tblHoaDon.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -353,7 +354,9 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
 		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		tblHoaDon.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		tblHoaDon.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		tblHoaDon.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+		tblHoaDon.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 		JTableHeader tableHeader = tblHoaDon.getTableHeader();
 		tableHeader.setBackground(new Color(58, 181, 74));
 		tableHeader.setForeground(Color.white);
@@ -384,20 +387,24 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		};
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblXeMay.setRowHeight(35);
-		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(60);
-		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(120);
-		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(300);
-		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(135);
-		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(130);
-		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(100);
-		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(230);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(60);// stt
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(400);// tên xe
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(250);// Số khung
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(130);// số sườn
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(210);// Giá bán
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(130);// Bảo hành
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(200);// Màu xe
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);// Loại xe
+		tblXeMay.getColumnModel().getColumn(8).setPreferredWidth(150);// Dòng xe
+		tblXeMay.getColumnModel().getColumn(9).setPreferredWidth(150);// Hãng xe
+		tblXeMay.getColumnModel().getColumn(10).setPreferredWidth(150);// Xuất xứ
 
 //		center value in column
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 //		tblXeMay.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+		tblXeMay.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
-		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
 
 		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -779,6 +786,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			if (khachHang != null) {
 				capNhatKhachHang(khachHang);
 			} else {
+				capNhatKhachHang(khachHang);
 				JOptionPane.showMessageDialog(null, "Số điện thoại không tồn tại", "Thông báo",
 						JOptionPane.INFORMATION_MESSAGE, null);
 			}
@@ -791,6 +799,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			if (khachHang != null) {
 				capNhatKhachHang(khachHang);
 			} else {
+				capNhatKhachHang(khachHang);
 				JOptionPane.showMessageDialog(null, "Số CMT không tồn tại", "Thông báo",
 						JOptionPane.INFORMATION_MESSAGE, null);
 			}
@@ -988,7 +997,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			int row = tblXeMay.getSelectedRow();
 			if (row != -1) {
 				String ma = xeMays.get(row).getMaXeMay();
-				//XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
+				// XeMay xeMay = xeMayDao.getXeMayTheoMa(ma);
 				new GD_ChiTietXeMay(ma).setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Bạn chưa chọn xe máy để xem chi tiết");
@@ -1138,6 +1147,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			txtSoCMT.setText(khachHang.getSoCMT());
 			txtSoCMT.setEditable(false);
 			txtSoDienThoai.setEditable(false);
+			txtSoDienThoai.setText(khachHang.getSoDienThoai());
 			lblNgaySinh.setText(XuLyThoiGian.chuyenDateThanhString(khachHang.getNgaySinh()));
 			lblDiaChi.setText("<html>" + khachHang.getDiaChiKH() + "</html>");
 		} else {

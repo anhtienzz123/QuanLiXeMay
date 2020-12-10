@@ -24,6 +24,24 @@ public class ThongKeQuanLiConstant {
 			"HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
 			"where MONTH(HoaDon.ngayLap) between ? and ? and YEAR(HoaDon.ngayLap) = ?";
 	
+	// So Luong Xe
+	
+	public static final String GET_SO_LUONG_XE_BAN_TRONG_NGAY = "select COUNT(*) as soLuong\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where DAY(HoaDon.ngayLap) = ? and MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap) = ?";
+	
+	public static final String GET_SO_LUONG_XE_BAN_TRONG_THANG = "select COUNT(*) as soLuong\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap) = ?";
+	
+	public static final String GET_SO_LUONG_XE_BAN_TRONG_NAM = "select COUNT(*) as soLuong\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"where YEAR(HoaDon.ngayLap) = ?";
+	
+	
 	// Doanh thu Map
 	public static final String DOANH_THU_NGAYS_THEO_THANG = " select  DAY(HoaDon.ngayLap) as ngay , SUM(giaBan*soLuong)as doanhThu from \r\n"
 			+ " HoaDon inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n"
@@ -100,4 +118,16 @@ public class ThongKeQuanLiConstant {
 			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
 			"where Year(HoaDon.ngayLap) = ?\r\n" + 
 			"group by NhanVienHanhChinh.maNVHanhChinh";
+	
+	public static final String THONG_KE_XE_BAN_TRONG_NGAY = "select tenXeMay, COUNT(tenXeMay) as total\r\n" + 
+			"from HoaDon\r\n" + 
+			"inner join ChiTietHoaDon on HoaDon.maHoaDon = ChiTietHoaDon.maHoaDon\r\n" + 
+			"inner join XeMay on ChiTietHoaDon.maXeMay = XeMay.maXeMay\r\n" + 
+			"where DAY(HoaDon.ngayLap) = ? and MONTH(HoaDon.ngayLap) = ? and YEAR(HoaDon.ngayLap)= ?\r\n" + 
+			"group by tenXeMay";
+	
+	public static final String THONG_KE_SO_LUONG_XE_TON = "select tenXeMay, COUNT(*) as total\r\n" + 
+			"from XeMay\r\n" + 
+			"where soLuong > 0\r\n" + 
+			"group by tenXeMay";
 }

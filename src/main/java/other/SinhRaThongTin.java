@@ -308,7 +308,9 @@ public class SinhRaThongTin {
 	}
 
 	public static void main(String[] args) {
-		sinhRaThongTinXeMay("data/xemay.txt", 2);
+//		sinhRaThongTinXeMay("data/xemay.txt", 40);
+		KhachHangDao dao = KhachHangDao.getInstance();
+		sinhRaDanhSachThongTinKhachHang(60).forEach(v->dao.themKhachHang(v));
 	}
 
 }

@@ -269,7 +269,7 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		JLabel lblSoKhung = new JLabel(xeMay.getSoKhung());
 		lblSoKhung.setForeground(Color.BLACK);
 		lblSoKhung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSoKhung.setBounds(1047, 358, 188, 30);
+		lblSoKhung.setBounds(1047, 358, 279, 30);
 		add(lblSoKhung);
 
 		JLabel lblSSn = new JLabel("Số sườn:");

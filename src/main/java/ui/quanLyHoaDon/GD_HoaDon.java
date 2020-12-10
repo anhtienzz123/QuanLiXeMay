@@ -281,6 +281,8 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		
 		btnBoloc.addActionListener(this);
 		
+		
+		
 		cboTimKiem.addActionListener(this);
 		txtTimKiem.addKeyListener(this);
 		txtNgay.addPropertyChangeListener(new PropertyChangeListener() {
@@ -288,7 +290,16 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("date")) {
-					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					
+					if(txtNgay != null) {
+						
+						
+						if(txtNgay.getDate()!=null)
+							date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+							
+						
+					}
+					
                     capNhatHoaDonsTrongBang();
 				}
 
@@ -299,6 +310,7 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 
 	private void khoiTao() {
 		hoaDonDao = HoaDonDao.getInstance();
+		txtNgay.setDate(null);
 
 	}
 
@@ -347,6 +359,14 @@ public class GD_HoaDon extends JPanel implements ActionListener, MouseListener, 
 		if(source == cboTimKiem) {
 			txtTimKiem.setText("");
 			this.page = 1;
+			capNhatHoaDonsTrongBang();
+		}
+		
+		if(source == btnBoloc) {
+			cboTimKiem.setSelectedItem("Mã hóa đơn");
+			txtTimKiem.setText("");
+			txtNgay.setDate(null);
+			date = null;
 			capNhatHoaDonsTrongBang();
 		}
 

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import constant.ThongTinChungXeMayConstant;
-import constant.XeMayConstant;
 import converter.ThongTinChungXeMayConverter;
 import customoutput.ThongTinChiTietXeMay;
 import customoutput.ThongTinChungXeMay;

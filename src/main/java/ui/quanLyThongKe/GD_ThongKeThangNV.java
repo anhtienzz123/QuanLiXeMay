@@ -64,11 +64,14 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 	private ThongKeNhanVienDao thongKeNhanVienDao;
 	private String maNhanVienHanhChinh;
 
+
+	
 	/**
 	 * Create the panel.
 	 */
 	public GD_ThongKeThangNV() {
 
+	
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1800, 1010));
 		setLayout(null);

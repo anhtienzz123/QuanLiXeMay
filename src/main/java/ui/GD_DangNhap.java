@@ -174,8 +174,8 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 		txtTaiKhoan.addKeyListener(this);
 
 //		Test
-		txtTaiKhoan.setText("NV180556");
-		txtMatKhau.setText("55555");
+		txtTaiKhoan.setText("NVHC180556");
+		txtMatKhau.setText("12345678");
 
 	}
 

@@ -29,21 +29,20 @@ import entity.XeMay;
 import entity.XuatXu;
 
 public class ImportExcelFile {
-//	public static final int COLUMN_MAXE = 0;
+	public static final int COLUMN_MAXE = 0;
 	public static final int COLUMN_TENXE = 1;
-	public static final int COLUMN_SOLUONG = 2;
-	public static final int COLUMN_GIANHAP = 3;
-	public static final int COLUMN_HESOBAN = 4;
-	public static final int COLUMN_BAOHANH = 5;
-	public static final int COLUMN_SOKHUNG = 6;
-	public static final int COLUMN_SOSUON = 7;
-	public static final int COLUMN_PHANKHOI = 8;
-	public static final int COLUMN_MAUXE = 9;
-	public static final int COLUMN_LOAIXE = 10;
-	public static final int COLUMN_HANGXE = 11;
-	public static final int COLUMN_DONGXE = 12;
-	public static final int COLUMN_XUATXU = 13;
-	public static final int COLUMN_MOTA = 14;
+	public static final int COLUMN_GIANHAP = 2;
+	public static final int COLUMN_HESOBAN = 3;
+	public static final int COLUMN_BAOHANH = 4;
+	public static final int COLUMN_SOKHUNG = 5;
+	public static final int COLUMN_SOSUON = 6;
+	public static final int COLUMN_PHANKHOI = 7;
+	public static final int COLUMN_MAUXE = 8;
+	public static final int COLUMN_LOAIXE = 9;
+	public static final int COLUMN_HANGXE = 10;
+	public static final int COLUMN_DONGXE = 11;
+	public static final int COLUMN_XUATXU = 12;
+	public static final int COLUMN_MOTA = 13;
 	private static HangXe hangXe;
 
 	public static void main(String[] args) throws IOException {
@@ -80,7 +79,8 @@ public class ImportExcelFile {
 
 			// Read cells and set value for book object
 			XeMay xeMay = new XeMay();
-			xeMay.setMaXeMay(RandomMa.getMaNgauNhien(TenEntity.XE_MAY).trim());
+//			xeMay.setMaXeMay(RandomMa.getMaNgauNhien(TenEntity.XE_MAY).trim());
+			xeMay.setSoLuong(1);
 			while (cellIterator.hasNext()) {
 				// Read cell
 				Cell cell = cellIterator.next();
@@ -93,15 +93,11 @@ public class ImportExcelFile {
 				int columnIndex = cell.getColumnIndex();
 
 				switch (columnIndex) {
-//				case COLUMN_MAXE:
-//					xeMay.setMaXeMay(getCellValue(cell).toString().trim());
-//					break;
+				case COLUMN_MAXE:
+					xeMay.setMaXeMay(getCellValue(cell).toString().trim());
+					break;
 				case COLUMN_TENXE:
 					xeMay.setTenXeMay(getCellValue(cell).toString().trim());
-					break;
-				case COLUMN_SOLUONG:
-					double soLuong = (double) getCellValue(cell);
-					xeMay.setSoLuong((int) Math.round(soLuong));
 					break;
 				case COLUMN_GIANHAP:
 					xeMay.setGiaNhap((double) getCellValue(cell));
