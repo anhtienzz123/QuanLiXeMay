@@ -391,10 +391,16 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void capNhatXeMaysTrongBang() {
 
-		if (cboXe.getSelectedItem().toString().equals("Xem từng xe"))
+		
+		if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
+			System.out.println("== Da cap nhap xem tung xe ==");
 			capNhatXeMaysTungChiec();
-		else
+		}
+		else {
+			System.out.println("== Da cap nhap xe may gom nhom ==");
 			capNhatXeMaysGomNhom();
+		}
+			
 
 	}
 
@@ -439,29 +445,41 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
 				tenDongXe, tenHangXe, SIZE);
-		xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
-				tenDongXe, tenHangXe, from, to);
+		
+		if(! (xeMaysGomNhom.size()  > 0) ) {
+			xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
+					tenDongXe, tenHangXe, from, to);
+		}
 
 		xoaDuLieuXeMayTrongBang();
-		themXeMaysGomNhomVaoBang();
+		themXeMaysGomNhomVaoBang(from, to);
 		txtTrang.setText(this.page + "");
 	}
 
-	private void themXeMaysGomNhomVaoBang() {
+	private int x;
 
+	private void themXeMaysGomNhomVaoBang(int from, int to) {
+
+		x = 0;
+		
+		
 		xeMaysGomNhom.forEach((key, value) -> {
 
-			Object[] datas = new Object[8];
-			datas[0] = tblXeMay.getRowCount() + 1;
-			datas[1] = key.getTenXeMay();
-			datas[2] = value;
-			datas[3] = DinhDangTien.format(key.tinhGiaBan());
-			datas[4] = key.getThoiGianBaoHanh() + " tháng";
-			datas[5] = key.getLoaiXe().getTenLoaiXe();
-			datas[6] = key.getDongXe().getTenDongXe();
-			datas[7] = key.getDongXe().getHangXe().getTenHangXe();
+			x++;
 
-			modelXe.addRow(datas);
+			if (x >= from && x <= to) {
+				Object[] datas = new Object[8];
+				datas[0] = tblXeMay.getRowCount() + 1;
+				datas[1] = key.getTenXeMay();
+				datas[2] = value;
+				datas[3] = DinhDangTien.format(key.tinhGiaBan());
+				datas[4] = key.getThoiGianBaoHanh() + " tháng";
+				datas[5] = key.getLoaiXe().getTenLoaiXe();
+				datas[6] = key.getDongXe().getTenDongXe();
+				datas[7] = key.getDongXe().getHangXe().getTenHangXe();
+
+				modelXe.addRow(datas);
+			}
 
 		});
 
@@ -661,10 +679,10 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		if (o.equals(btnXemChiTiet)) {
 
 			if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
-				System.out.println("Xem tung xe");
+				
 				xemChiTiet();
 			} else {
-				System.out.println("Xem chung xe");
+				
 				xemChiTietChung();
 			}
 
