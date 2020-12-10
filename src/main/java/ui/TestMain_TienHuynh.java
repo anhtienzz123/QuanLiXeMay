@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import customoutput.ThongTinChungXeMay;
+import dao.ThongKeQuanLiDao;
 import dao.ThongTinChungXeMayDao;
 import dao.XeMayDao;
 import db.DatabaseConnect;
@@ -23,6 +24,7 @@ public class TestMain_TienHuynh {
 
 		XeMayDao xeMayDao = XeMayDao.getInstance();
 		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
+		ThongKeQuanLiDao thongKeQuanLiDao = ThongKeQuanLiDao.getInstance();
 
 		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay("SH Mode 50", "anh2",  2000, 1, 36, 150,
 				"Xe tay ga", "SH",  "day la mo ta", null);
@@ -50,6 +52,14 @@ public class TestMain_TienHuynh {
 
 		// Hàm sinh thông tin xe máy
 		// 
-		SinhRaThongTin.sinhRaThongTinXeMay("data/xemay.txt", 2); // 2 là số lượng mỗi chiếc muốn random
+		//SinhRaThongTin.sinhRaThongTinXeMay("data/xemay.txt", 2); // 2 là số lượng mỗi chiếc muốn random
+//		
+//		thongKeQuanLiDao.thongKeXeBanTrongNgay(9, 12, 2020).forEach((key,value) -> {
+//			 System.out.println(key + " : " + value);
+//		});
+		
+		thongKeQuanLiDao.thongXeSoLuongXeTon().forEach( (key,value) -> {
+			System.out.println(key + " : " + value);
+		});
 	}
 }

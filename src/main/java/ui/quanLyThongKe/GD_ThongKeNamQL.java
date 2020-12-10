@@ -42,7 +42,6 @@ import dao.ThongKeQuanLiDao;
 import entity.NhanVienHanhChinh;
 import other.DinhDangTien;
 
-
 public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	/**
@@ -73,10 +72,19 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	private JTextArea txtSoLieu2;
 	private JTextArea txtSoLieu3;
 
+	private JLabel lblTitle;
+	private JLabel lblDoanhThuTrongNam;
+	private JLabel lblSoXeTrongNam;
+
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeNamQL() {
+	public GD_ThongKeNamQL(JLabel lblTitle, JLabel lblDoanhThuTrongNam, JLabel lblSoXeTrongNam) {
+
+		this.lblTitle = lblTitle;
+		this.lblDoanhThuTrongNam = lblDoanhThuTrongNam;
+		this.lblSoXeTrongNam = lblSoXeTrongNam;
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
@@ -168,20 +176,20 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane1.setViewportView(txtSoLieu1);
-		
+
 		JScrollPane scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(619, 13, 500, 655);
 		pnlSoLieu.add(scrollPane2);
-		
+
 		txtSoLieu2 = new JTextArea();
 		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane2.setViewportView(txtSoLieu2);
-		
+
 		JScrollPane scrollPane3 = new JScrollPane();
 		scrollPane3.setBounds(1224, 13, 500, 655);
 		pnlSoLieu.add(scrollPane3);
-		
+
 		txtSoLieu3 = new JTextArea();
 		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu3.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -193,6 +201,12 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
 
+		dangKiSuKien();
+		capNhapLaiDuLieu();
+	}
+
+	private void dangKiSuKien() {
+		cboNam.addActionListener(this);
 	}
 
 	public void khoiTao() {
@@ -312,7 +326,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
-		Map<String, Long> result = thongKeDao.thongKeDongXeTrongNam(5,nam);
+		Map<String, Long> result = thongKeDao.thongKeDongXeTrongNam(5, nam);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
@@ -369,72 +383,102 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (cboThongKe.getSelectedIndex() == 0) {
-			pnlBieuDo.setVisible(true);
-			pnlSoLieu.setVisible(false);
-		} else {
 
-			pnlBieuDo.setVisible(false);
-			pnlSoLieu.setVisible(true);
+		Object source = e.getSource();
+
+		if (source.equals(cboNam)) {
+			txtSoLieu1.setText("");
+			txtSoLieu2.setText("");
+			txtSoLieu3.setText("");
+
+			this.nam = Integer.valueOf(cboNam.getSelectedItem().toString());
+
+			capNhapLaiDuLieu();
 		}
-		
-		capNhapLaiDuLieu();
-		
-		
+
+		if (source.equals(cboThongKe)) {
+			if (cboThongKe.getSelectedIndex() == 0) {
+				pnlBieuDo.setVisible(true);
+				pnlSoLieu.setVisible(false);
+			} else {
+
+				pnlBieuDo.setVisible(false);
+				pnlSoLieu.setVisible(true);
+			}
+		}
+
 	}
 
-	
 	private void capNhapLaiDuLieu() {
+		capNhapThongTinChung();
 		capNhapSoLieu();
+		capNhapLaiBieuDo();
 	}
-	
+
+	private void capNhapThongTinChung() {
+
+		lblTitle.setText("Tổng thu trong ngày " + nam);
+
+		Double doanhSoNgay = thongKeDao.getDoanhThuTheoNam(nam);
+
+		lblDoanhThuTrongNam.setText(DinhDangTien.format(doanhSoNgay));
+
+		long xeNgay = thongKeDao.getSoLuongXeTheoNam(nam);
+
+		lblSoXeTrongNam.setText(xeNgay + "");
+	}
+
+	private void capNhapLaiBieuDo() {
+		thongKeDoanhThuNam(pnlDoanhThuThang);
+		thongKeDoanhThuQuy(pnlDoanhThuQuy);
+		thongKeTopXe(pnlTopXe);
+		thongKeTopDongXe(pnlTopDong);
+		thongKeTopHangXe(pnlTopHang);
+	}
+
 	private void capNhapSoLieu() {
-		
-	    // Cap nhat so lieu 1
+
+		System.out.println("Cap nhap so lieu " + nam);
+		// Cap nhat so lieu 1
 		txtSoLieu1.append("===== Doanh thu từng tháng trong năm ====");
 		Map<String, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
-		result.forEach( (key,value) -> {
-			 txtSoLieu1.append("\n- Tháng " + key +" : " + DinhDangTien.format(value) );
+		result.forEach((key, value) -> {
+			txtSoLieu1.append("\n- Tháng " + key + " : " + DinhDangTien.format(value));
 		});
 		txtSoLieu1.append("\n===== Doanh thu từng quý trong năm =====");
 		txtSoLieu1.append("\nQúy 1: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(1, this.nam)));
 		txtSoLieu1.append("\nQúy 2: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(2, this.nam)));
 		txtSoLieu1.append("\nQúy 3: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(3, this.nam)));
 		txtSoLieu1.append("\nQúy 4: " + DinhDangTien.format(thongKeDao.getDoanhThuQuyTrongNam(4, this.nam)));
-		
+
 		txtSoLieu1.append("\n===== Xe bán chạy trong năm =====");
 		Map<String, Long> topXesBanChay = thongKeDao.getTopXeBansTrongNam(TOP, nam);
-		
-		topXesBanChay.forEach( (key,value) -> {
-			 txtSoLieu1.append("\n" + key + " : " +  value);
+
+		topXesBanChay.forEach((key, value) -> {
+			txtSoLieu1.append("\n" + key + " : " + value);
 		});
 		// Cap so lieu 2
-		
+
 		txtSoLieu2.append("===== Số lượng xe bán ra theo hãng ====");
 		Map<String, Long> hangXes = thongKeDao.thongKeHangXeTrongNam(nam);
-		hangXes.forEach( (key,value) -> {
-			 txtSoLieu2.append("\n- " + key +" : " + value);
+		hangXes.forEach((key, value) -> {
+			txtSoLieu2.append("\n- " + key + " : " + value);
 		});
-		
+
 		txtSoLieu2.append("\n===== Số lượng xe bán ra theo dòng xe ====");
-		Map<String, Long> dongXes = thongKeDao.thongKeDongXeTrongNam(10,nam);
-		dongXes.forEach( (key,value) -> {
-			 txtSoLieu2.append("\n- " + key +" : " + value);
+		Map<String, Long> dongXes = thongKeDao.thongKeDongXeTrongNam(10, nam);
+		dongXes.forEach((key, value) -> {
+			txtSoLieu2.append("\n- " + key + " : " + value);
 		});
 		// Cap nhap so lieu 3
 		txtSoLieu3.append("===== Doanh thu của mỗi nhân viên ===== ");
 		Map<NhanVienHanhChinh, Double> doanhThuNhanViens = thongKeDao.thongKeDoanhThuNhanVienTrongNam(nam);
-		doanhThuNhanViens.forEach((key,value) ->{
-			txtSoLieu3.append("\n"+key.getMaNVHanhChinh()+" - " + key.getHoTenNV() + " : " + DinhDangTien.format(value)  );
-			
-		});
-		
-		
-		
-		
-		
-	}
-	
+		doanhThuNhanViens.forEach((key, value) -> {
+			txtSoLieu3.append(
+					"\n" + key.getMaNVHanhChinh() + " - " + key.getHoTenNV() + " : " + DinhDangTien.format(value));
 
+		});
+
+	}
 
 }

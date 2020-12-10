@@ -101,6 +101,79 @@ public class ThongKeQuanLiDao {
 
 		return doanhThu;
 	}
+	
+	// So Luong xe bang so
+	
+	public long getSoLuongXeTheoNgay(int ngay, int thang, int nam) {
+
+		long soLuong = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_SO_LUONG_XE_BAN_TRONG_NGAY);
+			preparedStatement.setInt(1, ngay);
+			preparedStatement.setInt(2, thang);
+			preparedStatement.setInt(3, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				soLuong = resultSet.getLong("soLuong");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return soLuong;
+
+	}
+
+	public long getSoLuongXeTheoThang(int thang, int nam) {
+
+		long soLuong = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_SO_LUONG_XE_BAN_TRONG_THANG);
+			preparedStatement.setInt(1, thang);
+			preparedStatement.setInt(2, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				soLuong = resultSet.getLong("soLuong");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return soLuong;
+	}
+
+	public long getSoLuongXeTheoNam(int nam) {
+
+		long soLuong = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(ThongKeQuanLiConstant.GET_SO_LUONG_XE_BAN_TRONG_NAM);
+
+			preparedStatement.setInt(1, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+				soLuong = resultSet.getLong("soLuong");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return soLuong;
+	}
 
 	// Thống kê Map
 	public Map<String, Double> getDoanhThuNgaysTheoThang(int thang, int nam) {
@@ -425,6 +498,56 @@ public class ThongKeQuanLiDao {
 		}
 		return result;
 
+	}
+	
+	// Thong ke số lượng xe nào bán ra trong ngay
+	public Map<String, Long> thongKeXeBanTrongNgay(int ngay, int thang, int nam){
+		
+		Map<String, Long> result = new HashMap<String, Long>();
+		try {
+			String sql = ThongKeQuanLiConstant.THONG_KE_XE_BAN_TRONG_NGAY;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, ngay);
+			preparedStatement.setInt(2, thang);
+			preparedStatement.setInt(3, nam);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+
+				String tenXeMay = resultSet.getString("tenXeMay");
+				
+				Long total = resultSet.getLong("total");
+
+				result.put(tenXeMay, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// thong ke so luong ton
+	public Map<String, Long> thongXeSoLuongXeTon(){
+		Map<String, Long> result = new HashMap<String, Long>();
+		try {
+			String sql = ThongKeQuanLiConstant.THONG_KE_SO_LUONG_XE_TON;
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+
+				String tenXeMay = resultSet.getString("tenXeMay");
+				
+				long total = resultSet.getLong("total");
+
+				result.put(tenXeMay, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }
