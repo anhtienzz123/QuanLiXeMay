@@ -179,6 +179,7 @@ public class NhanVienHanhChinhDao {
 			PreparedStatement preparedStatement = null;
 
 			switch (field) {
+			
 			case "":
 				preparedStatement = connection
 						.prepareStatement(NhanVienHanhChinhConstant.GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG);

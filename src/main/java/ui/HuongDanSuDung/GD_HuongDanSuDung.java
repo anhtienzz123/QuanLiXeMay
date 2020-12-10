@@ -26,6 +26,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import constant.HuongDanSuDungConstant;
+import constant.NhanVienHanhChinhConstant;
 import other.TreeUtil;
 import other.TradingProjectDataService;
 import other.TradingProjectTreeRenderer;
@@ -140,7 +141,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		txtText = new JEditorPane();
 		txtText.setContentType("text/html");
-		txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
+		txtText.setText(HuongDanSuDungConstant.GIOI_THIEU);
 		txtText.setEditable(false);
 		txtText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtText);
@@ -199,7 +200,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			switch (selectedNode.getUserObject().toString()) {
 //			Hóa đơn
 			case "Lập hóa đơn":
-				txtText.setText(HuongDanSuDungConstant.TEST);
+				txtText.setText(HuongDanSuDungConstant.LAP_HOA_DON);
 				break;
 			case "Tìm kiếm hóa đơn":
 				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
@@ -219,44 +220,47 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				break;
 //				Nhân viên
 			case "Thêm nhân viên hành chính":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_NHAN_VIEN_HANH_CHINH);
 				break;
 			case "Cập nhật nhân viên hành chính":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_NHAN_VIEN_HANH_CHINH);
 				break;
 			case "Xóa nhân viên hành chính":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_NHAN_VIEN_HANH_CHINH);
 				break;
 			case "Tìm kiếm nhân viên hành chính":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.TIM_NHAN_VIEN_HANH_CHINH);
 				break;
 			case "Thêm nhân viên kỹ thuật":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_NV_KI_THUAT);
 				break;
 			case "Cập nhật nhân viên kỹ thuật":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_NV_KI_THUAT);
 				break;
 			case "Xóa nhân viên kỹ thuật":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_NV_KI_THUAT);
 				break;
 			case "Tìm kiếm nhân viên kỹ thuật":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_NV_KI_THUAT);
 				break;
 			case "Đổi mật khẩu":
 				txtText.setText(selectedNode.getUserObject().toString());
 				break;
 //				Khách hàng
 			case "Thêm khách hàng":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_KHACH_HANG);
 				break;
 			case "Cập nhật khách hàng":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_KHACH_HANG);
 				break;
 			case "Xóa khách hàng":
 				txtText.setText(selectedNode.getUserObject().toString());
 				break;
 			case "Tìm kiếm khách hàng":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_KHACH_HANG);
+				break;
+			case "Xem chi tiết khách hàng":
+				txtText.setText(HuongDanSuDungConstant.XEM_CHI_TIET_KHACH_HANG);
 				break;
 //				Dòng xe
 			case "Thêm dòng xe":

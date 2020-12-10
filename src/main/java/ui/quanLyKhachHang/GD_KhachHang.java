@@ -290,6 +290,21 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
 			}
 		}
+		
+		if(source.equals(btnXoa)) {
+//			int row = tblKhachHang.getSelectedRow();
+//			String maKH = (String) modelKhachHang.getValueAt(row, 1);
+//			if(row > 0) {
+//				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa khách hàng ?", "Chú ý",
+//						JOptionPane.YES_NO_OPTION); 
+//				if(xacnhan == JOptionPane.YES_OPTION) {
+//					KhachHang khachHang = khachHangDao.getKhachHangTheoMa(maKH);
+//					khachHang.
+//				}
+//			}else {
+//				JOptionPane.showMessageDialog(this, "Chọn khách hàng bạn muốn xóa");
+//			}
+		}
 
 		if (source == btnDau) {
 			this.page = 1;
