@@ -189,14 +189,14 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		};
 		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblBaoHanh.setRowHeight(35);
-		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(136);
-		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(160);
-		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(160);
-		tblBaoHanh.getColumnModel().getColumn(3).setPreferredWidth(160);
-		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);
-		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);
-		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);
-		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(160);
+		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(100);//Stt
+		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(160);//Mã hợp đồng
+		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(160);//Mã hóa đơn
+		tblBaoHanh.getColumnModel().getColumn(3).setPreferredWidth(160);//Mã nhân viên
+		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);//Tên nhân viên
+		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);//Mã khách hàng
+		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);//Tên khách hàng
+		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(196);//Ngày lập hóa đơn
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

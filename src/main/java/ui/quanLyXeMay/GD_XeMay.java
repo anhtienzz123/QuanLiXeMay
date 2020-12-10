@@ -306,14 +306,18 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblXeMay.setRowHeight(35);
 		scrollPaneXeMay.setViewportView(tblXeMay);
-		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
-		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
-		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
-		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
-		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);//stt
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);//Mã xe
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);//Tên xe
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(230);//Số khung
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(150);//Số sườn
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(230);//Giá bán
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(150);//Bảo hành
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(230);//Màu xe
+		tblXeMay.getColumnModel().getColumn(8).setPreferredWidth(150);//Loại xe
+		tblXeMay.getColumnModel().getColumn(9).setPreferredWidth(150);//Dòng xe
+		tblXeMay.getColumnModel().getColumn(10).setPreferredWidth(150);//Hãng xe
+		tblXeMay.getColumnModel().getColumn(11).setPreferredWidth(150);//Xuất xứ
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -324,7 +328,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
 
 		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -841,16 +844,20 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblXeMay.setRowHeight(35);
 		scrollPaneXeMay.setViewportView(tblXeMay);
-		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
-		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
-		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
-		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
-		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);//stt
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);//Mã xe
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);//Tên xe
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(230);//Số khung
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(150);//Số sườn
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(230);//Giá bán
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(150);//Bảo hành
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(230);//Màu xe
+		tblXeMay.getColumnModel().getColumn(8).setPreferredWidth(150);//Loại xe
+		tblXeMay.getColumnModel().getColumn(9).setPreferredWidth(150);//Dòng xe
+		tblXeMay.getColumnModel().getColumn(10).setPreferredWidth(150);//Hãng xe
+		tblXeMay.getColumnModel().getColumn(11).setPreferredWidth(150);//Xuất xứ
 
-//			center value in column
+//		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -859,7 +866,8 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+
+		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		/**
 		 * Đổi màu header cho table
@@ -869,7 +877,6 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		tblXeMay.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 
 	// Giao diện xem gom nhóm
@@ -890,14 +897,14 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		tblXeMay.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblXeMay.setRowHeight(35);
 		scrollPaneXeMay.setViewportView(tblXeMay);
-		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);
-		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(700);
-		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(250);
-		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(150);
-		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(300);
-		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(150);
+		tblXeMay.getColumnModel().getColumn(0).setPreferredWidth(85);//stt
+		tblXeMay.getColumnModel().getColumn(1).setPreferredWidth(700);//Tên xe
+		tblXeMay.getColumnModel().getColumn(2).setPreferredWidth(150);//SL tồn
+		tblXeMay.getColumnModel().getColumn(3).setPreferredWidth(250);//Giá bán
+		tblXeMay.getColumnModel().getColumn(4).setPreferredWidth(150);//Bảo hành
+		tblXeMay.getColumnModel().getColumn(5).setPreferredWidth(200);//Loại xe
+		tblXeMay.getColumnModel().getColumn(6).setPreferredWidth(200);//Dòng xe
+		tblXeMay.getColumnModel().getColumn(7).setPreferredWidth(200);//Hãng xe
 
 //			center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -905,10 +912,9 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
 		tblXeMay.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-		tblXeMay.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-		tblXeMay.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
-		tblXeMay.getColumnModel().getColumn(6).setCellRenderer(rightRenderer);
-		tblXeMay.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(2).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(3).setCellRenderer(rightRenderer);
+		tblXeMay.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
 
 		/**
 		 * Đổi màu header cho table
