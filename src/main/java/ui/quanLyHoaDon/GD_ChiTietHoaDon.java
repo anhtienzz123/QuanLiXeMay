@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.EventObject;
 
 import javax.swing.ImageIcon;
@@ -25,6 +26,7 @@ import dao.HoaDonDao;
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import other.DinhDangTien;
+import other.DocSo;
 import other.XuLyThoiGian;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
@@ -279,7 +281,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		scrollPane.setViewportView(tblHoaDon);
 
 		btnXuatHoaDon = new JButton("Xuất hóa đơn");
-		btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
+		//btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
 		btnXuatHoaDon.setForeground(Color.WHITE);
 		btnXuatHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXuatHoaDon.setBackground(Color.GRAY);
@@ -347,6 +349,10 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			modelHoaDon.addRow(datas);
 
 		}
+		
+		DecimalFormat df = new DecimalFormat("###.##");
+		lblTongTien.setText("Tổng tiền: " + DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
+		lblChu.setText("<html>Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng</html>");
 	}
 
 	@Override

@@ -391,16 +391,13 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	 */
 	private void capNhatXeMaysTrongBang() {
 
-		
 		if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
 			System.out.println("== Da cap nhap xem tung xe ==");
 			capNhatXeMaysTungChiec();
-		}
-		else {
+		} else {
 			System.out.println("== Da cap nhap xe may gom nhom ==");
 			capNhatXeMaysGomNhom();
 		}
-			
 
 	}
 
@@ -445,11 +442,9 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
 				tenDongXe, tenHangXe, SIZE);
-		
-		if(! (xeMaysGomNhom.size()  > 0) ) {
-			xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
-					tenDongXe, tenHangXe, from, to);
-		}
+
+		xeMaysGomNhom = xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe,
+				tenDongXe, tenHangXe, from, to);
 
 		xoaDuLieuXeMayTrongBang();
 		themXeMaysGomNhomVaoBang(from, to);
@@ -461,8 +456,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 	private void themXeMaysGomNhomVaoBang(int from, int to) {
 
 		x = 0;
-		
-		
+
 		xeMaysGomNhom.forEach((key, value) -> {
 
 			x++;
@@ -679,10 +673,10 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		if (o.equals(btnXemChiTiet)) {
 
 			if (cboXe.getSelectedItem().toString().equals("Xem từng xe")) {
-				
+
 				xemChiTiet();
 			} else {
-				
+
 				xemChiTietChung();
 			}
 

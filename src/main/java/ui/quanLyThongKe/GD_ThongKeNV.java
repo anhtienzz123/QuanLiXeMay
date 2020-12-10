@@ -485,10 +485,11 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		localDate = LocalDate.now();
 
 		thongKeDao = ThongKeQuanLiDao.getInstance();
-		Double ngay = thongKeDao.getDoanhThuTheoNgay(localDate.getDayOfMonth(), localDate.getMonthValue(),
+		Double ngay = thongKeNhanVienDao.getDoanhThuTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
+				localDate.getMonthValue(), localDate.getYear());
+		Double thang = thongKeNhanVienDao.getDoanhThuTheoThang(maNhanVienHanhChinh, localDate.getMonthValue(),
 				localDate.getYear());
-		Double thang = thongKeDao.getDoanhThuTheoThang(localDate.getMonthValue(), localDate.getYear());
-		Double nam = thongKeDao.getDoanhThuTheoNam(localDate.getYear());
+		Double nam = thongKeNhanVienDao.getDoanhThuTheoNam(maNhanVienHanhChinh, localDate.getYear());
 
 		lblThongKeNgay.setText(DinhDangTien.format(ngay));
 		lblThongKeThang.setText(DinhDangTien.format(thang));
@@ -561,18 +562,17 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		lblHDNgay.setText(hoaDonLaps + "");
 		lblXeBanNgay.setText(soXeBanTrongNgay + "");
 		lblXeNgay.setText(soXeBanTrongNgay + "");
-		
-		lblTonKho.setText(soLuongTon+"");
-		
+
+		lblTonKho.setText(soLuongTon + "");
 
 	}
 
 	private void hienThiThongKeThang() {
 		double doanhThuThang = thongKeNhanVienDao.getDoanhThuTheoThang(maNhanVienHanhChinh, localDate.getMonthValue(),
 				localDate.getYear());
-		long soXeBanTrongThang = thongKeNhanVienDao.getSoLuongXeTheoThang(maNhanVienHanhChinh, 
+		long soXeBanTrongThang = thongKeNhanVienDao.getSoLuongXeTheoThang(maNhanVienHanhChinh,
 				localDate.getMonthValue(), localDate.getYear());
-		long hoaDonLapsTrongThang = thongKeNhanVienDao.getHoaDonLapTheoThang(maNhanVienHanhChinh, 
+		long hoaDonLapsTrongThang = thongKeNhanVienDao.getHoaDonLapTheoThang(maNhanVienHanhChinh,
 				localDate.getMonthValue(), localDate.getYear());
 
 		lblThongKeThang.setText(DinhDangTien.format(doanhThuThang));
@@ -583,12 +583,10 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 	}
 
 	private void hienThiThongKeNam() {
-		double doanhThuNam = thongKeNhanVienDao.getDoanhThuTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
-				localDate.getMonthValue(), localDate.getYear());
-		long soXeBanTrongNam = thongKeNhanVienDao.getSoLuongXeTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
-				localDate.getMonthValue(), localDate.getYear());
-		long hoaDonLapsTrongNam = thongKeNhanVienDao.getHoaDonLapTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
-				localDate.getMonthValue(), localDate.getYear());
+		double doanhThuNam = thongKeNhanVienDao.getDoanhThuTheoNam(maNhanVienHanhChinh, localDate.getYear());
+		long soXeBanTrongNam = thongKeNhanVienDao.getSoLuongXeTheoNam(maNhanVienHanhChinh, localDate.getYear());
+		long hoaDonLapsTrongNam = thongKeNhanVienDao.getHoaDonLapTheoNam(maNhanVienHanhChinh, localDate.getYear());
+		
 
 		lblThongKeNam.setText(DinhDangTien.format(doanhThuNam));
 		lblTongTienNam.setText(DinhDangTien.format(doanhThuNam));
@@ -596,7 +594,7 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		lblXeBanNam.setText(soXeBanTrongNam + "");
 		lblXeNam.setText(soXeBanTrongNam + "");
 	}
-	
+
 	// Thong ke hoa don Lap trong ngay
 
 }

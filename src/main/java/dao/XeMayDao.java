@@ -435,7 +435,7 @@ public class XeMayDao {
 		}
 
 		sql += "\ngroup by a.tenXeMay";
-		System.out.println(sql);
+	
 
 		Map<String, Integer> result = new TreeMap<String, Integer>();
 
