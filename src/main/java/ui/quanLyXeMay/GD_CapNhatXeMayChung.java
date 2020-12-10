@@ -40,6 +40,7 @@ import dao.HangXeDao;
 import dao.LoaiXeDao;
 import dao.ThongTinChungXeMayDao;
 import other.BatRegex;
+import other.CopyTask;
 import other.XuLyChung;
 import ui.App;
 
@@ -540,6 +541,12 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 		thongTinChungXeMay.setTenAnh(tenAnh1);
 
 		if (validateXeMay()) {
+
+			if (txtPath.getText().trim().contains("\\")) {
+				String fileNameExtentions = filePath.split("\\.")[1];
+				CopyTask task = new CopyTask(filePath, "ImgXe/" + txtTenXe.getText().trim() + "." + fileNameExtentions);
+				task.execute();
+			}
 			if (thongTinChungXeMayDao.capNhapThongTinChungXeMay(tenXeMayCu, thongTinChungXeMay))
 
 				JOptionPane.showMessageDialog(this, "Lưu thành công");
@@ -555,8 +562,6 @@ public class GD_CapNhatXeMayChung extends JPanel implements ActionListener, KeyL
 
 		}
 	}
-
-
 
 	/**
 	 * Chọn ảnh

@@ -1,2 +1,97 @@
 tenXeMay;tenAnh;giaNhap;heSoBan;thoiGianBaoHanh;soPhanKhoi;mauXe;tenLoaiXe;tenDongXe;tenXuatXu
-SH Mode 101;1.png;100000;1;12;150;Đỏ,Đen,Xanh;Xe tay ga;SH;Ân độ,Việt Nam
+SH Mode 125;SH Mode 125.png;53890000;5;36;125;Đỏ,Đen,Xanh,Trắng;Xe tay ga;SH Mode;Ân độ,Việt Nam,Thái Lan,Hàn Quốc
+Air Blade 125;Air Blade 125.png;42390000;5;36;125;Đỏ-đen,Đen,Xanh-đen,Trắng-đen,Xám-đen;Xe tay ga;Air Blade;Việt Nam,Thái Lan,Hàn Quốc,Nhật Bản
+Air Blade 150;Air Blade 150.png;56390000;5;36;150;Đỏ-bạc-đen,Xanh-xám-đen,Trắng-đen,Xám-đen;Xe tay ga;Air Blade;Việt Nam,Thái Lan,Hàn Quốc,Nhật Bản,Đức
+Air Blade 150;Air Blade 150.png;56390000;5;36;150;Đỏ-bạc-đen,Xanh-xám-đen,Trắng-đen,Xám-đen;Xe tay ga;Air Blade;Việt Nam,Thái Lan,Hàn Quốc,Nhật Bản,Đức
+Blade 110;Blade 110.png;18800000;5;36;110;Đỏ,Xanh,Trắng,Xám,Đen;Xe số;Blade;Việt Nam,Thái Lan,Trung Quốc
+Wave RSX FI 110;Wave RSX FI 110.jpg;21690000;5;36;110;Đỏ,Xanh,Trắng,Xám,Đen;Xe số;Wave RSX;Việt Nam,Thái Lan,Trung Quốc
+Wave Alpha 110cc;Wave Alpha 110cc.jpg;17790000;5;36;110;Đỏ,Xanh,Trắng,Xám,Đen;Xe số;Wave Alpha;Việt Nam,Thái Lan,Trung Quốc
+Rebel 500;Rebel 500.png;180000000;5;36;175;Đỏ,Xanh,Trắng,Xám,Đen;Xe mô tô;Rebel;Thái Lan,Nhật Bản,Đức
+Winner X;Winner X.png;48990000;5;36;150;Đỏ,Xanh,Trắng,Xám,Đen;Xe côn tay;Winner;Thái Lan,Nhật Bản,Đức
+CBR1000RR-R Fireblade SP;CBR1000RR-R Fireblade SP.png;1049000000;5;36;175;Đỏ-Xanh-Trắng;Xe mô tô;CBR;Thái Lan,Nhật Bản,Đức
+SH 125i;SH 125i.png;78990000;5;36;125;Đỏ,Xanh,Trắng,Xám,Đen;Xe tay ga;SH i;Thái Lan,Nhật Bản,Đức
+SH 150i;SH 150i.png;95990000;5;36;150;Đỏ,Xanh,Trắng,Xám,Đen;Xe tay ga;SH i;Thái Lan,Nhật Bản,Đức
+SH300i ABS;SH300i ABS.jpg;276490000;5;36;175;Đỏ,Trắng,Đen;Xe tay ga;SH i;Thái Lan,Nhật Bản,Đức
+Goldwing;Goldwing.png;1200000000;5;36;150;Đỏ,Trắng;Xe mô tô;Gold Wing;Thái Lan,Nhật Bản,Đức
+Future 125 FI;Future 125 FI.jpg;30190000;5;36;125;Đỏ,Trắng,Xanh,Đen,Bạc;Xe số;Future;Thái Lan,Nhật Bản,Việt Nam
+CB150R Exmotion;CB150R Exmotion.jpg;105000000;5;36;175;Đỏ,Đen;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+PCX 125;PCX 125.png;56490000;5;36;125;Đỏ,Đen,Bạc;Xe tay ga;PCX;Thái Lan,Nhật Bản,Việt Nam
+PCX 150;PCX 150.png;70490000;5;36;150;Đỏ,Đen,Bạc;Xe tay ga;PCX;Thái Lan,Nhật Bản,Việt Nam
+MSX125;MSX125.png;49990000;5;36;125;Đỏ,Vàng,Trắng;Xe côn tay;MSX;Thái Lan,Nhật Bản,Việt Nam
+Rebel 300;Rebel 300.png;125000000;5;36;175;Đỏ,Đen,Bạc;Xe mô tô;Rebel;Thái Lan,Nhật Bản,Việt Nam
+CB500X;CB500X.png;187990000;5;36;175;Đỏ,Đen,Bạc;Xe mô tô;CBX;Thái Lan,Nhật Bản,Việt Nam
+CBR500R;CBR500R.png;186990000;5;36;175;Đỏ,Đen;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+CB300R;CB300R.png;140000000;5;36;175;Đỏ,Đen;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+CBR650R;CBR650R.jpg;253990000;5;36;175;Đỏ,Đen;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+CB650R;CB650R.png;245990000;5;36;175;Đỏ,Đen,Bạc;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+CB1000R;CB1000R.jpg;468000000;5;36;175;Đỏ,Đen,Bạc;Xe mô tô;CBR;Thái Lan,Nhật Bản,Việt Nam
+CB500F;CB500F.png;178990000;5;36;175;Đỏ,Đen,Bạc;Xe mô tô;CBF;Thái Lan,Nhật Bản,Việt Nam
+Vision;Vision.jpg;29990000;5;36;110;Đỏ,Đen,Bạc,Trắng,Xanh;Xe tay ga;Vision;Thái Lan,Nhật Bản,Việt Nam
+Lead 125 FI;Lead 125 FI.png;38290000;5;36;125;Đỏ,Đen,Nâu,Trắng,Xanh;Xe tay ga;Lead;Thái Lan,Nhật Bản,Việt Nam
+Monkey;Monkey.jpg;84990000;5;36;125;Đỏ,Đen,Vàng,Xanh;Xe côn tay;Monkey;Thái Lan,Nhật Bản,Việt Nam
+Super Cub C125;Super Cub C125.jpg;84990000;5;36;125;Đỏ,Đen,Xanh;Xe số;Super Cub;Thái Lan,Nhật Bản,Việt Nam
+PCX Hybrid;PCX Hybrid.jpg;89990000;5;36;150;Xanh-đen;Xe tay ga;PCX;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN MONSTER ENERGY YAMAHA MOTOGP;EXCITER 150 PHIÊN BẢN MONSTER ENERGY YAMAHA MOTOGP.png;48990000;5;36;150;Xanh-đen;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN GIỚI HẠN;EXCITER 150 PHIÊN BẢN GIỚI HẠN.png;47990000;5;36;150;Xanh-đen,Trắng,Xanh lá;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN DOXOU;EXCITER 150 PHIÊN BẢN DOXOU.png;47990000;5;36;150;Đen-đồng,Trắng;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN MOVISTAR;EXCITER 150 PHIÊN BẢN MOVISTAR.png;47990000;5;36;150;Xanh;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN GP;EXCITER 150 PHIÊN BẢN GP.png;47490000;5;36;150;Xanh;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+EXCITER 150 PHIÊN BẢN RC;EXCITER 150 PHIÊN BẢN RC.png;46990000;5;36;150;Xanh;Xe côn tay;Exciter;Thái Lan,Nhật Bản,Việt Nam
+JUPITER FI PHIÊN BẢN GP;JUPITER FI PHIÊN BẢN GP.png;30000000;5;36;110;Xanh;Xe số;Jupiter;Thái Lan,Nhật Bản,Việt Nam
+JUPITER FI PHIÊN BẢN RC;JUPITER FI PHIÊN BẢN RC.png;29400000;5;36;110;Đen nhám,Đỏ-đen;Xe số;Jupiter;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS FI PHIÊN BẢN RC VÀNH ĐÚC;SIRIUS FI PHIÊN BẢN RC VÀNH ĐÚC.png;23190000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius FI;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS FI PHIÊN BẢN PHANH ĐĨA;SIRIUS FI PHIÊN BẢN PHANH ĐĨA.png;21340000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius FI;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS FI PHIÊN BẢN PHANH CƠ;SIRIUS PHIÊN BẢN PHANH CƠ.png;20340000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius FI;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS PHIÊN BẢN RC VÀNH ĐÚC;SIRIUS PHIÊN BẢN RC VÀNH ĐÚC.png;21300000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS PHIÊN BẢN PHANH ĐĨA;SIRIUS PHIÊN BẢN PHANH ĐĨA.png;19800000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius;Thái Lan,Nhật Bản,Việt Nam
+SIRIUS PHIÊN BẢN PHANH CƠ;SIRIUS PHIÊN BẢN PHANH CƠ.png;18800000;5;36;110;Đen,Đỏ,Trắng;Xe số;Sirius;Thái Lan,Nhật Bản,Việt Nam
+GRANDE BLUE CORE HYBRID PHIÊN BẢN GIỚI HẠN;GRANDE BLUE CORE HYBRID PHIÊN BẢN GIỚI HẠN.png;50000000;5;36;125;Bạc,Đen nhám,Xanh nhám;Xe tay ga;Grande;Thái Lan,Nhật Bản,Việt Nam
+GRANDE BLUE CORE HYBRID PHIÊN BẢN TIÊU CHUẨN;GRANDE BLUE CORE HYBRID PHIÊN BẢN TIÊU CHUẨN.png;45500000;5;36;125;Đỏ-đen,Trắng,Đen;Xe tay ga;Grande;Thái Lan,Nhật Bản,Việt Nam
+GRANDE BLUE CORE HYBRID PHIÊN BẢN ĐẶC BIỆT;GRANDE BLUE CORE HYBRID PHIÊN BẢN ĐẶC BIỆT.png;49500000;5;36;125;Đỏ,Trắng,Xám;Xe tay ga;Grande;Thái Lan,Nhật Bản,Việt Nam
+GRANDE BLUE CORE PHIÊN BẢN ĐẶC BIỆT (PREMIUM);GRANDE BLUE CORE PHIÊN BẢN ĐẶC BIỆT (PREMIUM).png;43990000;5;36;125;Trắng,Xám,Xanh,Đen nhám;Xe tay ga;Grande;Thái Lan,Nhật Bản,Việt Nam
+GRANDE BLUE CORE PHIÊN BẢN CAO CẤP (DELUXE);GRANDE BLUE CORE PHIÊN BẢN CAO CẤP (DELUXE).png;41990000;5;36;125;Xanh lá,Xanh ngọc,Xanh dương,Đỏ;Xe tay ga;Grande;Thái Lan,Nhật Bản,Việt Nam
+LATTE PHIÊN BẢN GIỚI HẠN;LATTE PHIÊN BẢN GIỚI HẠN.png;37990000;5;36;125;Bạc;Xe tay ga;Latte;Thái Lan,Nhật Bản,Việt Nam
+LATTE PHIÊN BẢN TIÊU CHUẨN;LATTE PHIÊN BẢN TIÊU CHUẨN.png;37490000;5;36;125;Đỏ,Trắng,Đen;Xe tay ga;Latte;Thái Lan,Nhật Bản,Việt Nam
+JANUS PHIÊN BẢN GIỚI HẠN (LIMITED);JANUS PHIÊN BẢN GIỚI HẠN (LIMITED).png;31990000;5;36;125;Trắng,Đen,Đỏ;Xe tay ga;Janus;Thái Lan,Nhật Bản,Việt Nam
+JANUS PHIÊN BẢN TIÊU CHUẨN (STANDARD);JANUS PHIÊN BẢN TIÊU CHUẨN (STANDARD).png;27990000;5;36;125;Đỏ,Trắng,Xám;Xe tay ga;Janus;Thái Lan,Nhật Bản,Việt Nam
+JANUS PHIÊN BẢN ĐẶC BIỆT (PREMIUM);JANUS PHIÊN BẢN ĐẶC BIỆT (PREMIUM).png;31490000;5;36;125;Xanh,Đỏ,Trắng;Xe tay ga;Janus;Thái Lan,Nhật Bản,Việt Nam
+NVX 155 VVA THẾ HỆ II PHIÊN BẢN GIỚI HẠN MONSTER ENERGY YAMAHA MOTOGP;NVX 155 VVA THẾ HỆ II PHIÊN BẢN GIỚI HẠN MONSTER ENERGY YAMAHA MOTOGP.png;54000000;5;36;150;Đen;Xe tay ga;NVX;Thái Lan,Nhật Bản,Việt Nam
+NVX 155 VVA THẾ HỆ II;NVX 155 VVA THẾ HỆ II.png;53000000;5;36;150;Đỏ,Đen,Xanh;Xe tay ga;NVX;Thái Lan,Nhật Bản,Việt Nam
+NVX 155 THẾ HỆ I;NVX 155 THẾ HỆ I.png;52240000;5;36;150;Xanh nhám,Xám,Đỏ;Xe tay ga;NVX;Thái Lan,Nhật Bản,Việt Nam
+NVX 155 THẾ HỆ I PHIÊN BẢN DOXOU;NVX 155 THẾ HỆ I PHIÊN BẢN DOXOU.png;52740000;5;36;150;Đen-đồng;Xe tay ga;NVX;Thái Lan,Nhật Bản,Việt Nam
+FREEGO S PHIÊN BẢN ĐẶC BIỆT;FREEGO S PHIÊN BẢN ĐẶC BIỆT.png;38990000;5;36;125;Xanh nhám,Đen,Đỏ,Trắng;Xe tay ga;FREEGO;Thái Lan,Nhật Bản,Việt Nam
+FREEGO PHIÊN BẢN TIÊU CHUẨN;FREEGO PHIÊN BẢN TIÊU CHUẨN.png;32990000;5;36;125;Trắng,Đỏ;Xe tay ga;FREEGO;Thái Lan,Nhật Bản,Việt Nam
+ACRUZO PHIÊN BẢN CAO CẤP (DELUXE);ACRUZO PHIÊN BẢN CAO CẤP (DELUXE).png;33490000;5;36;125;Xanh nhám,Đỏ,Đen;Xe tay ga;ACRUZO;Thái Lan,Nhật Bản,Việt Nam
+YZF-R3;YZF-R3.png;129000000;5;36;175;Xanh bạc,Đen;Xe mô tô;YZF-R3;Thái Lan,Nhật Bản,Việt Nam
+YZF-R15 PHIÊN BẢN GIỚI HẠN MONSTER ENERGY YAMAHA MOTOGP;YZF-R15 PHIÊN BẢN GIỚI HẠN MONSTER ENERGY YAMAHA MOTOGP.png;72000000;5;36;175;Đen;Xe mô tô;YZF-R15;Thái Lan,Nhật Bản,Việt Nam
+YZF-R15;YZF-R15.png;70000000;5;36;175;Xanh bạc,Đen;Xe mô tô;YZF-R15;Thái Lan,Nhật Bản,Việt Nam
+MT-03;MT-03.png;124000000;5;36;175;Đen;Xe mô tô;MT-03;Thái Lan,Nhật Bản,Việt Nam
+MT-15;MT-15.png;69000000;5;36;175;Xanh,Đen;Xe mô tô;MT-15;Thái Lan,Nhật Bản,Việt Nam
+TFX;TFX.png;72900000;5;36;150;Vàng,Đỏ;Xe mô tô;TFX;Thái Lan,Nhật Bản,Việt Nam
+GSX150 - BANDIT;GSX150 - BANDIT.png;68900000;5;36;150;Đỏ,Đen;Xe mô tô;GSX;Thái Lan,Nhật Bản,Việt Nam
+GSX-S150;GSX-S150.png;69400000;5;36;150;Đỏ,Đen;Xe mô tô;GSX;Thái Lan,Nhật Bản,Việt Nam
+GSX-R150;GSX-R150.jpg;74900000;5;36;150;Đỏ,Đen;Xe mô tô;GSX;Thái Lan,Nhật Bản,Việt Nam
+SATRIA F150;SATRIA F150.jpg;51990000;5;36;150;Xanh,Đen;Xe côn tay;Satria;Thái Lan,Nhật Bản,Việt Nam
+RAIDER R150;RAIDER R150.jpg;49190000;5;36;150;Xanh,Đen;Xe côn tay;Raider;Thái Lan,Nhật Bản,Việt Nam
+INTRUDER150;INTRUDER150.jpg;89990000;5;36;150;Bạc,Đen;Xe mô tô;Intruder;Thái Lan,Nhật Bản,Việt Nam
+GZ150 - A;GZ150 - A.png;66990000;5;36;150;Đỏ,Đen;Xe mô tô;GZ150;Thái Lan,Nhật Bản,Việt Nam
+GD110HU;GD110HU.jpg;28490000;5;36;150;Đen,Đỏ;Xe côn tay;GZ150;Thái Lan,Nhật Bản,Việt Nam
+IMPULSE 125 Fi;IMPULSE 125 Fi.png;31990000;5;36;125;Đen,Trắng;Xe tay ga;Impulse;Thái Lan,Nhật Bản,Việt Nam
+ADDRESS 110 Fi;ADDRESS 110 Fi.png;28790000;5;36;110;Vàng,Đen;Xe tay ga;Address;Thái Lan,Nhật Bản,Việt Nam
+VIVA 115 Fi;VIVA 115 Fi.jpg;23990000;5;36;110;Xanh;Xe số;Viva;Thái Lan,Nhật Bản,Việt Nam
+REVO 110;REVO 110.jpg;17690000;5;36;110;Xanh;Xe số;Revo;Thái Lan,Nhật Bản,Việt Nam
+AXELO 125;AXELO 125.jpg;27790000;5;36;125;Xanh;Xe số;Axelo;Thái Lan,Nhật Bản,Việt Nam
+Galaxy 50;Galaxy 50.png;16990000;5;36;50;Đen,Trắng;Xe số;Galaxy;Thái Lan,Nhật Bản,Việt Nam
+New Galaxy 125;New Galaxy 125.png;25200000;5;36;125;Đen,Trắng;Xe số;Galaxy;Thái Lan,Nhật Bản,Việt Nam
+Elegant 50;Elegant 50.jpg;15390000;5;36;50;Đen,Xanh;Xe số;Elegant;Thái Lan,Nhật Bản,Việt Nam
+Angela 50;Angela 50.png;15900000;5;36;50;Trắng,Đen;Xe số;Angela;Thái Lan,Nhật Bản,Việt Nam
+New Angel 125;New Angel 125.png;24700000;5;36;125;Đen;Xe số;Angela;Thái Lan,Nhật Bản,Việt Nam
+Elegant 110;Elegant 110.jpg;24700000;5;36;110;Đen;Xe số;Elegant;Thái Lan,Nhật Bản,Việt Nam
+Angel 110;Angel 110.png;17090000;5;36;110;Đỏ;Xe số;Angel;Thái Lan,Nhật Bản,Việt Nam
+Attila 50;Attila 50.jpg;25190000;5;36;50;Đen;Xe tay ga;Attila;Thái Lan,Nhật Bản,Việt Nam
+Passing 50;Passing 50.png;23700000;5;36;50;Đỏ,Đen;Xe tay ga;Passing;Thái Lan,Nhật Bản,Việt Nam
+Elite 50;Elite 50.png;22390000;5;36;50;Đỏ;Xe tay ga;Elite;Thái Lan,Nhật Bản,Việt Nam
+New Attila 125;New Attila 125.png;32990000;5;36;125;Đỏ;Xe tay ga;Attila;Thái Lan,Nhật Bản,Việt Nam
+Attila-V 125 EFI;Attila-V 125 EFI.png;33690000;5;36;125;Đỏ;Xe tay ga;Attila;Thái Lan,Nhật Bản,Việt Nam
+Elizabeth 110 EFI;Elizabeth 110 EFI.png;30890000;5;36;110;Xanh,Trắng;Xe tay ga;Elizabeth;Thái Lan,Nhật Bản,Việt Nam
+Venus 125 EFI;Venus 125 EFI.png;35490000;5;36;125;Tím,Trắng;Xe tay ga;Venus;Thái Lan,Nhật Bản,Việt Nam
