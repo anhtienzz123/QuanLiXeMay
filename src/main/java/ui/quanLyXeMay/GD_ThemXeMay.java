@@ -698,7 +698,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 						JOptionPane.showMessageDialog(this, "Thêm thất bại (Trùng mã xe)");
 
 					} else {
-						JOptionPane.showMessageDialog(this, "Thêm "+dem+" xe thành công!!!");
+						JOptionPane.showMessageDialog(this, "Thêm " + dem + " xe thành công!!!");
 					}
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -849,7 +849,10 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	public void keyReleased(KeyEvent e) {
 		Object o = e.getSource();
 		if (o.equals(txtTenXe)) {
-			thongTinChungXeMays = thongTinChungXeMayDao.getThongTinChungXeMayTheoTens(txtTenXe.getText().trim());
+
+			new Thread(() -> thongTinChungXeMays = thongTinChungXeMayDao
+					.getThongTinChungXeMayTheoTens(txtTenXe.getText().trim())).start();
+			
 			defaultListModelTenXe.removeAllElements();
 			thongTinChungXeMays.forEach(v -> {
 				defaultListModelTenXe.addElement(v.getTenXe());

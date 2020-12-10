@@ -140,7 +140,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 
 		txtText = new JEditorPane();
 		txtText.setContentType("text/html");
-		txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
+		txtText.setText(HuongDanSuDungConstant.GIOI_THIEU);
 		txtText.setEditable(false);
 		txtText.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane.setViewportView(txtText);
@@ -199,7 +199,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			switch (selectedNode.getUserObject().toString()) {
 //			Hóa đơn
 			case "Lập hóa đơn":
-				txtText.setText(HuongDanSuDungConstant.TEST);
+				txtText.setText(HuongDanSuDungConstant.LAP_HOA_DON);
 				break;
 			case "Tìm kiếm hóa đơn":
 				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
