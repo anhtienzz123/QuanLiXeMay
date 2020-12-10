@@ -18,6 +18,12 @@ public class KhachHangDao {
 	private Connection connection;
 
 	private KhachHangDao() {
+		try {
+			DatabaseConnect.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		connection = DatabaseConnect.getInstance();
 	}
 

@@ -131,7 +131,7 @@ public class GD_ThongKeQL extends JPanel implements MouseListener {
 		lblTitleTongThuTrongNgay = new JLabel("Tổng thu trong ngày");
 		lblTitleTongThuTrongNgay.setForeground(Color.WHITE);
 		lblTitleTongThuTrongNgay.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTitleTongThuTrongNgay.setBounds(12, 11, 317, 30);
+		lblTitleTongThuTrongNgay.setBounds(12, 11, 365, 30);
 		pnlThongKeNgay.add(lblTitleTongThuTrongNgay);
 
 		lblThongKeNgay = new JLabel();

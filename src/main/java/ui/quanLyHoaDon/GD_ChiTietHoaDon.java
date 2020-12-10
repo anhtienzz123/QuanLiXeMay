@@ -49,11 +49,14 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 	private JButton btnThoat;
 	private HoaDonDao hoaDonDao;
 	private String maHoaDon;
+	private JLabel lblTongTien;
+	private JLabel lblChu;
+	private JButton btnXuatHoaDon;
 
 	public GD_ChiTietHoaDon(String maHoaDon) {
 		this.maHoaDon = maHoaDon;
 		hoaDonDao = HoaDonDao.getInstance();
-		
+
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GD_ChiTietHoaDon.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Hóa đơn");
@@ -241,7 +244,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		btnThoat.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setBounds(1015, 810, 136, 30);
+		btnThoat.setBounds(1015, 791, 136, 35);
 		contentPane.add(btnThoat);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -264,9 +267,9 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		tblHoaDon.setRowHeight(30);
 		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(50);
 		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(100);
-		
+
 		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(300);
-		
+
 		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(100);
 		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(100);
 		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(100);
@@ -274,43 +277,64 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(200);
 		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(100);
 		scrollPane.setViewportView(tblHoaDon);
+
+		btnXuatHoaDon = new JButton("Xuất hóa đơn");
+		btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
+		btnXuatHoaDon.setForeground(Color.WHITE);
+		btnXuatHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
+		btnXuatHoaDon.setBackground(Color.GRAY);
+		btnXuatHoaDon.setBounds(762, 791, 214, 35);
+		contentPane.add(btnXuatHoaDon);
+
+		lblTongTien = new JLabel("Tổng tiền:");
+		lblTongTien.setForeground(Color.RED);
+		lblTongTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblTongTien.setBounds(23, 729, 642, 35);
+		contentPane.add(lblTongTien);
+
+		lblChu = new JLabel("(Bằng chữ");
+		lblChu.setVerticalAlignment(SwingConstants.TOP);
+		lblChu.setForeground(Color.RED);
+		lblChu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblChu.setBounds(23, 765, 688, 61);
+		contentPane.add(lblChu);
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
-		tblHoaDon.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-		tblHoaDon.getColumnModel().getColumn(6).setCellRenderer( centerRenderer );
-		tblHoaDon.getColumnModel().getColumn(8).setCellRenderer( centerRenderer );
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblHoaDon.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblHoaDon.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
+		tblHoaDon.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
 
 		JTableHeader tableHeaderNVKyThuat = tblHoaDon.getTableHeader();
 		tableHeaderNVKyThuat.setBackground(new Color(58, 181, 74));
 		tableHeaderNVKyThuat.setForeground(Color.white);
 		tableHeaderNVKyThuat.setFont(new Font("Tahoma", Font.PLAIN, 20));
-	
+
 		btnThoat.addActionListener(this);
-		
+		btnXuatHoaDon.addActionListener(this);
 		khoiTao();
 
 	}
-	
+
 	private void khoiTao() {
 		HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon(maHoaDon);
-		
+
 		lblMaHD.setText(hoaDon.getMaHoaDon());
 		lblNgayLapHD.setText(XuLyThoiGian.chuyenDateThanhString(hoaDon.getNgayLap()));
 		lblMaNV.setText(hoaDon.getNhanVienHanhChinh().getMaNVHanhChinh());
 		lblTenNV.setText(hoaDon.getNhanVienHanhChinh().getHoTenNV());
-		
+
 		lblMaKH.setText(hoaDon.getKhachHang().getMaKhachHang());
 		lblSoCMT.setText(hoaDon.getKhachHang().getSoCMT());
 		lblTenKH.setText(hoaDon.getKhachHang().getHoTenKH());
 		lblSDT.setText(hoaDon.getKhachHang().getSoDienThoai());
 		lblNgaySinh.setText(XuLyThoiGian.chuyenDateThanhString(hoaDon.getKhachHang().getNgaySinh()));
 		lblDiaChi.setText(hoaDon.getKhachHang().getDiaChiKH());
-		
+
 		for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
-			Object []datas = new Object[9];
-			datas[0] = tblHoaDon.getRowCount() +1;
+			Object[] datas = new Object[9];
+			datas[0] = tblHoaDon.getRowCount() + 1;
 			datas[1] = chiTietHoaDon.getXeMay().getMaXeMay();
 			datas[2] = chiTietHoaDon.getXeMay().getTenXeMay();
 			datas[3] = chiTietHoaDon.getXeMay().getDongXe().getHangXe().getMaHangXe();
@@ -319,14 +343,20 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			datas[6] = chiTietHoaDon.getSoLuong();
 			datas[7] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
 			datas[8] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh();
-			
+
 			modelHoaDon.addRow(datas);
-			
+
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		setVisible(false);
+		Object o = e.getSource();
+		if (o.equals(btnThoat)) {
+			setVisible(false);
+		}
+		if (o.equals(btnXuatHoaDon)) {
+
+		}
 	}
 }
