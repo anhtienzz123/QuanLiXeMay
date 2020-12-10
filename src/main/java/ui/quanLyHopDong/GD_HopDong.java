@@ -41,7 +41,7 @@ import dao.HopDongDao;
 import entity.HopDong;
 import ui.App;
 
-public class GD_HopDong extends JPanel implements ActionListener, MouseListener,KeyListener {
+public class GD_HopDong extends JPanel implements ActionListener, MouseListener, KeyListener {
 	/**
 	 * 
 	 */
@@ -110,7 +110,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {"Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên lập", "Tên khách hàng", "Số điện thoại"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên",
+				"Tên nhân viên lập", "Tên khách hàng", "Số điện thoại" }));
 		cboTimKiem.setBounds(151, 83, 274, 30);
 		add(cboTimKiem);
 
@@ -171,8 +172,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		txtTrang.setBounds(178, 806, 60, 40);
 		add(txtTrang);
 
-		String[] colHeaderHopDong = { "STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Tên khách hàng",
-				"Số điện thoại KH", "ngày lập hóa đơn" };
+		String[] colHeaderHopDong = { "STT", "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên",
+				"Tên khách hàng", "Số điện thoại KH", "ngày lập hóa đơn" };
 		modelHopDong = new DefaultTableModel(colHeaderHopDong, 0);
 		tblHopDong = new JTable(modelHopDong) {
 			private static final long serialVersionUID = 1L;
@@ -194,13 +195,13 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-		tblHopDong.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
-		tblHopDong.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-		tblHopDong.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
-		tblHopDong.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
-		tblHopDong.getColumnModel().getColumn(5).setCellRenderer( centerRenderer );
-		tblHopDong.getColumnModel().getColumn(7).setCellRenderer( centerRenderer );
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+		tblHopDong.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 		scrollPaneHopDong.setViewportView(tblHopDong);
 
 		JLabel lblTngThuTrong_1_1 = new JLabel("Ngày lập hợp đồng:");
@@ -229,7 +230,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 								pnlLogo.getPreferredSize().height, Image.SCALE_DEFAULT)));
 		lblLogo.setBounds(0, 0, 1800, 133);
 		pnlLogo.add(lblLogo);
-		
+
 		btnBoLoc = new JButton("Xóa tìm kiếm");
 		btnBoLoc.setIcon(new ImageIcon(GD_HopDong.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnBoLoc.setForeground(Color.WHITE);
@@ -250,6 +251,8 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		}
 		dangKiSuKien();
 		capNhatDuLieuTrongBangHopDong();
+		
+		txtNgay.setDate(null);
 
 	}
 
@@ -265,12 +268,19 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (evt.getPropertyName().equals("date")) {
-					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					if (txtNgay != null) {
+
+						if (txtNgay.getDate() != null)
+							date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+					}
 					capNhatDuLieuTrongBangHopDong();
 				}
 
 			}
 		});
+
+		btnBoLoc.addActionListener(this);
 
 	}
 
@@ -388,25 +398,34 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 			this.page = 1;
 			capNhatDuLieuTrongBangHopDong();
 		}
+		
+		if(o == btnBoLoc) {
+			
+			cboTimKiem.setSelectedItem("Mã hợp đồng");
+			txtTimKiem.setText("");
+			txtNgay.setDate(null);
+			date = null;
+			capNhatDuLieuTrongBangHopDong();
+		}
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		this.page = 1;
 		capNhatDuLieuTrongBangHopDong();
-		
+
 	}
 }
