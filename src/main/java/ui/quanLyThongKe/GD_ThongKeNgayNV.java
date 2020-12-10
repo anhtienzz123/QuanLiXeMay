@@ -62,7 +62,7 @@ public class GD_ThongKeNgayNV extends JPanel implements MouseListener, ActionLis
 
 	private ThongKeNhanVienDao thongKeNhanVienDao;
 	private String maNhanVienHanhChinh;
-
+	
 	/**
 	 * Create the panel.
 	 */
