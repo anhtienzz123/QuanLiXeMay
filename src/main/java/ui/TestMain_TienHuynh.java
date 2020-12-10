@@ -1,14 +1,11 @@
 package ui;
 
-import java.io.IOException;
-import java.sql.SQLException;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
-import customoutput.ThongTinChungXeMay;
-import dao.ThongKeQuanLiDao;
-import dao.ThongTinChungXeMayDao;
-import dao.XeMayDao;
+import dao.HoaDonDao;
 import db.DatabaseConnect;
-import other.SinhRaThongTin;
+import entity.HoaDon;
+import other.XuLiXuatFile;
 
 public class TestMain_TienHuynh {
 
@@ -19,47 +16,23 @@ public class TestMain_TienHuynh {
 	private static final int FROM = 1;
 	private static final int TO = 20;
 
-	public static void main(String[] args) throws SQLException, IOException {
+	public static void main(String[] args) throws Exception {
 		DatabaseConnect.connect();
 
-		XeMayDao xeMayDao = XeMayDao.getInstance();
-		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-		ThongKeQuanLiDao thongKeQuanLiDao = ThongKeQuanLiDao.getInstance();
-
-		ThongTinChungXeMay thongTinChungXeMay = new ThongTinChungXeMay("SH Mode 50", "anh2",  2000, 1, 36, 150,
-				"Xe tay ga", "SH",  "day la mo ta", null);
-
-		System.out.println(thongTinChungXeMayDao.capNhapThongTinChungXeMay("SH Mode 51", thongTinChungXeMay)
-				? "Cap nhat thanh cong"
-				: "Cap nhat that bai");
-		;
-
-//		System.out.println(xeMayDao.getMaxPageTheoNhieuTieuChiGomNhom(RONG, "Tên giá", TAT_CA, TAT_CA, TAT_CA, TAT_CA, TAT_CA, TAT_CA, 3) );
-
-//		xeMayDao.getXeMaysTheoNhieuTieuChiGomNhom(RONG, "Tên giá", TAT_CA, TAT_CA, TAT_CA, TAT_CA, TAT_CA, TAT_CA, FROM, TO)
-//		.forEach((key,value) -> {
-//			System.out.println("==== Thong tin xe may");
-//			System.out.println("- ten xe may" + key.getTenXeMay());
-//			System.out.println("- gia xe may" + key.tinhGiaBan());
-//			
-//			System.out.println("==== So luong ton");
-//			System.out.println("- so luong xe" + value);
-//		});
-//
+//		XeMayDao xeMayDao = XeMayDao.getInstance();
 //		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-//		
-//		System.out.println(thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay("Sh mode 50"));
+//		ThongKeQuanLiDao thongKeQuanLiDao = ThongKeQuanLiDao.getInstance();
 
-		// Hàm sinh thông tin xe máy
-		// 
-		//SinhRaThongTin.sinhRaThongTinXeMay("data/xemay.txt", 2); // 2 là số lượng mỗi chiếc muốn random
-//		
-//		thongKeQuanLiDao.thongKeXeBanTrongNgay(9, 12, 2020).forEach((key,value) -> {
-//			 System.out.println(key + " : " + value);
-//		});
-		
-		thongKeQuanLiDao.thongXeSoLuongXeTon().forEach( (key,value) -> {
-			System.out.println(key + " : " + value);
-		});
+		HoaDonDao hoaDonDao = HoaDonDao.getInstance();
+		HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon("HD104174");
+
+		XuLiXuatFile xuatFile = new XuLiXuatFile();
+
+		//xuatFile.xuatHoaDonRaFileWord(hoaDon);
+
+		//XWPFDocument doc = new XWPFDocument();
+
+		xuatFile.xuatHoaDonRaFileWord1(hoaDon);
+
 	}
 }

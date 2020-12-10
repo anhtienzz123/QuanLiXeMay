@@ -162,7 +162,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		add(btnSau);
 
 		btnCuoi = new JButton("");
-		btnCuoi.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
+		btnCuoi.setIcon(
+				new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_fast_forward_white_24dp.png")));
 		btnCuoi.setForeground(Color.WHITE);
 		btnCuoi.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnCuoi.setBackground(Color.GRAY);
@@ -177,8 +178,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		txtTrang.setBounds(178, 805, 60, 40);
 		add(txtTrang);
 
-		String[] colHeaderHopDong = {"STT","Mã hợp đồng","Mã hóa đơn", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng",
-				"Tên khách hàng", "ngày lập hóa đơn"};
+		String[] colHeaderHopDong = { "STT", "Mã hợp đồng", "Mã hóa đơn", "Mã nhân viên", "Tên nhân viên",
+				"Mã khách hàng", "Tên khách hàng", "ngày lập hóa đơn" };
 		modelBaoHanh = new DefaultTableModel(colHeaderHopDong, 0);
 		tblBaoHanh = new JTable(modelBaoHanh) {
 			private static final long serialVersionUID = 1L;
@@ -189,14 +190,14 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		};
 		tblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblBaoHanh.setRowHeight(35);
-		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(100);//Stt
-		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(160);//Mã hợp đồng
-		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(160);//Mã hóa đơn
-		tblBaoHanh.getColumnModel().getColumn(3).setPreferredWidth(160);//Mã nhân viên
-		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);//Tên nhân viên
-		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);//Mã khách hàng
-		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);//Tên khách hàng
-		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(196);//Ngày lập hóa đơn
+		tblBaoHanh.getColumnModel().getColumn(0).setPreferredWidth(100);// Stt
+		tblBaoHanh.getColumnModel().getColumn(1).setPreferredWidth(160);// Mã hợp đồng
+		tblBaoHanh.getColumnModel().getColumn(2).setPreferredWidth(160);// Mã hóa đơn
+		tblBaoHanh.getColumnModel().getColumn(3).setPreferredWidth(160);// Mã nhân viên
+		tblBaoHanh.getColumnModel().getColumn(4).setPreferredWidth(400);// Tên nhân viên
+		tblBaoHanh.getColumnModel().getColumn(5).setPreferredWidth(160);// Mã khách hàng
+		tblBaoHanh.getColumnModel().getColumn(6).setPreferredWidth(400);// Tên khách hàng
+		tblBaoHanh.getColumnModel().getColumn(7).setPreferredWidth(196);// Ngày lập hóa đơn
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -261,6 +262,8 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		hopDongDao = HopDongDao.getInstance();
 		dangKiSuKien();
 		capNhatDuLieuTrongBangHopDong();
+		
+		txtNgay.setDate(null);
 
 	}
 
@@ -278,8 +281,14 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
+
 				if (evt.getPropertyName().equals("date")) {
-					date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+					if (txtNgay != null) {
+
+						if (txtNgay.getDate() != null)
+							date = txtNgay.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+					}
 					capNhatDuLieuTrongBangHopDong();
 				}
 
@@ -287,6 +296,7 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		});
 		txtTimKiem.addKeyListener(this);
 		cboTimKiem.addActionListener(this);
+		btnBoLoc.addActionListener(this);
 
 	}
 
@@ -394,6 +404,16 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		if (o.equals(btnCuoi)) {
 			this.page = maxPage;
 			capNhatDuLieuTrongBangHopDong();
+		}
+
+		if (o.equals(btnBoLoc)) {
+
+			cboTimKiem.setSelectedItem("Mã hợp đồng");
+			txtTimKiem.setText("");
+			txtNgay.setDate(null);
+			date = null;
+			capNhatDuLieuTrongBangHopDong();
+
 		}
 
 	}

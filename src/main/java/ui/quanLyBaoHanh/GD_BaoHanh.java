@@ -527,6 +527,8 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		if (o.equals(btnXemChiTiet)) {
 			xemChiTiet();
 		}
+		
+	
 	}
 
 	@Override

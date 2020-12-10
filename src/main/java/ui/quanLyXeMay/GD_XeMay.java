@@ -780,7 +780,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 
 				scrollPaneXeMay.setViewportView(tblXeMay);
 			}
-
+			this.page = 1;
 			capNhatXeMaysTrongBang();
 		}
 

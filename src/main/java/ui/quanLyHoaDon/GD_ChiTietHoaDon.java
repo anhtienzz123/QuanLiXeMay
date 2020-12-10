@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -27,6 +28,7 @@ import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import other.DinhDangTien;
 import other.DocSo;
+import other.XuLiXuatFile;
 import other.XuLyThoiGian;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
@@ -254,8 +256,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		scrollPane.setBounds(23, 329, 1128, 383);
 		contentPane.add(scrollPane);
 
-		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe", "hãng", "loại xe", "Màu sắc", "Số lượng", "Giá Bán",
-				"Bảo hành" };
+		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe","Số khung", "Giá bán", "Bảo hành" ,"Hãng xe", "Loại xe", "Màu sắc" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -320,11 +321,15 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		btnThoat.addActionListener(this);
 		btnXuatHoaDon.addActionListener(this);
 		khoiTao();
+		
+		
 
 	}
+	
+	private HoaDon hoaDon;
 
 	private void khoiTao() {
-		HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon(maHoaDon);
+		hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon(maHoaDon);
 
 		lblMaHD.setText(hoaDon.getMaHoaDon());
 		lblNgayLapHD.setText(XuLyThoiGian.chuyenDateThanhString(hoaDon.getNgayLap()));
@@ -343,12 +348,12 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			datas[0] = tblHoaDon.getRowCount() + 1;
 			datas[1] = chiTietHoaDon.getXeMay().getMaXeMay();
 			datas[2] = chiTietHoaDon.getXeMay().getTenXeMay();
-			datas[3] = chiTietHoaDon.getXeMay().getDongXe().getHangXe().getMaHangXe();
-			datas[4] = chiTietHoaDon.getXeMay().getLoaiXe().getTenLoaiXe();
-			datas[5] = chiTietHoaDon.getXeMay().getMauXe();
-			datas[6] = chiTietHoaDon.getSoLuong();
-			datas[7] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
-			datas[8] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh();
+			datas[3] = chiTietHoaDon.getXeMay().getSoKhung();
+			datas[4] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
+			datas[5] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh();
+			datas[6] = chiTietHoaDon.getXeMay().getDongXe().getHangXe().getTenHangXe();
+			datas[7] = chiTietHoaDon.getXeMay().getLoaiXe().getTenLoaiXe();
+			datas[8] = chiTietHoaDon.getXeMay().getMauXe();
 
 			modelHoaDon.addRow(datas);
 
@@ -366,7 +371,15 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			setVisible(false);
 		}
 		if (o.equals(btnXuatHoaDon)) {
-
+             XuLiXuatFile xuatFile = new XuLiXuatFile();
+             try {
+				xuatFile.xuatHoaDonRaFileWord1(this.hoaDon);
+				
+				JOptionPane.showMessageDialog(null, "Xuất hóa đơn thành công");
+			} catch (Exception e1) {
+				
+				JOptionPane.showMessageDialog(null, "Xuất hóa đơn thất bại");
+			}
 		}
 	}
 }
