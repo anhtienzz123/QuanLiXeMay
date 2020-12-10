@@ -261,6 +261,7 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtSoLuong.setBounds(535, 350, 73, 30);
 		txtSoLuong.setEditable(false);
 		add(txtSoLuong);
+		txtSoLuong.setVisible(false);
 
 		JLabel lblMau = new JLabel("Màu xe:");
 		lblMau.setForeground(Color.BLACK);
@@ -452,12 +453,6 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 		txtThongBao.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		txtThongBao.setBounds(29, 769, 680, 107);
 		add(txtThongBao);
-
-		JLabel lblSl = new JLabel("Số lượng:");
-		lblSl.setForeground(Color.BLACK);
-		lblSl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblSl.setBounds(428, 350, 111, 30);
-		add(lblSl);
 
 		JLabel lblHeSoBan_1 = new JLabel("%");
 		lblHeSoBan_1.setForeground(Color.BLACK);
@@ -854,9 +849,13 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 					.getThongTinChungXeMayTheoTens(txtTenXe.getText().trim())).start();
 			
 			defaultListModelTenXe.removeAllElements();
-			thongTinChungXeMays.forEach(v -> {
-				defaultListModelTenXe.addElement(v.getTenXe());
-			});
+			try {
+				thongTinChungXeMays.forEach(v -> {
+					defaultListModelTenXe.addElement(v.getTenXe());
+				});
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
 			popupTenXe.show(true);
 			popupTenXe.show(txtTenXe, 0, txtTenXe.getHeight());
 			scrollPaneTenXe.setViewportView(listTenXe);
