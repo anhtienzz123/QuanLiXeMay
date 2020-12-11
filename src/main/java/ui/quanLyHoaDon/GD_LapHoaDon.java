@@ -1086,7 +1086,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
 		String cboTenXe = flagCBO ? "Tất cả" : cboXe.getSelectedItem().toString().split("-")[0].trim();
-		System.out.println("===CBO TEN XE: " + cboTenXe);
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, cboTenXe, SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
@@ -1102,6 +1101,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		}
 
 		txtTrang.setText(this.page + "");
+		flagCBO = false;
 
 	}
 

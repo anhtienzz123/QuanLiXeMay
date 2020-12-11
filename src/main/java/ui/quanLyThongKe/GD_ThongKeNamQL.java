@@ -225,7 +225,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 	 */
 	public void thongKeDoanhThuNam(JPanel jpnItem) {
 
-		Map<String, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
+		Map<Integer, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
@@ -444,7 +444,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		System.out.println("Cap nhap so lieu " + nam);
 		// Cap nhat so lieu 1
 		txtSoLieu1.append("===== Doanh thu từng tháng trong năm ====");
-		Map<String, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
+		Map<Integer, Double> result = thongKeDao.getDoanhThuThangsTheoNam(this.nam);
 		result.forEach((key, value) -> {
 			txtSoLieu1.append("\n- Tháng " + key + " : " + DinhDangTien.format(value));
 		});
