@@ -55,13 +55,14 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 	private boolean isTenKhachHang = false;
 	private boolean isSoDienThoai = false;
 	private boolean isNgaySinh = false;
+	private JTextField txtEmail;
 
 	public GD_ThemKhachHang(GD_KhachHang gd_KhachHang) {
 		khachHangDao = KhachHangDao.getInstance();
 		this.gd_KhachHang = gd_KhachHang;
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 540);
+		setBounds(100, 100, 800, 600);
 		setLocationRelativeTo(null);
 		setTitle("Thêm khách hàng");
 		contentPane = new JPanel();
@@ -220,6 +221,36 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
 		verticalBox.add(rigidArea_3);
+		
+		Box horizontalBox_7_2 = Box.createHorizontalBox();
+		verticalBox.add(horizontalBox_7_2);
+		
+		Component rigidArea_20_2 = Box.createRigidArea(new Dimension(20, 20));
+		horizontalBox_7_2.add(rigidArea_20_2);
+		
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Email:");
+		lblNewLabel_1_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		horizontalBox_7_2.add(lblNewLabel_1_1_2_1);
+		
+		Component rigidArea_15_1_2_1 = Box.createRigidArea(new Dimension(20, 20));
+		rigidArea_15_1_2_1.setPreferredSize(new Dimension(125, 20));
+		horizontalBox_7_2.add(rigidArea_15_1_2_1);
+		
+		txtEmail = new JTextField();
+		txtEmail.setPreferredSize(new Dimension(300, 40));
+		txtEmail.setMaximumSize(new Dimension(300, 40));
+		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtEmail.setColumns(20);
+		horizontalBox_7_2.add(txtEmail);
+		
+		Component horizontalGlue_6_1 = Box.createHorizontalGlue();
+		horizontalBox_7_2.add(horizontalGlue_6_1);
+		
+		Component rigidArea_11_1 = Box.createRigidArea(new Dimension(20, 20));
+		horizontalBox_7_2.add(rigidArea_11_1);
+		
+		Component rigidArea_3_1_1 = Box.createRigidArea(new Dimension(20, 20));
+		verticalBox.add(rigidArea_3_1_1);
 
 		Box horizontalBox_7 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_7);
@@ -256,17 +287,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		Component rigidArea_20_1 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_7_1.add(rigidArea_20_1);
 
-		JLabel lblThongBao = new JLabel("Thông báo: ");
-		lblThongBao.setVerticalAlignment(SwingConstants.TOP);
-		lblThongBao.setPreferredSize(new Dimension(120, 130));
-		lblThongBao.setMaximumSize(new Dimension(120, 200));
-		lblThongBao.setVerticalTextPosition(SwingConstants.TOP);
-		lblThongBao.setForeground(Color.RED);
-		lblThongBao.setFont(new Font("Tahoma", Font.BOLD, 20));
-		horizontalBox_7_1.add(lblThongBao);
-
 		txtThongBao = new JTextArea();
-		txtThongBao.setPreferredSize(new Dimension(640, 130));
+		txtThongBao.setEnabled(false);
+		txtThongBao.setPreferredSize(new Dimension(640, 120));
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
 		txtThongBao.setForeground(Color.RED);

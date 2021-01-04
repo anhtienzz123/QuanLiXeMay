@@ -24,7 +24,8 @@ import entity.HoaDon;
 
 public class XuLiXuatFile {
 
-	public static final String FILE = "C:\\Users\\admin\\Documents\\Java\\JavaCore\\QuanLiXeMay\\QuanLiXeMay\\hoadon";
+//	public static final String FILE = "C:\\Users\\admin\\Documents\\Java\\JavaCore\\QuanLiXeMay\\QuanLiXeMay\\hoadon";
+	public static final String FILE = "C:\\Users\\ASUS\\OneDrive\\Máy tính\\XuatHoaDon";
 
 	
 
@@ -34,7 +35,7 @@ public class XuLiXuatFile {
 		XWPFDocument document = new XWPFDocument();
 
 		// Write the Document in file system
-		FileOutputStream out = new FileOutputStream(new File(FILE, "hoadon.docx"));
+		FileOutputStream out = new FileOutputStream(new File(FILE, hoaDon.getMaHoaDon().trim() +".docx"));
 
 		// tạo title
 		XWPFParagraph title = document.createParagraph();
@@ -114,7 +115,7 @@ public class XuLiXuatFile {
 					.setText(chiTietHoaDon.getXeMay().getTenXeMay() + "\\" + chiTietHoaDon.getXeMay().getSoKhung());
 			tableRow.getCell(2).setText(DinhDangTien.format(chiTietHoaDon.getXeMay().tinhGiaBan())) ;
 			tableRow.getCell(3).setText("Chiếc");
-			tableRow.getCell(4).setText(DinhDangTien.format(chiTietHoaDon.getXeMay().getThue() ));
+			tableRow.getCell(4).setText(DinhDangTien.format(chiTietHoaDon.getXeMay().tinhThue() ));
 			tableRow.getCell(5).setText(DinhDangTien.format(chiTietHoaDon.getGiaBan() ));
 
 			count++;
@@ -127,7 +128,7 @@ public class XuLiXuatFile {
 		run31.addBreak();
 		XWPFRun run32 = paragraph3.createRun();
 		DecimalFormat df = new DecimalFormat("###.##");
-		run32.setText("Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) +" đồng");
+		run32.setText("Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) +"đồng");
 
 		document.write(out);
 		out.close();

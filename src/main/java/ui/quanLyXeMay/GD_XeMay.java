@@ -291,6 +291,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnXoa.setBackground(Color.RED);
 		btnXoa.setBounds(1222, 937, 160, 40);
 		add(btnXoa);
+		btnXoa.setVisible(false);
 
 		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
 				"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };

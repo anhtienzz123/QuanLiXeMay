@@ -30,18 +30,14 @@ public class XeMay {
 		this.maXeMay = maXeMay;
 		this.tenXeMay = tenXeMay;
 	}
-	
-	
 
 	public double tinhGiaBan() {
 		return giaNhap * (1 + (heSoBan / 100));
 	}
 
-	public double getThue() {
+	public double tinhThue() {
 		return (tinhGiaBan() / 100) * dongXe.getThue();
 	}
-
-
 
 	public XeMay(String tenXeMay, double giaNhap, int thoiGianBaoHanh, LoaiXe loaiXe, DongXe dongXe) {
 		super();
@@ -51,8 +47,6 @@ public class XeMay {
 		this.loaiXe = loaiXe;
 		this.dongXe = dongXe;
 	}
-
-
 
 	public XeMay(String maXeMay, String tenXeMay, String tenAnh, int soLuong, double giaNhap, double heSoBan,
 			int thoiGianBaoHanh, String soKhung, int soPhanKhoi, String soSuon, String mauXe, LoaiXe loaiXe,
@@ -73,7 +67,5 @@ public class XeMay {
 		this.dongXe = dongXe;
 		this.xuatXu = xuatXu;
 	}
-	
-	
 
 }

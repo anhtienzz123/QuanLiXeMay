@@ -283,6 +283,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		tblHoaDon.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		btnXuatHoaDon = new JButton("Xuất hóa đơn");
+		btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
 		//btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
 		btnXuatHoaDon.setForeground(Color.WHITE);
 		btnXuatHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));

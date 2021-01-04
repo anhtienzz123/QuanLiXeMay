@@ -822,7 +822,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 				if (xeMay.getSoLuong() >= soLuong) {
 					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(lblMaHoaDon.getText()), xeMay,
-							xeMay.tinhGiaBan() + xeMay.getThue(), soLuong);
+							xeMay.tinhGiaBan() + xeMay.tinhThue(), soLuong);
 					xeMay.setSoLuong(xeMay.getSoLuong() - soLuong);
 					xeMayDao.capNhatXeMay(xeMay);
 
@@ -1051,7 +1051,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 				datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
 				datas[2] = chiTietHoaDon.getXeMay().getSoKhung();
 				datas[3] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhGiaBan());
-				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().getThue());
+				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhThue());
 				datas[5] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
 
 				modelHoaDon.addRow(datas);
