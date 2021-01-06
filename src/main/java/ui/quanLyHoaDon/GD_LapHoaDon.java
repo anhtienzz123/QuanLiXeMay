@@ -1060,7 +1060,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			lblTongTien.setText(DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
 
 			DecimalFormat df = new DecimalFormat("###.##");
-			System.out.println(DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())));
 			lblTienBangChu.setText(
 					"<html>Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng</html>");
 		} else {

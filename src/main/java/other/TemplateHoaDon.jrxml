@@ -33,7 +33,19 @@
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
+		<field name="stt" class="java.lang.Integer"/>
+		<field name="tenXeMay" class="java.lang.String"/>
+		<field name="giaBan" class="java.lang.String"/>
+		<field name="baoHanh" class="java.lang.String"/>
 	</subDataset>
+	<parameter name="chiTietHoaDons" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<parameter name="maHoaDon" class="java.lang.String"/>
+	<parameter name="tenNguoiMua" class="java.lang.String"/>
+	<parameter name="soDienThoai" class="java.lang.String"/>
+	<parameter name="diaChi" class="java.lang.String"/>
+	<parameter name="tongTienBangSo" class="java.lang.String"/>
+	<parameter name="tongTienBangChu" class="java.lang.String"/>
+	<parameter name="ngayLap" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -54,19 +66,27 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Ngày ... tháng ... năm ..."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Ngày Lập:      "]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="410" y="0" width="155" height="30" uuid="adb12816-e765-4d09-9f5e-aeee86ba0f8a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Mã hóa đơn: HD123456"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Mã hóa đơn:"]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="2" width="140" height="48" uuid="784910ef-22f6-4da8-b30f-e7a13edf864d"/>
-				<imageExpression><![CDATA["/src/main/java/icon/Layer 1.png"]]></imageExpression>
+				<imageExpression><![CDATA["Img/Layer 1.png"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="490" y="10" width="100" height="30" uuid="f31d8c5e-a625-43b1-86c6-09d7c625b078"/>
+				<textFieldExpression><![CDATA[$P{maHoaDon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="490" y="33" width="100" height="30" uuid="64a8abb3-b3bf-4a84-bbd8-4c74347a1938"/>
+				<textFieldExpression><![CDATA[$P{ngayLap}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -121,7 +141,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Nguyễn Trần Nhật Hào"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tenNguoiMua}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="20" y="64" width="109" height="20" uuid="818d0bbc-9f54-4b69-99a4-2f91e9d51aed"/>
@@ -135,7 +155,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["12 Nguyễn Văn Bảo, phường 4, quận Gò Vấp, Thành Phố Hồ Chí Minh"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{diaChi}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="20" y="36" width="109" height="20" uuid="de9ab491-2ccc-404d-87d4-9b6260649aa9"/>
@@ -149,7 +169,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["0123456789"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{soDienThoai}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="20" y="89" width="119" height="20" uuid="7ee078ac-fb00-4573-bbfa-522f09037e7d"/>
@@ -180,8 +200,8 @@
 					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="ChiTietHoaDon" uuid="ef219c01-4664-4f8f-977b-3a8d19d65574">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+					<datasetRun subDataset="ChiTietHoaDon" uuid="d4a50276-bb0f-4a61-a433-73d20d8528b9">
+						<dataSourceExpression><![CDATA[$P{chiTietHoaDons}]]></dataSourceExpression>
 					</datasetRun>
 					<jr:column width="30" uuid="b40f9433-ecbf-4fec-92ab-48a00c244be2">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
@@ -197,7 +217,12 @@
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="Table_TD" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="30" height="30" uuid="da95808c-b4c6-447d-90b7-526acc0189f0"/>
+								<textFieldExpression><![CDATA[$F{stt}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
 					</jr:column>
 					<jr:column width="290" uuid="a1973f13-2998-4c28-bc5a-3ff5cdf003a4">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
@@ -213,7 +238,12 @@
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="Table_TD" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="290" height="30" uuid="7ad844b5-901f-477f-9473-34f530b8f763"/>
+								<textFieldExpression><![CDATA[$F{tenXeMay}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
 					</jr:column>
 					<jr:column width="159" uuid="25028885-ac89-4d3b-b114-4ddc32c47fec">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
@@ -229,7 +259,12 @@
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="Table_TD" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="159" height="30" uuid="a7dee633-266f-47d7-bd1f-0757981fd17f"/>
+								<textFieldExpression><![CDATA[$F{giaBan}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
 					</jr:column>
 					<jr:column width="63" uuid="c194faa9-bcfa-438c-9075-076c284fa5bc">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
@@ -245,7 +280,12 @@
 						<jr:tableFooter style="Table_TH" height="30" rowSpan="1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1"/>
 						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
-						<jr:detailCell style="Table_TD" height="30"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="63" height="30" uuid="e88d9c38-8ea9-40f5-8d37-cd6c598a5177"/>
+								<textFieldExpression><![CDATA[$F{baoHanh}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
 					</jr:column>
 				</jr:table>
 			</componentElement>
@@ -261,7 +301,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["30.000.000 VNĐ"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tongTienBangSo}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="20" y="229" width="60" height="20" uuid="d494fd3a-fd53-4496-b78e-49fbe98c81e0"/>
@@ -275,7 +315,7 @@
 				<textElement>
 					<font fontName="Times New Roman" size="13"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Ba mươi triệu đồng"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{tongTienBangChu}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="6" y="254" width="562" height="1" uuid="3a6777a3-f0d6-4456-b9b0-02bcbf1ffbac"/>

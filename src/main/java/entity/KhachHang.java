@@ -23,28 +23,12 @@ public class KhachHang {
 		super();
 		this.maKhachHang = maKhachHang;
 	}
-	
-	
 
-	@Override
-	public boolean equals(Object obj) {
-		
-		KhachHang khachHang = (KhachHang) obj;
-		
-		if( khachHang.getMaKhachHang().equalsIgnoreCase(maKhachHang) ||  khachHang.getSoCMT().equalsIgnoreCase(soCMT) || khachHang.getHoTenKH().equalsIgnoreCase(hoTenKH) || khachHang.getSoDienThoai().equalsIgnoreCase(soDienThoai)  )
-			return true;
-		
-		return false;
+	public KhachHang(String maKhachHang, String hoTenKH) {
+		super();
+		this.maKhachHang = maKhachHang;
+		this.hoTenKH = hoTenKH;
 	}
-
-
-	@Override
-	public int hashCode() {
-		
-		return super.hashCode();
-	}
-
-
 
 	public KhachHang(String maKhachHang, String soCMT, String hoTenKH, Date ngaySinh, String soDienThoai,
 			String diaChiKH) {
@@ -56,6 +40,24 @@ public class KhachHang {
 		this.soDienThoai = soDienThoai;
 		this.diaChiKH = diaChiKH;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+
+		KhachHang khachHang = (KhachHang) obj;
+
+		if (khachHang.getMaKhachHang().equalsIgnoreCase(maKhachHang) || khachHang.getSoCMT().equalsIgnoreCase(soCMT)
+				|| khachHang.getHoTenKH().equalsIgnoreCase(hoTenKH)
+				|| khachHang.getSoDienThoai().equalsIgnoreCase(soDienThoai))
+			return true;
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+
+		return super.hashCode();
+	}
 
 }

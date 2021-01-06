@@ -2,15 +2,18 @@ package other;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import customoutput.ChiTietHoaDonReport;
+import dao.HoaDonDao;
+import db.DatabaseConnect;
+import entity.ChiTietHoaDon;
 import entity.HoaDon;
-import entity.Test;
 import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -21,24 +24,41 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class XuatHoaDon {
-	
+
 	public static final String FILE_REPORT = "C:/Users/admin/Documents/Java/JavaCore/QuanLiXeMay/QuanLiXeMay/src/main/java/other/TemplateHoaDon.jrxml";
 
 	public static void xuatHoaDon(HoaDon hoaDon) throws Exception {
 
-		List<Test> listItems = new ArrayList<Test>();
+		List<ChiTietHoaDonReport> listItems = new ArrayList<ChiTietHoaDonReport>();
+		DecimalFormat df = new DecimalFormat("###.##");
 
-		Test test = new Test("1", "tien", "20", "13-04-2020");
-		Test test1 = new Test("2", "tuan", "20", "13-04-2020");
-
-		listItems.add(test);
-		listItems.add(test1);
+		listItems = toChiTietHoaDonReports(hoaDon);
+	
 
 		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listItems);
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("duLieu", itemsJRBean);
-		parameters.put("ngay", "13-04-2020");
+
+		String maHoaDon = hoaDon.getMaHoaDon();
+		
+		
+		String tenNguoiMua = hoaDon.getKhachHang().getHoTenKH();
+		String soDienThoai = hoaDon.getKhachHang().getSoDienThoai();
+		String diaChi = hoaDon.getKhachHang().getDiaChiKH();
+		String tongTienBangSo = DinhDangTien.format(hoaDon.tinhTongTienHoaDon());
+
+		String tongTienBangChu = DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon()));
+
+		parameters.put("maHoaDon", maHoaDon);
+		parameters.put("ngayLap", XuLyThoiGian.chuyenDateThanhString(hoaDon.getNgayLap()));
+		
+		parameters.put("tenNguoiMua", tenNguoiMua);
+		parameters.put("soDienThoai", soDienThoai);
+		parameters.put("diaChi", diaChi);
+
+		parameters.put("chiTietHoaDons", itemsJRBean);
+		parameters.put("tongTienBangSo", tongTienBangSo);
+		parameters.put("tongTienBangChu", tongTienBangChu);
 
 		InputStream input = new FileInputStream(FILE_REPORT);
 
@@ -51,30 +71,36 @@ public class XuatHoaDon {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
 
 		/* call jasper engine to display report in jasperviewer window */
-		JasperViewer.viewReport(jasperPrint);
+		JasperViewer.viewReport(jasperPrint, false);
 		
+
 		System.out.println("File Generated");
 	}
+	
+	public static List<ChiTietHoaDonReport> toChiTietHoaDonReports(HoaDon hoaDon){
+		
+		List<ChiTietHoaDonReport> chiTietHoaDonReports = new ArrayList<ChiTietHoaDonReport>();
+		
+		int i = 1;
+		
+		for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
+			
+			int stt = i;
+			String tenXeMay = chiTietHoaDon.getXeMay().getTenXeMay() +"\n" + chiTietHoaDon.getXeMay().getSoKhung();
+			String giaBan = DinhDangTien.format(chiTietHoaDon.getGiaBan());
+			String baoHanh = chiTietHoaDon.getXeMay().getThoiGianBaoHanh() + " tháng";
+			
+			ChiTietHoaDonReport chiTietHoaDonReport = new ChiTietHoaDonReport(stt, tenXeMay, giaBan, baoHanh);
+			
+			chiTietHoaDonReports.add(chiTietHoaDonReport);
+		    i++;
+			
+		}
+		
+		return chiTietHoaDonReports;
+	}
 
 	
-	public static void main(String[] args) throws Exception {
-		xuatHoaDon(null);
-	}
+
 	
-	public static void test(List<Test> list) throws JRException {
-
-		InputStream arq = XuatHoaDon.class.getResourceAsStream("/other/Blank_A4.jrxml");
-
-		JasperReport report = JasperCompileManager.compileReport(arq);
-
-		Map<String, Object> result = new HashMap<String, Object>();
-
-		result.put("name", "13-04-2020");
-		// JasperPrint print = JasperFillManager.fillReport(report, result, new
-		// JRBeanCollectionDataSource(list));
-
-		JasperPrint print = JasperFillManager.fillReport(report, result, new JREmptyDataSource());
-
-		JasperViewer.viewReport(print, false);
-	}
 }
