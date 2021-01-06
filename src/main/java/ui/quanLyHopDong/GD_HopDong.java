@@ -184,14 +184,14 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		};
 		tblHopDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHopDong.setRowHeight(35);
-		tblHopDong.getColumnModel().getColumn(0).setPreferredWidth(136);
-		tblHopDong.getColumnModel().getColumn(1).setPreferredWidth(160);
-		tblHopDong.getColumnModel().getColumn(2).setPreferredWidth(160);
-		tblHopDong.getColumnModel().getColumn(3).setPreferredWidth(160);
-		tblHopDong.getColumnModel().getColumn(4).setPreferredWidth(400);
-		tblHopDong.getColumnModel().getColumn(5).setPreferredWidth(160);
-		tblHopDong.getColumnModel().getColumn(6).setPreferredWidth(400);
-		tblHopDong.getColumnModel().getColumn(7).setPreferredWidth(160);
+		tblHopDong.getColumnModel().getColumn(0).setPreferredWidth(100);//Stt
+		tblHopDong.getColumnModel().getColumn(1).setPreferredWidth(160);//Mã hợp đồng
+		tblHopDong.getColumnModel().getColumn(2).setPreferredWidth(160);//Mã hóa đơn
+		tblHopDong.getColumnModel().getColumn(3).setPreferredWidth(160);//Mã nhân viên
+		tblHopDong.getColumnModel().getColumn(4).setPreferredWidth(400);//Tên nhân viên
+		tblHopDong.getColumnModel().getColumn(5).setPreferredWidth(400);//Tên khách hàng
+		tblHopDong.getColumnModel().getColumn(6).setPreferredWidth(160);//Số điện thoại khách hàng
+		tblHopDong.getColumnModel().getColumn(7).setPreferredWidth(196);//Ngày lập hóa đơn
 
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -200,7 +200,7 @@ public class GD_HopDong extends JPanel implements ActionListener, MouseListener,
 		tblHopDong.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 		tblHopDong.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 		tblHopDong.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-		tblHopDong.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
+		tblHopDong.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
 		tblHopDong.getColumnModel().getColumn(7).setCellRenderer(centerRenderer);
 		scrollPaneHopDong.setViewportView(tblHopDong);
 

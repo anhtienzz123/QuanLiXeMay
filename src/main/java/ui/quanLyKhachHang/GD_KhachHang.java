@@ -183,17 +183,16 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		};
 		tblKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblKhachHang.setRowHeight(35);
-		tblKhachHang.getColumnModel().getColumn(0).setPreferredWidth(140);
-		tblKhachHang.getColumnModel().getColumn(1).setPreferredWidth(300);
-		tblKhachHang.getColumnModel().getColumn(2).setPreferredWidth(700);
-		tblKhachHang.getColumnModel().getColumn(3).setPreferredWidth(300);
-		tblKhachHang.getColumnModel().getColumn(4).setPreferredWidth(300);
+		tblKhachHang.getColumnModel().getColumn(0).setPreferredWidth(140);//Stt
+		tblKhachHang.getColumnModel().getColumn(1).setPreferredWidth(300);//Mã khách hàng
+		tblKhachHang.getColumnModel().getColumn(2).setPreferredWidth(700);//Tên khách hàng
+		tblKhachHang.getColumnModel().getColumn(3).setPreferredWidth(300);//Số CMT
+		tblKhachHang.getColumnModel().getColumn(4).setPreferredWidth(300);//Số điện thoại
 //		center value in column
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 		tblKhachHang.getColumnModel().getColumn(0).setCellRenderer( centerRenderer );
 		tblKhachHang.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
-		tblKhachHang.getColumnModel().getColumn(3).setCellRenderer( centerRenderer );
 		tblKhachHang.getColumnModel().getColumn(4).setCellRenderer( centerRenderer );
 
 		scrollPaneKhachHang.setViewportView(tblKhachHang);

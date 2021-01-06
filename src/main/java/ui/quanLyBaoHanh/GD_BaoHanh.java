@@ -386,13 +386,15 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		 * Tính thời gian của các đợt bảo hành
 		 */
 		Calendar calendar = GregorianCalendar.getInstance();
-		System.out.println();
-		List<Date> ngayBH = new ArrayList<Date>(Arrays.asList(ngayLapHD));
-		for (int i = 1; i <= 6; i++) {
-			calendar.setTime(ngayBH.get(ngayBH.size() - 1));
-			calendar.add(GregorianCalendar.MONTH, 6);
-			ngayBH.add(calendar.getTime());
-		}
+//		System.out.println();
+//		List<Date> ngayBH = new ArrayList<Date>(Arrays.asList(ngayLapHD));
+//		for (int i = 1; i <= 6; i++) {
+//			calendar.setTime(ngayBH.get(ngayBH.size() - 1));
+//			calendar.add(GregorianCalendar.MONTH, 6);
+//			ngayBH.add(calendar.getTime());
+//		}
+		
+		List<Date> listThoiGianBaoHanh = hopDong.tinhThoiGianBaoHanh();
 
 		/**
 		 * Ghi các đợt bảo hành vào bảng
@@ -400,14 +402,14 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		String tgBH;
 		for (int i = 1; i < 7; i++) {
 			if (i != 1) {
-				calendar.setTime(ngayBH.get(i - 1));
+				calendar.setTime(listThoiGianBaoHanh.get(i - 1));
 				calendar.add(GregorianCalendar.DATE, 1);
 				tgBH = "Từ ngày " + simpleDateFormat.format(calendar.getTime()) + " đến ngày "
-						+ simpleDateFormat.format(ngayBH.get(i));
+						+ simpleDateFormat.format(listThoiGianBaoHanh.get(i));
 				modelBaoHanh.addRow(new Object[] { i, "Đợt " + i, tgBH, null });
 			} else {
-				tgBH = "Từ ngày " + simpleDateFormat.format(ngayBH.get(i - 1)) + " đến ngày "
-						+ simpleDateFormat.format(ngayBH.get(i));
+				tgBH = "Từ ngày " + simpleDateFormat.format(listThoiGianBaoHanh.get(i - 1)) + " đến ngày "
+						+ simpleDateFormat.format(listThoiGianBaoHanh.get(i));
 				modelBaoHanh.addRow(new Object[] { i, "Đợt " + i, tgBH, null });
 			}
 		}
@@ -527,6 +529,8 @@ public class GD_BaoHanh extends JPanel implements ActionListener, MouseListener 
 		if (o.equals(btnXemChiTiet)) {
 			xemChiTiet();
 		}
+		
+	
 	}
 
 	@Override

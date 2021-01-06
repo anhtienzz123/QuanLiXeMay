@@ -1,7 +1,6 @@
 package ui.quanLyXeMay;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
@@ -259,6 +258,7 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 		JLabel lblHeSoBan = new JLabel("0.1");
 		lblHeSoBan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblHeSoBan.setBounds(504, 379, 55, 30);
+		lblHeSoBan.setText(xeMay.getHeSoBan()+"");
 		contentPane.add(lblHeSoBan);
 
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("Xuất xứ:");

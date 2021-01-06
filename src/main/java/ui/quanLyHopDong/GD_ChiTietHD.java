@@ -397,7 +397,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		lblNewLabel_1_1_1_1_5_1_1_1.setBounds(30, 803, 147, 30);
 		contentPane.add(lblNewLabel_1_1_1_1_5_1_1_1);
 
-		double giaBan = hopDong.getXeMay().tinhGiaBan();
+		double giaBan = hopDong.getXeMay().tinhGiaBan() + hopDong.getXeMay().tinhThue();
 		lblGiaBan = new JLabel(DinhDangTien.format(giaBan));
 		lblGiaBan.setForeground(Color.BLACK);
 		lblGiaBan.setFont(new Font("Tahoma", Font.PLAIN, 20));

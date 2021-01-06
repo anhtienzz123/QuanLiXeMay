@@ -20,9 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.table.DefaultTableModel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -113,6 +111,7 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		pnlSoLieu.add(scrollPane1);
 
 		txtSoLieu1 = new JTextArea();
+		txtSoLieu1.setEditable(false);
 		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane1.setViewportView(txtSoLieu1);
@@ -122,6 +121,7 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		pnlSoLieu.add(scrollPane3);
 
 		txtSoLieu3 = new JTextArea();
+		txtSoLieu3.setEditable(false);
 		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane3.setViewportView(txtSoLieu3);
@@ -131,6 +131,7 @@ public class GD_ThongKeNgayQL extends JPanel implements ActionListener {
 		pnlSoLieu.add(scrollPane2);
 
 		txtSoLieu2 = new JTextArea();
+		txtSoLieu2.setEditable(false);
 		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane2.setViewportView(txtSoLieu2);

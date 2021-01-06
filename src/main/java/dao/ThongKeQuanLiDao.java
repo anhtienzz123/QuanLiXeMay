@@ -176,9 +176,9 @@ public class ThongKeQuanLiDao {
 	}
 
 	// Thống kê Map
-	public Map<String, Double> getDoanhThuNgaysTheoThang(int thang, int nam) {
+	public Map<Integer, Double> getDoanhThuNgaysTheoThang(int thang, int nam) {
 
-		Map<String, Double> doanhThuNgays = new TreeMap<>();
+		Map<Integer, Double> doanhThuNgays = new TreeMap<>();
 
 		try {
 			PreparedStatement preparedStatement = connection
@@ -190,7 +190,7 @@ public class ThongKeQuanLiDao {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				String ngay = resultSet.getString("ngay");
+				int ngay = resultSet.getInt("ngay");
 				double doanhThu = resultSet.getDouble("doanhThu");
 				doanhThuNgays.put(ngay, doanhThu);
 			}
@@ -202,9 +202,9 @@ public class ThongKeQuanLiDao {
 		return doanhThuNgays;
 	}
 
-	public Map<String, Double> getDoanhThuThangsTheoNam(int nam) {
+	public Map<Integer, Double> getDoanhThuThangsTheoNam(int nam) {
 
-		Map<String, Double> doanhThuThangs = new TreeMap<>();
+		Map<Integer, Double> doanhThuThangs = new TreeMap<>();
 
 		try {
 			PreparedStatement preparedStatement = connection
@@ -213,7 +213,7 @@ public class ThongKeQuanLiDao {
 			preparedStatement.setInt(1, nam);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				String ngay = resultSet.getString("thang");
+				int ngay = resultSet.getInt("thang");
 				double doanhThu = resultSet.getDouble("doanhThu");
 				doanhThuThangs.put(ngay, doanhThu);
 			}

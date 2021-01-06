@@ -39,7 +39,8 @@ public class SplashScreen extends JWindow {
         setBounds(x,y,width,height);
          
         // Build the splash screen
-        JLabel label = new JLabel(new ImageIcon(this.getClass().getResource("/img/motorcycle-logo-on-a-green-background2.jpg")));
+//        JLabel label = new JLabel(new ImageIcon(this.getClass().getResource("/img/motorcycle-logo-on-a-green-background2.jpg")));
+        JLabel label = new JLabel();
         JLabel copyrt = new JLabel
                 ("Copyright 2002, O'Reilly & Associates", JLabel.CENTER);
         copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
@@ -69,6 +70,7 @@ public class SplashScreen extends JWindow {
          
         // Throw a nice little title page up on the screen first
         SplashScreen splash = new SplashScreen(10000);
+        splash.showSplash();
  
         // Normally, we'd call splash.showSplash() and get on 
         // with the program. But, since this is only a test...

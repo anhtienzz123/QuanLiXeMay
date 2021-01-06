@@ -730,7 +730,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		hienThiNhanVien();
 
 		loadDuLieuThongTinTimKiem();
-		capNhatXeMaysTrongBang();
+		capNhatXeMaysTrongBang(false);
 
 	}
 
@@ -774,6 +774,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 	}
 
+	private boolean flagCBO;
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -821,13 +822,13 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 				if (xeMay.getSoLuong() >= soLuong) {
 					ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon(new HoaDon(lblMaHoaDon.getText()), xeMay,
-							xeMay.tinhGiaBan() + xeMay.getThue(), soLuong);
+							xeMay.tinhGiaBan() + xeMay.tinhThue(), soLuong);
 					xeMay.setSoLuong(xeMay.getSoLuong() - soLuong);
 					xeMayDao.capNhatXeMay(xeMay);
 
 					this.hoaDon.themChiTietHoaDon(chiTietHoaDon);
 
-					capNhatXeMaysTrongBang();
+					capNhatXeMaysTrongBang(false);
 					capNhatHoaDon();
 				} else {
 					JOptionPane.showMessageDialog(null, "Xe máy này không đủ số lượng");
@@ -838,6 +839,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			}
 		}
 
+		
 		if (source == cboHangXe || source == cboLoaiXe || source == cboMauXe || source == cboDongXe
 				|| source == cboXuatXu || source == cboGiaXe) {
 
@@ -881,35 +883,36 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 			this.page = 1;
 
-			capNhatXeMaysTrongBang();
+			flagCBO = true;
+			capNhatXeMaysTrongBang(false);
 
 		}
 
 		if (source == cboTimKiem) {
 			this.page = 1;
 			txtTimKiem.setText("");
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(false);
 		}
 
 		if (source == btnTruoc && this.page > 1) {
 
 			this.page--;
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(true);
 		}
 
 		if (source == btnSau && this.page < maxPage) {
 			this.page++;
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(true);
 		}
 
 		if (source == btnDau) {
 			this.page = 1;
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(true);
 		}
 
 		if (source == btnCuoi) {
 			this.page = maxPage;
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(true);
 		}
 
 		if (source == txtTienKhachTra) {
@@ -974,7 +977,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 				this.hoaDon = null;
 				capNhatHoaDon();
 				capNhatKhachHang(null);
-				capNhatXeMaysTrongBang();
+				capNhatXeMaysTrongBang(false);
 				xoaThongTinsTimKiem();
 			}
 
@@ -989,7 +992,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 			hoaDon.getChiTietHoaDons().remove(row);
 			capNhatHoaDon();
-			capNhatXeMaysTrongBang();
+			capNhatXeMaysTrongBang(false);
 
 		}
 
@@ -1034,7 +1037,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 	@Override
 	public void keyReleased(KeyEvent e) {
 		this.page = 1;
-		capNhatXeMaysTrongBang();
+		capNhatXeMaysTrongBang(false);
 
 	}
 
@@ -1048,8 +1051,8 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 				datas[1] = chiTietHoaDon.getXeMay().getTenXeMay();
 				datas[2] = chiTietHoaDon.getXeMay().getSoKhung();
 				datas[3] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhGiaBan());
-				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().getThue());
-				datas[5] = DinhDangTien.format(chiTietHoaDon.tinhTongTien());
+				datas[4] = DinhDangTien.format(chiTietHoaDon.getXeMay().tinhThue());
+				datas[5] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
 
 				modelHoaDon.addRow(datas);
 			}
@@ -1069,7 +1072,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 	}
 
-	private void capNhatXeMaysTrongBang() {
+	private void capNhatXeMaysTrongBang(boolean temp) {
 
 		int from = (SIZE * (page - 1) + 1);
 		int to = page * SIZE;
@@ -1082,7 +1085,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		String tenLoaiXe = cboLoaiXe.getSelectedItem().toString();
 		String tenDongXe = cboDongXe.getSelectedItem().toString();
 		String tenHangXe = cboHangXe.getSelectedItem().toString();
-		String cboTenXe = cboXe.getSelectedItem().toString().split("-")[0].trim();
+		String cboTenXe = flagCBO ? "Tất cả" : cboXe.getSelectedItem().toString().split("-")[0].trim();
 		this.maxPage = xeMayDao.getMaxPageTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
 				tenHangXe, cboTenXe, SIZE);
 		xeMays = xeMayDao.getXeMaysTheoNhieuTieuChi(timKiem, field, gia, mauXe, tenXuatXu, tenLoaiXe, tenDongXe,
@@ -1093,9 +1096,12 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		xoaDuLieuXeMayTrongBang();
 		themXeMaysVaoBang();
 
-		capNhatTenXeTimDuoc(tenXes);
+		if(!temp) {
+			capNhatTenXeTimDuoc(tenXes);
+		}
 
 		txtTrang.setText(this.page + "");
+		flagCBO = false;
 
 	}
 
@@ -1171,6 +1177,7 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 		cboDongXe.setSelectedItem("Tất cả");
 		cboXuatXu.setSelectedItem("Tất cả");
 		cboGiaXe.setSelectedItem("Tất cả");
+		
 
 	}
 
