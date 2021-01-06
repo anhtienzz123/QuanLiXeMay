@@ -205,7 +205,8 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		cboHang.setModel(new DefaultComboBoxModel<String>(XuLyChung.doiListThanhArray(
 				hangXeDao.getHangXes().stream().map(s -> s.getTenHangXe()).collect(Collectors.toList()))));
 		cboHang.removeItem("Tất cả");
-		cboHang.setSelectedIndex(4);
+//		cboHang.setSelectedIndex(0);
+		cboHang.setSelectedItem("Honda");
 
 		JLabel lblNewLabel_1_2_1_1 = new JLabel("Thuế:");
 		lblNewLabel_1_2_1_1.setForeground(Color.BLACK);

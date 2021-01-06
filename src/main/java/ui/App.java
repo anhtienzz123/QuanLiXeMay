@@ -53,8 +53,7 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		new App("NVHC162807").setVisible(true);
-
+		new App("NVHC154034").setVisible(true);
 	}
 
 	/**
