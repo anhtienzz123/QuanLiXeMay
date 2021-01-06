@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import dao.ThongKeNhanVienDao;
+import dao.ThongKeQuanLiDao;
 import entity.HoaDon;
 import other.DinhDangTien;
 import other.ThongTinNguoiDung;
@@ -239,6 +240,16 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 		cboNam.setSelectedItem(localDate.getYear() + "");
 
 		thongKeNhanVienDao = ThongKeNhanVienDao.getInstance();
+		ThongKeQuanLiDao thongKeDao = ThongKeQuanLiDao.getInstance();
+
+		List<String> nams = thongKeDao.getNams();
+
+		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>();
+		for (String string : nams) {
+			temp.addElement(string);
+		}
+
+		cboNam.setModel(temp);
 
 	}
 
@@ -335,18 +346,18 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 
 		if (o.equals(cboNam))
 			capNhatDuLieu();
-		
-		if(o.equals(btnChiTiet)) {
+
+		if (o.equals(btnChiTiet)) {
 			int row = tblHoaDon.getSelectedRow();
-			
-			if(row != -1) {
+
+			if (row != -1) {
 				String maHoaDon = tblHoaDon.getValueAt(row, 1).toString();
-				
+
 				new GD_ChiTietHoaDon(maHoaDon).setVisible(true);
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xem");
 			}
-			
+
 		}
 	}
 }

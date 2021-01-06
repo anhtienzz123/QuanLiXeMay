@@ -101,9 +101,9 @@ public class ThongKeQuanLiDao {
 
 		return doanhThu;
 	}
-	
+
 	// So Luong xe bang so
-	
+
 	public long getSoLuongXeTheoNgay(int ngay, int thang, int nam) {
 
 		long soLuong = 0;
@@ -474,8 +474,8 @@ public class ThongKeQuanLiDao {
 		return result;
 
 	}
-	
-	public Map<NhanVienHanhChinh, Double> thongKeDoanhThuNhanVienTrongNam( int nam) {
+
+	public Map<NhanVienHanhChinh, Double> thongKeDoanhThuNhanVienTrongNam(int nam) {
 		Map<NhanVienHanhChinh, Double> result = new HashMap<NhanVienHanhChinh, Double>();
 		try {
 			String sql = ThongKeQuanLiConstant.THONG_KE_DOANH_THU_NHAN_VIEN_TRONG_NAM;
@@ -499,10 +499,10 @@ public class ThongKeQuanLiDao {
 		return result;
 
 	}
-	
+
 	// Thong ke số lượng xe nào bán ra trong ngay
-	public Map<String, Long> thongKeXeBanTrongNgay(int ngay, int thang, int nam){
-		
+	public Map<String, Long> thongKeXeBanTrongNgay(int ngay, int thang, int nam) {
+
 		Map<String, Long> result = new HashMap<String, Long>();
 		try {
 			String sql = ThongKeQuanLiConstant.THONG_KE_XE_BAN_TRONG_NGAY;
@@ -516,7 +516,7 @@ public class ThongKeQuanLiDao {
 			while (resultSet.next()) {
 
 				String tenXeMay = resultSet.getString("tenXeMay");
-				
+
 				Long total = resultSet.getLong("total");
 
 				result.put(tenXeMay, total);
@@ -526,23 +526,44 @@ public class ThongKeQuanLiDao {
 		}
 		return result;
 	}
-	
+
 	// thong ke so luong ton
-	public Map<String, Long> thongXeSoLuongXeTon(){
+	public Map<String, Long> thongXeSoLuongXeTon() {
 		Map<String, Long> result = new HashMap<String, Long>();
 		try {
 			String sql = ThongKeQuanLiConstant.THONG_KE_SO_LUONG_XE_TON;
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
-			
+
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
+
 			while (resultSet.next()) {
 
 				String tenXeMay = resultSet.getString("tenXeMay");
-				
+
 				long total = resultSet.getLong("total");
 
 				result.put(tenXeMay, total);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<String> getNams() {
+		List<String> result = new ArrayList<String>();
+		try {
+			String sql = "select distinct YEAR(ngayLap) as nam from HoaDon";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				String nam = resultSet.getString("nam");
+
+				result.add(nam);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

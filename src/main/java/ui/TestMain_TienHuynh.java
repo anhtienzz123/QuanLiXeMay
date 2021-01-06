@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import dao.HopDongDao;
+import dao.ThongKeQuanLiDao;
 import db.DatabaseConnect;
 import entity.HopDong;
 import other.DinhDangTien;
@@ -23,6 +24,7 @@ public class TestMain_TienHuynh {
 	public static void main(String[] args) throws Exception {
 		DatabaseConnect.connect();
 		HopDongDao hopDongDao = HopDongDao.getInstance();
+		
 
 //		Calendar cal = Calendar.getInstance();
 //		cal.add(Calendar.DAY_OF_MONTH, 7);
