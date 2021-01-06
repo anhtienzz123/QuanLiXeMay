@@ -2,9 +2,14 @@ package ui;
 
 
 import java.util.Calendar;
+import java.util.Date;
 
 import dao.HopDongDao;
 import db.DatabaseConnect;
+import entity.HopDong;
+import other.DinhDangTien;
+import other.EmailSender;
+import other.XuLyThoiGian;
 
 public class TestMain_TienHuynh {
 
@@ -19,53 +24,23 @@ public class TestMain_TienHuynh {
 		DatabaseConnect.connect();
 		HopDongDao hopDongDao = HopDongDao.getInstance();
 
-		Calendar cal = Calendar.getInstance();
-
-		// cal.add(Calendar.DAY_OF_MONTH, 7 );
-
-		// System.out.println(cal.get(Calendar.YEAR));
-
-		// Date date1 = new Date(2020, 10, 11);
-		// Date date2 = new Date(2020, 9, 11);
-
-		// Calendar cal1 = Calendar.getInstance();
-
-		// cal1.setTime(date2);
-		// System.out.println(cal1.get(Calendar.MONTH));
-
-		// System.out.println(date1.compareTo(date2) );
-
+//		Calendar cal = Calendar.getInstance();
+//		cal.add(Calendar.DAY_OF_MONTH, 7);
+//		
+//		Date date = new Date(cal.get(Calendar.YEAR) , cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+//		System.out.println(date.getDate() + "-"+date.getMonth() + "-" + date.getYear());
+//		
 //		HopDong hopDong = hopDongDao.getHopDongTheoMa("HDG104477");
 //		
+//		System.out.println(hopDong.isCheckBaoHanh(date));
 //		
-//
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.set(2021, 6, 4);
-//		System.out.println(calendar.getTime().getYear());
-//
-//		@SuppressWarnings("deprecation")
-//		Date thoiGian = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-//				calendar.get(Calendar.DAY_OF_MONTH));
-//
-//		
-//		System.out.println(hopDong.isCheckBaoHanh(thoiGian));
-
+//		hopDong.getThoiGianBaoHanhDinhKis().forEach( s -> {
+//			System.out.println(s.getDate() + "-"+s.getMonth() + "-" + s.getYear());
+//		});
 		
 		//EmailSender.sendEmailThongBaoBaoHanhDinhKi();
-		
-		Integer a = new Integer(1);
-		Integer b = new Integer(2);
-		
-		swap(a, b);
-		
-		System.out.println(a);
 	}
 	
-	public static void swap(Integer a, Integer b) {
-		Integer temp = b;
-		b = a;
-		
-		a = temp;
-	}
+	
 
 }

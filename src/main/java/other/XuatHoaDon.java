@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import customoutput.ChiTietHoaDonReport;
-import dao.HoaDonDao;
-import db.DatabaseConnect;
 import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import net.sf.jasperreports.engine.JREmptyDataSource;

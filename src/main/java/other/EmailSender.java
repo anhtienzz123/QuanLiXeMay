@@ -21,6 +21,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import dao.HopDongDao;
+import db.DatabaseConnect;
 import entity.HopDong;
 
 public class EmailSender {
@@ -29,19 +30,17 @@ public class EmailSender {
 	private static final String PASSWORD = "testlaptrinh123@";
 	private static final String SUBJECT = "Thông báo bảo hành định kì";
 
-	public static void main(String[] args) throws AddressException, MessagingException {
+	public static void main(String[] args) throws Exception {
 
-		sendText("anhtienzz123@gmail.com", "test goi email\ndksdsadsa");
+		DatabaseConnect.connect();
 		
-		String noiDung = "Xin chào ông/bà:xyz\r\n" + 
-				"\r\n" + 
-				"MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n" + 
-				"\r\n" + 
-				"Theo hợp đồng (Mã hợp đồng: xxxx) đã lập ngày xx-xx-xxxx và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy đợt x của xe xxx sẽ bắt đầu từ ngày xx-xx-xxxx đến ngày xx-xx-xxxx. \r\n" + 
-				"\r\n" + 
-				"Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n" + 
-				"\r\n" + 
-				"Xin trân trọng cảm ơn!";
+		
+		HopDongDao hopDongDao = HopDongDao.getInstance();
+		HopDong hopDong = hopDongDao.getHopDongTheoMa("HDG104477");
+		
+		sendBaoHanh(hopDong);
+		
+		
 	}
 
 	
@@ -129,9 +128,32 @@ public class EmailSender {
 		
 		String emailNguoiNhan = hopDong.getHoaDon().getKhachHang().getEmail();
 		String tenKhachHang = hopDong.getHoaDon().getKhachHang().getHoTenKH();
-		String noiDung = "Xin chào: " + tenKhachHang + " đã đến thời gian bảo hành" ;
+		String maHopDong = hopDong.getMaHopDong();
+		String ngayLapHopDong = XuLyThoiGian.chuyenDateThanhString(hopDong.getHoaDon().getNgayLap());
+		String tenXeMay = hopDong.getXeMay().getTenXeMay() + "("+   hopDong.getXeMay().getSoKhung() +")";
 		
-		System.out.println("da goi cho:  " + emailNguoiNhan);
+		Calendar calendar = Calendar.getInstance();
+		
+		calendar.add(Calendar.DAY_OF_MONTH, 7);
+		
+		Date date = calendar.getTime();
+		
+		@SuppressWarnings("deprecation")
+		int year = date.getYear() + 1900, month = date.getMonth()+1;
+		@SuppressWarnings("deprecation")
+		String ngayBaoHanh = date.getDate()+"-"+month+"-"+year;
+		
+		String noiDung = "Xin chào ông/bà: "+tenKhachHang+"\r\n" + 
+				"\r\n" + 
+				"MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n" + 
+				"\r\n" + 
+				"Theo hợp đồng (Mã hợp đồng: "+ maHopDong +") đã lập ngày "+ ngayLapHopDong +" và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "+ tenXeMay+" sẽ bắt đầu từ ngày hôm nay đến ngày "+ ngayBaoHanh +"\r\n" + 
+				"\r\n" + 
+				"Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n" + 
+				"\r\n" + 
+				"Xin trân trọng cảm ơn!";
+		
+		
 		try {
 			sendText(emailNguoiNhan, noiDung);
 		} catch (MessagingException e) {
@@ -176,6 +198,8 @@ public class EmailSender {
 		transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 		transport.close();
 	}
+	
+	
 
 	
 }

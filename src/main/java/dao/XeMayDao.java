@@ -338,8 +338,7 @@ public class XeMayDao {
 		}
 
 		String result = XuLyChung.xuLyCauSqlPhanTrang(sql, from, to);
-		System.out.println("==== sql xe: ");
-		System.out.println(result);
+		
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 

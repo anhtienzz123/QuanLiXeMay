@@ -54,12 +54,9 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//<<<<<<< HEAD
-//		new App("NVHC154034").setVisible(true);
-//=======
+
 		new App("NVHC152665").setVisible(true);
 
-//>>>>>>> 113643b7e450a830b4df0c9418bec8a52814b224
 	}
 
 	/**
@@ -73,7 +70,17 @@ public class App extends JFrame implements ActionListener, MouseListener {
 			e.printStackTrace();
 		}
 		
-		EmailSender.sendEmailThongBaoBaoHanhDinhKi();
+		
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				EmailSender.sendEmailThongBaoBaoHanhDinhKi();
+				
+			}
+		});
+		
+		t.start();
 		
 		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNhanVien);
 		ThongTinNguoiDung.nhanVienHanhChinh = nhanVienHanhChinh;
