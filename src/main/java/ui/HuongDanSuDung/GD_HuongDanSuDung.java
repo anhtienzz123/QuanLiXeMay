@@ -26,11 +26,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 import constant.HuongDanSuDungConstant;
-import constant.NhanVienHanhChinhConstant;
-import other.TreeUtil;
 import other.TradingProjectDataService;
 import other.TradingProjectTreeRenderer;
 import other.TreeFilterDecorator;
+import other.TreeUtil;
 
 public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseListener {
 
@@ -203,7 +202,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				txtText.setText(HuongDanSuDungConstant.LAP_HOA_DON);
 				break;
 			case "Tìm kiếm hóa đơn":
-				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOP_DONG);
+				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOA_DON);
 				break;
 //				Xe máy
 			case "Thêm xe máy":
@@ -303,8 +302,14 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				txtText.setText(selectedNode.getUserObject().toString());
 				break;
 //				Thống kê
-			case "Thống kê":
-				txtText.setText(selectedNode.getUserObject().toString());
+			case "Thống kê theo ngày":
+				txtText.setText(HuongDanSuDungConstant.THONG_KE_THEO_NGAY);
+				break;
+			case "Thống kê theo tháng":
+				txtText.setText(HuongDanSuDungConstant.THONG_KE_THEO_THANG);
+				break;
+			case "Thống kê theo năm":
+				txtText.setText(HuongDanSuDungConstant.THONG_KE_THEO_NAM);
 				break;
 //				Bảo hành
 			case "Thêm phiếu bảo hành":
@@ -333,7 +338,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			}
 			
 		} catch (Exception e2) {
-			// TODO: handle exception
+			
 		}
 
 	}

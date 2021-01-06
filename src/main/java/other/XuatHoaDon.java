@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import entity.HoaDon;
 import entity.Test;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -20,60 +21,60 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class XuatHoaDon {
+	
+	public static final String FILE_REPORT = "C:/Users/admin/Documents/Java/JavaCore/QuanLiXeMay/QuanLiXeMay/src/main/java/other/TemplateHoaDon.jrxml";
 
-	public static void xuatHoaDon(List<Test> list) throws JRException {
+	public static void xuatHoaDon(HoaDon hoaDon) throws Exception {
+
+		List<Test> listItems = new ArrayList<Test>();
+
+		Test test = new Test("1", "tien", "20", "13-04-2020");
+		Test test1 = new Test("2", "tuan", "20", "13-04-2020");
+
+		listItems.add(test);
+		listItems.add(test1);
+
+		JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listItems);
+
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("duLieu", itemsJRBean);
+		parameters.put("ngay", "13-04-2020");
+
+		InputStream input = new FileInputStream(FILE_REPORT);
+
+		JasperDesign jasperDesign = JRXmlLoader.load(input);
+
+		/* compiling jrxml with help of JasperReport class */
+		JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+
+		/* Using jasperReport object to generate PDF */
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+
+		/* call jasper engine to display report in jasperviewer window */
+		JasperViewer.viewReport(jasperPrint);
 		
-		InputStream arq = XuatHoaDon.class.getResourceAsStream("/other/Blank_A4.jrxml");
-		
-		JasperReport report = JasperCompileManager.compileReport(arq);
-		
-		Map<String, Object> result = new HashMap<String, Object>();
-		
-		result.put("name", "13-04-2020");
-		//JasperPrint print = JasperFillManager.fillReport(report, result, new JRBeanCollectionDataSource(list));
-		
-		JasperPrint print = JasperFillManager.fillReport(report, result, new JREmptyDataSource());
-		
-		JasperViewer.viewReport(print, false);
+		System.out.println("File Generated");
 	}
+
 	
 	public static void main(String[] args) throws Exception {
-		test();
+		xuatHoaDon(null);
 	}
 	
-	public static void test() throws Exception {
-	
-        List<Test> listItems = new ArrayList<Test>();
+	public static void test(List<Test> list) throws JRException {
 
-        Test test = new Test("1", "tien", "20", "13-04-2020");
-		Test test1 = new Test("2", "tuan", "20", "13-04-2020");
-		
-        listItems.add(test);
-        listItems.add(test1);
-    
-        JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(listItems);
-        
-        
+		InputStream arq = XuatHoaDon.class.getResourceAsStream("/other/Blank_A4.jrxml");
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("duLieu", itemsJRBean);
-        parameters.put("ngay", "13-04-2020");
-        
+		JasperReport report = JasperCompileManager.compileReport(arq);
 
-        InputStream input = new FileInputStream("C:/Users/admin/Documents/Java/JavaCore/QuanLiXeMay/QuanLiXeMay/src/main/java/report/report.jrxml");
-                            
-        JasperDesign jasperDesign = JRXmlLoader.load(input);
-        
-        /*compiling jrxml with help of JasperReport class*/
-        JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+		Map<String, Object> result = new HashMap<String, Object>();
 
-        /* Using jasperReport object to generate PDF */
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, new JREmptyDataSource());
+		result.put("name", "13-04-2020");
+		// JasperPrint print = JasperFillManager.fillReport(report, result, new
+		// JRBeanCollectionDataSource(list));
 
-        /*call jasper engine to display report in jasperviewer window*/
-        JasperViewer.viewReport(jasperPrint);
-        
-       
-        System.out.println("File Generated");	
+		JasperPrint print = JasperFillManager.fillReport(report, result, new JREmptyDataSource());
+
+		JasperViewer.viewReport(print, false);
 	}
 }

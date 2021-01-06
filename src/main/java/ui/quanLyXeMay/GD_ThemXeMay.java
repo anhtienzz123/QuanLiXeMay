@@ -58,7 +58,6 @@ import other.BatRegex;
 import other.CopyTask;
 import other.ImportExcelFile;
 import other.RandomMa;
-import other.RandomThongTin;
 import other.XuLyChung;
 import ui.App;
 

@@ -1,8 +1,10 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class HopDong {
 		this.hoaDon = hoaDon;
 		this.xeMay = xeMay;
 	}
+
 
 	public List<Date> getThoiGianBaoHanhDinhKis() {
 
@@ -66,6 +69,21 @@ public class HopDong {
 
 		return false;
 
+	}
+
+
+	
+	public List<Date> tinhThoiGianBaoHanh() {
+		Calendar calendar = GregorianCalendar.getInstance();
+		System.out.println();
+		List<Date> listThoiGianBaoHanh = new ArrayList<Date>(Arrays.asList(hoaDon.getNgayLap()));
+		for (int i = 1; i <= 6; i++) {
+			calendar.setTime(listThoiGianBaoHanh.get(listThoiGianBaoHanh.size() - 1));
+			calendar.add(GregorianCalendar.MONTH, 6);
+			listThoiGianBaoHanh.add(calendar.getTime());
+		}
+		return listThoiGianBaoHanh;
+		
 	}
 
 }

@@ -22,7 +22,7 @@ public enum TradingProjectDataService {
 		addModule("Hãng xe", "Thêm hãng xe", "Cập nhật hãng xe", "Xóa hãng xe");
 		addModule("Loại xe", "Thêm loại xe", "Cập nhật loại xe", "Xóa loại xe");
 		addModule("Xuất xứ", "Thêm xuất xứ", "Cập nhật xuất xứ", "Xóa xuất xứ");
-		addModule("Thống kê");
+		addModule("Thống kê", "Thống kê theo ngày","Thống kê theo tháng","Thống kê theo năm");
 	}
 
 	private void addModule(String module, String... projects) {
