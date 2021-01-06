@@ -1,11 +1,10 @@
 package ui;
 
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import java.util.Calendar;
 
-import dao.HoaDonDao;
+import dao.HopDongDao;
 import db.DatabaseConnect;
-import entity.HoaDon;
-import other.XuLiXuatFile;
+import other.EmailSender;
 
 public class TestMain_TienHuynh {
 
@@ -18,21 +17,55 @@ public class TestMain_TienHuynh {
 
 	public static void main(String[] args) throws Exception {
 		DatabaseConnect.connect();
+		HopDongDao hopDongDao = HopDongDao.getInstance();
 
-//		XeMayDao xeMayDao = XeMayDao.getInstance();
-//		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-//		ThongKeQuanLiDao thongKeQuanLiDao = ThongKeQuanLiDao.getInstance();
+		Calendar cal = Calendar.getInstance();
 
-		HoaDonDao hoaDonDao = HoaDonDao.getInstance();
-		HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon("HD104174");
+		// cal.add(Calendar.DAY_OF_MONTH, 7 );
 
-		XuLiXuatFile xuatFile = new XuLiXuatFile();
+		// System.out.println(cal.get(Calendar.YEAR));
 
-		//xuatFile.xuatHoaDonRaFileWord(hoaDon);
+		// Date date1 = new Date(2020, 10, 11);
+		// Date date2 = new Date(2020, 9, 11);
 
-		//XWPFDocument doc = new XWPFDocument();
+		// Calendar cal1 = Calendar.getInstance();
 
-		xuatFile.xuatHoaDonRaFileWord1(hoaDon);
+		// cal1.setTime(date2);
+		// System.out.println(cal1.get(Calendar.MONTH));
 
+		// System.out.println(date1.compareTo(date2) );
+
+//		HopDong hopDong = hopDongDao.getHopDongTheoMa("HDG104477");
+//		
+//		
+//
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.set(2021, 6, 4);
+//		System.out.println(calendar.getTime().getYear());
+//
+//		@SuppressWarnings("deprecation")
+//		Date thoiGian = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+//				calendar.get(Calendar.DAY_OF_MONTH));
+//
+//		
+//		System.out.println(hopDong.isCheckBaoHanh(thoiGian));
+
+		
+		//EmailSender.sendEmailThongBaoBaoHanhDinhKi();
+		
+		Integer a = new Integer(1);
+		Integer b = new Integer(2);
+		
+		swap(a, b);
+		
+		System.out.println(a);
 	}
+	
+	public static void swap(Integer a, Integer b) {
+		Integer temp = b;
+		b = a;
+		
+		a = temp;
+	}
+
 }

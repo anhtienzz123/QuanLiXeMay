@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import dao.NhanVienHanhChinhDao;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
+import other.EmailSender;
 import other.ThongTinNguoiDung;
 
 public class App extends JFrame implements ActionListener, MouseListener {
@@ -67,6 +68,8 @@ public class App extends JFrame implements ActionListener, MouseListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		EmailSender.sendEmailThongBaoBaoHanhDinhKi();
 		
 		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNhanVien);
 		ThongTinNguoiDung.nhanVienHanhChinh = nhanVienHanhChinh;

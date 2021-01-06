@@ -17,11 +17,14 @@ public class KhachHang {
 	private Date ngaySinh;
 	private String soDienThoai;
 	private String diaChiKH;
+	private String email;
 
 	public KhachHang(String maKhachHang) {
 		super();
 		this.maKhachHang = maKhachHang;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -39,6 +42,19 @@ public class KhachHang {
 	public int hashCode() {
 		
 		return super.hashCode();
+	}
+
+
+
+	public KhachHang(String maKhachHang, String soCMT, String hoTenKH, Date ngaySinh, String soDienThoai,
+			String diaChiKH) {
+		super();
+		this.maKhachHang = maKhachHang;
+		this.soCMT = soCMT;
+		this.hoTenKH = hoTenKH;
+		this.ngaySinh = ngaySinh;
+		this.soDienThoai = soDienThoai;
+		this.diaChiKH = diaChiKH;
 	}
 	
 
