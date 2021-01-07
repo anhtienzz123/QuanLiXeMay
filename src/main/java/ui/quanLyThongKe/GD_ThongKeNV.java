@@ -34,7 +34,6 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 	private JPanel pnlXemChiTietDTThang;
 
 	private LocalDate localDate;
-	private ThongKeQuanLiDao thongKeDao;
 	private JLabel lblThongKeNgay;
 	private JLabel lblThongKeNam;
 	private JLabel lblThongKeThang;
@@ -484,7 +483,7 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 
 		localDate = LocalDate.now();
 
-		thongKeDao = ThongKeQuanLiDao.getInstance();
+		ThongKeQuanLiDao.getInstance();
 		Double ngay = thongKeNhanVienDao.getDoanhThuTheoNgay(maNhanVienHanhChinh, localDate.getDayOfMonth(),
 				localDate.getMonthValue(), localDate.getYear());
 		Double thang = thongKeNhanVienDao.getDoanhThuTheoThang(maNhanVienHanhChinh, localDate.getMonthValue(),

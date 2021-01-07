@@ -164,4 +164,25 @@ public class XuatXuDao {
 
 		return result > 0;
 	}
+	
+	
+	public boolean kiemTraKhongTrungTenXuatXu(String tenXuatXu) {
+
+		try {
+			String sql = "select * from XuatXu where tenXuatXu = ? ";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, tenXuatXu);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return false;
+
+		} catch (SQLException e) {
+
+		}
+
+		return true;
+	}
 }
