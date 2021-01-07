@@ -30,6 +30,7 @@ import other.DinhDangTien;
 import other.DocSo;
 import other.XuLyThoiGian;
 import other.XuatHoaDon;
+import ui.GD_DangNhap;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 
@@ -61,8 +62,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		this.maHoaDon = maHoaDon;
 		hoaDonDao = HoaDonDao.getInstance();
 
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_ChiTietHoaDon.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Hóa đơn");
 		setSize(1200, 900);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -195,10 +195,11 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		lblSDT.setBounds(718, 187, 136, 30);
 		contentPane.add(lblSDT);
 
-		lblDiaChi = new JLabel("12, Nguyễn Văn Bảo, phường 4, Quận Gò Vấp, TPHCM");
+		lblDiaChi = new JLabel();
+		lblDiaChi.setVerticalAlignment(SwingConstants.TOP);
 		lblDiaChi.setForeground(Color.BLACK);
 		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblDiaChi.setBounds(616, 230, 554, 30);
+		lblDiaChi.setBounds(616, 233, 554, 59);
 		contentPane.add(lblDiaChi);
 
 		JLabel lblNewLabel_1_2_4_1 = new JLabel("Địa chỉ:");
@@ -274,12 +275,12 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 
 		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(300);// Tên xe
 
-		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(200);// Hãng
-		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);// Loại xe
-		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(200);// Màu
-		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(100);// Số lượng
-		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(250);// Giá bán
-		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(100);// Bảo hành
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(250);// Số khung
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(250);// giá bán
+		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(100);// bảo hành
+		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(200);// Hãng xe
+		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(200);// Loại xe 
+		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(200);// Màu sắc
 		scrollPane.setViewportView(tblHoaDon);
 		tblHoaDon.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -312,9 +313,8 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
 		tblHoaDon.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		tblHoaDon.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-		tblHoaDon.getColumnModel().getColumn(6).setCellRenderer(centerRenderer);
-		tblHoaDon.getColumnModel().getColumn(7).setCellRenderer(rightRenderer);
-		tblHoaDon.getColumnModel().getColumn(8).setCellRenderer(centerRenderer);
+		tblHoaDon.getColumnModel().getColumn(4).setCellRenderer(rightRenderer);
+		tblHoaDon.getColumnModel().getColumn(5).setCellRenderer(rightRenderer);
 
 		JTableHeader tableHeaderNVKyThuat = tblHoaDon.getTableHeader();
 		tableHeaderNVKyThuat.setBackground(new Color(58, 181, 74));
@@ -342,7 +342,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		lblTenKH.setText(hoaDon.getKhachHang().getHoTenKH());
 		lblSDT.setText(hoaDon.getKhachHang().getSoDienThoai());
 		lblNgaySinh.setText(XuLyThoiGian.chuyenDateThanhString(hoaDon.getKhachHang().getNgaySinh()));
-		lblDiaChi.setText(hoaDon.getKhachHang().getDiaChiKH());
+		lblDiaChi.setText("<html>"+hoaDon.getKhachHang().getDiaChiKH()+"</html>");
 
 		for (ChiTietHoaDon chiTietHoaDon : hoaDon.getChiTietHoaDons()) {
 			Object[] datas = new Object[9];
@@ -351,7 +351,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			datas[2] = chiTietHoaDon.getXeMay().getTenXeMay();
 			datas[3] = chiTietHoaDon.getXeMay().getSoKhung();
 			datas[4] = DinhDangTien.format(chiTietHoaDon.getGiaBan());
-			datas[5] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh();
+			datas[5] = chiTietHoaDon.getXeMay().getThoiGianBaoHanh() +" tháng";
 			datas[6] = chiTietHoaDon.getXeMay().getDongXe().getHangXe().getTenHangXe();
 			datas[7] = chiTietHoaDon.getXeMay().getLoaiXe().getTenLoaiXe();
 			datas[8] = chiTietHoaDon.getXeMay().getMauXe();

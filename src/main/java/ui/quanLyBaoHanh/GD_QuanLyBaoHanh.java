@@ -238,10 +238,11 @@ public class GD_QuanLyBaoHanh extends JPanel implements ActionListener, KeyListe
 		pnlLogo.add(lblLogo);
 
 		btnDanhMucBaoHanh = new JButton("Danh mục bảo hành");
+		btnDanhMucBaoHanh.setIcon(new ImageIcon(GD_QuanLyBaoHanh.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		btnDanhMucBaoHanh.setForeground(new Color(255, 255, 255));
 		btnDanhMucBaoHanh.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnDanhMucBaoHanh.setBackground(new Color(0, 153, 255));
-		btnDanhMucBaoHanh.setBounds(1219, 805, 257, 40);
+		btnDanhMucBaoHanh.setBounds(1191, 805, 285, 40);
 		add(btnDanhMucBaoHanh);
 
 		btnBoLoc = new JButton("Xóa tìm kiếm");

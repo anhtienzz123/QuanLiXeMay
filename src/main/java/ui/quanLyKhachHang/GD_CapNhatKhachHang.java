@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -33,6 +34,8 @@ import dao.KhachHangDao;
 import entity.KhachHang;
 import other.BatRegex;
 import other.RandomMa;
+import ui.GD_DangNhap;
+import javax.swing.ImageIcon;
 
 public class GD_CapNhatKhachHang extends JFrame implements ActionListener, FocusListener {
 
@@ -60,6 +63,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 	private JTextField txtEmail;
 
 	public GD_CapNhatKhachHang(String maKhachHang, GD_KhachHang gd_KhachHang) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		khachHangDao = KhachHangDao.getInstance();
 		this.maKhachHang = maKhachHang;
 		this.gd_KhachHang = gd_KhachHang;
@@ -312,11 +316,12 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 		horizontalBox_6.add(rigidArea_16);
 
 		btnThoat = new JButton("Thoát");
+		btnThoat.setIcon(new ImageIcon(GD_CapNhatKhachHang.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThoat.setMaximumSize(new Dimension(97, 40));
-		btnThoat.setPreferredSize(new Dimension(97, 40));
+		btnThoat.setPreferredSize(new Dimension(120, 40));
 		horizontalBox_6.add(btnThoat);
 		btnThoat.addActionListener(this);
 
@@ -324,7 +329,8 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 		horizontalBox_6.add(horizontalGlue);
 
 		btnLuu = new JButton("Lưu");
-		btnLuu.setPreferredSize(new Dimension(97, 40));
+		btnLuu.setIcon(new ImageIcon(GD_CapNhatKhachHang.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
+		btnLuu.setPreferredSize(new Dimension(120, 40));
 		btnLuu.setMaximumSize(new Dimension(97, 40));
 		btnLuu.setForeground(Color.WHITE);
 		btnLuu.setFont(new Font("Tahoma", Font.BOLD, 20));

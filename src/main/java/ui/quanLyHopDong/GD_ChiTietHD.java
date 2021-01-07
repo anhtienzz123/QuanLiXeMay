@@ -20,6 +20,9 @@ import dao.HopDongDao;
 import entity.HopDong;
 import other.DinhDangTien;
 import other.DocSo;
+import ui.GD_DangNhap;
+
+import javax.swing.ImageIcon;
 
 public class GD_ChiTietHD extends JFrame implements ActionListener {
 
@@ -66,8 +69,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		hopDongDao = HopDongDao.getInstance();
 		HopDong hopDong = hopDongDao.getHopDongTheoMa(maHopDong);
 		System.out.println(hopDong);
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_ChiTietHD.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Chi tiết hợp đồng");
 		setSize(950, 981);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -425,6 +427,7 @@ public class GD_ChiTietHD extends JFrame implements ActionListener {
 		contentPane.add(lblChu);
 
 		JButton btnThoat = new JButton("Thoát");
+		btnThoat.setIcon(new ImageIcon(GD_ChiTietHD.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));

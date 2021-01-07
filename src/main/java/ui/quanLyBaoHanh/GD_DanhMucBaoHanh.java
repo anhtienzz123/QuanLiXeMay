@@ -30,6 +30,7 @@ import constant.TenEntity;
 import dao.DanhMucBaoHanhDao;
 import entity.DanhMucBaoHanh;
 import other.RandomMa;
+import ui.GD_DangNhap;
 
 public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseListener {
 
@@ -70,8 +71,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 	 * Create the frame.
 	 */
 	public GD_DanhMucBaoHanh() {
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Danh mục bảo hành");
 		setSize(1196, 661);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -164,6 +164,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 		txtTen.setColumns(10);
 
 		btnThem = new JButton("Thêm");
+		btnThem.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
@@ -171,20 +172,23 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 		contentPane.add(btnThem);
 
 		btnSua = new JButton("Sửa");
+		btnSua.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_construction_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
-		btnSua.setBounds(670, 566, 136, 30);
+		btnSua.setBounds(639, 566, 136, 30);
 		contentPane.add(btnSua);
 
 		btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(498, 566, 136, 30);
+		btnXoa.setBounds(467, 566, 136, 30);
 		contentPane.add(btnXoa);
 
 		btnXoaRong = new JButton("Xóa rỗng");
+		btnXoaRong.setIcon(new ImageIcon(GD_DanhMucBaoHanh.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -192,7 +196,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setBounds(843, 566, 136, 30);
+		btnXoaRong.setBounds(811, 566, 173, 30);
 		contentPane.add(btnXoaRong);
 
 		JTableHeader tableHearder = table.getTableHeader();

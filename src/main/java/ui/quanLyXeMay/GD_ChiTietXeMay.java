@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Optional;
@@ -21,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 import dao.XeMayDao;
 import entity.XeMay;
 import other.DinhDangTien;
+import ui.GD_DangNhap;
 
 public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 
@@ -50,6 +52,7 @@ public class GD_ChiTietXeMay extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public GD_ChiTietXeMay(String maXeMay) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		XeMayDao xeMayDao = XeMayDao.getInstance();
 		XeMay xeMay = xeMayDao.getXeMayTheoMa(maXeMay);
 		

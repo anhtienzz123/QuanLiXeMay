@@ -51,7 +51,7 @@ public class ThongTinChungXeMayDao {
 			while (resultSet.next()) {
 				ThongTinChiTietXeMay thongTinChiTietXeMay = new ThongTinChiTietXeMay(resultSet.getString("maXeMay"),
 						resultSet.getString("soKhung"), resultSet.getString("soSuon"), resultSet.getString("mauXe"),
-						resultSet.getString("tenXuatXu"));
+						resultSet.getString("tenXuatXu"), resultSet.getInt("soLuong"));
 
 				thongTinChiTietXeMays.add(thongTinChiTietXeMay);
 

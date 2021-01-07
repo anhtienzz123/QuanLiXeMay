@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +20,8 @@ import javax.swing.border.EmptyBorder;
 import dao.KhachHangDao;
 import entity.KhachHang;
 import other.XuLyThoiGian;
+import ui.GD_DangNhap;
+import javax.swing.ImageIcon;
 
 public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 
@@ -37,6 +40,7 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 	private String maKhachHang;
 
 	public GD_ChiTietKhachHang(String maKhachHang) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 
 		khachHangDao = KhachHangDao.getInstance();
 		this.maKhachHang = maKhachHang;
@@ -248,11 +252,12 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		horizontalBox_6.add(horizontalGlue);
 
 		btnThoat = new JButton("Thoát");
+		btnThoat.setIcon(new ImageIcon(GD_ChiTietKhachHang.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnThoat.setMaximumSize(new Dimension(97, 40));
-		btnThoat.setPreferredSize(new Dimension(97, 40));
+		btnThoat.setMaximumSize(new Dimension(120, 40));
+		btnThoat.setPreferredSize(new Dimension(120, 40));
 		horizontalBox_6.add(btnThoat);
 
 		Component rigidArea_17 = Box.createRigidArea(new Dimension(20, 20));

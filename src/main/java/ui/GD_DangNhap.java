@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import dao.NhanVienHanhChinhDao;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
+import java.awt.Toolkit;
 
 public class GD_DangNhap extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -60,6 +61,7 @@ public class GD_DangNhap extends JFrame implements ActionListener, MouseListener
 	}
 
 	public GD_DangNhap() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 
 		/*
 		 * // setLookAndFeel try {
