@@ -230,6 +230,7 @@ public class NhanVienKiThuatDao {
 			case "":
 				preparedStatement = connection
 						.prepareStatement(NhanVienKiThuatConstant.GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG_MAX_PAGE);
+				
 				break;
 			case NhanVienKiThuatConstant.MA_NHAN_VIEN_KI_THUAT:
 				preparedStatement = connection

@@ -22,7 +22,7 @@ public class HopDong {
 	private List<PhieuBaoHanh> phieuBaoHanhs;
 
 	public HopDong(String maHopDong) {
-		
+
 		this.maHopDong = maHopDong;
 	}
 
@@ -32,6 +32,67 @@ public class HopDong {
 		this.hoaDon = hoaDon;
 		this.xeMay = xeMay;
 	}
+
+
+	public List<Date> getThoiGianBaoHanhDinhKis() {
+
+		List<Date> ketQua = new ArrayList<Date>();
+
+		Calendar ngayLapHopDong = Calendar.getInstance();
+		ngayLapHopDong.setTime(hoaDon.getNgayLap());
+		for (int i = 0; i < 6; i++) {
+			ngayLapHopDong.add(Calendar.MONTH, 6);
+
+			int ngay = ngayLapHopDong.get(Calendar.DAY_OF_MONTH);
+			int thang = ngayLapHopDong.get(Calendar.MONTH);
+			int nam = ngayLapHopDong.get(Calendar.YEAR);
+
+			@SuppressWarnings("deprecation")
+			Date temp = new Date(nam, thang, ngay);
+
+			ketQua.add(temp);
+		}
+
+		return ketQua;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public int checkDot(Date thoiGian) {
+		
+		List<Date> thoiGianBaoHanhs = getThoiGianBaoHanhDinhKis();
+		
+		int i = 1;
+
+		for (Date date : thoiGianBaoHanhs) {
+			
+			if(date.getDate() == thoiGian.getDate() && date.getMonth() == thoiGian.getMonth() && date.getYear() == thoiGian.getYear())
+				return i;
+			
+			i++;
+				
+		}
+
+		return 0;
+	}
+	
+
+
+	@SuppressWarnings("deprecation")
+	public boolean isCheckBaoHanh(Date thoiGian) {
+
+		List<Date> thoiGianBaoHanhs = getThoiGianBaoHanhDinhKis();
+
+		for (Date date : thoiGianBaoHanhs) {
+			if(date.getDate() == thoiGian.getDate() && date.getMonth() == thoiGian.getMonth() && date.getYear() == thoiGian.getYear())
+				return true;
+				
+		}
+
+		return false;
+
+	}
+
+
 	
 	public List<Date> tinhThoiGianBaoHanh() {
 		Calendar calendar = GregorianCalendar.getInstance();
@@ -45,5 +106,5 @@ public class HopDong {
 		return listThoiGianBaoHanh;
 		
 	}
-	
+
 }

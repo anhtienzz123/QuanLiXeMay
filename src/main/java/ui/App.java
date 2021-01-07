@@ -27,6 +27,7 @@ import javax.swing.border.EmptyBorder;
 import dao.NhanVienHanhChinhDao;
 import db.DatabaseConnect;
 import entity.NhanVienHanhChinh;
+import other.EmailSender;
 import other.ThongTinNguoiDung;
 
 public class App extends JFrame implements ActionListener, MouseListener {
@@ -53,12 +54,13 @@ public class App extends JFrame implements ActionListener, MouseListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//<<<<<<< HEAD
-//		new App("NVHC154034").setVisible(true);
-//=======
-		new App("NVHC152665").setVisible(true);
 
-//>>>>>>> 113643b7e450a830b4df0c9418bec8a52814b224
+		
+		// nhan vien
+		//new App("NVHC102430").setVisible(true);
+		// quan li NVHC110373
+		new App("NVHC110373").setVisible(true);
+
 	}
 
 	/**
@@ -71,6 +73,18 @@ public class App extends JFrame implements ActionListener, MouseListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				EmailSender.sendEmailThongBaoBaoHanhDinhKi();
+				
+			}
+		});
+		
+		t.start();
 		
 		NhanVienHanhChinh nhanVienHanhChinh = NhanVienHanhChinhDao.getInstance().getNVHanhChinhTheoMa(maNhanVien);
 		ThongTinNguoiDung.nhanVienHanhChinh = nhanVienHanhChinh;

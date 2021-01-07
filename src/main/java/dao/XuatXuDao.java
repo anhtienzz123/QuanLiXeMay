@@ -148,17 +148,21 @@ public class XuatXuDao {
 	}
 	
 	public boolean xoaXuatXu(String maXuatXu) {
-		int n = 0;
 
+		int result = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.XOA_XUAT_XU);
+			String sql = "delete from XuatXu where maXuatXu = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
 			preparedStatement.setString(1, maXuatXu);
-			n = preparedStatement.executeUpdate();
+
+			result = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
+			System.out.println("Mã xuất xứ xe đã bị ràng buộc, không xóa được");
 
 		}
 
-		return n > 0;
+		return result > 0;
 	}
 }

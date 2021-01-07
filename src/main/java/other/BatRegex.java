@@ -30,8 +30,9 @@ public class BatRegex {
 	public static boolean kiemTraSoCMT(JTextField text) {
 
 		String regex = "^\\d{9}$";
+		String regex1 = "^\\d{12}$";
 
-		if (text.getText().matches(regex))
+		if (text.getText().matches(regex) || text.getText().matches(regex1)  )
 			return true;
 
 		return false;
@@ -69,6 +70,17 @@ public class BatRegex {
 
 		return false;
 	}
+	
+	public static boolean kiemTraEmail(JTextField text) {
+
+		String regex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+
+		if (text.getText().matches(regex))
+			return true;
+
+		return false;
+	}
+	
 
 	public static boolean kiemTraTenXe(JTextField text) {
 
@@ -130,6 +142,8 @@ public class BatRegex {
 
 		return false;
 	}
+	
+	
 
 	public static boolean kiemTraBaoHanh(JTextField text) {
 

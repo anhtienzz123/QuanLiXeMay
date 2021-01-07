@@ -55,6 +55,8 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 	private boolean isTenKhachHang = false;
 	private boolean isSoDienThoai = false;
 	private boolean isNgaySinh = false;
+	private boolean isEmail = false;
+	
 	private JTextField txtEmail;
 
 	public GD_ThemKhachHang(GD_KhachHang gd_KhachHang) {
@@ -288,7 +290,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		horizontalBox_7_1.add(rigidArea_20_1);
 
 		txtThongBao = new JTextArea();
-		txtThongBao.setEnabled(false);
+		txtThongBao.setEditable(false);
 		txtThongBao.setPreferredSize(new Dimension(640, 120));
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
@@ -372,6 +374,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 			}
 		});
 
+		txtEmail.addFocusListener(this);
 	}
 
 	@Override
@@ -393,7 +396,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 					this.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên",
+					JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại", "Thêm nhân viên",
 							JOptionPane.ERROR_MESSAGE, null);
 				}
 			} else {
@@ -401,6 +404,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 				isTenKhachHang = true;
 				isSoDienThoai = true;
 				isNgaySinh = true;
+				isEmail = true;
 				capNhatThongBaoLoi();
 			}
 
@@ -416,12 +420,13 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		String soCMT = txtSoCMT.getText();
 		String hoTenKH = txtTenKH.getText();
 		String soDienThoai = txtSoDienThoai.getText();
+		String email = txtEmail.getText();
 
 		@SuppressWarnings("deprecation")
 		Date ngaySinh = new Date(txtNgaySinh.getDate().getYear(), txtNgaySinh.getDate().getMonth(),
 				txtNgaySinh.getDate().getDate());
 		String diaChiKH = txtDiaChi.getText();
-		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH);
+		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH, email);
 		return khachHang;
 
 	}
@@ -432,13 +437,14 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		txtTenKH.setText("");
 		txtSoDienThoai.setText("");
 		txtDiaChi.setText("");
+		txtEmail.setText("");
 
 	}
 
 	private boolean validateKhachHang(KhachHang khachHang) {
 
 		if (BatRegex.kiemTraSoCMT(txtSoCMT) && BatRegex.kiemTraTen(txtTenKH)
-				&& BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && BatRegex.kiemTraNgaySinh(txtNgaySinh))
+				&& BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && BatRegex.kiemTraNgaySinh(txtNgaySinh) && BatRegex.kiemTraEmail(txtEmail) )
 			return true;
 
 		return false;
@@ -460,6 +466,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		if (!BatRegex.kiemTraNgaySinh(txtNgaySinh) && isNgaySinh)
 			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.NGAY_SINH);
+		
+		if (!BatRegex.kiemTraEmail(txtEmail) && isEmail)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + "Email không đúng định dạng");
 
 	}
 
@@ -476,6 +485,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 		if (source.equals(txtSoDienThoai))
 			isSoDienThoai = true;
+		
+		if(source.equals(txtEmail))
+			isEmail = true;
 
 	}
 

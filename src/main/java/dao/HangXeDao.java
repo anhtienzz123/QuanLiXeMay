@@ -145,22 +145,23 @@ public class HangXeDao {
 
 		return true;
 	}
-	
-	public boolean xoaHangXe(String maHangXe) {
-		
-		int n = 0;
 
+	public boolean xoaHangXe(String maHangXe) {
+
+		int result = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.XOA_HANG_XE);
+			String sql = "delete from HangXe where maHangXe = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
 			preparedStatement.setString(1, maHangXe);
-			n = preparedStatement.executeUpdate();
+
+			result = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
+			System.out.println("Mã hãng xe đã bị ràng buộc, không xóa được");
 
 		}
 
-		return n > 0;
-		
+		return result > 0;
 	}
-
 }

@@ -28,8 +28,8 @@ import entity.ChiTietHoaDon;
 import entity.HoaDon;
 import other.DinhDangTien;
 import other.DocSo;
-import other.XuLiXuatFile;
 import other.XuLyThoiGian;
+import other.XuatHoaDon;
 
 public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 
@@ -256,7 +256,8 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		scrollPane.setBounds(23, 329, 1128, 383);
 		contentPane.add(scrollPane);
 
-		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe","Số khung", "Giá bán", "Bảo hành" ,"Hãng xe", "Loại xe", "Màu sắc" };
+		String[] colHeaderHoaDon = { "STT", "Mã xe", "Tên xe", "Số khung", "Giá bán", "Bảo hành", "Hãng xe", "Loại xe",
+				"Màu sắc" };
 		modelHoaDon = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblHoaDon = new JTable(modelHoaDon) {
 			private static final long serialVersionUID = 1L;
@@ -268,15 +269,15 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		tblHoaDon.setBackground(Color.WHITE);
 		tblHoaDon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		tblHoaDon.setRowHeight(30);
-		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(50);//STT
-		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(150);//Mã xe
+		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(50);// STT
+		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(150);// Mã xe
 
-		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(300);//Tên xe
+		tblHoaDon.getColumnModel().getColumn(2).setPreferredWidth(300);// Tên xe
 
-		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(200);//Hãng
-		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);//Loại xe
-		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(200);//Màu
-		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(100);//Số lượng
+		tblHoaDon.getColumnModel().getColumn(3).setPreferredWidth(200);// Hãng
+		tblHoaDon.getColumnModel().getColumn(4).setPreferredWidth(200);// Loại xe
+		tblHoaDon.getColumnModel().getColumn(5).setPreferredWidth(200);// Màu
+		tblHoaDon.getColumnModel().getColumn(6).setPreferredWidth(100);// Số lượng
 		tblHoaDon.getColumnModel().getColumn(7).setPreferredWidth(250);// Giá bán
 		tblHoaDon.getColumnModel().getColumn(8).setPreferredWidth(100);// Bảo hành
 		scrollPane.setViewportView(tblHoaDon);
@@ -284,7 +285,8 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 
 		btnXuatHoaDon = new JButton("Xuất hóa đơn");
 		btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
-		//btnXuatHoaDon.setIcon(new ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
+		// btnXuatHoaDon.setIcon(new
+		// ImageIcon(GD_ChiTietHoaDon.class.getResource("/icon/print_30px.png")));
 		btnXuatHoaDon.setForeground(Color.WHITE);
 		btnXuatHoaDon.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXuatHoaDon.setBackground(Color.GRAY);
@@ -322,11 +324,9 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 		btnThoat.addActionListener(this);
 		btnXuatHoaDon.addActionListener(this);
 		khoiTao();
-		
-		
 
 	}
-	
+
 	private HoaDon hoaDon;
 
 	private void khoiTao() {
@@ -359,7 +359,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			modelHoaDon.addRow(datas);
 
 		}
-		
+
 		DecimalFormat df = new DecimalFormat("###.##");
 		lblTongTien.setText("Tổng tiền: " + DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
 		lblChu.setText("<html>Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng</html>");
@@ -372,13 +372,17 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 			setVisible(false);
 		}
 		if (o.equals(btnXuatHoaDon)) {
-             XuLiXuatFile xuatFile = new XuLiXuatFile();
-             try {
-				xuatFile.xuatHoaDonRaFileWord1(this.hoaDon);
-				
-				JOptionPane.showMessageDialog(null, "Xuất hóa đơn thành công");
+			// XuLiXuatFile xuatFile = new XuLiXuatFile();
+			try {
+
+				HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon(maHoaDon);
+
+				XuatHoaDon.xuatHoaDon(hoaDon);
+				// xuatFile.xuatHoaDonRaFileWord1(this.hoaDon);
+				// JOptionPane.showMessageDialog(null, "Xuất hóa đơn thành công");
+
 			} catch (Exception e1) {
-				
+
 				JOptionPane.showMessageDialog(null, "Xuất hóa đơn thất bại");
 			}
 		}

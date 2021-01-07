@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
@@ -96,12 +97,16 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		lblTngThuTrong_2_1_1.setBounds(48, 20, 182, 30);
 		add(lblTngThuTrong_2_1_1);
 
-		khoiTao();
-
 		cboNam = new JComboBox<String>();
 		cboNam.setBackground(Color.WHITE);
 		cboNam.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" }));
+		cboNam.setModel(new DefaultComboBoxModel<String>(new String[] { "2018", "2019", "2020" })  );
+		khoiTao();
+
+		
+		
+		
+		
 		cboNam.setBounds(228, 20, 90, 30);
 		add(cboNam);
 		((JLabel) cboNam.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -216,7 +221,17 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 		thongKeDao = ThongKeQuanLiDao.getInstance();
 		LocalDate date = LocalDate.now();
 		nam = date.getYear();
+		
+		List<String> nams = thongKeDao.getNams();
+		
+		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>();
+		for (String string : nams) {
+			temp.addElement(string);
+		}
+	
+		cboNam.setModel(temp);
 	}
+	
 
 	/**
 	 * Biểu đồ cột thống kê số doanh thu bán trong năm

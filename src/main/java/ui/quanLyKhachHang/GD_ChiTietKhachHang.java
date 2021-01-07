@@ -31,6 +31,7 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 	private JLabel lblTenKH;
 	private JLabel lblSoCMT;
 	private JLabel lblMaKH;
+	private JLabel lblEmail;
 
 	private KhachHangDao khachHangDao;
 	private String maKhachHang;
@@ -185,28 +186,28 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		Component rigidArea_3 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_3.setPreferredSize(new Dimension(20, 30));
 		verticalBox.add(rigidArea_3);
-		
+
 		Box horizontalBox_3_1 = Box.createHorizontalBox();
 		verticalBox.add(horizontalBox_3_1);
-		
+
 		Component rigidArea_9_1 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3_1.add(rigidArea_9_1);
-		
+
 		JLabel lblNewLabel_1_3_1 = new JLabel("Email:");
 		lblNewLabel_1_3_1.setFont(new Font("Tahoma", Font.BOLD, 20));
 		horizontalBox_3_1.add(lblNewLabel_1_3_1);
-		
+
 		Component rigidArea_15_3_1 = Box.createRigidArea(new Dimension(20, 20));
 		horizontalBox_3_1.add(rigidArea_15_3_1);
-		
-		JLabel lblEmail = new JLabel("nhathao0852@gmail.com");
+
+		lblEmail = new JLabel("nhathao0852@gmail.com");
 		lblEmail.setForeground(Color.BLACK);
 		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		horizontalBox_3_1.add(lblEmail);
-		
+
 		Component horizontalGlue_3_1 = Box.createHorizontalGlue();
 		horizontalBox_3_1.add(horizontalGlue_3_1);
-		
+
 		Component rigidArea_3_1 = Box.createRigidArea(new Dimension(20, 20));
 		rigidArea_3_1.setPreferredSize(new Dimension(20, 30));
 		verticalBox.add(rigidArea_3_1);
@@ -277,6 +278,7 @@ public class GD_ChiTietKhachHang extends JFrame implements ActionListener {
 		lblSDT.setText(khachHang.getSoDienThoai());
 		lblDiaChi.setText("<html>" + khachHang.getDiaChiKH() + "</html>");
 		lblNgaySinh.setText(XuLyThoiGian.chuyenDateThanhString(khachHang.getNgaySinh()));
+		lblEmail.setText(khachHang.getEmail());
 	}
 
 }

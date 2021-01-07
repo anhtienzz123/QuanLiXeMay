@@ -40,7 +40,6 @@ public class LoaiXeDao {
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.GET_LOAI_XE);
 			ResultSet resultSet = preparedStatement.executeQuery();
-
 			while (resultSet.next()) {
 
 				LoaiXe loaiXe = LoaiXeConvert.getLoaiXe(resultSet);
@@ -147,17 +146,22 @@ public class LoaiXeDao {
 	}
 	
 	public boolean xoaLoaiXe(String maLoaiXe) {
-		int n = 0;
 
+		int result = 0;
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.XOA_LOAI_XE);
+			String sql = "delete from LoaiXe where maLoaiXe = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
 			preparedStatement.setString(1, maLoaiXe);
-			n = preparedStatement.executeUpdate();
+
+			result = preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
+			System.out.println("Mã loại xe đã bị ràng buộc, không xóa được");
 
 		}
 
-		return n > 0;
+		return result > 0;
+
 	}
 }

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventObject;
@@ -37,7 +39,7 @@ import entity.HangXe;
 import other.RandomMa;
 import other.XuLyChung;
 
-public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
+public class GD_DongXe extends JFrame implements ActionListener, MouseListener, KeyListener {
 
 	/**
 	 * 
@@ -238,7 +240,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		contentPane.add(lblNewLabel_1_2_1_2);
 
 		cboTimKiem = new JComboBox<String>();
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên dòng xe", "Mã dòng xe", "Hãng", "" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên dòng xe", "Mã dòng xe", "Hãng" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setBounds(169, 170, 147, 30);
@@ -258,6 +260,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 			model.addRow(new Object[] { i, null, null });
 		}
 
+		dongXes = DongXeDao.getInstance().getDongXes();
 		dangKiSuKien();
 		capNhatBang();
 	}
@@ -268,7 +271,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 	private void capNhatBang() {
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
-		dongXes = DongXeDao.getInstance().getDongXes();
+
 		if (dongXes != null) {
 			for (DongXe dongXe : dongXes) {
 				Object[] datas = new Object[5];
@@ -289,34 +292,97 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
+
+		table.addMouseListener(this);
+
+		cboTimKiem.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-			HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
-			DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(), Integer.parseInt(txtThue.getText().trim()), hangXe);
-			if (DongXeDao.getInstance().themDongXe(dongXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
-			}else {
-				
+
+			if (kiemTraHopLe()) {
+				// kiem tra ma khong trung
+
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+
+				if (dongXeDao.kiemTraKhongTrungTenDongXe(txtTen.getText().trim())) {
+					HangXe hangXe = HangXeDao.getInstance()
+							.getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
+					DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
+							Double.parseDouble(txtThue.getText().trim()), hangXe);
+
+					if (DongXeDao.getInstance().themDongXe(dongXe)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+					}
+
+					capNhatBang();
+					xoaRong();
+				} else {
+					JOptionPane.showMessageDialog(this, "Tên dòng xe đã trùng");
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Thông tin dòng xe không hợp lệ");
+
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
-			capNhatBang();
-		}
-		if (o.equals(btnXoa)) {
-			JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không","Chú ý",JOptionPane.YES_NO_OPTION);
-		}
-		if (o.equals(btnSua)) {
 
 		}
-		if (o.equals(btnXoaRong)) {
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
-			txtThue.setText("2");
-			txtTen.setText("");
-			cboHang.setSelectedIndex(4);
+		if (o.equals(btnXoa)) {
+
+			int row = table.getSelectedRow();
+
+			if (row != -1) {
+				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa không ?", "Xóa hãng xe",
+						JOptionPane.YES_NO_OPTION);
+
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				// da nhan ok
+				if (flag == JOptionPane.YES_OPTION) {
+					String maDongXe = (String) model.getValueAt(row, 1);
+
+					if (dongXeDao.xoaDongXe(maDongXe)) {
+						JOptionPane.showMessageDialog(null, "Xóa dòng xe thành công");
+						capNhatBang();
+						xoaRong();
+					} else {
+						JOptionPane.showMessageDialog(null, "Xóa dòng xe thất bại");
+					}
+
+				}
+			}
 		}
+
+		if (o.equals(btnSua)) {
+			if (kiemTraHopLe()) {
+				HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
+				DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
+						Double.parseDouble(txtThue.getText().trim()), hangXe);
+
+				if (DongXeDao.getInstance().capNhatDongXe(dongXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+
+				capNhatBang();
+				xoaRong();
+			} else {
+				JOptionPane.showMessageDialog(this, "Thông tin dòng xe không hợp lệ");
+			}
+		}
+
+		if (o.equals(btnXoaRong)) {
+			xoaRong();
+		}
+	}
+
+	private void xoaRong() {
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
+		txtThue.setText("2");
+		txtTen.setText("");
+		cboHang.setSelectedIndex(1);
 	}
 
 	@Override
@@ -324,8 +390,34 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		int row = table.getSelectedRow();
 		lblMa.setText(model.getValueAt(row, 1).toString().trim());
 		txtTen.setText(model.getValueAt(row, 2).toString().trim());
-//		txtThue.setText(t);
+		cboHang.setSelectedItem(model.getValueAt(row, 3).toString().trim());
+		txtThue.setText(model.getValueAt(row, 4).toString().trim());
 
+	}
+
+	private boolean kiemTraHopLe() {
+
+		String tenDongXe = txtTen.getText().trim();
+
+		if (tenDongXe.length() == 0)
+			return false;
+
+		String tien = txtThue.getText().trim();
+
+		if (tien.length() == 0)
+			return false;
+
+		try {
+			double thue = Double.valueOf(txtThue.getText().trim());
+
+			if (thue < 0)
+				return false;
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -348,6 +440,48 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+
+		String txtTimKiem = this.txtTimKiem.getText().trim();
+		System.out.println(txtTimKiem);
+
+		if (cboTimKiem.getSelectedItem().equals("Tên dòng xe")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoTenDongXe(txtTimKiem);
+
+		}
+
+		if (cboTimKiem.getSelectedItem().equals("Mã dòng xe")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoMaDongXe(txtTimKiem);
+
+		}
+
+		if (cboTimKiem.getSelectedItem().equals("Hãng")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoHang(txtTimKiem);
+
+		}
+
+		capNhatBang();
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}

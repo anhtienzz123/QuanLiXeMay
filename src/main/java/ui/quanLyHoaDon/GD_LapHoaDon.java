@@ -942,25 +942,34 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 
 		if (source == btnLapHoaDon) {
 
-			if (lblTienTraLai.getText().length() > 0) {
-				HoaDonDao hoaDonDao = HoaDonDao.getInstance();
-				System.out.println(hoaDon);
-				if (hoaDonDao.themHoaDon(this.hoaDon)) {
+			if(!lblMaKhachHang.getText().trim().equals("")) {
+				if(tblHoaDon.getRowCount()>0) {
+					if (lblTienTraLai.getText().length() > 0) {
+						HoaDonDao hoaDonDao = HoaDonDao.getInstance();
+						System.out.println(hoaDon);
+						if (hoaDonDao.themHoaDon(this.hoaDon)) {
 
-					new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
-					hoaDon = null;
-					capNhatHoaDon();
-					capNhatKhachHang(null);
-					lblMaHoaDon.setText(RandomMa.getMaNgauNhien(TenEntity.HOA_DON));
+							new GD_ChiTietHoaDon(hoaDon.getMaHoaDon()).setVisible(true);
+							hoaDon = null;
+							capNhatHoaDon();
+							capNhatKhachHang(null);
+							lblMaHoaDon.setText(RandomMa.getMaNgauNhien(TenEntity.HOA_DON));
 
-				} else {
-					System.out.println("Them that bai");
+						} else {
+							System.out.println("Them that bai");
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Bạn chưa nhập tiền khách trả");
+						txtTienKhachTra.requestFocus();
+						txtTienKhachTra.selectAll();
+
+					}
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Bạn chưa nhập tiền khách trả");
-				txtTienKhachTra.requestFocus();
-				txtTienKhachTra.selectAll();
-
+				else {
+					JOptionPane.showMessageDialog(null, "Hóa đơn không được rỗng");
+				}
+			}else {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin khách hàng");
 			}
 
 		}
@@ -1060,7 +1069,6 @@ public class GD_LapHoaDon extends JPanel implements ActionListener, KeyListener,
 			lblTongTien.setText(DinhDangTien.format(hoaDon.tinhTongTienHoaDon()));
 
 			DecimalFormat df = new DecimalFormat("###.##");
-			System.out.println(DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())));
 			lblTienBangChu.setText(
 					"<html>Bằng chữ: " + DocSo.readNum(df.format(hoaDon.tinhTongTienHoaDon())) + " đồng</html>");
 		} else {

@@ -620,7 +620,7 @@ public class HuongDanSuDungConstant {
 			+ "    <img src='file:/" + Paths.get("Img/ThemXuatXu0.png").toAbsolutePath() + "' alt=\"\">\r\n"
 			+ "    <p>Hệ thống hiển thị giao diện Quản lý xuất xứ</p>\r\n"
 			+ "    <p>- Điền tên xuất xứ muốn thêm và chọn \"Thêm\"</p>\r\n" + "    <img src='file:/"
-			+ Paths.get("Img/ThemXuatXu1.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ Paths.get("Img/ThemXuatXu.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
 			+ "</html>";
 	public static final String XOA_XUAT_XU_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
 			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"

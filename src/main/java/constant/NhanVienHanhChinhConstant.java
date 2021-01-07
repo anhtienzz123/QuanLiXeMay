@@ -32,10 +32,10 @@ public class NhanVienHanhChinhConstant {
 	
 	
 	//get maxPage
-	public static final String GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where maNVHanhChinh like ?";
-	public static final String TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where maNVHanhChinh like ?";
-	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where hoTenNV like ?";
-	public static final String TIM_KIEM_THEO_SO_DIEN_THOAI_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where soDienThoai like ?";
-	public static final String TIM_KIEM_THEO_CHUC_VU_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where chucVu like ?";
+	public static final String GET_NHAN_VIEN_HANH_CHINHS_PHAN_TRANG_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where maNVHanhChinh like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_MA_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where maNVHanhChinh like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where hoTenNV like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_SO_DIEN_THOAI_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where soDienThoai like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_CHUC_VU_NHAN_VIEN_HANH_CHINHS_MAX_PAGE = "select COUNT(maNVHanhChinh) as total from NhanVienHanhChinh where chucVu like ? and trangThai = 1";
 
 }

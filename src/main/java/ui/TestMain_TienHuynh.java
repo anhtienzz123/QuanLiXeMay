@@ -1,36 +1,27 @@
 package ui;
 
-import dao.HoaDonDao;
+import java.util.Date;
+
+import dao.HopDongDao;
 import db.DatabaseConnect;
-import entity.HoaDon;
-import other.XuLiXuatFile;
+import entity.HopDong;
 
 public class TestMain_TienHuynh {
 
-	public static final String FILE = "C:/Users/admin/Desktop/Test";
 
-	public static final String TAT_CA = "Tất cả";
-//	private static final String RONG = "";
-//	private static final int FROM = 1;
-//	private static final int TO = 20;
+
 
 	public static void main(String[] args) throws Exception {
+
 		DatabaseConnect.connect();
-
-//		XeMayDao xeMayDao = XeMayDao.getInstance();
-//		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-//		ThongKeQuanLiDao thongKeQuanLiDao = ThongKeQuanLiDao.getInstance();
-
-		HoaDonDao hoaDonDao = HoaDonDao.getInstance();
-		HoaDon hoaDon = hoaDonDao.getHoaDonTheoMaHoaDon("HD104174");
-
-		XuLiXuatFile xuatFile = new XuLiXuatFile();
-
-		//xuatFile.xuatHoaDonRaFileWord(hoaDon);
-
-		//XWPFDocument doc = new XWPFDocument();
-
-		xuatFile.xuatHoaDonRaFileWord1(hoaDon);
-
+		
+		HopDongDao honDongDao = HopDongDao.getInstance();
+		
+		HopDong hopDong = honDongDao.getHopDongTheoMa("HDG104477");
+		hopDong.getThoiGianBaoHanhDinhKis().forEach(  s-> System.out.println(s.getDate() + "-" + s.getMonth() + "-" +s.getYear()));;
+		Date date = new Date(2021, 1, 14);
+		System.out.println(hopDong.checkDot(date));
+		
 	}
+
 }
