@@ -147,7 +147,7 @@ public class EmailSender {
 			
 			int n1 = hopDong.getHoaDon().getNgayLap().getDate();
 			int m1 = hopDong.getHoaDon().getNgayLap().getMonth() +1;
-			int y1 = hopDong.getHoaDon().getNgayLap().getYear() + 1990;
+			int y1 = hopDong.getHoaDon().getNgayLap().getYear() + 1900;
 			ngayBatDau = n1 + "-" +m1 + "-" + y1;
 			
 		}
