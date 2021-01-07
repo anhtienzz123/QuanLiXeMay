@@ -291,7 +291,7 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		btnXoa.setBackground(Color.RED);
 		btnXoa.setBounds(1222, 937, 160, 40);
 		add(btnXoa);
-		btnXoa.setVisible(false);
+		//btnXoa.setVisible(false);
 
 		String[] colHeaderXeMay = { "STT", "Mã xe", "Tên xe", "Số khung", "Số sườn", "Giá bán", "Bảo hành", "Màu xe",
 				"Loại xe", "Dòng xe", "Hãng xe", "Xuất xứ" };
@@ -672,6 +672,30 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 		}
 		if (o.equals(btnXoa)) {
 
+			int row = tblXeMay.getSelectedRow();
+			
+			if(row != -1) {
+				
+				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn xóa không ?", "Xóa xe máy", JOptionPane.YES_NO_OPTION);
+						
+			    if(flag == JOptionPane.YES_OPTION){
+			    	
+			    	String maXeMay = (String) tblXeMay.getValueAt(row, 1);
+			    	
+			    	if (xeMayDao.xoaXeMay(maXeMay)) {
+			    		JOptionPane.showMessageDialog(null, "Xóa xe máy thành công");
+			    		
+			    		capNhatXeMaysTrongBang();
+			    	}	
+			    	else
+			    		JOptionPane.showMessageDialog(null, "Xóa xe máy thất bại");
+			    	
+			    }
+				
+			}else {
+				JOptionPane.showMessageDialog(null, "Bạn chưa chọn hàng cần xóa");
+			}
+			
 		}
 
 		if (o.equals(btnXemChiTiet)) {
@@ -774,11 +798,12 @@ public class GD_XeMay extends JPanel implements ActionListener, KeyListener {
 			if (temp.equals("Xem từng xe")) {
 
 				capNhapGiaoDienXemTungChiec();
+				btnXoa.setEnabled(true);
 
 				scrollPaneXeMay.setViewportView(tblXeMay);
 			} else {
 				capNhapGiaoDienGomNhomXe();
-
+				btnXoa.setEnabled(false);
 				scrollPaneXeMay.setViewportView(tblXeMay);
 			}
 			this.page = 1;

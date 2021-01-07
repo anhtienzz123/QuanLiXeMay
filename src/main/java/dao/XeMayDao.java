@@ -338,7 +338,6 @@ public class XeMayDao {
 		}
 
 		String result = XuLyChung.xuLyCauSqlPhanTrang(sql, from, to);
-		
 
 		List<XeMay> xeMays = new ArrayList<XeMay>();
 
@@ -436,7 +435,6 @@ public class XeMayDao {
 		}
 
 		sql += "\ngroup by a.tenXeMay";
-	
 
 		Map<String, Integer> result = new TreeMap<String, Integer>();
 
@@ -541,12 +539,11 @@ public class XeMayDao {
 
 		Map<XeMay, Integer> result = new HashMap<XeMay, Integer>();
 
-		String sql = "SELECT tenXeMay, COUNT(maXeMay) as soLuongXe FROM XeMay\r\n" + 
-				"inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n" + 
-				"inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe\r\n" + 
-				"inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n" + 
-				"inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + 
-				"where soLuong > 0";
+		String sql = "SELECT tenXeMay, COUNT(maXeMay) as soLuongXe FROM XeMay\r\n"
+				+ "inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n"
+				+ "inner join LoaiXe on XeMay.maLoaiXe = LoaiXe.maLoaiXe\r\n"
+				+ "inner join DongXe on XeMay.maDongXe = DongXe.maDongXe\r\n"
+				+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "where soLuong > 0";
 
 		if (!timKiem.trim().equals(RONG)) {
 			if (field.equalsIgnoreCase(TEN_XE)) {
@@ -632,6 +629,25 @@ public class XeMayDao {
 
 		return total;
 
+	}
+
+	public boolean xoaXeMay(String maXeMay) {
+
+		int n = 0;
+
+		try {
+			String sql = "delete from XeMay where maXeMay = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, maXeMay);
+
+			n = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+		}
+
+		return n > 0;
 	}
 
 }
