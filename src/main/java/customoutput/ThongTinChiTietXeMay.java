@@ -14,5 +14,6 @@ public class ThongTinChiTietXeMay {
 	private String soSuon;
 	private String mauXe;
 	private String xuatXu;
+	private int soLuong;
 
 }

@@ -329,7 +329,7 @@ public class GD_TrangChu extends JPanel implements ActionListener, MouseListener
 		listDanhMuc.add(new DanhMuc("ThemNhanVien", pnlThemNhanVien, lblIconThemNhanVien));
 		ChuyenManHinh chuyen = new ChuyenManHinh(this, this.maNhanVienHanhChinh, pnlMenu);
 
-		JLabel lblaCh = new JLabel("Địa chỉ: 151 điện biên phủ, phường 15, quận bình thạnh, Thành phố Hồ Chí Minh");
+		JLabel lblaCh = new JLabel("Địa chỉ: 151 Điện Biên Phủ, phường 15, quận Bình Thạnh, Thành phố Hồ Chí Minh");
 		lblaCh.setForeground(Color.BLACK);
 		lblaCh.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		lblaCh.setBackground(new Color(102, 102, 255));

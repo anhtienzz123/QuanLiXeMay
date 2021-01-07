@@ -219,6 +219,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		pnlLogo.add(lblLogo);
 
 		btnSua = new JButton("Sửa");
+		btnSua.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/icon/baseline_construction_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
@@ -226,6 +227,7 @@ public class GD_KhachHang extends JPanel implements ActionListener, MouseListene
 		add(btnSua);
 
 		btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(GD_KhachHang.class.getResource("/icon/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);

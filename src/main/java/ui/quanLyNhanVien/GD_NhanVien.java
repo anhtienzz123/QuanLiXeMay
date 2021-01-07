@@ -206,6 +206,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		pnlLogo.add(lblLogo);
 
 		btnSua = new JButton("Sửa");
+		btnSua.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_construction_white_18dp.png")));
 		btnSua.setToolTipText("Sửa thông tin nhân viên");
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -214,6 +215,7 @@ public class GD_NhanVien extends JPanel implements ActionListener, MouseListener
 		add(btnSua);
 
 		btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(GD_NhanVien.class.getResource("/icon/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setToolTipText("Xóa nhân viên");
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));

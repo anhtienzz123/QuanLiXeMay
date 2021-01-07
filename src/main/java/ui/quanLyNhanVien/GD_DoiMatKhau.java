@@ -2,6 +2,7 @@ package ui.quanLyNhanVien;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -21,6 +22,10 @@ import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienHanhChinhDao;
 import entity.NhanVienHanhChinh;
+import ui.GD_DangNhap;
+
+import javax.swing.border.LineBorder;
+import java.awt.Dimension;
 
 public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListener, KeyListener {
 
@@ -50,6 +55,7 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 
 	public GD_DoiMatKhau(NhanVienHanhChinh nhanVienHanhChinh) {
 		this.nhanVienHanhChinh = nhanVienHanhChinh;
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 
 		/*
 		 * // setLookAndFeel try {
@@ -64,35 +70,29 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		setBounds(100, 100, 666, 371);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(82, 83, 81));
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		setResizable(false);
 
-		lblDangNhap = new JLabel("Đổi mật khẩu");
-		lblDangNhap.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDangNhap.setFont(new Font("Tahoma", Font.BOLD, 30));
-		lblDangNhap.setForeground(new Color(253, 245, 230));
-		lblDangNhap.setBounds(192, 34, 290, 34);
-		contentPane.add(lblDangNhap);
-
 		lblTaiKhoan = new JLabel("Mật khẩu mới:");
 		lblTaiKhoan.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTaiKhoan.setForeground(new Color(255, 255, 255));
+		lblTaiKhoan.setForeground(Color.BLACK);
 		lblTaiKhoan.setBounds(44, 90, 180, 44);
 		contentPane.add(lblTaiKhoan);
 
 		lblMatKhau = new JLabel("Nhập lại :");
-		lblMatKhau.setForeground(Color.WHITE);
+		lblMatKhau.setForeground(Color.BLACK);
 		lblMatKhau.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblMatKhau.setBounds(44, 164, 180, 44);
 		contentPane.add(lblMatKhau);
 
 		txtNhapLai = new JPasswordField();
-		txtNhapLai.setForeground(new Color(255, 255, 255));
+		txtNhapLai.setBorder(new LineBorder(Color.BLACK, 2));
+		txtNhapLai.setForeground(Color.BLACK);
 		txtNhapLai.setHorizontalAlignment(SwingConstants.CENTER);
-		txtNhapLai.setBackground(new Color(82, 83, 81));
+		txtNhapLai.setBackground(Color.WHITE);
 		txtNhapLai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNhapLai.setBounds(236, 166, 329, 41);
 		contentPane.add(txtNhapLai);
@@ -115,35 +115,44 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		contentPane.add(btnHuy);
 
 		pnlVien1 = new JPanel();
-		pnlVien1.setBackground(new Color(0, 128, 0));
-		pnlVien1.setBounds(236, 67, 202, 10);
+		pnlVien1.setMaximumSize(new Dimension(32767, 50));
+		pnlVien1.setPreferredSize(new Dimension(10, 50));
+		pnlVien1.setBackground(new Color(58, 181, 74));
+		pnlVien1.setBounds(0, 0, 660, 50);
 		contentPane.add(pnlVien1);
+		
+				lblDangNhap = new JLabel("Đổi mật khẩu");
+				pnlVien1.add(lblDangNhap);
+				lblDangNhap.setBackground(Color.WHITE);
+				lblDangNhap.setHorizontalAlignment(SwingConstants.CENTER);
+				lblDangNhap.setFont(new Font("Tahoma", Font.BOLD, 30));
+				lblDangNhap.setForeground(Color.WHITE);
 
 		lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(485, 181, 56, 16);
 		contentPane.add(lblNewLabel);
 
 		pnlHienMK2 = new JPanel();
-		pnlHienMK2.setBackground(new Color(82, 83, 81));
+		pnlHienMK2.setBackground(Color.WHITE);
 		pnlHienMK2.setBounds(577, 169, 40, 39);
 		contentPane.add(pnlHienMK2);
 		pnlHienMK2.setLayout(null);
 
 		pnlAnMK2 = new JPanel();
-		pnlAnMK2.setBackground(new Color(82, 83, 81));
+		pnlAnMK2.setBackground(Color.WHITE);
 		pnlAnMK2.setBounds(577, 169, 40, 39);
 		contentPane.add(pnlAnMK2);
 		pnlAnMK2.setLayout(null);
 
 		lblHienMK2 = new JLabel("");
 		lblHienMK2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHienMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_white_36dp.png")));
+		lblHienMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_black_36dp.png")));
 		lblHienMK2.setBounds(0, 0, 40, 39);
 		pnlHienMK2.add(lblHienMK2);
 
 		lblAnMK2 = new JLabel("");
 		lblAnMK2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAnMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
+		lblAnMK2.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_black_36dp.png")));
 		lblAnMK2.setBounds(0, 0, 40, 39);
 		pnlAnMK2.add(lblAnMK2);
 
@@ -155,34 +164,35 @@ public class GD_DoiMatKhau extends JFrame implements ActionListener, MouseListen
 		txtNhapLai.setText("55555");
 
 		txtMatKhau = new JPasswordField();
+		txtMatKhau.setBorder(new LineBorder(Color.BLACK, 2));
 		txtMatKhau.setText("55555");
 		txtMatKhau.setHorizontalAlignment(SwingConstants.CENTER);
-		txtMatKhau.setForeground(Color.WHITE);
+		txtMatKhau.setForeground(Color.BLACK);
 		txtMatKhau.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMatKhau.setBackground(new Color(82, 83, 81));
+		txtMatKhau.setBackground(Color.WHITE);
 		txtMatKhau.setBounds(236, 90, 329, 41);
 		contentPane.add(txtMatKhau);
 
 		pnlHienMK1 = new JPanel();
 		pnlHienMK1.setLayout(null);
-		pnlHienMK1.setBackground(new Color(82, 83, 81));
+		pnlHienMK1.setBackground(Color.WHITE);
 		pnlHienMK1.setBounds(577, 90, 40, 39);
 		contentPane.add(pnlHienMK1);
 
 		lblHienMK1 = new JLabel("");
-		lblHienMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_white_36dp.png")));
+		lblHienMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_black_36dp.png")));
 		lblHienMK1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblHienMK1.setBounds(0, 0, 40, 39);
 		pnlHienMK1.add(lblHienMK1);
 
 		pnlAnMK1 = new JPanel();
 		pnlAnMK1.setLayout(null);
-		pnlAnMK1.setBackground(new Color(82, 83, 81));
+		pnlAnMK1.setBackground(Color.WHITE);
 		pnlAnMK1.setBounds(577, 90, 40, 39);
 		contentPane.add(pnlAnMK1);
 
 		lblAnMK1 = new JLabel("");
-		lblAnMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_white_36dp.png")));
+		lblAnMK1.setIcon(new ImageIcon(GD_DoiMatKhau.class.getResource("/icon/baseline_visibility_off_black_36dp.png")));
 		lblAnMK1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAnMK1.setBounds(0, 0, 40, 39);
 		pnlAnMK1.add(lblAnMK1);

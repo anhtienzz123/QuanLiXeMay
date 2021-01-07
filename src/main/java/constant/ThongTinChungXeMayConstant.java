@@ -8,7 +8,7 @@ public class ThongTinChungXeMayConstant {
 			+ "inner join HangXe on DongXe.maHangXe = HangXe.maHangXe\r\n" + "where tenXeMay = ?\r\n"
 			+ "group by tenXeMay";
 	
-	public static final String GET_CHI_TIET_THONG_TIN_XE_MAY_THEO_TEN = "select maXeMay, soKhung, soSuon, mauXe, tenXuatXu\r\n"
+	public static final String GET_CHI_TIET_THONG_TIN_XE_MAY_THEO_TEN = "select maXeMay, soKhung, soSuon, mauXe, tenXuatXu, soLuong\r\n"
 			+ "from XeMay inner join XuatXu on XeMay.maXuatXu = XuatXu.maXuatXu\r\n" + "where tenXeMay = ?";
 
 	public static final String CAP_NHAP_THONG_TIN_XE_MAY_CHUNG = "update XeMay\r\n"

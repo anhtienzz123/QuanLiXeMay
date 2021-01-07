@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -33,6 +34,8 @@ import dao.KhachHangDao;
 import entity.KhachHang;
 import other.BatRegex;
 import other.RandomMa;
+import ui.GD_DangNhap;
+import javax.swing.ImageIcon;
 
 public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusListener {
 
@@ -60,6 +63,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 	private JTextField txtEmail;
 
 	public GD_ThemKhachHang(GD_KhachHang gd_KhachHang) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		khachHangDao = KhachHangDao.getInstance();
 		this.gd_KhachHang = gd_KhachHang;
 
@@ -309,11 +313,12 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		horizontalBox_6.add(rigidArea_16);
 
 		btnThoat = new JButton("Thoát");
+		btnThoat.setIcon(new ImageIcon(GD_ThemKhachHang.class.getResource("/icon/baseline_close_white_24dp.png")));
 		btnThoat.setBackground(Color.RED);
 		btnThoat.setForeground(Color.WHITE);
 		btnThoat.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThoat.setMaximumSize(new Dimension(97, 40));
-		btnThoat.setPreferredSize(new Dimension(97, 40));
+		btnThoat.setPreferredSize(new Dimension(120, 40));
 		horizontalBox_6.add(btnThoat);
 		btnThoat.addActionListener(this);
 
@@ -321,7 +326,8 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		horizontalBox_6.add(horizontalGlue);
 
 		btnXoaRong = new JButton("Xóa rỗng");
-		btnXoaRong.setPreferredSize(new Dimension(140, 40));
+		btnXoaRong.setIcon(new ImageIcon(GD_ThemKhachHang.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
+		btnXoaRong.setPreferredSize(new Dimension(180, 40));
 		btnXoaRong.setMaximumSize(new Dimension(140, 40));
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -332,8 +338,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		horizontalBox_6.add(rigidArea_4);
 
 		btnThem = new JButton("Thêm");
-		btnThem.setPreferredSize(new Dimension(97, 40));
-		btnThem.setMaximumSize(new Dimension(97, 40));
+		btnThem.setIcon(new ImageIcon(GD_ThemKhachHang.class.getResource("/icon/baseline_person_add_alt_1_white_18dp.png")));
+		btnThem.setPreferredSize(new Dimension(130, 40));
+		btnThem.setMaximumSize(new Dimension(150, 40));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(0, 128, 0));

@@ -3,6 +3,7 @@ package ui.quanLyNhanVien;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -18,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import dao.NhanVienKiThuatDao;
 import entity.NhanVienKiThuat;
+import ui.GD_DangNhap;
 import ui.quanLyXeMay.GD_ThemXeMay;
 
 public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
@@ -32,6 +34,7 @@ public class GD_ChiTietNVKyThuat extends JFrame implements ActionListener {
 	
 
 	public GD_ChiTietNVKyThuat(String maNVKiThuat) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		this.maNVKiThuat = maNVKiThuat;
 		nhanVienKiThuatDao = NhanVienKiThuatDao.getInstance();
 		NhanVienKiThuat nhanVienKiThuat = nhanVienKiThuatDao.getNVKiThuatTheoMa(maNVKiThuat);

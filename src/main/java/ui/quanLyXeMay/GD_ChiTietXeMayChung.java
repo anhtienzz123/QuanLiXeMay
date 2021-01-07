@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventObject;
@@ -26,6 +27,7 @@ import customoutput.ThongTinChiTietXeMay;
 import customoutput.ThongTinChungXeMay;
 import dao.ThongTinChungXeMayDao;
 import other.DinhDangTien;
+import ui.GD_DangNhap;
 
 public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 
@@ -58,11 +60,12 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 	 * Create the frame.
 	 */
 	public GD_ChiTietXeMayChung(String tenXeMay) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 
 		ThongTinChungXeMayDao thongTinChungXeMayDao = ThongTinChungXeMayDao.getInstance();
-		
+
 		thongTinChungXeMay = thongTinChungXeMayDao.getThongTinChungXeMayTheoTenXeMay(tenXeMay);
-		
+
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1422, 958);
 		setLocationRelativeTo(null);
@@ -186,7 +189,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblGiaNhap = new JLabel("XM123456");
 		lblGiaNhap.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblGiaNhap.setBounds(504, 228, 223, 30);
-		lblGiaNhap.setText(DinhDangTien.format(thongTinChungXeMay.getGiaBan() )  );
+		lblGiaNhap.setText(DinhDangTien.format(thongTinChungXeMay.getGiaBan()));
 		contentPane.add(lblGiaNhap);
 
 		JLabel lblNewLabel_2_1_10 = new JLabel("Bảo hành:");
@@ -197,7 +200,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		JLabel lblBaoHanh = new JLabel("36 tháng");
 		lblBaoHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblBaoHanh.setBounds(147, 279, 116, 30);
-		lblBaoHanh.setText(thongTinChungXeMay.getThoiGianBaoHanh()+ " tháng");
+		lblBaoHanh.setText(thongTinChungXeMay.getThoiGianBaoHanh() + " tháng");
 		contentPane.add(lblBaoHanh);
 
 		JLabel lblNewLabel_2_1_12 = new JLabel("Mô tả:");
@@ -246,7 +249,7 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 		lblNewLabel_2_1_12_2.setBounds(32, 560, 83, 30);
 		contentPane.add(lblNewLabel_2_1_12_2);
 
-		String[] colHeaderHoaDon = { "STT", "Mã xe", "Sô khung", "Số sườn", "Màu", "Xuất xứ" };
+		String[] colHeaderHoaDon = { "STT", "Mã xe", "Số khung", "Số sườn", "Màu", "Xuất xứ", "Ghi chú" };
 		modelXe = new DefaultTableModel(colHeaderHoaDon, 0);
 		tblXe = new JTable(modelXe) {
 			private static final long serialVersionUID = 1L;
@@ -256,32 +259,41 @@ public class GD_ChiTietXeMayChung extends JFrame implements ActionListener {
 			}
 		};
 		tblXe.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tblXe.setRowHeight(35);
+		tblXe.setRowHeight(35);//1324
+		
+		tblXe.getColumnModel().getColumn(0).setPreferredWidth(74);// STT
+		tblXe.getColumnModel().getColumn(1).setPreferredWidth(150);// Mã xe
+		tblXe.getColumnModel().getColumn(2).setPreferredWidth(300);// Tên xe
+		tblXe.getColumnModel().getColumn(3).setPreferredWidth(300);// Tên xe
+		tblXe.getColumnModel().getColumn(4).setPreferredWidth(200);// Tên xe
+		tblXe.getColumnModel().getColumn(5).setPreferredWidth(200);// Tên xe
+		tblXe.getColumnModel().getColumn(6).setPreferredWidth(100);// Tên xe
+		
 		JTableHeader tableHeader2 = tblXe.getTableHeader();
 		tableHeader2.setBackground(new Color(58, 181, 74));
 		tableHeader2.setForeground(Color.white);
 		tableHeader2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-//		tblXe.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		
 
 		themListChiTietXeVaoBang();
-		
+
 		scrollPaneXe.setViewportView(tblXe);
 
 	}
-	
+
 	private void themListChiTietXeVaoBang() {
 		for (ThongTinChiTietXeMay thongTinChiTietXeMay : thongTinChungXeMay.getThongTinChiTietXeMays()) {
-			Object[] datas = new Object[6];
-			datas[0] = tblXe.getRowCount() + 1;
-			datas[1] = thongTinChiTietXeMay.getMaXe();
-			datas[2] = thongTinChiTietXeMay.getSoKhung();
-			datas[3] = thongTinChiTietXeMay.getSoSuon();
-			datas[4] = thongTinChiTietXeMay.getMauXe();
-			datas[5] = thongTinChiTietXeMay.getXuatXu();
-			
+			Object[] datas = new Object[7];
+			datas[0] = tblXe.getRowCount() + 1;// STT
+			datas[1] = thongTinChiTietXeMay.getMaXe();// Mã xe
+			datas[2] = thongTinChiTietXeMay.getSoKhung();// Số khung
+			datas[3] = thongTinChiTietXeMay.getSoSuon();// Số sườn
+			datas[4] = thongTinChiTietXeMay.getMauXe();// Màu xe
+			datas[5] = thongTinChiTietXeMay.getXuatXu();// Xuất xứ
+			datas[6] = thongTinChiTietXeMay.getSoLuong() == 0 ? "Đã bán" : "";// Ghi chú
 			modelXe.addRow(datas);
-			
+
 		}
 	}
 

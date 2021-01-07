@@ -31,6 +31,7 @@ import dao.XuatXuDao;
 import entity.HangXe;
 import entity.XuatXu;
 import other.RandomMa;
+import ui.GD_DangNhap;
 
 public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 
@@ -70,8 +71,7 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 	 * Create the frame.
 	 */
 	public GD_XuatXu() {
-		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(GD_LoaiXe.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		setTitle("Quản lý xuất xứ");
 		setSize(718, 428);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -117,10 +117,10 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 
 		btnXoaRong = new JButton("Xóa trắng");
 		btnXoaRong.setBackground(Color.RED);
-		btnXoaRong.setIcon(new ImageIcon(GD_LoaiXe.class.getResource("/icon/baseline_close_white_24dp.png")));
+		btnXoaRong.setIcon(new ImageIcon(GD_XuatXu.class.getResource("/icon/baseline_clear_all_white_18dp.png")));
 		btnXoaRong.setForeground(Color.WHITE);
 		btnXoaRong.setFont(new Font("Tahoma", Font.BOLD, 20));
-		btnXoaRong.setBounds(174, 334, 170, 30);
+		btnXoaRong.setBounds(179, 334, 196, 30);
 		contentPane.add(btnXoaRong);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -152,24 +152,27 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 		txtTen.setColumns(10);
 
 		btnThem = new JButton("Thêm");
+		btnThem.setIcon(new ImageIcon(GD_XuatXu.class.getResource("/icon/baseline_create_new_folder_white_18dp.png")));
 		btnThem.setForeground(Color.WHITE);
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnThem.setBackground(new Color(58, 181, 74));
-		btnThem.setBounds(547, 334, 120, 30);
+		btnThem.setBounds(547, 334, 136, 30);
 		contentPane.add(btnThem);
 
 		btnSua = new JButton("Sửa");
+		btnSua.setIcon(new ImageIcon(GD_XuatXu.class.getResource("/icon/baseline_construction_white_18dp.png")));
 		btnSua.setForeground(Color.WHITE);
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnSua.setBackground(new Color(0, 153, 255));
-		btnSua.setBounds(390, 334, 110, 30);
+		btnSua.setBounds(396, 334, 129, 30);
 		contentPane.add(btnSua);
 
 		btnXoa = new JButton("Xóa");
+		btnXoa.setIcon(new ImageIcon(GD_XuatXu.class.getResource("/icon/baseline_delete_sweep_white_18dp.png")));
 		btnXoa.setForeground(Color.WHITE);
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnXoa.setBackground(Color.RED);
-		btnXoa.setBounds(23, 334, 110, 30);
+		btnXoa.setBounds(23, 334, 129, 30);
 		contentPane.add(btnXoa);
 
 		JTableHeader tableHearder = table.getTableHeader();

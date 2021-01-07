@@ -3,6 +3,7 @@ package ui.HuongDanSuDung;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -30,6 +31,7 @@ import other.TradingProjectDataService;
 import other.TradingProjectTreeRenderer;
 import other.TreeFilterDecorator;
 import other.TreeUtil;
+import ui.GD_DangNhap;
 
 public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseListener {
 
@@ -67,6 +69,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 	public GD_HuongDanSuDung() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GD_DangNhap.class.getResource("/icon/motorbike_helmet_100px.png")));
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1800, 1000);
