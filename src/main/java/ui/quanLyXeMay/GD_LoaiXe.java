@@ -213,37 +213,88 @@ public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-			LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (LoaiXeDao.getInstance().themLoaiXe(loaiXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+
+			if (kiemTraHopLe()) {
+				LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
+				if (LoaiXeDao.getInstance().themLoaiXe(loaiXe)) {
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				}
+				lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+				capNhatBang();
+				xoaRong();
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên loại xe không được để trống");
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
-			capNhatBang();
+
 		}
 		if (o.equals(btnXoa)) {
+
+			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+
+			int row = table.getSelectedRow();
+
+			if (row != -1) {
+				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa không ?", "Xóa loại xe",
+						JOptionPane.YES_NO_OPTION);
+
+				// da nhan ok
+				if (flag == JOptionPane.YES_OPTION) {
+					String maLoaiXe = (String) model.getValueAt(row, 1);
+
+					if (loaiXeDao.xoaLoaiXe(maLoaiXe)) {
+						JOptionPane.showMessageDialog(null, "Xóa loại xe thành công");
+						capNhatBang();
+						xoaRong();
+					} else {
+						JOptionPane.showMessageDialog(null, "Xóa loại xe thất bại");
+					}
+
+				}
+			}
 
 		}
 		if (o.equals(btnSua)) {
 
-			LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (LoaiXeDao.getInstance().capNhatLoaiXe(loaiXe)) {
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			if (kiemTraHopLe()) {
+				LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
+				if (LoaiXeDao.getInstance().capNhatLoaiXe(loaiXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+				capNhatBang();
+				xoaRong();
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên loại xe không được để trống");
 			}
-			capNhatBang();
 
 		}
 		if (o.equals(btnXoaRong)) {
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
-			txtTen.setText("");
+			xoaRong();
 		}
+	}
+
+	private void xoaRong() {
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+		txtTen.setText("");
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+
 		int row = table.getSelectedRow();
 		lblMa.setText(model.getValueAt(row, 1).toString().trim());
 		txtTen.setText(model.getValueAt(row, 2).toString().trim());
 
+	}
+
+	// Tra ve true neu khong loi gi het
+	private boolean kiemTraHopLe() {
+
+		String ten = txtTen.getText().trim();
+
+		if (ten.length() > 0)
+			return true;
+
+		return false;
 	}
 
 	@Override

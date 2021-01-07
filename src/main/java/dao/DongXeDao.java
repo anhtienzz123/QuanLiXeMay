@@ -143,6 +143,8 @@ public class DongXeDao {
 
 		return n > 0;
 	}
+	
+	
 
 	public boolean kiemTraMaKhongTrung(String maDongXe) {
 
@@ -161,6 +163,25 @@ public class DongXeDao {
 		}
 
 		return true;
+	}
+	
+	public boolean xoaDongXe(String maDongXe) {
+
+		int result = 0;
+		try {
+			String sql = "delete from DongXe where maDongXe = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, maDongXe);
+
+			result = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Mã dòng xe đã bị ràng buộc, không xóa được");
+
+		}
+
+		return result > 0;
 	}
 
 }
