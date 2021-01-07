@@ -746,7 +746,21 @@ public class GD_ThemXeMay extends JPanel implements ActionListener, KeyListener,
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-			themXe();
+			if(txtTenXe.getText().trim().equals("")) {
+				txtThongBao.append("Tên xe không được để trống\n");
+			}
+			if(txtGiaNhap.getText().trim().equals("")) {
+				txtThongBao.append("Giá nhập không được để trống\n");
+			}
+			if(txtSoKhung.getText().trim().equals("")) {
+				txtThongBao.append("Số khung không được để trống\n");
+			}
+			if(txtSoSuon.getText().trim().equals("")) {
+				txtThongBao.append("Số sườn không được để trống\n");
+			}
+			else {
+				themXe();
+			}
 		}
 		if (o.equals(btnXoaRong)) {
 			xoaRong();

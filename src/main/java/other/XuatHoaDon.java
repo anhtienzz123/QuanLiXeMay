@@ -1,7 +1,9 @@
 package other;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +22,13 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
+import ui.quanLyHoaDon.GD_ChiTietHoaDon;
 
 public class XuatHoaDon {
 
-	public static final String FILE_REPORT = "C:/Users/admin/Documents/Java/JavaCore/QuanLiXeMay/QuanLiXeMay/src/main/java/other/TemplateHoaDon.jrxml";
+//	public static final String FILE_REPORT = "C:/Users/admin/Documents/Java/JavaCore/QuanLiXeMay/QuanLiXeMay/src/main/java/other/TemplateHoaDon.jrxml";
+	public static final String FILE_REPORT = "D:\\D\\NAM 3\\HKI\\PHAT TRIEN UNG DUNG\\BTL\\BTLPTUD\\QuanLiXeMay\\src\\main\\java\\other/TemplateHoaDon.jrxml";
+//	public static final String FILE = XuatHoaDon.class.getResource("TemplateHoaDon.jrxml").getPath().toString();
 
 	public static void xuatHoaDon(HoaDon hoaDon) throws Exception {
 
@@ -59,6 +64,7 @@ public class XuatHoaDon {
 		parameters.put("tongTienBangChu", tongTienBangChu);
 
 		InputStream input = new FileInputStream(FILE_REPORT);
+//		InputStream input = new FileInputStream("other/TemplateHoaDon.jrxml");
 
 		JasperDesign jasperDesign = JRXmlLoader.load(input);
 

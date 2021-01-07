@@ -1,5 +1,6 @@
 package other;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -180,5 +181,10 @@ public class DocSo {
 		arrList.addAll(Arrays.asList(result));
 		return arrList;
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(DocSo.readNum("123456"));
+	}
+	
 
 }

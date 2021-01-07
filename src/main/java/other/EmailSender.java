@@ -21,7 +21,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import dao.HopDongDao;
-import db.DatabaseConnect;
 import entity.HopDong;
 
 public class EmailSender {
@@ -32,12 +31,7 @@ public class EmailSender {
 
 	public static void main(String[] args) throws Exception {
 
-		DatabaseConnect.connect();
-
-		HopDongDao hopDongDao = HopDongDao.getInstance();
-		HopDong hopDong = hopDongDao.getHopDongTheoMa("HDG104477");
-
-		// sendBaoHanh(hopDong);
+		
 
 		sendText("anhtienzz123@gmail.com", "Dsds");
 		System.out.println("goi thanh cong");
@@ -138,6 +132,7 @@ public class EmailSender {
 		@SuppressWarnings("deprecation")
 		int year = date.getYear() + 1900, month = date.getMonth() + 1;
 		@SuppressWarnings("deprecation")
+
 		String ngayBaoHanh = date.getDate() + "-" + month + "-" + year;
 
 		String noiDung = "Xin chào ông/bà: " + tenKhachHang + "\r\n" + "\r\n"
@@ -147,6 +142,7 @@ public class EmailSender {
 				+ tenXeMay + " sẽ bắt đầu từ ngày hôm nay đến ngày " + ngayBaoHanh + "\r\n" + "\r\n"
 				+ "Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n"
 				+ "\r\n" + "Xin trân trọng cảm ơn!";
+
 
 		try {
 			sendText(emailNguoiNhan, noiDung);
@@ -174,22 +170,17 @@ public class EmailSender {
 
 		mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailNguoiNhan)); 
 																						
-
-		// Bạn có thể chọn CC, BCC
-		 //   generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
-
-		mailMessage.setFrom(new InternetAddress(emailNguoiNhan));
+      	mailMessage.setFrom(new InternetAddress(EMAIL));
 		mailMessage.setSubject(SUBJECT);
 		mailMessage.setText(noiDung);
 
 		// Step3: Send mail
 		Transport transport = getMailSession.getTransport("smtp");
 
-		// Thay your_gmail thành gmail của bạn, thay your_password thành mật khẩu gmail
-		// của bạn
 		transport.connect("smtp.gmail.com", EMAIL, PASSWORD);
 		transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 		transport.close();
 	}
+
 
 }
