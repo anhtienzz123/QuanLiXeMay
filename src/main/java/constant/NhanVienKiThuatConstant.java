@@ -31,9 +31,9 @@ public class NhanVienKiThuatConstant {
 	
 	//get maxpage
 	
-	public static final String GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where maNVKiThuat like ?";
-	public static final String TIM_KIEM_THEO_MA_NHAN_KI_THUATS_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where maNVKiThuat like ?";
-	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_KI_THUATS_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where hoTen like ?";
-	public static final String TIM_KIEM_THEO_SO_NAM_KINH_NGHIEM_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where soNamKinhNghiem like ?";
-	public static final String TIM_KIEM_THEO_CHUC_VU_BAC_THO_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where bacTho like ?";
+	public static final String GET_NHAN_VIEN_KI_THUATS_PHAN_TRANG_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where maNVKiThuat like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_MA_NHAN_KI_THUATS_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where maNVKiThuat like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_TEN_NHAN_VIEN_KI_THUATS_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where hoTen like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_SO_NAM_KINH_NGHIEM_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where soNamKinhNghiem like ? and trangThai = 1";
+	public static final String TIM_KIEM_THEO_CHUC_VU_BAC_THO_MAX_PAGE = "select COUNT(maNVKiThuat) as total from NhanVienKiThuat where bacTho like ? and trangThai = 1";
 }
