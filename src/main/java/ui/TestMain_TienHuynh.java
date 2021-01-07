@@ -11,6 +11,7 @@ import entity.HopDong;
 import other.DinhDangTien;
 import other.EmailSender;
 import other.XuLyThoiGian;
+import other.XuatHoaDon;
 
 public class TestMain_TienHuynh {
 

@@ -29,7 +29,7 @@ public class BatRegex {
 	// đúng nếu hợp lệ
 	public static boolean kiemTraSoCMT(JTextField text) {
 
-		String regex = "^\\d{9}$";
+		String regex = "^(\\d{9}|\\d{12})$";
 
 		if (text.getText().matches(regex))
 			return true;

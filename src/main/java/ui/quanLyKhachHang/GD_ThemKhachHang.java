@@ -288,7 +288,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		horizontalBox_7_1.add(rigidArea_20_1);
 
 		txtThongBao = new JTextArea();
-		txtThongBao.setEnabled(false);
+		txtThongBao.setEditable(false);
 		txtThongBao.setPreferredSize(new Dimension(640, 120));
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
@@ -393,7 +393,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 
 					this.setVisible(false);
 				} else {
-					JOptionPane.showMessageDialog(null, "Thêm nhân viên thất bại", "Thêm nhân viên",
+					JOptionPane.showMessageDialog(null, "Thêm khách hàng thất bại", "Thêm nhân viên",
 							JOptionPane.ERROR_MESSAGE, null);
 				}
 			} else {
@@ -421,7 +421,9 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		Date ngaySinh = new Date(txtNgaySinh.getDate().getYear(), txtNgaySinh.getDate().getMonth(),
 				txtNgaySinh.getDate().getDate());
 		String diaChiKH = txtDiaChi.getText();
-		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH);
+		String email = txtEmail.getText();
+//		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH);
+		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH, email);
 		return khachHang;
 
 	}
@@ -432,6 +434,7 @@ public class GD_ThemKhachHang extends JFrame implements ActionListener, FocusLis
 		txtTenKH.setText("");
 		txtSoDienThoai.setText("");
 		txtDiaChi.setText("");
+		txtEmail.setText("");
 
 	}
 

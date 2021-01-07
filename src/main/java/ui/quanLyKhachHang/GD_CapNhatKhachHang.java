@@ -291,6 +291,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 		horizontalBox_7_1.add(rigidArea_20_1);
 
 		txtThongBao = new JTextArea();
+		txtThongBao.setEditable(false);
 		txtThongBao.setPreferredSize(new Dimension(640, 130));
 		txtThongBao.setMaximumSize(new Dimension(2147483647, 130));
 		txtThongBao.setMargin(new Insets(10, 10, 10, 10));
