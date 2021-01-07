@@ -27,7 +27,9 @@ import javax.swing.table.JTableHeader;
 
 import constant.TenEntity;
 import dao.HangXeDao;
+import dao.LoaiXeDao;
 import entity.HangXe;
+import entity.LoaiXe;
 import other.RandomMa;
 
 public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
@@ -68,6 +70,7 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 	 * Create the frame.
 	 */
 	public GD_HangXe() {
+
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GD_LoaiXe.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Quản lý hãng xe");
@@ -213,22 +216,82 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
 		if (o.equals(btnThem)) {
-			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (HangXeDao.getInstance().themHangXe(hangXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			int flag = 0;
+
+			HangXe hangXe = null;
+			HangXeDao hangXeDao = HangXeDao.getInstance();
+			hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
+			List<HangXe> hangXes = hangXeDao.getHangXes();
+
+			for (HangXe hangXe2 : hangXes) {
+
+				if (hangXe2.getTenHangXe().trim().equalsIgnoreCase(hangXe.getTenHangXe())) {
+					JOptionPane.showMessageDialog(this, "Tên hãng xe bị trùng");
+					txtTen.selectAll();
+					txtTen.requestFocus();
+					flag++;
+				} else if (hangXe2.getMaHangXe().trim().equals(lblMa.getText())) {
+					JOptionPane.showMessageDialog(this, "Mã hãng xe bị trùng");
+					lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+					flag++;
+				}
+
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
-			capNhatBang();
+
+			if (!hangXe.getTenHangXe().equals("")) {
+				if (flag == 0) {
+					if (hangXeDao.themHangXe(hangXe)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+						txtTen.setText("");
+						lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+						capNhatBang();
+						return;
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên hãng xe bị trống");
+				txtTen.requestFocus();
+				return;
+			}
 		}
+
 		if (o.equals(btnXoa)) {
+
+			try {
+				int row = table.getSelectedRow();
+				String hangXe = (String) model.getValueAt(row, 1);
+				HangXeDao hangXeDao = HangXeDao.getInstance();
+				System.out.println(hangXe);
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không!", "Chú ý",
+						JOptionPane.YES_NO_OPTION);
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					if (hangXeDao.xoaHangXe(hangXe)) {
+						JOptionPane.showMessageDialog(this, "Xóa thành công");
+						capNhatBang();
+					} else {
+						JOptionPane.showMessageDialog(this, "Không thể xóa hãng xe đang tồn tại xe máy !");
+					}
+				}
+
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(this, "Chọn hãng xe muốn xóa");
+			}
 
 		}
 		if (o.equals(btnSua)) {
-
+			HangXeDao hangXeDao = HangXeDao.getInstance();
+			
+			
 			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (HangXeDao.getInstance().capNhatHangXe(hangXe)) {
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			if(!hangXe.getTenHangXe().equals("")) {
+				if (hangXeDao.capNhatHangXe(hangXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+			}else {
+				JOptionPane.showMessageDialog(this, "Tên hãng xe trống");
+				txtTen.requestFocus();
 			}
 			capNhatBang();
 

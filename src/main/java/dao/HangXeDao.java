@@ -145,4 +145,22 @@ public class HangXeDao {
 
 		return true;
 	}
+	
+	public boolean xoaHangXe(String maHangXe) {
+		
+		int n = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(HangXeConstant.XOA_HANG_XE);
+			preparedStatement.setString(1, maHangXe);
+			n = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+		}
+
+		return n > 0;
+		
+	}
+
 }

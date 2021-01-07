@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.HangXeConstant;
 import constant.LoaiXeConstant;
 import converter.LoaiXeConvert;
 import db.DatabaseConnect;
@@ -143,5 +144,20 @@ public class LoaiXeDao {
 		}
 
 		return true;
+	}
+	
+	public boolean xoaLoaiXe(String maLoaiXe) {
+		int n = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(LoaiXeConstant.XOA_LOAI_XE);
+			preparedStatement.setString(1, maLoaiXe);
+			n = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+		}
+
+		return n > 0;
 	}
 }

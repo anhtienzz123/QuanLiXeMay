@@ -204,18 +204,18 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 			case "Tìm kiếm hóa đơn":
 				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_HOA_DON);
 				break;
-//				Xe máy
+// 			bảo hành
 			case "Thêm xe máy":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_XE_MAY);
 				break;
 			case "Xóa xe máy":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_XE_MAY);
 				break;
 			case "Cập nhật xe máy":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_XE_MAY);
 				break;
 			case "Tìm kiếm xe máy":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.TIM_XE_MAY);
 				break;
 //				Nhân viên
 			case "Thêm nhân viên hành chính":
@@ -243,7 +243,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_NV_KI_THUAT);
 				break;
 			case "Đổi mật khẩu":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.DOI_MAT_KHAU);
 				break;
 //				Khách hàng
 			case "Thêm khách hàng":
@@ -253,7 +253,7 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				txtText.setText(HuongDanSuDungConstant.SUA_KHACH_HANG);
 				break;
 			case "Xóa khách hàng":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_KHACH_HANG);
 				break;
 			case "Tìm kiếm khách hàng":
 				txtText.setText(HuongDanSuDungConstant.TIM_KIEM_KHACH_HANG);
@@ -263,43 +263,43 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				break;
 //				Dòng xe
 			case "Thêm dòng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_DONG_XE);
 				break;
 			case "Cập nhật dòng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_DONG_XE);
 				break;
 			case "Xóa dòng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_DONG_XE);
 				break;
 //				Hãng xe
 			case "Thêm hãng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_HANG_XE);
 				break;
 			case "Cập nhật hãng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_HANG_XE);
 				break;
 			case "Xóa hãng xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_HANG_XE);
 				break;
 //				Loại xe
 			case "Thêm loại xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_LOAI_XE);
 				break;
 			case "Cập nhật loại xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_LOAI_XE);
 				break;
 			case "Xóa loại xe":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_LOAI_XE);
 				break;
 //				Xuất xứ
 			case "Thêm xuất xứ":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_XUAT_XU_XE);
 				break;
 			case "Cập nhật xuất xứ":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_XUAT_XU_XE);
 				break;
 			case "Xóa xuất xứ":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_XUAT_XU_XE);
 				break;
 //				Thống kê
 			case "Thống kê theo ngày":
@@ -313,16 +313,16 @@ public class GD_HuongDanSuDung extends JFrame implements ActionListener, MouseLi
 				break;
 //				Bảo hành
 			case "Thêm phiếu bảo hành":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_BAO_HANH);
 				break;
 			case "Thêm mục bảo hành":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.THEM_DANH_MUC_BAO_HANH);
 				break;
 			case "Cập nhật mục bảo hành":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.SUA_DANH_MUC_BAO_HANH);
 				break;
 			case "Xóa mục bảo hành":
-				txtText.setText(selectedNode.getUserObject().toString());
+				txtText.setText(HuongDanSuDungConstant.XOA_DANH_MUC_BAO_HANH);
 				break;
 //				Hợp đồng
 			case "Tìm kiếm hợp đồng":

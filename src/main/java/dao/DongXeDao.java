@@ -162,5 +162,9 @@ public class DongXeDao {
 
 		return true;
 	}
+	
+//	public boolean xoaDongXe(String maDongXe) {
+//		
+//	}
 
 }

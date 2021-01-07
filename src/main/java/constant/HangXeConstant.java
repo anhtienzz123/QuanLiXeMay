@@ -8,4 +8,5 @@ public class HangXeConstant {
 	public static final String CAP_NHAP_HANG_XE= "update HangXe set tenHangXe = ? where maHangXe = ?";
 	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maHangXe from HangXe\r\n" + 
     		"where maHangXe = ? ";
+	public static final String XOA_HANG_XE = "delete from HangXe where maHangXe = ?";
 }

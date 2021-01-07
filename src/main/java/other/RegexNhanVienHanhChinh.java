@@ -45,16 +45,14 @@ public class RegexNhanVienHanhChinh {
 	}
 	
 	public static boolean ktraChucVu(JTextField text) {
-		String regex = "\\D+";
-		if(text.getText().matches(regex))
+		if(!text.getText().trim().equals("") )
 			return true;
 		return false;
 		
 	}
 	
 	public static boolean ktraTrinhDo(JTextField text) {
-		String regex = "\\D+";
-		if(text.getText().matches(regex))
+		if(!text.getText().trim().equals("") )
 			return true;
 		return false;
 		

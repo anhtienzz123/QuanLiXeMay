@@ -27,4 +27,5 @@ public class HangXeConvert {
 		preparedStatement.setString(1, hangXe.getTenHangXe());
 		preparedStatement.setString(2, hangXe.getMaHangXe());
 	}
+
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import constant.HangXeConstant;
 import constant.XuatXuConstant;
 import converter.XuatXuConvert;
 import db.DatabaseConnect;
@@ -144,5 +145,20 @@ public class XuatXuDao {
 		}
 
 		return true;
+	}
+	
+	public boolean xoaXuatXu(String maXuatXu) {
+		int n = 0;
+
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(XuatXuConstant.XOA_XUAT_XU);
+			preparedStatement.setString(1, maXuatXu);
+			n = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+
+		}
+
+		return n > 0;
 	}
 }

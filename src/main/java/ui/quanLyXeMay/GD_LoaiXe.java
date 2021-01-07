@@ -24,10 +24,13 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import constant.TenEntity;
 import dao.LoaiXeDao;
+import dao.XuatXuDao;
 import entity.LoaiXe;
+import entity.XuatXu;
 import other.RandomMa;
 
 public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
@@ -100,7 +103,8 @@ public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
 		lblNewLabel_1_2.setBounds(23, 65, 129, 30);
 		contentPane.add(lblNewLabel_1_2);
 
-		lblMa = new JLabel("LX123456");
+		lblMa = new JLabel();
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
 		lblMa.setForeground(Color.BLACK);
 		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMa.setBounds(148, 65, 136, 30);
@@ -212,22 +216,79 @@ public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
 		if (o.equals(btnThem)) {
-			LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (LoaiXeDao.getInstance().themLoaiXe(loaiXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			int flag = 0;
+
+			LoaiXe loaiXe = null;
+			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+			loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
+			List<LoaiXe> loaiXes = loaiXeDao.getLoaiXes();
+
+			for (LoaiXe loaiXe2 : loaiXes) {
+
+				if (loaiXe2.getTenLoaiXe().trim().equalsIgnoreCase(loaiXe.getTenLoaiXe())) {
+					JOptionPane.showMessageDialog(this, "Tên loại xe bị trùng");
+					txtTen.selectAll();
+					txtTen.requestFocus();
+					flag++;
+				} else if (loaiXe2.getMaLoaiXe().trim().equals(lblMa.getText())) {
+					JOptionPane.showMessageDialog(this, "Mã loại xe bị trùng");
+					lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+
+					flag++;
+				}
+
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
-			capNhatBang();
+
+			if (!loaiXe.getTenLoaiXe().equals("")) {
+				if (flag == 0) {
+					if (loaiXeDao.themLoaiXe(loaiXe)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+						txtTen.setText("");
+						lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+						capNhatBang();
+						return;
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên loại xe bị trống");
+				txtTen.requestFocus();
+				return;
+			}
 		}
 		if (o.equals(btnXoa)) {
+			try {
+				int row = table.getSelectedRow();
+				String loaiXe = (String) model.getValueAt(row, 1);
+				LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không!", "Chú ý",
+						JOptionPane.YES_NO_OPTION);
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					if (loaiXeDao.xoaLoaiXe(loaiXe)) {
+						JOptionPane.showMessageDialog(this, "Xóa thành công");
+						capNhatBang();
+					} else {
+						JOptionPane.showMessageDialog(this, "Không thể xóa loại xe đang tồn tại xe máy !");
+					}
+				}
 
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(this, "Chọn loại xe muốn xóa");
+			}
 		}
 		if (o.equals(btnSua)) {
 
+			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+
 			LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (LoaiXeDao.getInstance().capNhatLoaiXe(loaiXe)) {
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			if (!loaiXe.getTenLoaiXe().equals("")) {
+				if (loaiXeDao.capNhatLoaiXe(loaiXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên loại xe trống");
+				txtTen.requestFocus();
 			}
 			capNhatBang();
 

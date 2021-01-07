@@ -257,6 +257,7 @@ public class GD_DanhMucBaoHanh extends JFrame implements ActionListener, MouseLi
 		 * Xóa
 		 */
 		if (o.equals(btnXoa)) {
+			JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không","Chú ý",JOptionPane.YES_NO_OPTION);;
 
 		}
 		/**

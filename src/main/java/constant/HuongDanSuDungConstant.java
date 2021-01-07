@@ -94,7 +94,7 @@ public class HuongDanSuDungConstant {
 			+ "        }\r\n" + "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n"
 			+ "    </style>\r\n" + "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
 			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
-			+ "    <title>Tìm kiếm hợp đồng</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "\r\n"
+			+ "    <title>Tìm kiếm hợp đồng theo ngày</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "\r\n"
 			+ "    <div style=\"margin: 50px;\">\r\n" + "        <h1>Tìm kiếm hợp đồng</h1>\r\n" + "        <hr>\r\n"
 			+ "        <p> Chọn vào ngày, tháng, năm muốn tìm kiếm hợp đồng</p>\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n"
 			+ "        <br>\r\n" + "\r\n" + "        <img  src='file:\\"
@@ -134,6 +134,17 @@ public class HuongDanSuDungConstant {
 			+ "    </div>\r\n" + "</body>\r\n" + "</html>";
 
 	// KHÁCH HÀNG
+	public static final String XOA_KHACH_HANG = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Xóa khách hàng</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Ở giao diện quản lý khách hàng chọn vào khách hàng muốn xóa </p>\r\n"
+			+ "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaKhachHang.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
 	public static final String SUA_KHACH_HANG = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
 			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
 			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
@@ -353,62 +364,284 @@ public class HuongDanSuDungConstant {
 			+ "    <p>- Ngoài ra bạn có thể lựa chọn “ngày” và dạng thống kê( biểu đồ, số liệu).</p>\r\n"
 			+ "    <img src='file:/" + Paths.get("Img/ThongKeNgay.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
 			+ "\r\n" + "\r\n" + "</body>\r\n" + "</html>";
-	public static final String THONG_KE_THEO_THANG = "<!DOCTYPE html>\r\n" + 
-			"<html lang=\"en\">\r\n" + 
-			"    <style>\r\n" + 
-			"        p{\r\n" + 
-			"            \r\n" + 
-			"            font-size: 30px;\r\n" + 
-			"        }\r\n" + 
-			"        h1{\r\n" + 
-			"            font-size: 40px;\r\n" + 
-			"        }\r\n" + 
-			"\r\n" + 
-			"    </style>\r\n" + 
-			"<head>\r\n" + 
-			"    <meta charset=\"UTF-8\">\r\n" + 
-			"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n" + 
-			"    <title>Document</title>\r\n" + 
-			"</head>\r\n" + 
-			"<body>\r\n" + 
-			"    <h1>Thống kê theo tháng</h1>\r\n" + 
-			"    <p>- Ở giao diện thống kê chọn vào “Tổng thu trong tháng”.</p>\r\n" + 
-			"    <p>- Hệ thống sẻ hiển thị các biểu đồ dưới dạng bảng thống kê về doanh thi trong tháng hiện tại.</p>\r\n" + 
-			"    <p>- Ngoài ra bạn có thể chọn tháng theo năm và dạng thống kê (biểu đồ, text)..</p>\r\n" + 
-			"    <img src='file:/"+Paths.get("Img/ThongKeThang.png").toAbsolutePath()+"' alt=\"\">\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"</body>\r\n" + 
-			"</html>";
-	public static final String THONG_KE_THEO_NAM = "<!DOCTYPE html>\r\n" + 
-			"<html lang=\"en\">\r\n" + 
-			"    <style>\r\n" + 
-			"        p{\r\n" + 
-			"            \r\n" + 
-			"            font-size: 30px;\r\n" + 
-			"        }\r\n" + 
-			"        h1{\r\n" + 
-			"            font-size: 40px;\r\n" + 
-			"        }\r\n" + 
-			"\r\n" + 
-			"    </style>\r\n" + 
-			"<head>\r\n" + 
-			"    <meta charset=\"UTF-8\">\r\n" + 
-			"    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n" + 
-			"    <title>Document</title>\r\n" + 
-			"</head>\r\n" + 
-			"<body>\r\n" + 
-			"    <h1>Thống kê theo năm</h1>\r\n" + 
-			"    <p>- Ở giao diện thống kê chọn vào “Tổng thu trong năm”.</p>\r\n" + 
-			"    <p>- Hệ thống sẻ hiện thị các biểu đồ dưới dạng bảng về tổng thu trong năm hiện tại</p>\r\n" + 
-			"    <p>- Ngoài ra bạn còn có thể chọn năm muốn thống kê hoặc dạng thống kê (biểu đồ, số liệu</p>\r\n" + 
-			"    <img src='file:/"+Paths.get("Img/ThongKeNam1.png").toAbsolutePath()+"' alt=\"\">\r\n" + 
-			"    <p>Khi chọn dạng thống kê “số liệu” hệ thống sẻ hiện thị như hình bên dưới:</p>\r\n" + 
-			"    <img src='file:/"+Paths.get("Img/ThongKeNam2.png").toAbsolutePath()+"' alt=\"\">\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"</body>\r\n" + 
-			"</html>";
+	public static final String THONG_KE_THEO_THANG = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n"
+			+ "    <style>\r\n" + "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n"
+			+ "        }\r\n" + "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n"
+			+ "    </style>\r\n" + "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Thống kê theo tháng</h1>\r\n"
+			+ "    <p>- Ở giao diện thống kê chọn vào “Tổng thu trong tháng”.</p>\r\n"
+			+ "    <p>- Hệ thống sẻ hiển thị các biểu đồ dưới dạng bảng thống kê về doanh thi trong tháng hiện tại.</p>\r\n"
+			+ "    <p>- Ngoài ra bạn có thể chọn tháng theo năm và dạng thống kê (biểu đồ, text)..</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThongKeThang.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "\r\n" + "\r\n" + "</body>\r\n" + "</html>";
+	public static final String THONG_KE_THEO_NAM = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
+			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
+			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
+			+ "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Thống kê theo năm</h1>\r\n"
+			+ "    <p>- Ở giao diện thống kê chọn vào “Tổng thu trong năm”.</p>\r\n"
+			+ "    <p>- Hệ thống sẻ hiện thị các biểu đồ dưới dạng bảng về tổng thu trong năm hiện tại</p>\r\n"
+			+ "    <p>- Ngoài ra bạn còn có thể chọn năm muốn thống kê hoặc dạng thống kê (biểu đồ, số liệu</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThongKeNam1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>Khi chọn dạng thống kê “số liệu” hệ thống sẻ hiện thị như hình bên dưới:</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThongKeNam2.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "\r\n" + "\r\n" + "</body>\r\n" + "</html>";
+	// Xe May
+
+	public static final String XOA_XE_MAY = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Xóa xe máy</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý xe máy chọn vào chế độ xem từng xe </p>\r\n"
+			+ "    <p>- Chọn vào xe muốn xóa</p>\r\n" + "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/XoaXeMay.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "</body>\r\n" + "\r\n" + "</html>";
+
+	public static final String THEM_XE_MAY = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
+			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
+			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
+			+ "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Thêm xe máy</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện trang chủ chọn \"Thêm xe máy\".</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThemXeMay1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Điền đầy đủ các thông tin của xe máy sau đó chọn nút thêm</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemXeMay2.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n"
+			+ "</body>\r\n" + "</html>";
+	public static final String SUA_XE_MAY = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
+			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
+			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
+			+ "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Cập nhật xe máy</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý xe máy chọn xe máy muốn cập nhật.</p>\r\n"
+			+ "    <p>- Chọn nút sửa</p>\r\n" + "    <img src='file:/" + Paths.get("Img/SuaXeMay1.png").toAbsolutePath()
+			+ "' alt=\"\">\r\n" + "    <p>- Chọn và sửa các trường muộn cập nhật</p>\r\n"
+			+ "    <p>- Bấm nút lưu</p>\r\n" + "    <img src='file:/" + Paths.get("Img/SuaXeMay2.png").toAbsolutePath()
+			+ "' alt=\"\">\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n" + "</body>\r\n" + "</html>";
+	public static final String TIM_XE_MAY = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
+			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
+			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
+			+ "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Tìm xe máy</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý xe máy chọn tiêu chí tìm kiếm.</p>\r\n"
+			+ "    <p>- Nhập thông tin muốn tìm kiếm</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/TimXe1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Ngoài ra có thể kết hợp tìm kiếm theo nhiều tiêu chí khác nhau</p>\r\n"
+			+ "    <p>- Có thể gộp nhóm xe hoặc xem từng xe</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/TimXe1.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n"
+			+ "</body>\r\n" + "</html>";
+
+	// Bảo hành
+
+	public static final String THEM_BAO_HANH = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "    <style>\r\n"
+			+ "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n" + "        }\r\n"
+			+ "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n" + "    </style>\r\n"
+			+ "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n" + "    <h1>Thêm phiếu bảo hành</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện trang chủ chọn vào nút \"Bảo hành\"</p>\r\n"
+			+ "    <p>- Nhập thông tin muốn tìm kiếm</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemBaoHanh1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Chọn đối tượng muốn thêm phiếu bảo hành và chọn xem chi tiết</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemBaoHanh2.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Chọn đợt bảo hành và bấm vào nút thêm</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemBaoHanh3.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Thêm vào các danh mục bảo hành và chọn \"Lưu\"</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemBaoHanh4.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "\r\n" + "\r\n" + "\r\n"
+			+ "</body>\r\n" + "</html>";
+	public static final String THEM_DANH_MUC_BAO_HANH = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n"
+			+ "    <style>\r\n" + "        p{\r\n" + "            \r\n" + "            font-size: 30px;\r\n"
+			+ "        }\r\n" + "        h1{\r\n" + "            font-size: 40px;\r\n" + "        }\r\n" + "\r\n"
+			+ "    </style>\r\n" + "<head>\r\n" + "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "<body>\r\n"
+			+ "    <h1>Thêm danh mục bảo hành</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Ở giao diện quản lý bảo hành chọn Danh mục bảo hành</p>\r\n"
+			+ "    <p>- Điền tên danh mục bảo hành và chọn vào nút thêm</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemDMBH.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "</html>";
+	public static final String XOA_DANH_MUC_BAO_HANH = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Xóa danh mục bảo hành</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Ở giao diện quản lý bảo hành chọn Danh mục bảo hành</p>\r\n"
+			+ "    <p>- Chọn danh mục bảo hành muốn xóa</p>\r\n" + "    <p>- Chọn nút xóa</p>\r\n"
+			+ "    <p>- Chọn yes để xác nhận</p>\r\n" + "    <p>-Chọn sửa</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaDMBH.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String SUA_DANH_MUC_BAO_HANH = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Sửa danh mục bảo hành</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Ở giao diện quản lý bảo hành chọn Danh mục bảo hành</p>\r\n"
+			+ "    <p>-Chọn danh mục bảo hành muốn sửa</p>\r\n" + "    <p->Sửa tên danh mục bảo hành</p>\r\n"
+			+ "    <p>-Chọn sửa</p>\r\n" + "    <img src='file:/" + Paths.get("Img/ThemDMBH.png").toAbsolutePath()
+			+ "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n" + "</html>";
+
+	// đổi mật khẩu
+	public static final String DOI_MAT_KHAU = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Đổi mật khẩu</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Ở giao diện trang chủ chọn dổi mật khẩu</p>\r\n" + "    <p>- Nhập mật khẩu hiện tại</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/DoiMatKhau1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>- Nhập mật khẩu mới và xác nhận</p>\r\n" + "    <p>- Chọn OK</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/DoiMatKhau2.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+
+	// Dòng xe
+	public static final String THEM_DONG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Thêm dòng xe</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Trong giao diện quản lý xe máy, click chuột phải vào trường dòng xe </p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThemDongXe1.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>Hệ thống hiển thị giao diện Quản lý dòng xe</p>\r\n"
+			+ "    <p>- Điền tên dòng xe, thuế muốn thêm và chọn \"Thêm\"</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemDongXe2.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String SUA_DONG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Sửa dòng xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý dòng xe chọn vào dòng xe muốn sửa </p>\r\n"
+			+ "    <p>- Thay đổi các trường thông tin và bấm nút Sửa </p>\r\n" + "    <p>- Bấm vào nút Yes</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/SuaDongXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "</body>\r\n" + "\r\n" + "</html>";
+	public static final String XOA_DONG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Xóa dòng xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý dòng xe chọn vào dòng xe muốn xóa </p>\r\n"
+			+ "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaDongXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+
+	// Hãng xe
+	public static final String THEM_HANG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Thêm hãng xe</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Trong giao diện quản lý xe máy, click chuột phải vào trường hãng xe </p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThemHangXe0.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>Hệ thống hiển thị giao diện Quản lý hãng xe</p>\r\n"
+			+ "    <p>- Điền tên hãng xe muốn thêm và chọn \"Thêm\"</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemHangXe1.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String XOA_HANG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Xóa hãng xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý hãng xe chọn vào hãng xe muốn xóa </p>\r\n"
+			+ "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaHangXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String SUA_HANG_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Sửa hãng xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý hãng xe chọn vào hãng xe muốn sửa </p>\r\n"
+			+ "    <p>- Thay đổi các trường thông tin và bấm nút Sửa </p>\r\n" + "    <p>- Bấm vào nút Yes</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/SuaHangXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "</body>\r\n" + "\r\n" + "</html>";
+
+	// Loại xe
+	public static final String THEM_LOAI_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Thêm loại xe</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Trong giao diện quản lý xe máy, click chuột phải vào trường loại xe </p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThemLoaiXe0.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>Hệ thống hiển thị giao diện Quản lý loại xe</p>\r\n"
+			+ "    <p>- Điền tên loại xe muốn thêm và chọn \"Thêm\"</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemLoaiXe1.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String XOA_LOAI_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Xóa loại xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý loại xe chọn vào loại xe muốn xóa </p>\r\n"
+			+ "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaLoaiXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String SUA_LOAI_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Sửa loại xe</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý loại xe chọn vào loại xe muốn sửa </p>\r\n"
+			+ "    <p>- Thay đổi các trường thông tin và bấm nút Sửa </p>\r\n" + "    <p>- Bấm vào nút Yes</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/SuaLoaiXe.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "</body>\r\n" + "\r\n" + "</html>";
+
+	// Xuất xứ
+	public static final String THEM_XUAT_XU_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n"
+			+ "    <h1>Thêm xuất xứ</h1>\r\n" + "    <hr>\r\n" + "\r\n"
+			+ "    <p>- Trong giao diện quản lý xe máy, click chuột phải vào trường xuất xứ </p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/ThemXuatXu0.png").toAbsolutePath() + "' alt=\"\">\r\n"
+			+ "    <p>Hệ thống hiển thị giao diện Quản lý xuất xứ</p>\r\n"
+			+ "    <p>- Điền tên xuất xứ muốn thêm và chọn \"Thêm\"</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/ThemXuatXu1.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String XOA_XUAT_XU_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Xóa xuất xứ</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý xuất xứ chọn vào xuất xứ muốn xóa </p>\r\n"
+			+ "    <p>- Chọn xóa và bấm vào nút Yes</p>\r\n" + "    <img src='file:/"
+			+ Paths.get("Img/XoaXuatXu.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n" + "</body>\r\n" + "\r\n"
+			+ "</html>";
+	public static final String SUA_XUAT_XU_XE = "<!DOCTYPE html>\r\n" + "<html lang=\"en\">\r\n" + "<style>\r\n"
+			+ "    p {\r\n" + "\r\n" + "        font-size: 30px;\r\n" + "    }\r\n" + "\r\n" + "    h1 {\r\n"
+			+ "        font-size: 40px;\r\n" + "    }\r\n" + "</style>\r\n" + "\r\n" + "<head>\r\n"
+			+ "    <meta charset=\"UTF-8\">\r\n"
+			+ "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n"
+			+ "    <title>Document</title>\r\n" + "</head>\r\n" + "\r\n" + "<body>\r\n" + "    <h1>Sửa xuất xứ</h1>\r\n"
+			+ "    <hr>\r\n" + "\r\n" + "    <p>- Ở giao diện quản lý xuất xứ chọn vào xuất xứ muốn sửa </p>\r\n"
+			+ "    <p>- Thay đổi các trường thông tin và bấm nút Sửa </p>\r\n" + "    <p>- Bấm vào nút Yes</p>\r\n"
+			+ "    <img src='file:/" + Paths.get("Img/SuaXuatXu.png").toAbsolutePath() + "' alt=\"\">\r\n" + "\r\n"
+			+ "</body>\r\n" + "\r\n" + "</html>";
+//XÓA XE MÁY, XÓA KHÁCH HÀNG
+
 }

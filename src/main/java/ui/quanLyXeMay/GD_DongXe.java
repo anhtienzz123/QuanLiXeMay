@@ -299,12 +299,14 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 			DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(), Integer.parseInt(txtThue.getText().trim()), hangXe);
 			if (DongXeDao.getInstance().themDongXe(dongXe)) {
 				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			}else {
+				
 			}
 			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
 			capNhatBang();
 		}
 		if (o.equals(btnXoa)) {
-
+			JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không","Chú ý",JOptionPane.YES_NO_OPTION);
 		}
 		if (o.equals(btnSua)) {
 

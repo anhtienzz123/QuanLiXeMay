@@ -11,4 +11,5 @@ public class DongXeConstant {
 	public static final String CAP_NHAP_DONG_XE= "update DongXe set tenDongXe = ?, thue = ? ,maHangXe = ? where maDongXe = ?";
 	public static final String KIEM_TRA_MA_KHONG_TRUNG = "select maDongXe from DongXe\r\n" + 
     		"where maDongXe = ? ";
+	public static final String XOA_DONG_XE = "";
 }
