@@ -33,31 +33,31 @@ public class EmailSender {
 	public static void main(String[] args) throws Exception {
 
 		DatabaseConnect.connect();
-		
-		
+
 		HopDongDao hopDongDao = HopDongDao.getInstance();
 		HopDong hopDong = hopDongDao.getHopDongTheoMa("HDG104477");
-		
-		sendBaoHanh(hopDong);
-		
-		
+
+		// sendBaoHanh(hopDong);
+
+		sendText("anhtienzz123@gmail.com", "Dsds");
+		System.out.println("goi thanh cong");
+
 	}
 
-	
 	public static void sendEmailThongBaoBaoHanhDinhKi() {
-		
+
 		try {
 			// nếu đã gởi rồi thì thôi không gởi nữa
-			if(checkDaGuiEmail()) {
+			if (checkDaGuiEmail()) {
 				System.out.println("da goi email roio");
 				return;
 			}
-				
+
 		} catch (FileNotFoundException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		HopDongDao hopDongDao = HopDongDao.getInstance();
 
 		// lấy ngày hiện tại
@@ -72,7 +72,6 @@ public class EmailSender {
 
 		List<HopDong> hopDongs = hopDongDao.getHopDongs();
 
-		
 		for (HopDong hopDong : hopDongs) {
 			// nếu hợp đồng nào có ngày trùng với bảo hành thì gởi email
 			if (hopDong.isCheckBaoHanh(thoiGian))
@@ -81,89 +80,82 @@ public class EmailSender {
 		}
 
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static boolean checkDaGuiEmail() throws ParseException, FileNotFoundException {
-		
+
 		boolean result = false;
-		
+
 		String file = "data/goiEmail.txt";
-		
-        Scanner scanner = new Scanner(new FileInputStream(file));
-		
+
+		Scanner scanner = new Scanner(new FileInputStream(file));
+
 		String ngayDaGoi = "";
-		
-		while(scanner.hasNextLine()) {
+
+		while (scanner.hasNextLine()) {
 			ngayDaGoi = scanner.nextLine();
 			break;
 		}
-		
+
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = format.parse(ngayDaGoi);
-		
+
 		Calendar calendar = Calendar.getInstance();
 		Date ngayHienTai = calendar.getTime();
-		
-		
-		if(date.getDate() == ngayHienTai.getDate() &  date.getMonth() == ngayHienTai.getMonth() && date.getYear() == ngayHienTai.getYear() ) {
+
+		if (date.getDate() == ngayHienTai.getDate() & date.getMonth() == ngayHienTai.getMonth()
+				&& date.getYear() == ngayHienTai.getYear()) {
 			result = true;
-		}else {
-			
+		} else {
+
 			PrintWriter writer = new PrintWriter(new FileOutputStream(file));
 			writer.write(format.format(ngayHienTai));
-			
+
 			writer.close();
 			result = false;
 		}
-		
-		
+
 		scanner.close();
-		
+
 		return result;
-		
+
 	}
-	
+
 	public static void sendBaoHanh(HopDong hopDong) {
 
-		
 		String emailNguoiNhan = hopDong.getHoaDon().getKhachHang().getEmail();
 		String tenKhachHang = hopDong.getHoaDon().getKhachHang().getHoTenKH();
 		String maHopDong = hopDong.getMaHopDong();
 		String ngayLapHopDong = XuLyThoiGian.chuyenDateThanhString(hopDong.getHoaDon().getNgayLap());
-		String tenXeMay = hopDong.getXeMay().getTenXeMay() + "("+   hopDong.getXeMay().getSoKhung() +")";
-		
+		String tenXeMay = hopDong.getXeMay().getTenXeMay() + "(" + hopDong.getXeMay().getSoKhung() + ")";
+
 		Calendar calendar = Calendar.getInstance();
-		
+
 		calendar.add(Calendar.DAY_OF_MONTH, 7);
-		
+
 		Date date = calendar.getTime();
-		
+
 		@SuppressWarnings("deprecation")
-		int year = date.getYear() + 1900, month = date.getMonth()+1;
+		int year = date.getYear() + 1900, month = date.getMonth() + 1;
 		@SuppressWarnings("deprecation")
-		String ngayBaoHanh = date.getDate()+"-"+month+"-"+year;
-		
-		String noiDung = "Xin chào ông/bà: "+tenKhachHang+"\r\n" + 
-				"\r\n" + 
-				"MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n" + 
-				"\r\n" + 
-				"Theo hợp đồng (Mã hợp đồng: "+ maHopDong +") đã lập ngày "+ ngayLapHopDong +" và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "+ tenXeMay+" sẽ bắt đầu từ ngày hôm nay đến ngày "+ ngayBaoHanh +"\r\n" + 
-				"\r\n" + 
-				"Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n" + 
-				"\r\n" + 
-				"Xin trân trọng cảm ơn!";
-		
-		
+		String ngayBaoHanh = date.getDate() + "-" + month + "-" + year;
+
+		String noiDung = "Xin chào ông/bà: " + tenKhachHang + "\r\n" + "\r\n"
+				+ "MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n"
+				+ "\r\n" + "Theo hợp đồng (Mã hợp đồng: " + maHopDong + ") đã lập ngày " + ngayLapHopDong
+				+ " và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "
+				+ tenXeMay + " sẽ bắt đầu từ ngày hôm nay đến ngày " + ngayBaoHanh + "\r\n" + "\r\n"
+				+ "Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n"
+				+ "\r\n" + "Xin trân trọng cảm ơn!";
+
 		try {
 			sendText(emailNguoiNhan, noiDung);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	}
 
-	
+	}
 
 	public static void sendText(String emailNguoiNhan, String noiDung) throws AddressException, MessagingException {
 		Properties mailServerProperties;
@@ -180,12 +172,13 @@ public class EmailSender {
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		mailMessage = new MimeMessage(getMailSession);
 
-		mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailNguoiNhan)); // Thay abc bằng địa
-																									// chỉ người nhận
+		mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailNguoiNhan)); 
+																						
 
 		// Bạn có thể chọn CC, BCC
-//		    generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
+		 //   generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
 
+		mailMessage.setFrom(new InternetAddress(emailNguoiNhan));
 		mailMessage.setSubject(SUBJECT);
 		mailMessage.setText(noiDung);
 
@@ -198,8 +191,5 @@ public class EmailSender {
 		transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 		transport.close();
 	}
-	
-	
 
-	
 }

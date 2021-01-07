@@ -55,6 +55,11 @@ public class HopDong {
 
 		return ketQua;
 	}
+	
+	public int checkDot(Date thoiGian) {
+		
+		return 1;
+	}
 
 	@SuppressWarnings("deprecation")
 	public boolean isCheckBaoHanh(Date thoiGian) {
