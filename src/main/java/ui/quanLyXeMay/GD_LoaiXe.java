@@ -100,7 +100,8 @@ public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
 		lblNewLabel_1_2.setBounds(23, 65, 129, 30);
 		contentPane.add(lblNewLabel_1_2);
 
-		lblMa = new JLabel("LX123456");
+		lblMa = new JLabel();
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
 		lblMa.setForeground(Color.BLACK);
 		lblMa.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblMa.setBounds(148, 65, 136, 30);
@@ -212,89 +213,95 @@ public class GD_LoaiXe extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
-		if (o.equals(btnThem)) {
 
-			if (kiemTraHopLe()) {
-				LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-				if (LoaiXeDao.getInstance().themLoaiXe(loaiXe)) {
-					JOptionPane.showMessageDialog(this, "Thêm thành công");
+		if (o.equals(btnThem)) {
+			int flag = 0;
+
+			LoaiXe loaiXe = null;
+			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+			loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
+			List<LoaiXe> loaiXes = loaiXeDao.getLoaiXes();
+
+			for (LoaiXe loaiXe2 : loaiXes) {
+
+				if (loaiXe2.getTenLoaiXe().trim().equalsIgnoreCase(loaiXe.getTenLoaiXe())) {
+					JOptionPane.showMessageDialog(this, "Tên loại xe bị trùng");
+					txtTen.selectAll();
+					txtTen.requestFocus();
+					flag++;
+				} else if (loaiXe2.getMaLoaiXe().trim().equals(lblMa.getText())) {
+					JOptionPane.showMessageDialog(this, "Mã loại xe bị trùng");
+					lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+
+					flag++;
 				}
-				lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
-				capNhatBang();
-				xoaRong();
-			} else {
-				JOptionPane.showMessageDialog(this, "Tên loại xe không được để trống");
+
 			}
 
+			if (!loaiXe.getTenLoaiXe().equals("")) {
+				if (flag == 0) {
+					if (loaiXeDao.themLoaiXe(loaiXe)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+						txtTen.setText("");
+						lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+						capNhatBang();
+						return;
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên loại xe bị trống");
+				txtTen.requestFocus();
+				return;
+			}
 		}
 		if (o.equals(btnXoa)) {
-
-			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
-
-			int row = table.getSelectedRow();
-
-			if (row != -1) {
-				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa không ?", "Xóa loại xe",
+			try {
+				int row = table.getSelectedRow();
+				String loaiXe = (String) model.getValueAt(row, 1);
+				LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không!", "Chú ý",
 						JOptionPane.YES_NO_OPTION);
-
-				// da nhan ok
-				if (flag == JOptionPane.YES_OPTION) {
-					String maLoaiXe = (String) model.getValueAt(row, 1);
-
-					if (loaiXeDao.xoaLoaiXe(maLoaiXe)) {
-						JOptionPane.showMessageDialog(null, "Xóa loại xe thành công");
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					if (loaiXeDao.xoaLoaiXe(loaiXe)) {
+						JOptionPane.showMessageDialog(this, "Xóa thành công");
 						capNhatBang();
-						xoaRong();
 					} else {
-						JOptionPane.showMessageDialog(null, "Xóa loại xe thất bại");
+						JOptionPane.showMessageDialog(this, "Không thể xóa loại xe đang tồn tại xe máy !");
 					}
-
 				}
-			}
 
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(this, "Chọn loại xe muốn xóa");
+			}
 		}
 		if (o.equals(btnSua)) {
 
-			if (kiemTraHopLe()) {
-				LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
-				if (LoaiXeDao.getInstance().capNhatLoaiXe(loaiXe)) {
+			LoaiXeDao loaiXeDao = LoaiXeDao.getInstance();
+
+			LoaiXe loaiXe = new LoaiXe(lblMa.getText().trim(), txtTen.getText().trim());
+			if (!loaiXe.getTenLoaiXe().equals("")) {
+				if (loaiXeDao.capNhatLoaiXe(loaiXe)) {
 					JOptionPane.showMessageDialog(this, "Sửa thành công");
 				}
-				capNhatBang();
-				xoaRong();
 			} else {
-				JOptionPane.showMessageDialog(this, "Tên loại xe không được để trống");
+				JOptionPane.showMessageDialog(this, "Tên loại xe trống");
+				txtTen.requestFocus();
 			}
+			capNhatBang();
 
 		}
 		if (o.equals(btnXoaRong)) {
-			xoaRong();
+			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.LOAI_XE));
+			txtTen.setText("");
 		}
-	}
-
-	private void xoaRong() {
-		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
-		txtTen.setText("");
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 		int row = table.getSelectedRow();
 		lblMa.setText(model.getValueAt(row, 1).toString().trim());
 		txtTen.setText(model.getValueAt(row, 2).toString().trim());
 
-	}
-
-	// Tra ve true neu khong loi gi het
-	private boolean kiemTraHopLe() {
-
-		String ten = txtTen.getText().trim();
-
-		if (ten.length() > 0)
-			return true;
-
-		return false;
 	}
 
 	@Override

@@ -213,22 +213,78 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
+
 		if (o.equals(btnThem)) {
-			XuatXu xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
-			if (XuatXuDao.getInstance().themXuatXu(xuatXu)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			XuatXu xuatXu = null;
+			XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+			xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
+
+			System.out.println(xuatXu);
+
+			List<XuatXu> xuatXus = xuatXuDao.getXuatXus();
+			for (XuatXu xuatXu2 : xuatXus) {
+				if (xuatXu2.getTenXuatXu().equalsIgnoreCase(xuatXu.getTenXuatXu())) {
+					JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trùng");
+					txtTen.selectAll();
+					txtTen.requestFocus();
+					return;
+				} else if (xuatXu2.getMaXuatXu().equals(lblMa.getText())) {
+					JOptionPane.showMessageDialog(this, "Mã xuất xứ bị trùng");
+					txtTen.selectAll();
+					txtTen.requestFocus();
+					lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
+					return;
+				}
+
+				else {
+					if (!xuatXu.getTenXuatXu().equals("")) {
+						if (xuatXuDao.themXuatXu(xuatXu)) {
+							JOptionPane.showMessageDialog(this, "Thêm thành công");
+							lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
+							capNhatBang();
+							return;
+						}
+					} else {
+						JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trống");
+						txtTen.requestFocus();
+						return;
+					}
+				}
+
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
-			capNhatBang();
 		}
 		if (o.equals(btnXoa)) {
+			try {
+				int row = table.getSelectedRow();
+				String xuatXu = (String) model.getValueAt(row, 1);
+				XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+				int xacnhan = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa không!", "Chú ý",
+						JOptionPane.YES_NO_OPTION);
+				if (xacnhan == JOptionPane.YES_OPTION) {
+					if (xuatXuDao.xoaXuatXu(xuatXu)) {
+						JOptionPane.showMessageDialog(this, "Xóa thành công");
+						capNhatBang();
+					} else {
+						JOptionPane.showMessageDialog(this, "Không thể xóa xuất xứ đang tồn tại xe máy !");
+					}
+				}
 
+			} catch (Exception e2) {
+				JOptionPane.showMessageDialog(this, "Chọn xuất xứ muốn xóa");
+			}
 		}
 		if (o.equals(btnSua)) {
 
+			XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+
 			XuatXu xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
-			if (XuatXuDao.getInstance().capNhatXuatXu(xuatXu)) {
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
+			if (!xuatXu.getTenXuatXu().equals("")) {
+				if (xuatXuDao.capNhatXuatXu(xuatXu)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên xuất xứ trống");
+				txtTen.requestFocus();
 			}
 			capNhatBang();
 

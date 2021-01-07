@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.EventObject;
@@ -37,7 +39,7 @@ import entity.HangXe;
 import other.RandomMa;
 import other.XuLyChung;
 
-public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
+public class GD_DongXe extends JFrame implements ActionListener, MouseListener, KeyListener {
 
 	/**
 	 * 
@@ -238,7 +240,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		contentPane.add(lblNewLabel_1_2_1_2);
 
 		cboTimKiem = new JComboBox<String>();
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên dòng xe", "Mã dòng xe", "Hãng", "" }));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] { "Tên dòng xe", "Mã dòng xe", "Hãng" }));
 		cboTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		cboTimKiem.setBackground(Color.WHITE);
 		cboTimKiem.setBounds(169, 170, 147, 30);
@@ -258,6 +260,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 			model.addRow(new Object[] { i, null, null });
 		}
 
+		dongXes = DongXeDao.getInstance().getDongXes();
 		dangKiSuKien();
 		capNhatBang();
 	}
@@ -268,7 +271,7 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 	private void capNhatBang() {
 		model.getDataVector().removeAllElements();
 		model.fireTableDataChanged();
-		dongXes = DongXeDao.getInstance().getDongXes();
+		
 		if (dongXes != null) {
 			for (DongXe dongXe : dongXes) {
 				Object[] datas = new Object[5];
@@ -291,6 +294,9 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		btnXoa.addActionListener(this);
 
 		table.addMouseListener(this);
+
+		cboTimKiem.addActionListener(this);
+		txtTimKiem.addKeyListener(this);
 	}
 
 	@Override
@@ -299,16 +305,26 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		if (o.equals(btnThem)) {
 
 			if (kiemTraHopLe()) {
-				HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
-				DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
-						Double.parseDouble(txtThue.getText().trim()), hangXe);
+				// kiem tra ma khong trung
 
-				if (DongXeDao.getInstance().themDongXe(dongXe)) {
-					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+
+				if (dongXeDao.kiemTraKhongTrungTenDongXe(txtTen.getText().trim())) {
+					HangXe hangXe = HangXeDao.getInstance()
+							.getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
+					DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
+							Double.parseDouble(txtThue.getText().trim()), hangXe);
+
+					if (DongXeDao.getInstance().themDongXe(dongXe)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+					}
+
+					capNhatBang();
+					xoaRong();
+				} else {
+					JOptionPane.showMessageDialog(this, "Tên dòng xe đã trùng");
 				}
 
-				capNhatBang();
-				xoaRong();
 			} else {
 				JOptionPane.showMessageDialog(this, "Thông tin dòng xe không hợp lệ");
 			}
@@ -422,6 +438,50 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		
+		DongXeDao dongXeDao = DongXeDao.getInstance();
+		
+		String txtTimKiem =  this.txtTimKiem.getText().trim();
+		System.out.println(txtTimKiem);
+		
+		
+		if (cboTimKiem.getSelectedItem().equals("Tên dòng xe")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoTenDongXe(txtTimKiem);
+			
+			
+		}
+
+		if (cboTimKiem.getSelectedItem().equals("Mã dòng xe")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoMaDongXe(txtTimKiem);
+			
+		}
+
+		if (cboTimKiem.getSelectedItem().equals("Hãng")) {
+
+			dongXes = dongXeDao.timKiemDongXeTheoHang(txtTimKiem);
+			
+		}
+		
+		capNhatBang();
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
 	}

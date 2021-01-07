@@ -56,10 +56,26 @@ public class HopDong {
 		return ketQua;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public int checkDot(Date thoiGian) {
 		
-		return 1;
+		List<Date> thoiGianBaoHanhs = getThoiGianBaoHanhDinhKis();
+		
+		int i = 1;
+
+		for (Date date : thoiGianBaoHanhs) {
+			
+			if(date.getDate() == thoiGian.getDate() && date.getMonth() == thoiGian.getMonth() && date.getYear() == thoiGian.getYear())
+				return i;
+			
+			i++;
+				
+		}
+
+		return 0;
 	}
+	
+
 
 	@SuppressWarnings("deprecation")
 	public boolean isCheckBaoHanh(Date thoiGian) {

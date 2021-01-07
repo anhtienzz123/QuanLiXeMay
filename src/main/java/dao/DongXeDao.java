@@ -59,7 +59,8 @@ public class DongXeDao {
 		List<DongXe> dongXes = new ArrayList<>();
 
 		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_TEN_HANG_XE);
+			PreparedStatement preparedStatement = connection
+					.prepareStatement(DongXeConstant.GET_DONG_XE_THEO_TEN_HANG_XE);
 
 			preparedStatement.setString(1, tenHangXe);
 
@@ -143,8 +144,6 @@ public class DongXeDao {
 
 		return n > 0;
 	}
-	
-	
 
 	public boolean kiemTraMaKhongTrung(String maDongXe) {
 
@@ -164,7 +163,7 @@ public class DongXeDao {
 
 		return true;
 	}
-	
+
 	public boolean xoaDongXe(String maDongXe) {
 
 		int result = 0;
@@ -183,5 +182,96 @@ public class DongXeDao {
 
 		return result > 0;
 	}
+
+	public boolean kiemTraKhongTrungTenDongXe(String tenDongXe) {
+
+		try {
+			String sql = "select * from DongXe where tenDongXe = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, tenDongXe);
+
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next())
+				return false;
+
+		} catch (SQLException e) {
+
+		}
+
+		return true;
+	}
+
+	public List<DongXe> timKiemDongXeTheoTenDongXe(String tenDongXe) {
+
+		List<DongXe> dongXes = new ArrayList<>();
+
+		try {
+			String sql = "select * from DongXe where tenDongXe like N'%" + tenDongXe + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				DongXe dongXe = DongXeConvert.getDongXe(resultSet);
+				dongXes.add(dongXe);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return dongXes;
+	}
+
+	public List<DongXe> timKiemDongXeTheoMaDongXe(String maDongXe) {
+
+		List<DongXe> dongXes = new ArrayList<>();
+
+		try {
+			String sql = "select * from DongXe where maDongXe like N'%" + maDongXe + "%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				DongXe dongXe = DongXeConvert.getDongXe(resultSet);
+				dongXes.add(dongXe);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return dongXes;
+	}
+	
+	public List<DongXe> timKiemDongXeTheoHang(String tenHangXe) {
+
+		List<DongXe> dongXes = new ArrayList<>();
+
+		try {
+			String sql = "select * from DongXe inner join HangXe on DongXe.maHangXe = HangXe.maHangXe where tenHangXe like N'%"+tenHangXe +"%'";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				DongXe dongXe = DongXeConvert.getDongXe(resultSet);
+				dongXes.add(dongXe);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return dongXes;
+	}
+	
+	
 
 }

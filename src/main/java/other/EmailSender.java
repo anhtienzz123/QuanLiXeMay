@@ -31,8 +31,6 @@ public class EmailSender {
 
 	public static void main(String[] args) throws Exception {
 
-		
-
 		sendText("anhtienzz123@gmail.com", "Dsds");
 		System.out.println("goi thanh cong");
 
@@ -115,6 +113,7 @@ public class EmailSender {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void sendBaoHanh(HopDong hopDong) {
 
 		String emailNguoiNhan = hopDong.getHoaDon().getKhachHang().getEmail();
@@ -129,20 +128,40 @@ public class EmailSender {
 
 		Date date = calendar.getTime();
 
-		@SuppressWarnings("deprecation")
 		int year = date.getYear() + 1900, month = date.getMonth() + 1;
-		@SuppressWarnings("deprecation")
-
 		String ngayBaoHanh = date.getDate() + "-" + month + "-" + year;
+
+		int dot = hopDong.checkDot(new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+				calendar.get(Calendar.DAY_OF_MONTH)));
+
+		String ngayBatDau = "";
+		
+		if(dot>1) {
+			int x = dot -1;
+			Date temp = hopDong.getThoiGianBaoHanhDinhKis().get(x);
+			
+			int month1 = temp.getMonth() + 1;
+			
+			ngayBatDau = temp.getDate() + "-" +month1 + "-" + temp.getYear();
+		}else {
+			
+			int n1 = hopDong.getHoaDon().getNgayLap().getDate();
+			int m1 = hopDong.getHoaDon().getNgayLap().getMonth() +1;
+			int y1 = hopDong.getHoaDon().getNgayLap().getYear() + 1990;
+			ngayBatDau = n1 + "-" +m1 + "-" + y1;
+			
+		}
+		
+		System.out.println("ngay bat dau: " + ngayBatDau);
 
 		String noiDung = "Xin chào ông/bà: " + tenKhachHang + "\r\n" + "\r\n"
 				+ "MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n"
 				+ "\r\n" + "Theo hợp đồng (Mã hợp đồng: " + maHopDong + ") đã lập ngày " + ngayLapHopDong
 				+ " và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "
-				+ tenXeMay + " sẽ bắt đầu từ ngày hôm nay đến ngày " + ngayBaoHanh + "\r\n" + "\r\n"
+				+ tenXeMay + " sẽ bắt đầu từ ngày " + ngayBatDau + " đến ngày " + ngayBaoHanh + " đợt " + dot + "\r\n"
+				+ "\r\n"
 				+ "Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n"
 				+ "\r\n" + "Xin trân trọng cảm ơn!";
-
 
 		try {
 			sendText(emailNguoiNhan, noiDung);
@@ -168,9 +187,9 @@ public class EmailSender {
 		getMailSession = Session.getDefaultInstance(mailServerProperties, null);
 		mailMessage = new MimeMessage(getMailSession);
 
-		mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailNguoiNhan)); 
-																						
-      	mailMessage.setFrom(new InternetAddress(EMAIL));
+		mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailNguoiNhan));
+
+		mailMessage.setFrom(new InternetAddress(EMAIL));
 		mailMessage.setSubject(SUBJECT);
 		mailMessage.setText(noiDung);
 
@@ -181,6 +200,5 @@ public class EmailSender {
 		transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 		transport.close();
 	}
-
 
 }
