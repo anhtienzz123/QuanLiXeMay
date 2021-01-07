@@ -56,6 +56,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 	private boolean isTenKhachHang = false;
 	private boolean isSoDienThoai = false;
 	private boolean isNgaySinh = false;
+	private boolean isEmail = false;
 	private JTextField txtEmail;
 
 	public GD_CapNhatKhachHang(String maKhachHang, GD_KhachHang gd_KhachHang) {
@@ -374,6 +375,8 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 
 			}
 		});
+		
+		txtEmail.addFocusListener(this);
 	}
 
 	@Override
@@ -406,6 +409,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 				isTenKhachHang = true;
 				isSoDienThoai = true;
 				isNgaySinh = true;
+				isEmail = true;
 				capNhatThongBaoLoi();
 			}
 
@@ -420,12 +424,14 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 		String soCMT = txtSoCMT.getText();
 		String hoTenKH = txtTenKH.getText();
 		String soDienThoai = txtSoDienThoai.getText();
+		String email = txtEmail.getText();
+		
 		@SuppressWarnings("deprecation")
 		Date ngaySinh = new Date(txtNgaySinh.getDate().getYear(), txtNgaySinh.getDate().getMonth(),
 				txtNgaySinh.getDate().getDate());
 		String diaChiKH = txtDiaChi.getText();
 
-		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH);
+		KhachHang khachHang = new KhachHang(maKhachHang, soCMT, hoTenKH, ngaySinh, soDienThoai, diaChiKH, email);
 		return khachHang;
 
 	}
@@ -433,7 +439,7 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 	private boolean validateKhachHang(KhachHang khachHang) {
 
 		if (BatRegex.kiemTraSoCMT(txtSoCMT) && BatRegex.kiemTraTen(txtTenKH)
-				&& BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && BatRegex.kiemTraNgaySinh(txtNgaySinh))
+				&& BatRegex.kiemTraSoDienThoai(txtSoDienThoai) && BatRegex.kiemTraNgaySinh(txtNgaySinh) && BatRegex.kiemTraEmail(txtEmail))
 			return true;
 
 		return false;
@@ -455,6 +461,9 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 
 		if (!BatRegex.kiemTraNgaySinh(txtNgaySinh) && isNgaySinh)
 			txtThongBao.setText(txtThongBao.getText() + "\n" + BatRegex.NGAY_SINH);
+		
+		if (!BatRegex.kiemTraEmail(txtEmail) && isEmail)
+			txtThongBao.setText(txtThongBao.getText() + "\n" + "Email không đúng định dạng");
 
 	}
 
@@ -470,6 +479,9 @@ public class GD_CapNhatKhachHang extends JFrame implements ActionListener, Focus
 
 		if (source.equals(txtSoDienThoai))
 			isSoDienThoai = true;
+		
+		if(source.equals(txtEmail))
+			isEmail = true;
 
 	}
 
