@@ -217,43 +217,41 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 		Object o = e.getSource();
 
 		if (o.equals(btnThem)) {
-			XuatXu xuatXu = null;
-			XuatXuDao xuatXuDao = XuatXuDao.getInstance();
-			xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
-
-			System.out.println(xuatXu);
-
-			List<XuatXu> xuatXus = xuatXuDao.getXuatXus();
-			for (XuatXu xuatXu2 : xuatXus) {
-				if (xuatXu2.getTenXuatXu().equalsIgnoreCase(xuatXu.getTenXuatXu())) {
-					JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trùng");
-					txtTen.selectAll();
+			if(kiemTraKhongTrung()) {
+				
+				XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+				
+				String tenXuatXu = txtTen.getText().trim();
+				
+				if(tenXuatXu.length() == 0) {
+					JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trống ");
 					txtTen.requestFocus();
-					return;
-				} else if (xuatXu2.getMaXuatXu().equals(lblMa.getText())) {
-					JOptionPane.showMessageDialog(this, "Mã xuất xứ bị trùng");
-					txtTen.selectAll();
-					txtTen.requestFocus();
-					lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
-					return;
-				}
-
-				else {
-					if (!xuatXu.getTenXuatXu().equals("")) {
-						if (xuatXuDao.themXuatXu(xuatXu)) {
-							JOptionPane.showMessageDialog(this, "Thêm thành công");
-							lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
-							capNhatBang();
-							return;
-						}
-					} else {
-						JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trống");
-						txtTen.requestFocus();
-						return;
+				}else {
+					XuatXu xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
+					
+					if(xuatXuDao.themXuatXu(xuatXu)) {
+						JOptionPane.showMessageDialog(this, "Thêm xuất xứ thành công");
+						
+						capNhatBang();
+						xoaRong();
+					}else {
+						JOptionPane.showMessageDialog(this, "Thêm xuất xứ thất bại");
 					}
+						
 				}
+				
+				
+				
 
+				
+				
+			}else {
+				JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trùng");
+				txtTen.requestFocus();
 			}
+			
+			
+			
 		}
 		if (o.equals(btnXoa)) {
 			try {
@@ -266,6 +264,7 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 					if (xuatXuDao.xoaXuatXu(xuatXu)) {
 						JOptionPane.showMessageDialog(this, "Xóa thành công");
 						capNhatBang();
+						xoaRong();
 					} else {
 						JOptionPane.showMessageDialog(this, "Không thể xóa xuất xứ đang tồn tại xe máy !");
 					}
@@ -277,24 +276,44 @@ public class GD_XuatXu extends JFrame implements ActionListener, MouseListener {
 		}
 		if (o.equals(btnSua)) {
 
-			XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+			if(kiemTraKhongTrung()) {
+				XuatXuDao xuatXuDao = XuatXuDao.getInstance();
 
-			XuatXu xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
-			if (!xuatXu.getTenXuatXu().equals("")) {
-				if (xuatXuDao.capNhatXuatXu(xuatXu)) {
-					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				XuatXu xuatXu = new XuatXu(lblMa.getText().trim(), txtTen.getText().trim());
+				if (!xuatXu.getTenXuatXu().equals("")) {
+					if (xuatXuDao.capNhatXuatXu(xuatXu)) {
+						JOptionPane.showMessageDialog(this, "Sửa thành công");
+						xoaRong();
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Tên xuất xứ trống");
+					txtTen.requestFocus();
 				}
-			} else {
-				JOptionPane.showMessageDialog(this, "Tên xuất xứ trống");
+				capNhatBang();
+			}else {
+				JOptionPane.showMessageDialog(this, "Tên xuất xứ bị trùng");
 				txtTen.requestFocus();
 			}
-			capNhatBang();
 
 		}
 		if (o.equals(btnXoaRong)) {
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
-			txtTen.setText("");
+			xoaRong();
 		}
+	}
+	
+	private void xoaRong() {
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.XUAT_XU));
+		txtTen.setText("");
+	}
+	
+	private boolean kiemTraKhongTrung() {
+		
+		String tenXuatXu =  (String) txtTen.getText();
+		
+		XuatXuDao xuatXuDao = XuatXuDao.getInstance();
+		
+		return xuatXuDao.kiemTraKhongTrungTenXuatXu(tenXuatXu);
+		
 	}
 
 	@Override
