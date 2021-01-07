@@ -55,6 +55,8 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 
 	private ThongKeNhanVienDao thongKeNhanVienDao;
 	private String maNhanVienHanhChinh;
+	
+	private  JLabel lblNgay, lblThang, lblNam;
 
 	/**
 	 * Create the panel.
@@ -238,23 +240,23 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		lblXeBanNam.setBounds(184, 88, 160, 30);
 		pnlThongKeNam.add(lblXeBanNam);
 
-		JLabel lblNgay = new JLabel("Ngày 8-12-2020");
+		 lblNgay = new JLabel("Ngày 8-12-2020");
 		lblNgay.setForeground(new Color(58, 181, 74));
 		lblNgay.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNgay.setBounds(33, 277, 186, 30);
 		add(lblNgay);
 
-		JLabel lblThng_1 = new JLabel("Tháng 12-2020");
-		lblThng_1.setForeground(new Color(58, 181, 74));
-		lblThng_1.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblThng_1.setBounds(649, 277, 186, 30);
-		add(lblThng_1);
+		 lblThang = new JLabel("Tháng 12-2020");
+		lblThang.setForeground(new Color(58, 181, 74));
+		lblThang.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblThang.setBounds(649, 277, 186, 30);
+		add(lblThang);
 
-		JLabel lblThng = new JLabel("Năm 2020");
-		lblThng.setForeground(new Color(58, 181, 74));
-		lblThng.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblThng.setBounds(1257, 277, 186, 30);
-		add(lblThng);
+		 lblNam = new JLabel("Năm 2020");
+		lblNam.setForeground(new Color(58, 181, 74));
+		lblNam.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNam.setBounds(1257, 277, 186, 30);
+		add(lblNam);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(new Color(58, 181, 74));
@@ -440,6 +442,8 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		dangKiSuKien();
 
 		hienThiThongTinThongKe();
+		
+		capNhatNgay();
 
 	}
 
@@ -447,6 +451,20 @@ public class GD_ThongKeNV extends JPanel implements MouseListener {
 		lblChiTietDTNam.addMouseListener(this);
 		lblChiTietDTNgay.addMouseListener(this);
 		lblChiTietDTThang.addMouseListener(this);
+	}
+	
+	private void capNhatNgay() {
+		String ngay = LocalDate.now().getDayOfMonth() +"";
+		String thang = LocalDate.now().getMonthValue()+"";
+		String nam = LocalDate.now().getYear()+"";
+		
+		String dinhDangNgay = ngay+"-"+thang+"-"+nam;
+		String dinhDangThang = thang+"-"+nam;
+		
+		
+		lblNgay.setText("Ngày " + dinhDangNgay);
+		lblThang.setText("Tháng "+dinhDangThang);
+		lblNam.setText("Năm " + nam);
 	}
 
 	@Override

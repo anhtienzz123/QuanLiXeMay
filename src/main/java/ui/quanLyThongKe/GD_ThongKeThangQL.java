@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultComboBoxModel;
@@ -65,24 +66,23 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 	private JScrollPane scrollPane2;
 	private JTextArea txtSoLieu2;
 	private JTextArea txtSoLieu3;
-	
+
 	private int thang;
 	private int nam;
 
-	
 	private JLabel lblTitle;
 	private JLabel lblDoanhThuTrongThang;
 	private JLabel lblSoXeTrongThang;
-	
+
 	/**
 	 * Create the panel.
 	 */
-	public GD_ThongKeThangQL(JLabel lblTitle, JLabel lblDoanhThuTrongThang,  JLabel lblSoXeTrongThang) {
-		
+	public GD_ThongKeThangQL(JLabel lblTitle, JLabel lblDoanhThuTrongThang, JLabel lblSoXeTrongThang) {
+
 		this.lblTitle = lblTitle;
 		this.lblDoanhThuTrongThang = lblDoanhThuTrongThang;
 		this.lblSoXeTrongThang = lblSoXeTrongThang;
-		
+
 		setBackground(Color.WHITE);
 		setPreferredSize(new Dimension(1724, 766));
 		setLayout(null);
@@ -189,21 +189,21 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 		txtSoLieu1.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane1.setViewportView(txtSoLieu1);
-		
+
 		scrollPane2 = new JScrollPane();
 		scrollPane2.setBounds(613, 13, 500, 655);
 		pnlSoLieu.add(scrollPane2);
-		
+
 		txtSoLieu2 = new JTextArea();
 		txtSoLieu2.setEditable(false);
 		txtSoLieu2.setMargin(new Insets(10, 10, 10, 10));
 		txtSoLieu2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		scrollPane2.setViewportView(txtSoLieu2);
-		
+
 		scrollPane3 = new JScrollPane();
 		scrollPane3.setBounds(1224, 13, 500, 655);
 		pnlSoLieu.add(scrollPane3);
-		
+
 		txtSoLieu3 = new JTextArea();
 		txtSoLieu3.setEditable(false);
 		txtSoLieu3.setMargin(new Insets(10, 10, 10, 10));
@@ -215,22 +215,42 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 		thongKeTopDongXe(pnlTopDong);
 		thongKeTopHangXe(pnlTopHang);
 		cboThongKe.addActionListener(this);
-		
+
 		dangKiSuKien();
 		khoiTao();
 		capNhapLaiDuLieu();
-		
+
+		capNhatThangNam();
+
 	}
 
 	public void khoiTao() {
 		thongKeDao = ThongKeQuanLiDao.getInstance();
 		date = LocalDate.now();
-		
+
 		this.thang = date.getMonthValue();
 		this.nam = date.getYear();
 
 	}
-	
+
+	private void capNhatThangNam() {
+
+		List<String> nams = thongKeDao.getNams();
+
+		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>();
+		for (String string : nams) {
+			temp.addElement(string);
+		}
+
+		cboNam.setModel(temp);
+
+		String thang = LocalDate.now().getMonthValue() + "";
+		String nam = LocalDate.now().getYear() + "";
+
+		cboThang.setSelectedItem(thang);
+		cboNam.setSelectedItem(nam);
+	}
+
 	private void dangKiSuKien() {
 		cboThang.addActionListener(this);
 		cboNam.addActionListener(this);
@@ -238,7 +258,6 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	public void thongKeDoanhThuThang(JPanel jpnItem) {
 
-	
 		Map<Integer, Double> result = thongKeDao.getDoanhThuNgaysTheoThang(thang, nam);
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -269,7 +288,6 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	public void thongKeTopXe(JPanel jpnItem) {
 
-	
 		Map<String, Long> result = thongKeDao.getTopXeBansTrongThang(5, thang, nam);
 
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -300,8 +318,7 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	public void thongKeTopDongXe(JPanel jpnItem) {
 
-	
-		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(5,thang, nam);
+		Map<String, Long> result = thongKeDao.thongKeDongXeTrongThang(5, thang, nam);
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
 
 		result.forEach((key, value) -> {
@@ -325,7 +342,6 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	public void thongKeTopHangXe(JPanel jpnItem) {
 
-		
 		Map<String, Long> result = thongKeDao.thongKeHangXeTrongThang(thang, nam);
 
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
@@ -350,17 +366,17 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		Object source = e.getSource();
-		
+
 		if (source.equals(cboNam) || source.equals(cboThang)) {
 			txtSoLieu1.setText("");
 			txtSoLieu2.setText("");
 			txtSoLieu3.setText("");
-			
+
 			this.thang = Integer.valueOf(cboThang.getSelectedItem().toString());
 			this.nam = Integer.valueOf(cboNam.getSelectedItem().toString());
-			
+
 			capNhapLaiDuLieu();
 		}
 
@@ -375,26 +391,24 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
-	
+
 	private void capNhapLaiDuLieu() {
 		capNhapThongTinChung();
 		capNhapSoLieu();
 		capNhapLaiBieuDo();
 	}
-	
+
 	private void capNhapThongTinChung() {
-		
-		String titleNgay =  thang + "-"+nam;
-		lblTitle.setText("Tổng thu trong ngày " + titleNgay);
-	
-		
-		Double doanhSoNgay = thongKeDao.getDoanhThuTheoThang( thang,nam);
-		
+
+		String titleNgay = thang + "-" + nam;
+		lblTitle.setText("Tổng thu trong tháng " + titleNgay);
+
+		Double doanhSoNgay = thongKeDao.getDoanhThuTheoThang(thang, nam);
+
 		lblDoanhThuTrongThang.setText(DinhDangTien.format(doanhSoNgay));
-		
-		long xeNgay = thongKeDao.getSoLuongXeTheoThang(thang,nam);
-		
+
+		long xeNgay = thongKeDao.getSoLuongXeTheoThang(thang, nam);
+
 		lblSoXeTrongThang.setText(xeNgay + "");
 	}
 
@@ -406,7 +420,7 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 	}
 
 	private static final int TOP = 20;
-	
+
 	private void capNhapSoLieu() {
 
 		// Cap nhat so lieu 1
@@ -416,9 +430,8 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 			txtSoLieu1.append("\n- Ngày " + key + " : " + DinhDangTien.format(value));
 		});
 
-
-		txtSoLieu1.append("\n===== Xe bán chạy trong năm =====");
-		Map<String, Long> topXesBanChay = thongKeDao.getTopXeBansTrongThang(TOP, thang,nam);
+		txtSoLieu1.append("\n===== Xe bán chạy trong tháng =====");
+		Map<String, Long> topXesBanChay = thongKeDao.getTopXeBansTrongThang(TOP, thang, nam);
 
 		topXesBanChay.forEach((key, value) -> {
 			txtSoLieu1.append("\n" + key + " : " + value);
@@ -426,19 +439,19 @@ public class GD_ThongKeThangQL extends JPanel implements ActionListener {
 		// Cap so lieu 2
 
 		txtSoLieu2.append("===== Số lượng xe bán ra theo hãng ====");
-		Map<String, Long> hangXes = thongKeDao.thongKeHangXeTrongThang(thang,nam);
+		Map<String, Long> hangXes = thongKeDao.thongKeHangXeTrongThang(thang, nam);
 		hangXes.forEach((key, value) -> {
 			txtSoLieu2.append("\n- " + key + " : " + value);
 		});
 
 		txtSoLieu2.append("\n===== Số lượng xe bán ra theo dòng xe ====");
-		Map<String, Long> dongXes = thongKeDao.thongKeDongXeTrongThang(TOP, thang,nam);
+		Map<String, Long> dongXes = thongKeDao.thongKeDongXeTrongThang(TOP, thang, nam);
 		dongXes.forEach((key, value) -> {
 			txtSoLieu2.append("\n- " + key + " : " + value);
 		});
 		// Cap nhap so lieu 3
 		txtSoLieu3.append("===== Doanh thu của mỗi nhân viên trong tháng ===== ");
-		Map<NhanVienHanhChinh, Double> doanhThuNhanViens = thongKeDao.thongKeDoanhThuNhanVienTrongThang(thang,nam);
+		Map<NhanVienHanhChinh, Double> doanhThuNhanViens = thongKeDao.thongKeDoanhThuNhanVienTrongThang(thang, nam);
 		doanhThuNhanViens.forEach((key, value) -> {
 			txtSoLieu3.append(
 					"\n" + key.getMaNVHanhChinh() + " - " + key.getHoTenNV() + " : " + DinhDangTien.format(value));

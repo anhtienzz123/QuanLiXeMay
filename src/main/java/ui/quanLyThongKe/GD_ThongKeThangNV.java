@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import dao.ThongKeNhanVienDao;
+import dao.ThongKeQuanLiDao;
 import entity.HoaDon;
 import other.DinhDangTien;
 import other.ThongTinNguoiDung;
@@ -254,6 +255,15 @@ public class GD_ThongKeThangNV extends JPanel implements MouseListener, ActionLi
 	}
 
 	private void khoiTao() {
+		
+		List<String> nams = ThongKeQuanLiDao.getInstance().getNams();
+
+		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>();
+		for (String string : nams) {
+			temp.addElement(string);
+		}
+
+		cboNam.setModel(temp);
 		
 		
 		this.maNhanVienHanhChinh = ThongTinNguoiDung.nhanVienHanhChinh.getMaNVHanhChinh();

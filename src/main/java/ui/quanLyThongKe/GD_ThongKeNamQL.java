@@ -435,7 +435,7 @@ public class GD_ThongKeNamQL extends JPanel implements ActionListener {
 
 	private void capNhapThongTinChung() {
 
-		lblTitle.setText("Tổng thu trong ngày " + nam);
+		lblTitle.setText("Tổng thu trong năm " + nam);
 
 		Double doanhSoNgay = thongKeDao.getDoanhThuTheoNam(nam);
 

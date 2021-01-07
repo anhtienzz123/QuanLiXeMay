@@ -382,7 +382,7 @@ public class GD_ChiTietHoaDon extends JFrame implements ActionListener {
 				// JOptionPane.showMessageDialog(null, "Xuất hóa đơn thành công");
 
 			} catch (Exception e1) {
-
+                e1.printStackTrace();
 				JOptionPane.showMessageDialog(null, "Xuất hóa đơn thất bại");
 			}
 		}

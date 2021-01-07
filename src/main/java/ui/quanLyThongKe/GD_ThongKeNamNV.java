@@ -236,8 +236,7 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 
 		this.maNhanVienHanhChinh = ThongTinNguoiDung.nhanVienHanhChinh.getMaNVHanhChinh();
 
-		localDate = LocalDate.now();
-		cboNam.setSelectedItem(localDate.getYear() + "");
+		
 
 		thongKeNhanVienDao = ThongKeNhanVienDao.getInstance();
 		ThongKeQuanLiDao thongKeDao = ThongKeQuanLiDao.getInstance();
@@ -250,6 +249,9 @@ public class GD_ThongKeNamNV extends JPanel implements MouseListener, ActionList
 		}
 
 		cboNam.setModel(temp);
+		
+		localDate = LocalDate.now();
+		cboNam.setSelectedItem(localDate.getYear() + "");
 
 	}
 
