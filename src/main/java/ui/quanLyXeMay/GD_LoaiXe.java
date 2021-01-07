@@ -24,13 +24,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import constant.TenEntity;
 import dao.LoaiXeDao;
-import dao.XuatXuDao;
 import entity.LoaiXe;
-import entity.XuatXu;
 import other.RandomMa;
 import ui.GD_DangNhap;
 

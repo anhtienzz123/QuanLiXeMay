@@ -26,9 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import constant.TenEntity;
-import dao.HangXeDao;
 import dao.XuatXuDao;
-import entity.HangXe;
 import entity.XuatXu;
 import other.RandomMa;
 import ui.GD_DangNhap;
