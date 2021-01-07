@@ -147,7 +147,7 @@ public class EmailSender {
 				"\r\n" + 
 				"MotorCycle VietNam cảm ơn quý khách hàng đã tin tưởng và ủng hộ cửa hàng chúng tôi trong suốt thời gian qua.\r\n" + 
 				"\r\n" + 
-				"Theo hợp đồng (Mã hợp đồng: "+ maHopDong +") đã lập ngày "+ ngayLapHopDong +" và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "+ tenXeMay+" sẽ bắt đầu từ ngày hôm nay đến ngày "+ ngayBaoHanh +"\r\n" + 
+				"Theo hợp đồng (Mã hợp đồng: "+ maHopDong +") đã lập ngày "+ ngayLapHopDong +" và chính sách bảo hành của cửa hàng, chúng tôi gửi gmail này đến quý khách để thông báo thời gian bảo hành xe máy của xe "+ tenXeMay+" sẽ bắt đầu từ ngày"+ ngayBaoHanh +"\r\n" + 
 				"\r\n" + 
 				"Một lần nữa MotorCycle VietNam xin chân thành cảm ơn tới quý khách hàng và mong sẽ tiếp tục nhận được sự ủng hộ quý khách trong thời gian tới.\r\n" + 
 				"\r\n" + 
@@ -186,6 +186,7 @@ public class EmailSender {
 		// Bạn có thể chọn CC, BCC
 //		    generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("cc@gmail.com")); //Địa chỉ cc gmail
 
+		mailMessage.setFrom(new InternetAddress(EMAIL));
 		mailMessage.setSubject(SUBJECT);
 		mailMessage.setText(noiDung);
 
@@ -198,6 +199,7 @@ public class EmailSender {
 		transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 		transport.close();
 	}
+	
 	
 	
 

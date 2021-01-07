@@ -144,4 +144,23 @@ public class LoaiXeDao {
 
 		return true;
 	}
+	
+	public boolean xoaLoaiXe(String maLoaiXe) {
+
+		int result = 0;
+		try {
+			String sql = "delete from LoaiXe where maLoaiXe = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, maLoaiXe);
+
+			result = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Mã loại xe đã bị ràng buộc, không xóa được");
+
+		}
+
+		return result > 0;
+	}
 }

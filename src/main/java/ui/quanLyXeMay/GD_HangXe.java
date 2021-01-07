@@ -45,6 +45,7 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 	private JButton btnThem;
 	private JButton btnSua;
 	private JButton btnXoa;
+	private HangXeDao hangXeDao;
 
 	private List<HangXe> hangXes;
 
@@ -68,6 +69,9 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 	 * Create the frame.
 	 */
 	public GD_HangXe() {
+
+		this.hangXeDao = HangXeDao.getInstance();
+
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GD_LoaiXe.class.getResource("/icon/baseline_receipt_long_white_36dp.png")));
 		setTitle("Quản lý hãng xe");
@@ -208,35 +212,74 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
 		table.addMouseListener(this);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (HangXeDao.getInstance().themHangXe(hangXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+			if (kiemTraHopLe()) {
+				HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
+				if (HangXeDao.getInstance().themHangXe(hangXe)) {
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				}
+				lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+				capNhatBang();
+				xoaRong();
+				
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên hãng xe không được để trống");
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
-			capNhatBang();
+
 		}
 		if (o.equals(btnXoa)) {
+
+			int row = table.getSelectedRow();
+
+			if (row != -1) {
+				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa không ?", "Xóa hãng xe",
+						JOptionPane.YES_NO_OPTION);
+
+				// da nhan ok
+				if (flag == JOptionPane.YES_OPTION) {
+					String maHangXe = (String) model.getValueAt(row, 1);
+
+					if (hangXeDao.xoaHangXe(maHangXe)) {
+						JOptionPane.showMessageDialog(null, "Xóa hãng xe thành công");
+						capNhatBang();
+						xoaRong();
+					} else {
+						JOptionPane.showMessageDialog(null, "Xóa hãng xe thất bại");
+					}
+
+				}
+			}
 
 		}
 		if (o.equals(btnSua)) {
 
-			HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
-			if (HangXeDao.getInstance().capNhatHangXe(hangXe)) {
-				JOptionPane.showMessageDialog(this, "Sửa thành công");
-			}
-			capNhatBang();
+			if (kiemTraHopLe()) {
 
+				HangXe hangXe = new HangXe(lblMa.getText().trim(), txtTen.getText().trim());
+				if (HangXeDao.getInstance().capNhatHangXe(hangXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+				capNhatBang();
+				xoaRong();
+
+			} else {
+				JOptionPane.showMessageDialog(this, "Tên hãng xe không được để trống");
+			}
 		}
 		if (o.equals(btnXoaRong)) {
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
-			txtTen.setText("");
+			xoaRong();
 		}
+	}
+	
+	private void xoaRong() {
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.HANG_XE));
+		txtTen.setText("");
 	}
 
 	@Override
@@ -245,6 +288,18 @@ public class GD_HangXe extends JFrame implements ActionListener, MouseListener {
 		lblMa.setText(model.getValueAt(row, 1).toString().trim());
 		txtTen.setText(model.getValueAt(row, 2).toString().trim());
 
+	}
+
+	// Tra ve true neu khong loi gi het
+	private boolean kiemTraHopLe() {
+
+		
+		String ten = txtTen.getText().trim();
+
+		if (ten.length() > 0)
+			return true;
+
+		return false;
 	}
 
 	@Override

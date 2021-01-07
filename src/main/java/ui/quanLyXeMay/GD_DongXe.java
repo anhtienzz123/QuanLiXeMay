@@ -289,32 +289,82 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		btnThem.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
+
+		table.addMouseListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThem)) {
-			HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
-			DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(), Integer.parseInt(txtThue.getText().trim()), hangXe);
-			if (DongXeDao.getInstance().themDongXe(dongXe)) {
-				JOptionPane.showMessageDialog(this, "Thêm thành công");
+
+			if (kiemTraHopLe()) {
+				HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
+				DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
+						Double.parseDouble(txtThue.getText().trim()), hangXe);
+
+				if (DongXeDao.getInstance().themDongXe(dongXe)) {
+					JOptionPane.showMessageDialog(this, "Thêm thành công");
+				}
+
+				capNhatBang();
+				xoaRong();
+			} else {
+				JOptionPane.showMessageDialog(this, "Thông tin dòng xe không hợp lệ");
 			}
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
-			capNhatBang();
+
 		}
 		if (o.equals(btnXoa)) {
+			int row = table.getSelectedRow();
 
+			if (row != -1) {
+				int flag = JOptionPane.showConfirmDialog(null, "Bạn có chắc xóa không ?", "Xóa hãng xe",
+						JOptionPane.YES_NO_OPTION);
+
+				DongXeDao dongXeDao = DongXeDao.getInstance();
+				// da nhan ok
+				if (flag == JOptionPane.YES_OPTION) {
+					String maDongXe = (String) model.getValueAt(row, 1);
+
+					if (dongXeDao.xoaDongXe(maDongXe)) {
+						JOptionPane.showMessageDialog(null, "Xóa dòng xe thành công");
+						capNhatBang();
+						xoaRong();
+					} else {
+						JOptionPane.showMessageDialog(null, "Xóa dòng xe thất bại");
+					}
+
+				}
+			}
 		}
+
 		if (o.equals(btnSua)) {
+			if (kiemTraHopLe()) {
+				HangXe hangXe = HangXeDao.getInstance().getHangXeTheoTen(cboHang.getSelectedItem().toString().trim());
+				DongXe dongXe = new DongXe(lblMa.getText().trim(), txtTen.getText().trim(),
+						Double.parseDouble(txtThue.getText().trim()), hangXe);
 
+				if (DongXeDao.getInstance().capNhatDongXe(dongXe)) {
+					JOptionPane.showMessageDialog(this, "Sửa thành công");
+				}
+
+				capNhatBang();
+				xoaRong();
+			} else {
+				JOptionPane.showMessageDialog(this, "Thông tin dòng xe không hợp lệ");
+			}
 		}
+
 		if (o.equals(btnXoaRong)) {
-			lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
-			txtThue.setText("2");
-			txtTen.setText("");
-			cboHang.setSelectedIndex(4);
+			xoaRong();
 		}
+	}
+
+	private void xoaRong() {
+		lblMa.setText(RandomMa.getMaNgauNhien(TenEntity.DONG_XE));
+		txtThue.setText("2");
+		txtTen.setText("");
+		cboHang.setSelectedIndex(1);
 	}
 
 	@Override
@@ -322,8 +372,34 @@ public class GD_DongXe extends JFrame implements ActionListener, MouseListener {
 		int row = table.getSelectedRow();
 		lblMa.setText(model.getValueAt(row, 1).toString().trim());
 		txtTen.setText(model.getValueAt(row, 2).toString().trim());
-//		txtThue.setText(t);
+		cboHang.setSelectedItem(model.getValueAt(row, 3).toString().trim());
+		txtThue.setText(model.getValueAt(row, 4).toString().trim());
 
+	}
+
+	private boolean kiemTraHopLe() {
+
+		String tenDongXe = txtTen.getText().trim();
+
+		if (tenDongXe.length() == 0)
+			return false;
+
+		String tien = txtThue.getText().trim();
+
+		if (tien.length() == 0)
+			return false;
+
+		try {
+			double thue = Double.valueOf(txtThue.getText().trim());
+
+			if (thue < 0)
+				return false;
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
